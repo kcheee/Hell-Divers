@@ -15,7 +15,5 @@ public class EJBossFire : MonoBehaviour
     {
         Debug.DrawRay(transform.position, transform.forward*10);
         Debug.DrawLine(transform.position, transform.forward*10);
-
-
     }
 }
