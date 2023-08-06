@@ -6,7 +6,12 @@ public class PlayerTest : MonoBehaviour
 {
     public Transform trBody;
     public float speed = 5;
-    public Gun gun;
+
+
+    public Gun currentGun;
+    public Gun mainGun;
+    public Gun subGun;
+
     Animator anim;
     void Start()
     {
@@ -75,14 +80,27 @@ public class PlayerTest : MonoBehaviour
         transform.position += dir * speed * Time.deltaTime;
 
 
-        if (Input.GetMouseButtonDown(0)) {
-            gun.Fire();
+        if (Input.GetMouseButton(0)) {
+            currentGun.Fire();
+        }
+        if (Input.GetKey(KeyCode.R)) {
+            currentGun.Reload();
+        }
+        //1번을 누르면 메인 무기
+        if (Input.GetKey(KeyCode.Alpha1)) {
+            ChangeGun(mainGun);
+        }
+        //2번을 누르면 보조 무기
+        if (Input.GetKey(KeyCode.Alpha2))
+        {
+            ChangeGun(subGun);
         }
 
-        //1번을 누르면 메인 무기
+    }
 
-        //2번을 누르면 보조 무기
-
-
+    public void ChangeGun(Gun gun) {
+        currentGun.gameObject.SetActive(false);
+        currentGun = gun;
+        currentGun.gameObject.SetActive(true);
     }
 }
