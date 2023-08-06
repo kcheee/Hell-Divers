@@ -7,6 +7,7 @@ using UnityEngine.AI;
 // Enemy 공통된 기능.
 public class Enemy_Fun : EnemyInfo
 {
+
     public enum EnemyState
     {
         idle,
@@ -18,16 +19,31 @@ public class Enemy_Fun : EnemyInfo
         hit,
         die
     }
-
     public EnemyState E_state;
 
     protected GameObject target;
     protected NavMeshAgent agent;
 
+    int targetIndex =0;
     protected virtual void F_patrol()
     {
+        Vector3 target = patrolT[targetIndex].transform.position;
+        Debug.Log(agent);
+        agent.SetDestination(target);
 
-
+        // 만약 목적지에 도착했다면(두지점의 거리가 0.1M이하라면)
+        target.y = transform.position.y;
+        float dist = Vector3.Distance(transform.position, target);
+        if (dist <= 0.1f)
+        {
+            // 인덱스를 1증가시키고싶다.
+            targetIndex++;
+            // 만약 인덱스가 points배열의 크기이상이되면 0으로 초기화 하고싶다.
+            if (targetIndex >=2)
+            {
+                targetIndex = 0;
+            }
+        }
     }
 
     protected virtual void F_chase()
@@ -41,7 +57,7 @@ public class Enemy_Fun : EnemyInfo
         if (distance < ENEMYATTACK.attackRange)
         {
             // 공격상태로 전이하고싶다.
-            E_state = EnemyState.attack1;
+            E_state = EnemyState.wait;
             //anim.SetTrigger("Attack");
             // agent야 멈춰!!
             agent.isStopped = true;
@@ -53,9 +69,10 @@ public class Enemy_Fun : EnemyInfo
             // 순찰 상태로 전이하고싶다.
         }
     }
-
+    // 공격1을 위한 대기시간.
     protected virtual void F_wait()
     {
+        
 
     }
 
