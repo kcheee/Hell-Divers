@@ -27,6 +27,8 @@ public class PlayerTest : MonoBehaviour
         speed = 4;
         anim.SetFloat("speed", dir.magnitude);
         anim.SetFloat("RunSpeed", speed);
+
+
         //만약에 움직이고 있다면(sqr은 루트 ㄴㄴ)
         if (dir.sqrMagnitude > 0)
         {
@@ -52,13 +54,74 @@ public class PlayerTest : MonoBehaviour
                 trBody.Rotate(new Vector3(0, -5, 0));
             }
         }
-        else {
-            //anim.SetBool("Walk", false);
+        Aiming();
+        transform.position += dir * speed * Time.deltaTime;
+
+        if (Input.GetMouseButton(0)) {
+            bool IsAnim = currentGun.Fire();
+            anim.SetBool("Fire", IsAnim);
+        }
+        if (Input.GetMouseButtonUp(0)) {
+            anim.SetBool("Fire", false);
         }
 
+        if (Input.GetKey(KeyCode.R)) {
+            currentGun.Reload();
+        }
+
+        //1번을 누르면 메인 무기
+        if (Input.GetKey(KeyCode.Alpha1)) {
+            ChangeGun(mainGun);
+        }
+        //2번을 누르면 보조 무기
+        if (Input.GetKey(KeyCode.Alpha2))
+        {
+            ChangeGun(subGun);
+        }
+
+        //
+
+    }
+
+    public void ChangeGun(Gun gun) {
+        currentGun.gameObject.SetActive(false);
+        currentGun = gun;
+        currentGun.gameObject.SetActive(true);
+    }
+    public void test() {
+        anim.SetBool("Fire", false);
+    }
+
+
+
+    public void Aiming() {
+        if (Input.GetMouseButtonUp(1))
+        {
+            anim.SetBool("PistolAiming", false);
+            anim.SetBool("RifleAiming", false);
+        }
         //마우스 우클릭
         if (Input.GetMouseButton(1))
         {
+            //만약 총을 들고있다면 
+            //조준 애니메이션을 실행합니다.
+
+            //만약 현재 총기가 라이플이라면 라이플 애니메이션을 실행하고
+            //현재 총기가 피스톨이라면 피스톨 애니메이션을 실행한다.
+            switch (currentGun.gunType)
+            {
+                case Gun.GunType.Rifle:
+                    anim.SetBool("RifleAiming", true);
+
+                    break;
+                case Gun.GunType.Pistol:
+                    anim.SetBool("PistolAiming",true);
+
+                    break;
+                
+            }
+            //anim.SetBool("Aiming", true);
+
             speed = 1;
             //마우스 위치를
             Vector3 msPos = Input.mousePosition;
@@ -77,30 +140,6 @@ public class PlayerTest : MonoBehaviour
             }
 
         }
-        transform.position += dir * speed * Time.deltaTime;
 
-
-        if (Input.GetMouseButton(0)) {
-            currentGun.Fire();
-        }
-        if (Input.GetKey(KeyCode.R)) {
-            currentGun.Reload();
-        }
-        //1번을 누르면 메인 무기
-        if (Input.GetKey(KeyCode.Alpha1)) {
-            ChangeGun(mainGun);
-        }
-        //2번을 누르면 보조 무기
-        if (Input.GetKey(KeyCode.Alpha2))
-        {
-            ChangeGun(subGun);
-        }
-
-    }
-
-    public void ChangeGun(Gun gun) {
-        currentGun.gameObject.SetActive(false);
-        currentGun = gun;
-        currentGun.gameObject.SetActive(true);
     }
 }

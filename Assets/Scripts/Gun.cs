@@ -24,6 +24,14 @@ public class Gun : MonoBehaviour
     public bool isFire = true;
 
     public float damage;
+
+    public bool WaitAnim;
+
+
+    //원작에서는 두가지로 나뉘는것같음
+    public enum GunType { Rifle,Pistol }
+    public GunType gunType;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -36,15 +44,15 @@ public class Gun : MonoBehaviour
     {
         
     }
-
-
     //Fire의 같은경우 한번 더 플레이 해 보니까
     //Ray로 되있는것같다.
-    public void Fire() {
+    public bool Fire() {
         //이거같은경우는 나중에 프로퍼티로 bool 변수를 빼가지고 하는게 더 나을려나
-        
+        bool fire = currentBullet > 0 && isFire;
+        bool returnfire = currentBullet > 0 && (WaitAnim ? isFire && WaitAnim : true);
         //총알이 있니?
-        if (currentBullet > 0 && isFire) {
+        if (fire) {
+            //action();
             isFire = false;
             StartCoroutine(FireWait());
             //총알 이팩트를 생성한다
@@ -55,7 +63,6 @@ public class Gun : MonoBehaviour
             //근데 Ray는 직선이니까 하나를 더 쏘거나 아니면 그냥 각도를 내리거나. 1번째 방법이 
             //더 낫겠지.
             //노말백터
-            Debug.LogError("Shoot!");
             Debug.DrawRay(transform.position, transform.forward * MaxDistance, Color.red,1);
             Ray ray = new Ray(transform.position,transform.forward);
 
@@ -71,7 +78,7 @@ public class Gun : MonoBehaviour
             //bullet.transform.forward = transform.forward;
             currentBullet--;
         }
-
+        return returnfire;
     }
 
     private void OnEnable()
@@ -90,6 +97,7 @@ public class Gun : MonoBehaviour
 
     IEnumerator FireWait() {
         yield return new WaitForSeconds(fireTime);
+
         isFire = true;
     }
 }
