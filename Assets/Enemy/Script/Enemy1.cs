@@ -12,12 +12,12 @@ public class Enemy1 : Enemy_Fun
     static public Enemy1 Instance;
     private void Awake()
     {
-        Instance= this;
+        Instance = this;
         getcomponent();
     }
     #endregion
 
-    float currrTime=0;
+    float currrTime = 0;
 
     // 컴포넌트 
     void getcomponent()
@@ -57,7 +57,7 @@ public class Enemy1 : Enemy_Fun
     protected override void F_chase()
     {
         // 걷는 애니메이션
-        anim.SetBool("walk", true);
+        anim.Play("Walk");
         base.F_chase();
     }
 
@@ -75,25 +75,40 @@ public class Enemy1 : Enemy_Fun
         base.F_rangedattack();
 
         currrTime += Time.deltaTime;
-        if(currrTime>2)
+        if (currrTime > 2)
         {
             currrTime = 0;
             E_state = EnemyState.chase;
         }
 
         // 총 쏘기.. 
+        // 밑에서 위로 쏘는 형식.
 
     }
 
     protected override void F_wait()
     {
-        
+
         // 장전 애니메이션
         anim.SetBool("walk", false);
         anim.Play("Equip");
 
         base.F_wait();
     }
+
+    // 근거리 공격
+    protected override void F_meleeattack()
+    {
+        currrTime += Time.deltaTime;
+
+        // 테스트용
+        if (currrTime > 2)
+        {
+            currrTime = 0;
+            E_state = EnemyState.chase;
+        }
+    }
+
 
     #endregion
 
