@@ -26,11 +26,10 @@ public class EnemyInfo : MonoBehaviour
     [Serializable]
     public struct enemyattackinfo
     {
-
-        public float attackDistance;  // 공격인식거리
+        public float melee_attack_possible;  // 근거리 공격인식거리
+        public float ranged_attack_possible; // 원거리 공격인식거리
         public float attackRange;  // 공격가능거리
         public float farDistance;  // 공격포기거리
-
     }
 
     // enemy 기본정보
@@ -45,4 +44,7 @@ public class EnemyInfo : MonoBehaviour
 
     [Header("patrol test용")]
     public GameObject[] patrolT;
+
+    // 플레이어와의 거리.
+    public float distance;
 }
