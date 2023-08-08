@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class EJObjectPoolMgr : MonoBehaviour
 {
+
     public static EJObjectPoolMgr instance;
 
     //GausCanon

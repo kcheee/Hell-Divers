@@ -48,18 +48,22 @@ public class EJMachineGun : MonoBehaviour
         {
             if (Physics.Raycast(machineGunPos.position, machineGunPos.up, out machineGunHitInfo, float.MaxValue))
             {
-                GameObject machineGunImpact = Instantiate(machineImpactFactory);
+                GameObject machineGunImpact = EJObjectPoolMgr.instance.GetGausCannonImpactQueue();
 
+                //EJObjectPoolMgr.instance.GetGausCannonImpactQueue();
                 machineGunImpact.transform.position = machineGunHitInfo.point;
                 machineGunImpact.transform.forward = machineGunHitInfo.normal;
-                machineGunImpact.transform.parent = machineGunHitInfo.transform;
+                //machineGunImpact.transform.parent = machineGunHitInfo.transform;
 
-                Destroy(machineGunImpact, 1);
+
+                //Destroy(machineGunImpact, 1);
             }           
 
             machineGunPos.Rotate(new Vector3(0, 0, machineGunRotateZadd), Space.Self);
             yield return new WaitForSeconds(0.1f);
         }
+
+        //EJObjectPoolMgr.instance.InsertGausCannonImpactQueue(machineGunImpact);
 
         machineGunPos.localEulerAngles = originMachineAngle;
         isMachineDone = true;      

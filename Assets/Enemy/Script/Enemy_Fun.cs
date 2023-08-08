@@ -16,6 +16,7 @@ public class Enemy_Fun : EnemyInfo
         chase,
         wait,
         melee_attack,
+        EnemyInSight,   // SquadLeader
         ranged_attack,
         hit,
         die
@@ -49,7 +50,7 @@ public class Enemy_Fun : EnemyInfo
         target.y = transform.position.y;
         float dist = Vector3.Distance(transform.position, target);
 
-        if (dist <= 0.1f)
+        if (dist <= 0.3f)
         {
             // 인덱스를 1증가시키고싶다.
             targetIndex++;
