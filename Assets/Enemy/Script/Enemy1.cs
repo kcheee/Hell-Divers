@@ -112,10 +112,14 @@ public class Enemy1 : Enemy_Fun
 
     #endregion
 
+
+    #region Animation Event
     // 애니메이션 event
     public void equip_end()
     {
         E_state = EnemyState.ranged_attack;
         Debug.Log("실행");
     }
+
+    #endregion
 }

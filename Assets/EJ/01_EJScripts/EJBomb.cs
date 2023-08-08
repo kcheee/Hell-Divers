@@ -37,12 +37,17 @@ public class EJBomb : MonoBehaviour
     {
         if (collision.gameObject.layer == LayerMask.NameToLayer("Floor"))
         {
+            //이줄로 enqueue를 넣어주는 방법
             GameObject bombImpact = Instantiate(bombImpactFactory);
+
             bombImpact.transform.position = transform.position;
             bombImpact.transform.forward = collision.GetContact(0).normal;
 
             //normal을 써주는 방법
+
+            //destroy가 dequeue?
             Destroy(bombImpact, 3);
+
             Destroy(gameObject);
             bombTrail.enabled = false;
         }
