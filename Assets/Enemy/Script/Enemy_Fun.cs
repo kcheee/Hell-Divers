@@ -85,7 +85,7 @@ public class Enemy_Fun : EnemyInfo
             // 공격상태로 전이하고싶다.
             E_state = EnemyState.wait;
             //anim.SetTrigger("Attack");
-            // agent야 멈춰!!
+            // agent stop
             agent.velocity = Vector3.zero;
             agent.isStopped = true;
         }
