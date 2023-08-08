@@ -52,20 +52,5 @@ public class EJBomb : MonoBehaviour
             bombTrail.enabled = false;
         }
     }
-
-    IEnumerator enqueueFX()
-    {
-
-            EJObjectPoolMgr.instance.InsertbombImpactQueue(bombImpactFactory);
-            bombImpactFactory.transform.position = transform.position;
-            bombImpactFactory.transform.forward = collision.GetContact(0).normal;
-
-            yield return new WaitForSeconds(3f);
-
-            EJObjectPoolMgr.instance.GetbombImpactQueue();
-
-            yield return new WaitForSeconds(0.2f);
-            
-    }
 }
 
