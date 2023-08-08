@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/Animation/Ch35_nonPBR@Walking.fbx.meta
+guid: 7829c309e5882264faa7663132860131
+========
 guid: f4c14be47c735db4490a832a022c39fd
+>>>>>>>> main:Assets/Enemy/Enemy Anim/Walking.fbx.meta
 ModelImporter:
   serializedVersion: 21300
   internalIDToNameTable: []
@@ -46,9 +50,9 @@ ModelImporter:
       hasAdditiveReferencePose: 0
       loopTime: 1
       loopBlend: 0
-      loopBlendOrientation: 0
-      loopBlendPositionY: 0
-      loopBlendPositionXZ: 0
+      loopBlendOrientation: 1
+      loopBlendPositionY: 1
+      loopBlendPositionXZ: 1
       keepOriginalOrientation: 0
       keepOriginalPositionY: 1
       keepOriginalPositionXZ: 0
