@@ -12,6 +12,7 @@ public class EJGausCannon : MonoBehaviour
     public Transform cannonPos;
     Vector3 originCannonAngle;
     public GameObject cannonImpactFactory;
+    GameObject cannonImpact;
 
     //±ËÀûline º¯¼ö
     public LineRenderer cannonLine;
@@ -61,7 +62,7 @@ public class EJGausCannon : MonoBehaviour
 
             if (Physics.Raycast(cannonPos.position, cannonPos.up, out cannonHitInfo, float.MaxValue))
             {
-                GameObject cannonImpact = Instantiate(cannonImpactFactory);
+                cannonImpact = EJObjectPoolMgr.instance.GetGausCannonImpactQueue();               
 
                 cannonImpact.transform.position = cannonHitInfo.point;
                 cannonImpact.transform.forward = cannonHitInfo.normal;

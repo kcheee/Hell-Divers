@@ -4,11 +4,25 @@ using UnityEngine;
 
 public class EJPlayerHPforTest : MonoBehaviour
 {
+    public static EJPlayerHPforTest instance;
+
+    public GameObject HPBarFactory;
+
     float curHP;
+    float maxHP = 120;
+
+    Camera mainCam;
+
+    private void Awake()
+    {
+        instance = this;
+        mainCam = Camera.main;
+    }
     // Start is called before the first frame update
     void Start()
     {
-        
+        GameObject HPbar = Instantiate(HPBarFactory, transform.position, Quaternion.identity);
+
     }
 
     // Update is called once per frame
@@ -16,9 +30,23 @@ public class EJPlayerHPforTest : MonoBehaviour
     {
         
     }
-    public void HitByBodyExplosion(float damage)
+    public void SetHP(float damage)
     {
-        curHP -= damage; 
-        // ¸®¾×¼Ç 
+        if (HP > 0)
+        {
+            curHP -= damage;
+        }
+    }
+
+    public float HP
+    {
+        get
+        {
+            return curHP;
+        }
+        set
+        {
+            curHP = value;
+        }
     }
 }
