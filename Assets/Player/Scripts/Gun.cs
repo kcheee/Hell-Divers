@@ -67,7 +67,7 @@ public class Gun : MonoBehaviour
             //근데 Ray는 직선이니까 하나를 더 쏘거나 아니면 그냥 각도를 내리거나. 1번째 방법이 
             //더 낫겠지.
             //노말백터
-            Debug.DrawRay(transform.position, transform.forward * MaxDistance, Color.red,1);
+            Debug.DrawRay(transform.position, transform.forward * MaxDistance, Color.white,1); Debug.DrawRay(transform.position, transform.forward * MaxDistance, Color.red,1);
             Ray ray = new Ray(transform.position,transform.forward);
 
             RaycastHit hit;
