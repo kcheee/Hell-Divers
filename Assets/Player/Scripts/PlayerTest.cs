@@ -1,12 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
 
 public class PlayerTest : MonoBehaviour
 {
     public Transform trBody;
     public float speed = 5;
-
     public Gun currentGun;
     public Gun mainGun;
     public Gun subGun;
