@@ -68,8 +68,11 @@ public class PlayerTest : MonoBehaviour
             anim.SetBool("Fire", false);
         }
 
-        if (Input.GetKey(KeyCode.R)) {
-            currentGun.Reload();
+        if (Input.GetKey(KeyCode.R) && currentGun.Reload()) {
+            //애니메이션이 끝나고 장전이 실행된다.
+            //장전 - > iDLE
+            anim.SetTrigger("Reload");
+            
         }
 
         //1번을 누르면 메인 무기
