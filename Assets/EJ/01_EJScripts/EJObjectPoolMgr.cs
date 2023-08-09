@@ -11,6 +11,10 @@ public class EJObjectPoolMgr : MonoBehaviour
     public Queue<GameObject> gausCononImpactQueue = new Queue<GameObject>();
     int gausCannonNum = 25;
 
+    public GameObject gausCanonMuzzleImpactPrefab;
+    public Queue<GameObject> gausCononMuzzleImpactQueue = new Queue<GameObject>();
+    int gausCannonMuzzleNum = 25;
+
     //MachineGun
     public GameObject machineGunImpactPrefab;
     public Queue<GameObject> machineGunImpactQueue = new Queue<GameObject>();
@@ -40,6 +44,13 @@ public class EJObjectPoolMgr : MonoBehaviour
             GameObject gausCannonImpactObject = Instantiate(gausCanonImpactPrefab, Vector3.zero, Quaternion.identity);
             gausCononImpactQueue.Enqueue(gausCannonImpactObject);
             gausCannonImpactObject.SetActive(false);
+        }
+        //gausCanon Muzzle 미리 생성 후 꺼두기
+        for (int i = 0; i < gausCannonNum; i++)
+        {
+            GameObject gausCannonMuzzleImpactObject = Instantiate(gausCanonMuzzleImpactPrefab, Vector3.zero, Quaternion.identity);
+            gausCononMuzzleImpactQueue.Enqueue(gausCannonMuzzleImpactObject);
+            gausCannonMuzzleImpactObject.SetActive(false);
         }
 
         //MachineGun 미리 생성 후 꺼두기
@@ -75,13 +86,30 @@ public class EJObjectPoolMgr : MonoBehaviour
         gausCononImpactQueue.Enqueue(gausCannonImpact);
         gausCannonImpact.SetActive(false);
     }
+
     //Queue Storage에서 Dequeue(꺼낸다)
     public GameObject GetGausCannonImpactQueue()
     {
+
+        //particle play를 다시 해주는 코드 필요
         GameObject gausCannonImpactObject = gausCononImpactQueue.Dequeue();
         gausCannonImpactObject.SetActive(true);
         return gausCannonImpactObject;
     }
+    //Queue Storage에 Enqueue(넣어둔다)
+    public void ReturnGausCannonMuzzleImpactQueue(GameObject gausCannonMuzzleImpact)
+    {
+        gausCononMuzzleImpactQueue.Enqueue(gausCannonMuzzleImpact);
+        gausCannonMuzzleImpact.SetActive(false);
+    }
+    //Queue Storage에서 Dequeue(꺼낸다)
+    public GameObject GetGausCannonMuzzleImpactQueue()
+    {
+        GameObject gausCannonMuzzleImpactObject = gausCononMuzzleImpactQueue.Dequeue();
+        gausCannonMuzzleImpactObject.SetActive(true);
+        return gausCannonMuzzleImpactObject;
+    }
+
 
     //machine Gun 함수
     //Queue Storage에 Enqueue(넣어둔다)

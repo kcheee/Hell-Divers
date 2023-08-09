@@ -33,8 +33,7 @@ public class EJMachineGun : MonoBehaviour
             }
         }
     }
-
-    
+   
     IEnumerator MachineGunFire()
     {
         RaycastHit machineGunHitInfo;
