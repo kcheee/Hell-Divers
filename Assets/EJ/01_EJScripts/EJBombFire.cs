@@ -14,7 +14,8 @@ public class EJBombFire : MonoBehaviour
     //bombPos
     public Transform bombPos;
     Vector3 originBombAngle;
-    public GameObject bombFactory;
+    //public GameObject bombFactory;
+    GameObject bomb;
 
     // Start is called before the first frame update
     void Start()
@@ -40,14 +41,21 @@ public class EJBombFire : MonoBehaviour
 
         for (int i = 0; i < bombCount; i++)
         {
-            GameObject bomb = Instantiate(bombFactory);
+            bomb = EJObjectPoolMgr.instance.GetbombQueue();
 
             bomb.transform.position = bombPos.position;
             bomb.transform.up = bombPos.transform.up;
+
+            //01.bombTrail을 만들어서 자식으로 붙인다.
+            GameObject trail = new GameObject("trail");
+            var tr = trail.AddComponent<TrailRenderer>();
+            tr.time = 0.5f;
+            trail.transform.parent = bomb.transform;
+            trail.transform.localPosition = Vector3.zero;
+
             yield return new WaitForSeconds(0.5f);
         }
 
-        isBombDone = true;
-        
+        isBombDone = true;        
     }   
 }

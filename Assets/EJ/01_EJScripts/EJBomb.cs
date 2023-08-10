@@ -5,8 +5,10 @@ using UnityEngine;
 public class EJBomb : MonoBehaviour
 {
     Rigidbody rb;
-    public GameObject bombImpactFactory;
+    //public GameObject bombImpactFactory;
     float speed;
+    GameObject bombImpact;
+    float bombDestroyTime = 2f;
 
     //궤적 Trail변수
     public TrailRenderer bombTrail;
@@ -29,7 +31,6 @@ public class EJBomb : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //계속 앞으로 가고 싶다.
         transform.position += transform.up * speed * Time.deltaTime;
     }
 
@@ -37,20 +38,32 @@ public class EJBomb : MonoBehaviour
     {
         if (collision.gameObject.layer == LayerMask.NameToLayer("Floor"))
         {
-            //이줄로 enqueue를 넣어주는 방법
-            GameObject bombImpact = Instantiate(bombImpactFactory);
+            //02.trailrenderer를 부모자식 관계를 끊고
+            var trail = transform.Find("trail");
+            trail.parent = null;
 
-            bombImpact.transform.position = transform.position;
-            bombImpact.transform.forward = collision.GetContact(0).normal;
-
-            //normal을 써주는 방법
-
-            //destroy가 dequeue?
-            Destroy(bombImpact, 3);
-
-            Destroy(gameObject);
-            bombTrail.enabled = false;
+            //03.일정 시간 후에 bombTrail을 없앤다.
+            Destroy(trail.gameObject, 3);
+            EJObjectPoolMgr.instance.ReturnbombQueue(transform.gameObject); 
+            
+            //04.coroutine만을 위한 빈 오브젝트를 만들어서 GameObject가 꺼진 후에도 작동하도록 한다.
+            EJGlobalCoroutine.instance.StartCoroutine(bombImpactMake(collision));           
         }
     }
+
+    //collision이나 vector3를 매개변수로 넣어주는 함수를 넣어주면 된다.
+    IEnumerator bombImpactMake (Collision collision)
+    {
+        bombImpact = EJObjectPoolMgr.instance.GetbombImpactQueue();
+
+        bombImpact.transform.position = transform.position;
+        bombImpact.transform.forward = collision.GetContact(0).normal;
+
+        yield return new WaitForSeconds(bombDestroyTime);
+
+        EJObjectPoolMgr.instance.ReturnbombImpactQueue(bombImpact);
+        yield return null;
+    }
+
 }
 
