@@ -1,15 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class EJPlayerHPforTest : MonoBehaviour
 {
     public static EJPlayerHPforTest instance;
 
-    public GameObject HPBarFactory;
+    public Image HPBar;
+    public TextMeshProUGUI HPText;
 
     float curHP;
     float maxHP = 120;
+    float HPbarFill;
 
     Camera mainCam;
 
@@ -21,20 +25,26 @@ public class EJPlayerHPforTest : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        GameObject HPbar = Instantiate(HPBarFactory, transform.position, Quaternion.identity);
-
+        HP = maxHP;
+        HPbarFill = HPBar.fillAmount;
+        HPbarFill = 1;
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        if (HP < 0)
+        {
+            Destroy(gameObject);
+        }
     }
-    public void SetHP(float damage)
+
+    public void DamageHP(float damage)
     {
         if (HP > 0)
         {
             curHP -= damage;
+            HPbarFill = 1- 1 / HP * damage;
         }
     }
 
@@ -42,11 +52,12 @@ public class EJPlayerHPforTest : MonoBehaviour
     {
         get
         {
-            return curHP;
+            return curHP;           
         }
         set
         {
             curHP = value;
+            HPText.text = $"{value}";                   
         }
     }
 }

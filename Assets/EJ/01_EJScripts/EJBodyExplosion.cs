@@ -7,11 +7,12 @@ public class EJBodyExplosion : MonoBehaviour
     //explosion 변수
     float radius = 5f;
     float bombExploDamage = 3f;     //**player의 maxHP로 변경
+    Transform bodyExploPos;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        bodyExploPos = gameObject.transform;
     }
 
     // Update is called once per frame
@@ -29,6 +30,11 @@ public class EJBodyExplosion : MonoBehaviour
         //01. Effect Enqueue
         GameObject bodyExploImpact = EJObjectPoolMgr.instance.GetbodyExploImpactQueue();
 
+        bodyExploImpact.transform.position = bodyExploPos.transform.position;
+        bodyExploImpact.transform.localScale = 1000* Vector3.one;
+
+        print(bodyExploImpact);
+
         //02. 반경 안에 들어온 것들 검출
         RaycastHit[] rayHits = Physics.SphereCastAll(transform.position, radius, Vector3.up, 0f, LayerMask.GetMask("Player"));
         
@@ -36,11 +42,13 @@ public class EJBodyExplosion : MonoBehaviour
         foreach (RaycastHit hitObj in rayHits)
         {
             //**Player HP 데미지 함수, 데미지 값으로 변경
-            hitObj.transform.GetComponent<EJPlayerHPforTest>().SetHP(3);
+            hitObj.transform.GetComponent<EJPlayerHPforTest>().DamageHP(3);
         }
 
         //04. Effect Dequeue
         yield return new WaitForSeconds(0.3f);
         EJObjectPoolMgr.instance.ReturnbodyExploImpactQueue(bodyExploImpact);
+
+        print("4 pressed");
     }
 }
