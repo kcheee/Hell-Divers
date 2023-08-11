@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: f70d5c5bad9e14a4a8a19d4fb294c77b
+guid: ce9e4e5eef8169c4bb9a27cbb176b35b
 ModelImporter:
   serializedVersion: 21300
   internalIDToNameTable: []
@@ -33,13 +33,13 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: mixamo.com
+      name: Walk Left
       takeName: mixamo.com
       internalID: -203655887218126122
       firstFrame: 0
-      lastFrame: 1
+      lastFrame: 30
       wrapMode: 0
-      orientationOffsetY: 0
+      orientationOffsetY: -50
       level: 0
       cycleOffset: 0
       loop: 0
@@ -104,18 +104,7 @@ ModelImporter:
     legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
     blendShapeNormalImportMode: 1
     normalSmoothingSource: 0
-  referencedClips:
-  - 7da5d329c2f9ed44696e904d849e462c
-  - 6892ba73a0154964f85d5a06b39e9b5a
-  - 849ee363ab0187a4c9290fe7e3f36f13
-  - 3a6e9f78b4f5988428c952278df04d03
-  - aa0ca7ba353044743bfa65c6d2f1c20e
-  - fce97ca81b87d044181b8e6c643949e9
-  - 4ec185b99bc092848ad5348370a75bee
-  - aae295e24b368bc46a912186319868eb
-  - f2df0691817c7c94cae5de18d05b7ef1
-  - 6f8461fcc33d2ed45b0889e44ffb6f36
-  - 56eb7a0a6c5d4794eadaff188210d896
+  referencedClips: []
   importAnimation: 1
   humanDescription:
     serializedVersion: 3
@@ -884,11 +873,11 @@ ModelImporter:
     hasTranslationDoF: 0
     hasExtraRoot: 1
     skeletonHasParents: 1
-  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  lastHumanDescriptionAvatarSource: {fileID: 9000000, guid: f70d5c5bad9e14a4a8a19d4fb294c77b, type: 3}
   autoGenerateAvatarMappingIfUnspecified: 1
   animationType: 3
   humanoidOversampling: 1
-  avatarSetup: 1
+  avatarSetup: 2
   addHumanoidExtraRootOnlyWhenUsingAvatar: 1
   remapMaterialsIfMaterialImportModeIsNone: 0
   additionalBone: 0

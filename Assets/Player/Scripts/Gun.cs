@@ -10,6 +10,7 @@ public class Gun : MonoBehaviour
 
     //총구
     public Transform FirePos;
+    public GameObject FireEft;
 
     public int maxBullet;
     public int currentBullet;
@@ -69,7 +70,7 @@ public class Gun : MonoBehaviour
             //노말백터
             Debug.DrawRay(transform.position, transform.forward * MaxDistance, Color.white,1); Debug.DrawRay(transform.position, transform.forward * MaxDistance, Color.red,1);
             Ray ray = new Ray(transform.position,transform.forward);
-
+            Instantiate(FireEft, FirePos);
             RaycastHit hit;
             if (Physics.Raycast(ray, out hit,MaxDistance)) {
                 EnemyTest enemy = hit.collider.gameObject.GetComponent<EnemyTest>();

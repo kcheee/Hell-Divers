@@ -12,6 +12,8 @@ public class PlayerTest : MonoBehaviour
     public Gun mainGun;
     public Gun subGun;
 
+    
+
     Animator anim;
     void Start()
     {
@@ -25,6 +27,8 @@ public class PlayerTest : MonoBehaviour
         Vector3 dir = Vector3.right * h + Vector3.forward * v;
         dir.Normalize();
         speed = 4;
+        anim.SetFloat("Horizontal",h);
+        anim.SetFloat("Vertical",v);
         anim.SetFloat("speed", dir.magnitude);
         anim.SetFloat("RunSpeed", speed);
 
