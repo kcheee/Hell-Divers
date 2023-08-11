@@ -36,6 +36,13 @@ public class EJGausCannon : MonoBehaviour
         }
     }
 
+    //1. fire coroutine안에서 muzzle, hitpoint 두가지 이펙트를 켜고 끄고 싶다.
+    //2. 생성된 후, 일정 시간이 지나면 끄고 싶다. 
+
+    //1-1. 코루틴 안에 또 코루틴을 사용?
+    //1-2. 한 루틴으로 한다고 하면 yield return 어떻게 집어 넣을지? 모르겠음.
+    //코루틴이 실행되고 있고, 임팩트마다 사라지는 스크립트를 넣어서 붙여주면 된다.
+
     IEnumerator CannonFire()
     {
         RaycastHit cannonHitInfo;
@@ -57,29 +64,49 @@ public class EJGausCannon : MonoBehaviour
                 cannonPosZDir *= -1;
             }
 
-            //lineRenderer1
+            //lineRenderer
             cannonLine.SetPosition(0, cannonPos.position);
+
+            GameObject gausCannonMuzzleImpact = EJObjectPoolMgr.instance.GetGausCannonMuzzleImpactQueue();
+            //01.총구에 Effect?????????????????????????????????
+            //!!StartCoroutine(GausCannonMuzzleImpact());
 
             if (Physics.Raycast(cannonPos.position, cannonPos.up, out cannonHitInfo, float.MaxValue))
             {
-                cannonImpact = EJObjectPoolMgr.instance.GetGausCannonImpactQueue();               
-
+                cannonImpact = EJObjectPoolMgr.instance.GetGausCannonImpactQueue();
+                
+                //02. 맞은 곳에 Effect
                 cannonImpact.transform.position = cannonHitInfo.point;
                 cannonImpact.transform.forward = cannonHitInfo.normal;
                 cannonImpact.transform.parent = cannonHitInfo.transform;
 
+                //LineRenderer
                 cannonLine.SetPosition(1, cannonHitInfo.point);
                 cannonLine.enabled = true;
             }
 
-            //line을 이어지게 수정
             cannonPos.Rotate(new Vector3(cannonPosX, 0, 5 * cannonPosZDir), Space.Self);
 
             yield return new WaitForSeconds(0.02f);
         }
 
+        //02.For문이 다 돌고 나면 모두 한번에 꺼지도록??????????????????????????????????
+        //!!EJObjectPoolMgr.instance.ReturnGausCannonImpactQueue(cannonImpact);
+
+        //CannonPos 초기화
         cannonPos.transform.localEulerAngles = originCannonAngle;
         cannonLine.enabled = false;
         isCannonDone = true;
     }
+
+    //01.총구에 Effect
+    //muzzle을 키고 끄는 코루틴을 또 새로?????????
+    IEnumerator GausCannonMuzzleImpact()
+    {
+        GameObject gausCannonMuzzleImpact = EJObjectPoolMgr.instance.GetGausCannonMuzzleImpactQueue();
+        yield return new WaitForSeconds(0.2f);
+        EJObjectPoolMgr.instance.ReturnGausCannonMuzzleImpactQueue(gausCannonMuzzleImpact);
+        yield return null;
+    }
+        
 }

@@ -47,7 +47,7 @@ public class EJBomb : MonoBehaviour
             EJObjectPoolMgr.instance.ReturnbombQueue(transform.gameObject); 
             
             //04.coroutine만을 위한 빈 오브젝트를 만들어서 GameObject가 꺼진 후에도 작동하도록 한다.
-            EJGlobalCoroutine.instance.StartCoroutine(bombImpactMake(collision));           
+            EJGlobalCoroutine.instance.StartCoroutine(bombImpactMake(collision));          
         }
     }
 
