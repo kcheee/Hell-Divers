@@ -18,7 +18,7 @@ GameObject:
   - component: {fileID: 19883576}
   - component: {fileID: 19995626}
   m_Layer: 0
-  m_Name: flarebullet
+  m_Name: flarebullet_squadLeader
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

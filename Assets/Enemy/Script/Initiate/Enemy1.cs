@@ -1,3 +1,4 @@
+using RootMotion.FinalIK;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -16,8 +17,16 @@ public class Enemy1 : Enemy_Fun
     }
     #endregion
 
+    // √—∞˙ final_IK_enable
+    private void OnEnable()
+    {
+        Gun.SetActive(true);
+        gameObject.GetComponent<FullBodyBipedIK>().enabled = true;
+    }
+
     float currrTime = 0;
 
+    public GameObject Gun;
     public GameObject I_bullet;
     public GameObject I_FirePos;
 
@@ -68,8 +77,8 @@ public class Enemy1 : Enemy_Fun
 
             //bullet.transform.forward = TsetG.transform.position - transform.position;
             // πÿπÊ«‚¿∏∑Œ »˚¿ª ¡‡æﬂ«‘.
-            Debug.Log(bulletpos - transform.position);
-            bullet.GetComponent<Rigidbody>().AddForce((bulletpos - transform.position) * 15, ForceMode.Impulse);
+            //Debug.Log(bulletpos - transform.position);
+            bullet.GetComponent<Rigidbody>().AddForce((bulletpos - transform.position) * 12, ForceMode.Impulse);
 
             yield return new WaitForSeconds(0.15f);
         }
@@ -213,7 +222,7 @@ public class Enemy1 : Enemy_Fun
     public void equip_end()
     {
         E_state = EnemyState.ranged_attack;
-        Debug.Log("Ω««‡");
+        //Debug.Log("Ω««‡");
     }
 
     #endregion

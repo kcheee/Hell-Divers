@@ -1,10 +1,7 @@
-using Mono.Cecil.Cil;
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.Rendering;
+
 
 public class SquadLeader : Enemy_Fun
 {
@@ -16,6 +13,8 @@ public class SquadLeader : Enemy_Fun
     public GameObject Flare;
     public GameObject FirePos;
     public GameObject GranadeLancher;
+    public GameObject E_Initiate;
+    public int spawnPos=5;
     bool flare_flag = true;
 
     private void Awake()
@@ -69,9 +68,27 @@ public class SquadLeader : Enemy_Fun
 
         Instantiate(Flare, FirePos.transform.position, Quaternion.identity);
 
+        // 플레어건이 터진 위치 기억
+
+        Vector3 FlarePo = transform.position;
+        Quaternion FlareRo = transform.rotation;
         // 애니메이션 실행 후
         yield return new WaitForSeconds(2); // 임의로
         flag = true;
+        yield return new WaitForSeconds(4);
+        // 쫄따구들 소환.
+        
+        float angle = 360 / spawnPos;
+        Transform tf = gameObject.transform;
+        for (int i = 0; i < spawnPos; i++)
+        {
+            Vector3 Po = FlarePo + new Vector3(Random.Range(-4f, 4), Random.Range(-4f, 4), Random.Range(-4f, 4));
+
+            Instantiate(E_Initiate, Po, Quaternion.identity);
+            
+            yield return new WaitForSeconds(Random.Range(0.2f,1f));
+        }
+
     }
 
     #endregion
@@ -235,7 +252,7 @@ public class SquadLeader : Enemy_Fun
         {
             Debug.Log("tlfgo");
         }
-        // 근접공격
+        // 근접공격 코드 아직 안짬. 애니메이션 없음
         Debug.Log("근접공격");
         if(distance > 4)
         {

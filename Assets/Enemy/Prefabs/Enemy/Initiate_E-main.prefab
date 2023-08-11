@@ -13,8 +13,9 @@ GameObject:
   - component: {fileID: 637354578839971738}
   - component: {fileID: 637354578839971737}
   - component: {fileID: 637354578839971742}
+  - component: {fileID: 3697702958917280647}
   m_Layer: 0
-  m_Name: Initiate_E
+  m_Name: Initiate_E-main
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -69,7 +70,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 637354577857568960}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a70e525c82ce9413fa4d940ad7fcf1db, type: 3}
   m_Name: 
@@ -528,7 +529,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 637354577857568960}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 46afd1b50f51e764583c0fed35a7d271, type: 3}
   m_Name: 
@@ -554,6 +555,7 @@ MonoBehaviour:
   - {fileID: 0}
   distance: 0
   E_state: 0
+  Gun: {fileID: 637354579262748632}
   I_bullet: {fileID: 6505834467949590267, guid: cae59c52a7abc804a9ff5ba3f3dc5b28, type: 3}
   I_FirePos: {fileID: 637354578492516875}
 --- !u!195 &637354578839971742
@@ -578,6 +580,18 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!114 &3697702958917280647
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 637354577857568960}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3cb8f84705814754c9c00cb735a3f5d4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &637354577857568962
 GameObject:
   m_ObjectHideFlags: 0
@@ -3165,6 +3179,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SciFiGunLightBlack
       objectReference: {fileID: 0}
+    - target: {fileID: 118234, guid: a4e476a037022df448ead5d0ceea7d06, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 453068, guid: a4e476a037022df448ead5d0ceea7d06, type: 3}
       propertyPath: m_RootOrder
       value: 5
@@ -3230,5 +3248,10 @@ PrefabInstance:
 --- !u!4 &637354579262673870 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 453068, guid: a4e476a037022df448ead5d0ceea7d06, type: 3}
+  m_PrefabInstance: {fileID: 637354579262798338}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &637354579262748632 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 118234, guid: a4e476a037022df448ead5d0ceea7d06, type: 3}
   m_PrefabInstance: {fileID: 637354579262798338}
   m_PrefabAsset: {fileID: 0}

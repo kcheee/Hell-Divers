@@ -43,7 +43,15 @@ public class Enemy_Fun : EnemyInfo
     {
         // 걷는 애니메이션
         // patrol 하는 target
+
+        // patrolT가 null인 상황은 분대장이 호출했을 경우 밖에 없기에 이렇게 짬.
+        if (patrolT[targetIndex] == null)
+        {
+            E_state = EnemyState.chase;
+        }
+        else
         P_targt = patrolT[targetIndex].transform.position;
+
         agent.SetDestination(P_targt);
 
         //Debug.Log(P_targt);
@@ -103,7 +111,7 @@ public class Enemy_Fun : EnemyInfo
         if (Vector3.Dot(currentDirection.normalized, targetDirection.normalized) < 0.99f)
         {
             Quaternion targetRotation = Quaternion.LookRotation(targetDirection, transform.up);
-            Quaternion newRotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 10);
+            Quaternion newRotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * ENEMY.turnSpeed);
 
             transform.rotation = newRotation;
         }
