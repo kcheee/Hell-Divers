@@ -77,29 +77,43 @@ namespace DigitalRuby.PyroParticles
             }
         }
 
-        protected virtual void Awake()
+        public void FlameStart()
         {
             Starting = true;
+            Stopping = false;
+            StartParticleSystems();
+        }
+        public void FlameStop()
+        {
+            Starting = false;
+            Stopping = true;
+            Stop();
+        }
+       static public FireBaseScript instance;
+
+        protected virtual void Awake()
+        {
+            instance= this;
+            //Starting = true;
             //int fireLayer = UnityEngine.LayerMask.NameToLayer("FireLayer");
             //UnityEngine.Physics.IgnoreLayerCollision(fireLayer, fireLayer);
         }
 
         protected virtual void Start()
         {
-            if (AudioSource != null)
-            {
-                AudioSource.Play();
-            }
+            //if (AudioSource != null)
+            //{
+            //    AudioSource.Play();
+            //}
 
             // precalculate so we can multiply instead of divide every frame
-            stopTimeMultiplier = 1.0f / StopTime;
-            startTimeMultiplier = 1.0f / StartTime;
+            //stopTimeMultiplier = 1.0f / StopTime;
+            //startTimeMultiplier = 1.0f / StartTime;
 
             // if this effect has an explosion force, apply that now
             CreateExplosion(gameObject.transform.position, ForceRadius, ForceAmount);
 
             // start any particle system that is not in the list of manual start particle systems
-            StartParticleSystems();
 
             // If we implement the ICollisionHandler interface, see if any of the children are forwarding
             // collision events. If they are, hook into them.
@@ -117,7 +131,7 @@ namespace DigitalRuby.PyroParticles
         protected virtual void Update()
         {
             // reduce the duration
-            Duration -= Time.deltaTime;
+            //Duration -= Time.deltaTime;
             if (Stopping)
             {
                 // increase the stop time
@@ -168,10 +182,10 @@ namespace DigitalRuby.PyroParticles
 
         public virtual void Stop()
         {
-            if (Stopping)
-            {
-                return;
-            }
+            //if (Stopping)
+            //{
+            //    return;
+            //}
             Stopping = true;
 
             // cleanup particle systems
@@ -180,7 +194,7 @@ namespace DigitalRuby.PyroParticles
                 p.Stop();
             }
 
-            StartCoroutine(CleanupEverythingCoRoutine());
+            //StartCoroutine(CleanupEverythingCoRoutine());
         }
 
         public bool Starting

@@ -1,22 +1,29 @@
 using DG.Tweening;
 using DigitalRuby.PyroParticles;
+using RootMotion.Demos;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Experimental.GlobalIllumination;
 
-public class test : MonoBehaviour
+public class FlameAttack : MonoBehaviour
 {
     public Transform player; // 플레이어 오브젝트
     public float rotationAngle = 40f; // 회전할 각도 (40도)
     public float rotationDuration = 2f; // 회전할 시간 (2초)
-    public  AudioSource audioSource;
+    public AudioSource audioSource;
+
+    static public FlameAttack instance;
+    private void Awake()
+    {
+        instance = this; 
+    }
 
     IEnumerator delay()
     {
-        FireBaseScript.instance.FlameStart();
         yield return null;
+        FireBaseScript.instance.FlameStart();
 
     }
 
@@ -33,7 +40,7 @@ public class test : MonoBehaviour
     private void OnDisable()
     {
         // 각도 0으로 만듦.
-        transform.rotation = Quaternion.Euler(0,0,0);
+        transform.rotation = Quaternion.Euler(0, 0, 0);
     }
 
     // 자신을 기준으로 오른쪽으로 회전
@@ -51,6 +58,9 @@ public class test : MonoBehaviour
             {
                 FireBaseScript.instance.FlameStop();
                 transform.rotation = Quaternion.Euler(0, 0, 0);
+
+                // 자기자신 false
+                GetComponent<FlameAttack>().enabled = false;
 
             }); ;
         });

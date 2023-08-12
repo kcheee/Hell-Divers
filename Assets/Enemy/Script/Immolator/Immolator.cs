@@ -19,8 +19,7 @@ public class Immolator : Enemy_Fun
 
     float currrTime = 0;
 
-    public GameObject I_bullet;
-    public GameObject I_FirePos;
+public 
 
     bool flag = false;
 
@@ -54,6 +53,7 @@ public class Immolator : Enemy_Fun
     // 화염방사 공격.
     IEnumerator I_RangedAttack()
     {
+        FlameAttack.instance.enabled = true;
         yield return  null;
     }
 
@@ -134,7 +134,7 @@ public class Immolator : Enemy_Fun
         // 장전 애니메이션
         anim.SetBool("walk", false);
         anim.Play("Equip");
-        Debug.Log("tlfgod");
+        //Debug.Log("tlfgod");
         // Enemy 앞방향 Player를 향하게 설정.
         //transform.forward = target.transform.position - transform.position;
         Vector3.Lerp(transform.forward, target.transform.position - transform.position, 0.1f);
