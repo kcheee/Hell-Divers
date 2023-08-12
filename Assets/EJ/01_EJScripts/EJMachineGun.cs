@@ -13,7 +13,7 @@ public class EJMachineGun : MonoBehaviour
     Vector3 originMachineAngle;
 
     //machineGun Effect
-    public GameObject machineImpactFactory;
+    //public GameObject machineImpactFactory;
     GameObject machineGunImpact;
 
     // Start is called before the first frame update
@@ -34,7 +34,7 @@ public class EJMachineGun : MonoBehaviour
         }
     }
    
-    IEnumerator MachineGunFire()
+    public IEnumerator MachineGunFire()
     {
         RaycastHit machineGunHitInfo;
 

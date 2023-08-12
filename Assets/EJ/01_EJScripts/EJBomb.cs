@@ -4,11 +4,12 @@ using UnityEngine;
 
 public class EJBomb : MonoBehaviour
 {
+    //bomb 변수
     Rigidbody rb;
-    //public GameObject bombImpactFactory;
-    float speed;
-    GameObject bombImpact;
-    float bombDestroyTime = 2f;
+    float bombSpeed;
+    GameObject bomExploImpact;
+    float bombDestroyTime = 0.2f;
+    float bombRadius = 2;
 
     //궤적 Trail변수
     public TrailRenderer bombTrail;
@@ -19,8 +20,9 @@ public class EJBomb : MonoBehaviour
         bombTrail = GetComponent<TrailRenderer>();
         bombTrail.enabled = true;
 
-        speed = Random.Range(10,30);
-
+        //bombFire Speed, Angle Random하게
+        bombSpeed = Random.Range(10,30);
+      
         Vector3 rot = transform.eulerAngles;
         rot.x += Random.Range(-5, 5);
         rot.y += Random.Range(-5, 5);
@@ -31,37 +33,41 @@ public class EJBomb : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.position += transform.up * speed * Time.deltaTime;
+        transform.position += transform.up * bombSpeed * Time.deltaTime;
     }
 
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.layer == LayerMask.NameToLayer("Floor"))
         {
-            //02.trailrenderer를 부모자식 관계를 끊고
-            var trail = transform.Find("trail");
-            trail.parent = null;
-
-            //03.일정 시간 후에 bombTrail을 없앤다.
-            Destroy(trail.gameObject, 3);
+            //땅과 부딪히면 bomb 없애기
             EJObjectPoolMgr.instance.ReturnbombQueue(transform.gameObject); 
             
             //04.coroutine만을 위한 빈 오브젝트를 만들어서 GameObject가 꺼진 후에도 작동하도록 한다.
-            EJGlobalCoroutine.instance.StartCoroutine(bombImpactMake(collision));          
+            EJGlobalCoroutine.instance.StartCoroutine(bombExplode(collision));          
         }
     }
 
-    //collision이나 vector3를 매개변수로 넣어주는 함수를 넣어주면 된다.
-    IEnumerator bombImpactMake (Collision collision)
+    //bomb 잔상이 켜졌다 꺼지는 함수
+    IEnumerator bombExplode (Collision collision)
     {
-        bombImpact = EJObjectPoolMgr.instance.GetbombImpactQueue();
+        bomExploImpact = EJObjectPoolMgr.instance.GetbombExploImpactQueue();
 
-        bombImpact.transform.position = transform.position;
-        bombImpact.transform.forward = collision.GetContact(0).normal;
+        bomExploImpact.transform.position = transform.position;
+        bomExploImpact.transform.localScale = Vector3.one * 10;
+        bomExploImpact.transform.forward = collision.GetContact(0).normal;
 
         yield return new WaitForSeconds(bombDestroyTime);
 
-        EJObjectPoolMgr.instance.ReturnbombImpactQueue(bombImpact);
+        //bomb반경 안의 player damage // 지금 안되고 있음
+        RaycastHit[] bombHits = Physics.SphereCastAll(transform.position, bombRadius, Vector3.up, 0f, LayerMask.GetMask("Player"));
+
+        foreach (RaycastHit hitObj in bombHits)
+        {
+            hitObj.transform.GetComponent<EJPlayerHPforTest>().DamageHP(3);
+        }
+
+        EJObjectPoolMgr.instance.ReturnbombExploImpactQueue(bomExploImpact);
         yield return null;
     }
 
