@@ -5,24 +5,23 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Tilemaps;
 
-// Enemy 공통된 기능.
-public class Enemy_Fun : EnemyInfo
+// Boss 공통된 기능.
+public class Boss_Fun: EnemyInfo
 {
-    // Enemy 상태
-    public enum EnemyState
+    // Boss 상태
+    public enum BossState
     {
-        idle,
-        patrol,
-        chase,
-        wait,
-        escape,
-        melee_attack,
-        EnemyInSight,   // SquadLeader
-        ranged_attack,
-        hit,
-        die
+        Idle,
+        Patrol,
+        Chase,
+        Wait,
+        Attack_GausCannon,
+        Attack_machineGun,
+        Attack_Bomb,
+        Die
     }
-    public EnemyState E_state;
+
+    public BossState B_state;
 
     // 플레이어 타겟 (나중에 수정해야함.)
     protected GameObject target;
@@ -35,10 +34,11 @@ public class Enemy_Fun : EnemyInfo
 
     // patrol
     int targetIndex = 0;
-    
+
     // 시간 딜레이를 주기 위한 변수
     protected float currTime = 0;
     Vector3 P_targt;
+
 
     protected virtual void F_patrol()
     {
@@ -48,10 +48,10 @@ public class Enemy_Fun : EnemyInfo
         // patrolT가 null인 상황은 분대장이 호출했을 경우 밖에 없기에 이렇게 짬.
         if (patrolT[targetIndex] == null)
         {
-            E_state = EnemyState.chase;
+            B_state = BossState.Chase;
         }
         else
-        P_targt = patrolT[targetIndex].transform.position;
+            P_targt = patrolT[targetIndex].transform.position;
 
         agent.SetDestination(P_targt);
 
@@ -74,14 +74,14 @@ public class Enemy_Fun : EnemyInfo
         // attackRange만큼 가까워지면 추적.
         if (distance < ENEMYATTACK.attackRange)
         {
-            E_state = EnemyState.chase;
+            B_state = BossState.Chase;
         }
 
     }
 
     protected virtual void F_chase()
     {
-       
+
     }
 
     // 공격1을 위한 대기시간.
@@ -92,7 +92,7 @@ public class Enemy_Fun : EnemyInfo
     protected virtual void F_rangedattack()
     {
         // 애니메이션 진행 후 chase로 바꿈.
-        
+
         // chase 
     }
     protected virtual void F_meleeattack()
@@ -130,10 +130,10 @@ public class Enemy_Fun : EnemyInfo
 
     protected void StopNavSetting()
     {
-        this.agent.isStopped=true;
+        this.agent.isStopped = true;
         this.agent.updatePosition = false;
         this.agent.updateRotation = false;
-        this.agent.velocity= Vector3.zero;
+        this.agent.velocity = Vector3.zero;
     }
     #endregion
 }
