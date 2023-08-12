@@ -3,19 +3,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-//bomb에 trail붙이기
 public class EJBombFire : MonoBehaviour
 {
     //bomb
     bool isBombDone = true;
-    Rigidbody rb;
     int bombCount = 4;
 
     //bombPos
     public Transform bombPos;
     Vector3 originBombAngle;
-    //public GameObject bombFactory;
     GameObject bomb;
+    GameObject bombMuzzleImpact;
 
     // Start is called before the first frame update
     void Start()
@@ -35,27 +33,27 @@ public class EJBombFire : MonoBehaviour
         }
     }
 
-    IEnumerator MakeBomb()
+   public IEnumerator MakeBomb()
     {
         isBombDone = false;
 
         for (int i = 0; i < bombCount; i++)
         {
+            //bomb 생성
             bomb = EJObjectPoolMgr.instance.GetbombQueue();
 
             bomb.transform.position = bombPos.position;
             bomb.transform.up = bombPos.transform.up;
 
-            //01.bombTrail을 만들어서 자식으로 붙인다.
-            GameObject trail = new GameObject("trail");
-            var tr = trail.AddComponent<TrailRenderer>();
-            tr.time = 0.5f;
-            trail.transform.parent = bomb.transform;
-            trail.transform.localPosition = Vector3.zero;
+            //bombMuzzle 생성
+            bombMuzzleImpact = EJObjectPoolMgr.instance.GetbombImpactQueue();
+
+            bombMuzzleImpact.transform.position = bombPos.position;
+            bombMuzzleImpact.transform.up = bombPos.transform.forward;
 
             yield return new WaitForSeconds(0.5f);
         }
 
         isBombDone = true;        
-    }   
+    }
 }
