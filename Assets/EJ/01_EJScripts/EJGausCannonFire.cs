@@ -7,7 +7,7 @@ public class EJGausCannonFire : MonoBehaviour
     //cannonFire 변수
     int cannonCount = 25;
     bool isCannonDone = true;
-    float cannonDelayTime = 0.5f; //0.02f
+    float cannonDelayTime = 0.02f; //0.02f
 
     //cannon Position 변수
     public Transform cannonPos;

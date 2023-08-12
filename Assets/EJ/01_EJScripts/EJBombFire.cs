@@ -33,10 +33,16 @@ public class EJBombFire : MonoBehaviour
         }
     }
 
-   public IEnumerator MakeBomb()
+    public void Test()
+    {
+        Debug.Log("fds");
+
+
+    }
+    public IEnumerator MakeBomb()
     {
         isBombDone = false;
-
+        Debug.Log("fds");
         for (int i = 0; i < bombCount; i++)
         {
             //bomb »ý¼º
