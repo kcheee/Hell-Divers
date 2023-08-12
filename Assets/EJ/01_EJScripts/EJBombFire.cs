@@ -3,18 +3,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-//bomb俊 trail嘿捞扁
 public class EJBombFire : MonoBehaviour
 {
     //bomb
     bool isBombDone = true;
-    Rigidbody rb;
     int bombCount = 4;
 
     //bombPos
     public Transform bombPos;
     Vector3 originBombAngle;
-    public GameObject bombFactory;
+    GameObject bomb;
+    GameObject bombMuzzleImpact;
 
     // Start is called before the first frame update
     void Start()
@@ -34,20 +33,27 @@ public class EJBombFire : MonoBehaviour
         }
     }
 
-    IEnumerator MakeBomb()
+   public IEnumerator MakeBomb()
     {
         isBombDone = false;
 
         for (int i = 0; i < bombCount; i++)
         {
-            GameObject bomb = Instantiate(bombFactory);
+            //bomb 积己
+            bomb = EJObjectPoolMgr.instance.GetbombQueue();
 
             bomb.transform.position = bombPos.position;
             bomb.transform.up = bombPos.transform.up;
+
+            //bombMuzzle 积己
+            bombMuzzleImpact = EJObjectPoolMgr.instance.GetbombImpactQueue();
+
+            bombMuzzleImpact.transform.position = bombPos.position;
+            bombMuzzleImpact.transform.up = bombPos.transform.forward;
+
             yield return new WaitForSeconds(0.5f);
         }
 
-        isBombDone = true;
-        
-    }   
+        isBombDone = true;        
+    }
 }
