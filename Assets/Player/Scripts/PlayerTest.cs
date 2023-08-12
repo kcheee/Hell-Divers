@@ -1,15 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
 
 public class PlayerTest : MonoBehaviour
 {
     public Transform trBody;
     public float speed = 5;
-
     public Gun currentGun;
     public Gun mainGun;
     public Gun subGun;
+
+    
 
     Animator anim;
     void Start()
@@ -24,6 +27,8 @@ public class PlayerTest : MonoBehaviour
         Vector3 dir = Vector3.right * h + Vector3.forward * v;
         dir.Normalize();
         speed = 4;
+        anim.SetFloat("Horizontal",h);
+        anim.SetFloat("Vertical",v);
         anim.SetFloat("speed", dir.magnitude);
         anim.SetFloat("RunSpeed", speed);
 
@@ -67,8 +72,11 @@ public class PlayerTest : MonoBehaviour
             anim.SetBool("Fire", false);
         }
 
-        if (Input.GetKey(KeyCode.R)) {
-            currentGun.Reload();
+        if (Input.GetKey(KeyCode.R) && currentGun.Reload()) {
+            //애니메이션이 끝나고 장전이 실행된다.
+            //장전 - > iDLE
+            anim.SetTrigger("Reload");
+            
         }
 
         //1번을 누르면 메인 무기
