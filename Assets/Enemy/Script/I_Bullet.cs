@@ -8,6 +8,7 @@ public class I_Bullet : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
+        Debug.Log(collision.ToString());
         if (collision.gameObject.name == "Plane")
         {
             //Debug.Log(collision.transform.position);

@@ -21,7 +21,7 @@ public class Enemy1 : Enemy_Fun
     private void OnEnable()
     {
         Gun.SetActive(true);
-        gameObject.GetComponent<FullBodyBipedIK>().enabled = true;
+        //gameObject.GetComponent<FullBodyBipedIK>().enabled = true;
     }
 
     float currrTime = 0;
