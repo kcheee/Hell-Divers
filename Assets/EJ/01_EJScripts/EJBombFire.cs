@@ -3,18 +3,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-//bomb에 trail붙이기
 public class EJBombFire : MonoBehaviour
 {
     //bomb
     bool isBombDone = true;
-    Rigidbody rb;
     int bombCount = 4;
 
     //bombPos
     public Transform bombPos;
     Vector3 originBombAngle;
-    public GameObject bombFactory;
+    GameObject bomb;
+    GameObject bombMuzzleImpact;
+
+    //bombMuzzleFX
+    public GameObject bombMuzzleFactory;
 
     // Start is called before the first frame update
     void Start()
@@ -34,20 +36,35 @@ public class EJBombFire : MonoBehaviour
         }
     }
 
-    IEnumerator MakeBomb()
+    public void Test()
+    {
+        Debug.Log("fds");
+
+
+    }
+    public IEnumerator MakeBomb()
     {
         isBombDone = false;
-
         for (int i = 0; i < bombCount; i++)
         {
-            GameObject bomb = Instantiate(bombFactory);
+            //bomb 생성
+            bomb = EJObjectPoolMgr.instance.GetbombQueue();
 
             bomb.transform.position = bombPos.position;
             bomb.transform.up = bombPos.transform.up;
+
+            //bombMuzzle 생성
+            GameObject bombMuzzleImpact = Instantiate(bombMuzzleFactory);
+
+            bombMuzzleImpact.transform.position = bombPos.position;
+            bombMuzzleImpact.transform.localScale = Vector3.one * 4;
+            bombMuzzleImpact.transform.up = bombPos.transform.forward;
+
+            //쿨타임
             yield return new WaitForSeconds(0.5f);
+            BossFSM.Sflag = false;
         }
 
-        isBombDone = true;
-        
-    }   
+        isBombDone = true;        
+    }
 }

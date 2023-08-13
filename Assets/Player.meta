@@ -1,7 +1,12 @@
 fileFormatVersion: 2
-guid: c48198688fe9bee4e95163ded5007635
+<<<<<<<< HEAD:Assets/Player.meta
+guid: ff9ed6be3835e7041848ecd19951668c
 folderAsset: yes
 DefaultImporter:
+========
+guid: 9e20ed6776db53345933ed9d0968f0a1
+PrefabImporter:
+>>>>>>>> origin/cej:Assets/EJ/06_EJPrefabs/HPbar.prefab.meta
   externalObjects: {}
   userData: 
   assetBundleName: 

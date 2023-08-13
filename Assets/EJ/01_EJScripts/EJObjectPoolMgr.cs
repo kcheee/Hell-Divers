@@ -4,12 +4,17 @@ using UnityEngine;
 
 public class EJObjectPoolMgr : MonoBehaviour
 {
+
     public static EJObjectPoolMgr instance;
 
     //GausCanon
     public GameObject gausCanonImpactPrefab;
     public Queue<GameObject> gausCononImpactQueue = new Queue<GameObject>();
-    int gausCannonNum = 15;
+    int gausCannonNum = 25;
+
+    public GameObject gausCanonMuzzleImpactPrefab;
+    public Queue<GameObject> gausCononMuzzleImpactQueue = new Queue<GameObject>();
+    int gausCannonMuzzleNum = 25;
 
     //MachineGun
     public GameObject machineGunImpactPrefab;
@@ -20,13 +25,20 @@ public class EJObjectPoolMgr : MonoBehaviour
     public GameObject bombPrefab;
     public Queue<GameObject> bombQueue = new Queue<GameObject>();
 
-    public GameObject bombImpactPrefab;
-    public Queue<GameObject> bombImpactQueue = new Queue<GameObject>();
+    public GameObject bombMuzzleImpactPrefab;
+    public Queue<GameObject> bombMuzzleImpactQueue = new Queue<GameObject>();
 
-    int bombNum = 4;
+    public GameObject bombExploImpactPrefab;
+    public Queue<GameObject> bombExploImpactQueue = new Queue<GameObject>();
+
+    int bombNum = 10;
+
+    //BodyExplosion
+    public GameObject bodyExploImpactPrefab;
+    public Queue<GameObject> bodyExploImpactQueue = new Queue<GameObject>();
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         instance = this;
 
@@ -37,12 +49,19 @@ public class EJObjectPoolMgr : MonoBehaviour
             gausCononImpactQueue.Enqueue(gausCannonImpactObject);
             gausCannonImpactObject.SetActive(false);
         }
+        //gausCanon Muzzle 미리 생성 후 꺼두기
+        for (int i = 0; i < gausCannonNum; i++)
+        {
+            GameObject gausCannonMuzzleImpactObject = Instantiate(gausCanonMuzzleImpactPrefab, Vector3.zero, Quaternion.identity);
+            gausCononMuzzleImpactQueue.Enqueue(gausCannonMuzzleImpactObject);
+            gausCannonMuzzleImpactObject.SetActive(false);
+        }
 
         //MachineGun 미리 생성 후 꺼두기
         for (int i = 0; i < machineGunNum; i++)
         {
             GameObject machineGunImpactObject = Instantiate(machineGunImpactPrefab, Vector3.zero, Quaternion.identity);
-            bombQueue.Enqueue(machineGunImpactObject);
+            machineGunImpactQueue.Enqueue(machineGunImpactObject);
             machineGunImpactObject.SetActive(false);
         }
 
@@ -53,33 +72,65 @@ public class EJObjectPoolMgr : MonoBehaviour
             bombQueue.Enqueue(bombObject);
             bombObject.SetActive(false);
 
-            GameObject bombImpactObject = Instantiate(bombImpactPrefab, Vector3.zero, Quaternion.identity);
-            bombImpactQueue.Enqueue(bombImpactObject);
-            bombImpactObject.SetActive(false);
+            GameObject bombMuzzleImpactObject = Instantiate(bombMuzzleImpactPrefab, Vector3.zero, Quaternion.identity);
+            bombMuzzleImpactQueue.Enqueue(bombMuzzleImpactObject);
+            bombMuzzleImpactObject.SetActive(false);
+
+            GameObject bombExploImpactObject = Instantiate(bombExploImpactPrefab, Vector3.zero, Quaternion.identity);
+            bombExploImpactQueue.Enqueue(bombExploImpactObject);
+            bombExploImpactObject.SetActive(false);
         }
+
+        //bodyExplosion 미리 생성 후 꺼두기
+        GameObject bodyexploImpactObject = Instantiate(bodyExploImpactPrefab, Vector3.zero, Quaternion.identity);
+        bodyExploImpactQueue.Enqueue(bodyexploImpactObject);
+        bodyexploImpactObject.SetActive(false);
     }
 
     //gausCannon 함수
-    public void InsertGausCannonImpactQueue(GameObject gausCannonImpact)
+    //Queue Storage에 Enqueue(넣어둔다)
+    public void ReturnGausCannonImpactQueue(GameObject gausCannonImpact)
     {
         gausCononImpactQueue.Enqueue(gausCannonImpact);
         gausCannonImpact.SetActive(false);
+        print("returnGausCannonimpactQueue");
     }
 
+    //Queue Storage에서 Dequeue(꺼낸다)
     public GameObject GetGausCannonImpactQueue()
     {
+        //particle play를 다시 해주는 코드 필요
         GameObject gausCannonImpactObject = gausCononImpactQueue.Dequeue();
         gausCannonImpactObject.SetActive(true);
+        print("getGausCannonimpactQueue");
         return gausCannonImpactObject;
+        
     }
+    //Queue Storage에 Enqueue(넣어둔다)
+    public void ReturnGausCannonMuzzleImpactQueue(GameObject gausCannonMuzzleImpact)
+    {
+        gausCononMuzzleImpactQueue.Enqueue(gausCannonMuzzleImpact);
+        gausCannonMuzzleImpact.SetActive(false);
+        print("returnMuzzleQueue");
+    }
+    //Queue Storage에서 Dequeue(꺼낸다)
+    public GameObject GetGausCannonMuzzleImpactQueue()
+    {
+        GameObject gausCannonMuzzleImpactObject = gausCononMuzzleImpactQueue.Dequeue();
+        gausCannonMuzzleImpactObject.SetActive(true);
+        print("getMuzzleQueue");
+        return gausCannonMuzzleImpactObject;        
+    }
+
 
     //machine Gun 함수
-    public void InsertmachineGunImpactQueue(GameObject machineGunImpact)
+    //Queue Storage에 Enqueue(넣어둔다)
+    public void ReturnmachineGunImpactQueue(GameObject machineGunImpact)
     {
-        gausCononImpactQueue.Enqueue(machineGunImpact);
+        machineGunImpactQueue.Enqueue(machineGunImpact);
         machineGunImpact.SetActive(false);
     }
-
+    //Queue Storage에서 Dequeue(꺼낸다)
     public GameObject GetmachineGunImpactQueue()
     {
         GameObject machineGunImpactObject = machineGunImpactQueue.Dequeue();
@@ -88,30 +139,60 @@ public class EJObjectPoolMgr : MonoBehaviour
     }
 
     //bomb 함수
-    public void InsertbombQueue(GameObject bomb)
+    //Queue Storage에 Enqueue(넣어둔다)
+    public void ReturnbombQueue(GameObject bomb)
     {
         bombQueue.Enqueue(bomb);
         bomb.SetActive(false);
     }
-
+    //Queue Storage에서 Dequeue(꺼낸다)
     public GameObject GetbombQueue()
     {
         GameObject bombObject = bombQueue.Dequeue();
         bombObject.SetActive(true);
         return bombObject;
     }
-
-    public void InsertbombImpactQueue(GameObject bombImpact)
+    //Queue Storage에 Enqueue(넣어둔다)
+    public void ReturnbombImpactQueue(GameObject bombImpact)
     {
-        bombImpactQueue.Enqueue(bombImpact);
+        bombMuzzleImpactQueue.Enqueue(bombImpact);
         bombImpact.SetActive(false);
     }
-
+    //Queue Storage에서 Dequeue(꺼낸다)
     public GameObject GetbombImpactQueue()
     {
-        GameObject bombImpactObject = bombImpactQueue.Dequeue();
+        GameObject bombImpactObject = bombMuzzleImpactQueue.Dequeue();
         bombImpactObject.SetActive(true);
         return bombImpactObject;
+    }
+
+    //Queue Storage에 Enqueue(넣어둔다)
+    public void ReturnbombExploImpactQueue(GameObject bombExploImpact)
+    {
+        bombExploImpactQueue.Enqueue(bombExploImpact);
+        bombExploImpact.SetActive(false);
+    }
+    //Queue Storage에서 Dequeue(꺼낸다)
+    public GameObject GetbombExploImpactQueue()
+    {
+        GameObject bombExploImpactObject = bombExploImpactQueue.Dequeue();
+        bombExploImpactObject.SetActive(true);
+        return bombExploImpactObject;
+    }
+
+    //bodyExplosion 함수
+    //Queue Storage에 Enqueue(넣어둔다)
+    public void ReturnbodyExploImpactQueue(GameObject bodyExploImpact)
+    {
+        bodyExploImpactQueue.Enqueue(bodyExploImpact);
+        bodyExploImpact.SetActive(false);
+    }
+    //Queue Storage에서 Dequeue(꺼낸다)
+    public GameObject GetbodyExploImpactQueue()
+    {
+        GameObject bodyexploImpactObject = bodyExploImpactQueue.Dequeue();
+        bodyexploImpactObject.SetActive(true);
+        return bodyexploImpactObject;
     }
 
     // Update is called once per frame

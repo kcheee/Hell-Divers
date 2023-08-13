@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 0.1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 764456824}
-  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 0.1}
+  m_IndirectSpecularColor: {r: 0.015759936, g: 0.018113216, b: 0.019674974, a: 0.1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &4
 LightmapSettings:
@@ -787,7 +787,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1693458534}
-        m_TargetAssemblyTypeName: 
+        m_TargetAssemblyTypeName: DigitalRuby.PyroParticles.DemoScript, Assembly-CSharp
         m_MethodName: SliderChanged
         m_Mode: 4
         m_Arguments:
@@ -5149,7 +5149,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &650607589 stripped
 Transform:
@@ -7788,7 +7788,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 413310, guid: f45d0aac4a59fb64ab8f6b07579e6b81, type: 3}
       propertyPath: m_RootOrder
-      value: 6
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 413310, guid: f45d0aac4a59fb64ab8f6b07579e6b81, type: 3}
       propertyPath: m_LocalScale.y
