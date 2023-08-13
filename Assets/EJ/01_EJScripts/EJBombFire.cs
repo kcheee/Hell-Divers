@@ -15,6 +15,9 @@ public class EJBombFire : MonoBehaviour
     GameObject bomb;
     GameObject bombMuzzleImpact;
 
+    //bombMuzzleFX
+    public GameObject bombMuzzleFactory;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -51,9 +54,10 @@ public class EJBombFire : MonoBehaviour
             bomb.transform.up = bombPos.transform.up;
 
             //bombMuzzle »ý¼º
-            bombMuzzleImpact = EJObjectPoolMgr.instance.GetbombImpactQueue();
+            GameObject bombMuzzleImpact = Instantiate(bombMuzzleFactory);
 
             bombMuzzleImpact.transform.position = bombPos.position;
+            bombMuzzleImpact.transform.localScale = Vector3.one * 4;
             bombMuzzleImpact.transform.up = bombPos.transform.forward;
 
             //ÄðÅ¸ÀÓ

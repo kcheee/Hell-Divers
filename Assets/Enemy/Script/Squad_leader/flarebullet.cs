@@ -18,6 +18,7 @@ public class flarebullet : MonoBehaviour {
 	public AudioClip flareBurningSound;
 
 	Rigidbody rb;
+
 	// Use this for initialization
 	void Start () {
 
@@ -71,6 +72,5 @@ public class flarebullet : MonoBehaviour {
 		myCoroutine = true;
 		yield return new WaitForSeconds(flareTimer);
 		myCoroutine = false;
-
 	}
 }

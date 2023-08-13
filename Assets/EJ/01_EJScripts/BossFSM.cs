@@ -111,11 +111,11 @@ public class BossFSM : MonoBehaviour
         {
             print("공격XLDistance에 들어왔어요");
             B_state = BossState.Wait;
-            //anim.SetTrigger("Attack");
         }
 
     }
 
+    //쿨타임을 걸어두고 앞으로 걸어나가면 공격 다르게 발사되는 상태
     private void UpdateAttack()
     {
         if (DistanceBoss2Player <= Attack_SDistance && !Sflag)
@@ -128,7 +128,6 @@ public class BossFSM : MonoBehaviour
         else if (DistanceBoss2Player <= Attack_SDistance && !Mflag)
         {
             print(" 1= " + DistanceBoss2Player);
-            //붙여주기만 하면 실행되지 않겠지
             StartCoroutine(transform.GetComponent<EJBombFire>().MakeBomb());
             Mflag = true;
             B_state = BossState.Wait;
@@ -148,15 +147,13 @@ public class BossFSM : MonoBehaviour
             B_state = BossState.Wait;
         }
 
-
         //공격 범위에서 벗어나면 Chase모드
         if (DistanceBoss2Player > Attack_XLDistance)
             {
                 print("Attack할 수 있는 거리가 아닙니다");
                 B_state = BossState.Chase;
                 //anim.SetTrigger("Chase");
-            }
-        
+            }       
     }
 
     private void UpdateDie()

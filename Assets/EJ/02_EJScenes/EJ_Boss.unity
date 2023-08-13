@@ -302,7 +302,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 73764007}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 1.425, z: -0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -869,14 +869,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1074265846}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: -0.08715578, y: 0, z: 0, w: 0.9961947}
+  m_LocalPosition: {x: 0, y: 1.286, z: -0.2}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2577946545711021367}
   m_RootOrder: 13
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -10, y: 0, z: 0}
 --- !u!1 &1093461567
 GameObject:
   m_ObjectHideFlags: 0
@@ -900,14 +900,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1093461567}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: 0.10452846, y: 0, z: 0, w: 0.9945219}
+  m_LocalPosition: {x: 0, y: 1.035, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2577946545711021367}
   m_RootOrder: 14
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 12, y: 0, z: 0}
 --- !u!1 &1119368131
 GameObject:
   m_ObjectHideFlags: 0
@@ -4386,6 +4386,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   machineGunPos: {fileID: 520621710}
+  machineGunFactory: {fileID: 0}
 --- !u!114 &111000010847711151
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4443,6 +4444,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bombPos: {fileID: 343025014}
+  bombMuzzleFactory: {fileID: 0}
 --- !u!114 &111000010847711155
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -35541,6 +35543,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   machineGunPos: {fileID: 54911035}
+  machineGunFactory: {fileID: 0}
 --- !u!114 &2388901527947885908
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -35554,6 +35557,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bombPos: {fileID: 1447912790}
+  bombMuzzleFactory: {fileID: 0}
 --- !u!114 &2388901527947885909
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -35622,7 +35626,7 @@ NavMeshAgent:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2388901527947885903}
-  m_Enabled: 1
+  m_Enabled: 0
   m_AgentTypeID: 0
   m_Radius: 4.1666665
   m_Speed: 3.5
@@ -36237,7 +36241,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1180086533150303821}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3001ab19c41efa64ca3d44162c6f1098, type: 3}
   m_Name: 
@@ -36255,7 +36259,7 @@ NavMeshAgent:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1180086533150303821}
-  m_Enabled: 1
+  m_Enabled: 0
   m_AgentTypeID: 0
   m_Radius: 10
   m_Speed: 10
@@ -36283,6 +36287,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   machineGunPos: {fileID: 1074265847}
+  machineGunFactory: {fileID: 8765008237907036386, guid: ee1c36be32b35c844beaaec7378d2ac4, type: 3}
 --- !u!114 &3318166437279568979
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -36296,6 +36301,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bombPos: {fileID: 1093461568}
+  bombMuzzleFactory: {fileID: 8579966591951127539, guid: 34940ba778088e74095f5f57d9c0dc28, type: 3}
 --- !u!114 &3318166437279568980
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -36309,7 +36315,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cannonPos: {fileID: 73764008}
-  cannonLine: {fileID: 2388901527947885905}
+  cannonLine: {fileID: 3318166437279568984}
 --- !u!114 &3318166437279568981
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -36324,7 +36330,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gausCanonImpactPrefab: {fileID: 8579966591951127539, guid: f8d9ce3e2bdf63943bf080cab022beeb, type: 3}
   gausCanonMuzzleImpactPrefab: {fileID: 141530, guid: 4dc02866e849db44dba817ad93e49a9c, type: 3}
-  machineGunImpactPrefab: {fileID: 1819066416490906, guid: f71e64e1ba018eb419bd5e9e3ca8a65c, type: 3}
+  machineGunImpactPrefab: {fileID: 8765008237907036386, guid: ee1c36be32b35c844beaaec7378d2ac4, type: 3}
   bombPrefab: {fileID: 3752470025682022511, guid: 7d6064dde017d7246840c5bd5af315e6, type: 3}
   bombMuzzleImpactPrefab: {fileID: 8579966591951127539, guid: 34940ba778088e74095f5f57d9c0dc28, type: 3}
   bombExploImpactPrefab: {fileID: 8579966591951127539, guid: 34940ba778088e74095f5f57d9c0dc28, type: 3}

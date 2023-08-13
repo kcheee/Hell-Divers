@@ -71,7 +71,7 @@ public class EJGausCannonFire : MonoBehaviour
                 cannonImpact = EJObjectPoolMgr.instance.GetGausCannonImpactQueue();
                 
                 //02. 맞은 곳에 Effect
-                cannonImpact.transform.position = cannonHitInfo.point +Vector3.up*1.26f;
+                cannonImpact.transform.position = cannonHitInfo.point;
                 cannonImpact.transform.localScale = Vector3.one * 3;
                 cannonImpact.transform.up = cannonHitInfo.normal;
                 //cannonImpact.transform.parent = cannonHitInfo.transform;
@@ -80,12 +80,10 @@ public class EJGausCannonFire : MonoBehaviour
                 cannonLine.SetPosition(1, cannonHitInfo.point);
                 cannonLine.enabled = true;
 
-                EJObjectPoolMgr.instance.ReturnGausCannonImpactQueue(cannonImpact);
-                
+                EJObjectPoolMgr.instance.ReturnGausCannonImpactQueue(cannonImpact);             
             }
 
             cannonPos.Rotate(new Vector3(cannonPosX, 0, 5 * cannonPosZDir), Space.Self);
-
             
             yield return new WaitForSeconds(cannonDelayTime);
         }
@@ -94,6 +92,5 @@ public class EJGausCannonFire : MonoBehaviour
         cannonPos.transform.localEulerAngles = originCannonAngle;
         cannonLine.enabled = false;
         isCannonDone = true;
-    }
-        
+    }       
 }
