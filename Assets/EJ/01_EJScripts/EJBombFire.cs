@@ -58,7 +58,7 @@ public class EJBombFire : MonoBehaviour
 
             bombMuzzleImpact.transform.position = bombPos.position;
             bombMuzzleImpact.transform.localEulerAngles = bombPos.transform.parent.localEulerAngles;
-            bombMuzzleImpact.transform.localScale = Vector3.one * 4;
+            bombMuzzleImpact.transform.localScale = Vector3.one ;
             bombMuzzleImpact.transform.up = bombPos.transform.forward;
 
             //ÄðÅ¸ÀÓ

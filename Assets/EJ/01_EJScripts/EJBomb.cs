@@ -21,7 +21,7 @@ public class EJBomb : MonoBehaviour
         //bombTrail.enabled = true;
 
         //bombFire Speed, Angle Random하게
-        bombSpeed = Random.Range(10,30);
+        bombSpeed = Random.Range(5,10);
       
         Vector3 rot = transform.eulerAngles;
         rot.x += Random.Range(-5, 5);
@@ -36,17 +36,34 @@ public class EJBomb : MonoBehaviour
         transform.position += transform.up * bombSpeed * Time.deltaTime;
     }
 
+/*    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.layer == LayerMask.NameToLayer("Floor"))
+        {
+            transform.position = other.transform.position;
+            //땅과 부딪히면 bomb 없애기
+            EJObjectPoolMgr.instance.ReturnbombQueue(transform.gameObject);
+
+            //04.coroutine만을 위한 빈 오브젝트를 만들어서 GameObject가 꺼진 후에도 작동하도록 한다.
+            EJGlobalCoroutine.instance.StartCoroutine(bombExplode(other));
+        }
+    }*/
+
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.layer == LayerMask.NameToLayer("Floor"))
         {
-            //땅과 부딪히면 bomb 없애기
-            EJObjectPoolMgr.instance.ReturnbombQueue(transform.gameObject); 
-            
+ 
+
             //04.coroutine만을 위한 빈 오브젝트를 만들어서 GameObject가 꺼진 후에도 작동하도록 한다.
-            EJGlobalCoroutine.instance.StartCoroutine(bombExplode(collision));          
+           StartCoroutine(bombExplode(collision));
+
+            //땅과 부딪히면 bomb 없애기
+            EJObjectPoolMgr.instance.ReturnbombQueue(transform.gameObject);
         }
     }
+
+
 
     //bomb 잔상이 켜졌다 꺼지는 함수
     IEnumerator bombExplode (Collision collision)
@@ -54,7 +71,7 @@ public class EJBomb : MonoBehaviour
         bomExploImpact = EJObjectPoolMgr.instance.GetbombExploImpactQueue();
 
         bomExploImpact.transform.position = transform.position;
-        bomExploImpact.transform.localScale = Vector3.one * 10;
+        bomExploImpact.transform.localScale = Vector3.one *3;
         bomExploImpact.transform.forward = collision.GetContact(0).normal;
 
         yield return new WaitForSeconds(bombDestroyTime);
@@ -69,6 +86,8 @@ public class EJBomb : MonoBehaviour
 
         EJObjectPoolMgr.instance.ReturnbombExploImpactQueue(bomExploImpact);
         yield return null;
+
+         BossFSM.Sflag = false;
     }
 
 }
