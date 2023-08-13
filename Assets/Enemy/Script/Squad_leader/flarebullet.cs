@@ -57,6 +57,7 @@ public class flarebullet : MonoBehaviour {
 			//mainModule.startSize = Mathf.Lerp(particle.main.startSizeMultiplier, 0, Time.deltaTime * 1.2f);
 			rb.drag = 10;
 		}
+
 		if(flarelight.range<=0.2f)
 			mainModule.startSize = Mathf.Lerp(particle.main.startSizeMultiplier, 0, Time.deltaTime * 1.5f);
         

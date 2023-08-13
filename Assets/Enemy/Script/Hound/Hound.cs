@@ -123,6 +123,8 @@ public class Hound : Enemy_Fun
 
         f_rotation();
 
+        //Vector3.Lerp(transform.forward, target.transform.position - transform.position, 0.2f);
+
         // 플레이어와 각도가 비슷하면 agent다시 enable
         if (angleToPlayer < 10)
         {
