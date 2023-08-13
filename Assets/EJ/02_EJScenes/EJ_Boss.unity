@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
+  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -301,14 +301,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 73764007}
-  m_LocalRotation: {x: -0.08715578, y: 0, z: 0, w: 0.9961947}
-  m_LocalPosition: {x: 0, y: 1.425, z: -0}
+  m_LocalRotation: {x: -0.20791169, y: 0, z: 0, w: 0.9781476}
+  m_LocalPosition: {x: 2.2609196, y: 0.99767673, z: -2.047804}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2577946545711021367}
   m_RootOrder: 12
-  m_LocalEulerAnglesHint: {x: -10, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -24, y: 0, z: 0}
 --- !u!114 &196111562 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4499340052416549321, guid: 22f3173d8617d7844b49633a9fb2f06e, type: 3}
@@ -998,7 +998,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1119368131}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 5.3, z: 165.5}
+  m_LocalPosition: {x: 0, y: 5.3, z: 253}
   m_LocalScale: {x: 6, y: 6, z: 6}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -1226,7 +1226,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1192444923}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 5.3, z: 166.8}
+  m_LocalPosition: {x: 0, y: 5.3, z: -1}
   m_LocalScale: {x: 6, y: 6, z: 6}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -1449,7 +1449,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1540627190}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 5.3, z: 208.3}
+  m_LocalPosition: {x: 0, y: 5.3, z: 356}
   m_LocalScale: {x: 6, y: 6, z: 6}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -4418,7 +4418,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cannonPos: {fileID: 343025014}
-  cannonLine: {fileID: 111000010847711156}
+  gausCannonMuzzleFactory: {fileID: 0}
 --- !u!114 &111000010847711153
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -34401,6 +34401,7 @@ GameObject:
   - component: {fileID: 3318166437279568979}
   - component: {fileID: 3318166437279568978}
   - component: {fileID: 3318166437279568984}
+  - component: {fileID: 3318166437279568985}
   m_Layer: 0
   m_Name: TankBoss-main
   m_TagString: Untagged
@@ -35331,7 +35332,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cannonPos: {fileID: 3423483983540265520}
-  cannonLine: {fileID: 2388901527947885905}
+  gausCannonMuzzleFactory: {fileID: 0}
 --- !u!120 &2388901527947885905
 LineRenderer:
   m_ObjectHideFlags: 0
@@ -36241,7 +36242,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1180086533150303821}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3001ab19c41efa64ca3d44162c6f1098, type: 3}
   m_Name: 
@@ -36259,7 +36260,7 @@ NavMeshAgent:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1180086533150303821}
-  m_Enabled: 0
+  m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 10
   m_Speed: 10
@@ -36309,13 +36310,13 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1180086533150303821}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0a363d8f7db50154f8c463a5657df580, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   cannonPos: {fileID: 73764008}
-  cannonLine: {fileID: 3318166437279568984}
+  gausCannonMuzzleFactory: {fileID: 8579966591951127539, guid: 34940ba778088e74095f5f57d9c0dc28, type: 3}
 --- !u!114 &3318166437279568981
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -36331,7 +36332,7 @@ MonoBehaviour:
   gausCanonImpactPrefab: {fileID: 8579966591951127539, guid: f8d9ce3e2bdf63943bf080cab022beeb, type: 3}
   gausCanonMuzzleImpactPrefab: {fileID: 141530, guid: 4dc02866e849db44dba817ad93e49a9c, type: 3}
   machineGunImpactPrefab: {fileID: 8765008237907036386, guid: ee1c36be32b35c844beaaec7378d2ac4, type: 3}
-  bombPrefab: {fileID: 3752470025682022511, guid: 7d6064dde017d7246840c5bd5af315e6, type: 3}
+  bombPrefab: {fileID: 9129263048663043606, guid: 7d6064dde017d7246840c5bd5af315e6, type: 3}
   bombMuzzleImpactPrefab: {fileID: 8579966591951127539, guid: 34940ba778088e74095f5f57d9c0dc28, type: 3}
   bombExploImpactPrefab: {fileID: 8579966591951127539, guid: 34940ba778088e74095f5f57d9c0dc28, type: 3}
   bodyExploImpactPrefab: {fileID: 100006, guid: e076683e0305e35498b8e8834978c0fa, type: 3}
@@ -36354,7 +36355,7 @@ LineRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1180086533150303821}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -36367,7 +36368,7 @@ LineRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 0}
+  - {fileID: 2100000, guid: 199736f44f64bd241812535018df57b6, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -36399,13 +36400,31 @@ LineRenderer:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 1
+        value: 0.71495056
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 0.503212
+        value: 0.9345875
         inSlope: 0
         outSlope: 0
         tangentMode: 0
         weightedMode: 0
         inWeight: 0.33333334
         outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 1
+        value: 0.68692017
+        inSlope: -0.09029969
+        outSlope: -0.09029969
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.650245
+        outWeight: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
@@ -36446,6 +36465,21 @@ LineRenderer:
     generateLightingData: 0
   m_UseWorldSpace: 1
   m_Loop: 0
+--- !u!114 &3318166437279568985
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1180086533150303821}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 46e13674374bb724cb2cf63c56ea0bc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cannonPos: {fileID: 73764008}
+  gausCannonMuzzleFactory: {fileID: 8579966591951127539, guid: 34940ba778088e74095f5f57d9c0dc28, type: 3}
+  gausCannonPrefabFactory: {fileID: 100002, guid: 1643f2f296912084db639937e195b6b1, type: 3}
 --- !u!1 &3320135345980783060
 GameObject:
   m_ObjectHideFlags: 0

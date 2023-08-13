@@ -12,13 +12,13 @@ public class EJBomb : MonoBehaviour
     float bombRadius = 2;
 
     //궤적 Trail변수
-    public TrailRenderer bombTrail;
+    //public TrailRenderer bombTrail;
 
     // Start is called before the first frame update
     void Start()
     {
-        bombTrail = GetComponent<TrailRenderer>();
-        bombTrail.enabled = true;
+        //bombTrail = GetComponent<TrailRenderer>();
+        //bombTrail.enabled = true;
 
         //bombFire Speed, Angle Random하게
         bombSpeed = Random.Range(10,30);
