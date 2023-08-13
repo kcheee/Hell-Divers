@@ -76,12 +76,12 @@ public class PlayerTest1 : MonoBehaviour
                 if (angle < 90)
                 {
                     trBody.Rotate(new Vector3(0, 5, 0));
-                    Debug.Log(angle);
+                    //Debug.Log(angle);
                 }
                 //그렇지않으면 왼쪽으로 회전
                 else
                 {
-                    Debug.Log(angle);
+                    //Debug.Log(angle);
                     trBody.Rotate(new Vector3(0, -5, 0));
                 }
             }

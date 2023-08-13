@@ -57,7 +57,7 @@ public class FlameAttack : MonoBehaviour
             transform.DORotateQuaternion(targetRotation, 1f).OnComplete(() =>
             {
                 FireBaseScript.instance.FlameStop();
-                transform.rotation = Quaternion.Euler(0, 0, 0);
+                
 
                 // 자기자신 false
                 GetComponent<FlameAttack>().enabled = false;

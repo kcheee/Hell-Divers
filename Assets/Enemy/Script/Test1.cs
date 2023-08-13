@@ -6,14 +6,18 @@ using RootMotion.Demos;
 
 public class Test1 : MonoBehaviour
 {
+    MeshRenderer mesh;
 
-    private void OnCollisionEnter(Collision collision)
+    private void Start()
     {
-        if (collision.collider.name == "Plane")
-        {
-
-        Debug.Log(transform.position);
-        }
+        mesh = GetComponent<MeshRenderer>();
     }
 
+    private void Update()
+    {
+        if(Input.GetKey(KeyCode.M))
+        {
+            mesh.material.mainTextureOffset += new Vector2(0,0.5f);
+        }
+    }
 }

@@ -115,7 +115,7 @@ public class Enemy_Fun : EnemyInfo
             Quaternion newRotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * ENEMY.turnSpeed);
 
             //newRotation.eulerAngles = new Vector3 (0, newRotation.y, 0);
-            Debug.Log(newRotation.eulerAngles);
+            //Debug.Log(newRotation.eulerAngles);
             transform.rotation = newRotation;
         }
     }
