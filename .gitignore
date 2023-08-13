@@ -72,3 +72,5 @@ crashlytics-build.properties
 /[Aa]ssets/[Ss]treamingAssets/aa/*
 Assets/Ch35_nonPBR@Walking.fbx
 Assets/Ch35_nonPBR@Walking.fbx.meta
+Assets/Player/Model/Animation/Ch35_nonPBR.fbx
+Assets/Player/Model/Animation/Ch35_nonPBR.fbx.meta

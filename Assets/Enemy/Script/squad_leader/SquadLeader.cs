@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
@@ -63,8 +64,10 @@ public class SquadLeader : Enemy_Fun
     IEnumerator Squad_Flare()
     {
         flare_flag = false;
-        yield return new WaitForSeconds(2); // 임의로
+        anim.SetTrigger("Flare");
+        yield return new WaitForSeconds(1.5f); // 임의로
 
+        yield return new WaitForSeconds(1f); // 임의로
 
         Instantiate(Flare, FirePos.transform.position, Quaternion.identity);
 
@@ -89,6 +92,15 @@ public class SquadLeader : Enemy_Fun
             yield return new WaitForSeconds(Random.Range(0.2f,1f));
         }
 
+    }
+
+    IEnumerator FireGrenada()
+    {
+
+        anim.SetTrigger("Ranged_Attack");
+
+        yield return new WaitForSeconds(0.3f);
+        Instantiate(GranadeLancher, FirePos.transform.position, Quaternion.identity);
     }
 
     #endregion
@@ -220,7 +232,8 @@ public class SquadLeader : Enemy_Fun
         if(flag&& !flare_flag)
         {
             // 유탄발사
-            Instantiate(GranadeLancher,FirePos.transform.position, Quaternion.identity);
+            StartCoroutine(FireGrenada());
+
             flag = false;
         }
 
