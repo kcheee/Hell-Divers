@@ -112,7 +112,7 @@ public class Enemy_Fun : EnemyInfo
         if (Vector3.Dot(currentDirection.normalized, targetDirection.normalized) < 0.99f)
         {
             Quaternion targetRotation = Quaternion.LookRotation(targetDirection, transform.up);
-            Quaternion newRotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * ENEMY.turnSpeed);
+            Quaternion newRotation = Quaternion.Lerp(transform.rotation, targetRotation, Time.deltaTime * ENEMY.turnSpeed);
 
             //newRotation.eulerAngles = new Vector3 (0, newRotation.y, 0);
             Debug.Log(newRotation.eulerAngles);
