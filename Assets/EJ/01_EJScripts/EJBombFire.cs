@@ -42,7 +42,6 @@ public class EJBombFire : MonoBehaviour
     public IEnumerator MakeBomb()
     {
         isBombDone = false;
-        Debug.Log("fds");
         for (int i = 0; i < bombCount; i++)
         {
             //bomb »ý¼º
@@ -57,7 +56,9 @@ public class EJBombFire : MonoBehaviour
             bombMuzzleImpact.transform.position = bombPos.position;
             bombMuzzleImpact.transform.up = bombPos.transform.forward;
 
+            //ÄðÅ¸ÀÓ
             yield return new WaitForSeconds(0.5f);
+            BossFSM.Sflag = false;
         }
 
         isBombDone = true;        
