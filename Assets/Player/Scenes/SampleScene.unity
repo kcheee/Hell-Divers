@@ -248,6 +248,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4861421871180131832, guid: 42b3349b6b7919742bfa35ecb7168c2e, type: 3}
+      propertyPath: m_Constraints
+      value: 126
+      objectReference: {fileID: 0}
     - target: {fileID: 4861421871180131838, guid: 42b3349b6b7919742bfa35ecb7168c2e, type: 3}
       propertyPath: BulletText
       value: 
@@ -692,6 +696,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   camY: 10
   followSpeed: 10
+--- !u!1 &1050711562 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6350526770402811846, guid: 42b3349b6b7919742bfa35ecb7168c2e, type: 3}
+  m_PrefabInstance: {fileID: 545181818}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1050711566
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1050711562}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b3a6c58e294942d4e99211a630036d84, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1700690658
 GameObject:
   m_ObjectHideFlags: 0
@@ -888,7 +909,7 @@ GameObject:
   - component: {fileID: 1963352762}
   m_Layer: 0
   m_Name: Floor
-  m_TagString: Untagged
+  m_TagString: Floor
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

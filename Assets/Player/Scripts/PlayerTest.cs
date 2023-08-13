@@ -11,8 +11,8 @@ public class PlayerTest : MonoBehaviour
     public Gun currentGun;
     public Gun mainGun;
     public Gun subGun;
+    bool reload = false;
 
-    
 
     Animator anim;
     void Start()
@@ -67,16 +67,17 @@ public class PlayerTest : MonoBehaviour
             bool IsAnim = currentGun.Fire();
             
         }
-        if (Input.GetMouseButtonUp(0))
+
+        if (Input.GetMouseButtonUp(0) && !reload)
         {
             anim.SetBool("Fire", false);
         }
 
-        if (Input.GetKey(KeyCode.R) && currentGun.Reload()) {
+        if (Input.GetKey(KeyCode.R) && currentGun.ReloadAble()) {
             //애니메이션이 끝나고 장전이 실행된다.
             //장전 - > iDLE
             anim.SetTrigger("Reload");
-            
+            reload = true;
         }
 
         //1번을 누르면 메인 무기
