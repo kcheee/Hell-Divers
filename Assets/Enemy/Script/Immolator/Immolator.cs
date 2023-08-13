@@ -137,7 +137,9 @@ public
         //Debug.Log("tlfgod");
         // Enemy ¾Õ¹æÇâ Player¸¦ ÇâÇÏ°Ô ¼³Á¤.
         //transform.forward = target.transform.position - transform.position;
-        Vector3.Lerp(transform.forward, target.transform.position - transform.position, 0.1f);
+        //Vector3.Lerp(transform.forward, target.transform.position - transform.position, 0.1f);
+
+        f_rotation();
         currTime += Time.deltaTime;
         // ÃÑÀ» ²¨³»´Â ½Ã°£.
         //Debug.Log("ÃÑ ²¨³¿.");

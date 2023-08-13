@@ -6,6 +6,7 @@ public class FlameDamage : MonoBehaviour
 {
     private void OnParticleCollision(GameObject other)
     {
+
         Debug.Log(other.name);
     }
 }

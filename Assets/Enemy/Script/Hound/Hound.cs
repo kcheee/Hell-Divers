@@ -155,7 +155,7 @@ public class Hound : Enemy_Fun
             agent.enabled = false;
 
             transform.DOMove(targetPosition, 1).OnComplete(() => {
-                Debug.Log(agent.transform.position);
+                //Debug.Log(agent.transform.position);
                 agent.enabled = true;
                 // 이 조건문이 한번 실행하기 위한 flag
                 flag = false;

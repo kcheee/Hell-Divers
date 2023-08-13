@@ -2,28 +2,18 @@ using UnityEngine;
 using DG.Tweening;
 using System.Collections;
 using Mono.Cecil.Cil;
+using RootMotion.Demos;
 
 public class Test1 : MonoBehaviour
 {
-    public GameObject bullet;
-    private Vector3 startPos;
-    public Vector3 endPos;
-    public float g;
-    public float max_height;
 
-
-
-    private void Start()
+    private void OnCollisionEnter(Collision collision)
     {
-        GameObject BULLET = Instantiate(bullet,transform.position,Quaternion.identity);
+        if (collision.collider.name == "Plane")
+        {
 
-        // 유탄 발사.
+        Debug.Log(transform.position);
+        }
     }
 
-
-
-    private void OnProjectileSimulationComplete()
-    {
-        Debug.Log("포물선 운동 완료");
-    }
 }
