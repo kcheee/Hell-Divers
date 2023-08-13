@@ -46,4 +46,11 @@ public class Stratagems : MonoBehaviour
             }
         }
     }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+
+        rbody.isKinematic = collision.gameObject.CompareTag("Floor");
+        
+    }
 }

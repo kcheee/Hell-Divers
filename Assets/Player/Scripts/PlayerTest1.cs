@@ -16,7 +16,7 @@ public class PlayerTest1 : MonoBehaviour
     public Gun currentGun;
     public Gun mainGun;
     public Gun subGun;
-
+    public bool reload = false;
     Animator anim;
 
     //현재 가까이 다가가서 활성화 되어있는 오브젝트
@@ -42,7 +42,11 @@ public class PlayerTest1 : MonoBehaviour
 
         float h = Input.GetAxisRaw("Horizontal");
         float v = Input.GetAxisRaw("Vertical");
+
+
+
         Vector3 dir = Vector3.right * h + Vector3.forward * v;
+
         //
         dir.Normalize();
         speed = 4;
@@ -59,7 +63,6 @@ public class PlayerTest1 : MonoBehaviour
            // transform.forward = dir;
             if (Input.GetKey(KeyCode.LeftShift))
             {
-                
                 speed = 10;
                 anim.SetFloat("RunSpeed", speed);
             }
@@ -69,23 +72,32 @@ public class PlayerTest1 : MonoBehaviour
 
             //만약에 각도가 90보다 작으면 오른쪽을 회전
             //원작에 회전이 생각보다 빠르게 된다.
-            if (angle < 90)
-            {
-                trBody.Rotate(new Vector3(0, 5, 0));
+            if (! (Vector3.Magnitude(trBody.forward - dir) < 0.1)) {
+                if (angle < 90)
+                {
+                    trBody.Rotate(new Vector3(0, 5, 0));
+                    Debug.Log(angle);
+                }
+                //그렇지않으면 왼쪽으로 회전
+                else
+                {
+                    Debug.Log(angle);
+                    trBody.Rotate(new Vector3(0, -5, 0));
+                }
             }
-            //그렇지않으면 왼쪽으로 회전
-            else
-            {
-                trBody.Rotate(new Vector3(0, -5, 0));
-            }
+            
+
+            //trBody.forward = Vector3.Lerp(trBody.forward, dir,Time.deltaTime * 20);
+
         }
         Aiming();
         transform.position += dir * speed * Time.deltaTime;
 
-        if (Input.GetMouseButton(0))
+        if (Input.GetMouseButton(0) && !reload)
         {
             //anim.SetTrigger("Fire2");
             bool IsAnim = currentGun.Fire();
+            
             
         }
         if (Input.GetMouseButtonUp(0))
@@ -93,12 +105,17 @@ public class PlayerTest1 : MonoBehaviour
             anim.SetBool("Fire", false);
         }
 
-        if (Input.GetKey(KeyCode.R) && currentGun.Reload()) {
+
+        //재장전 키를 눌렀고 Gun한테 장전을 할수 있는지 물어본다.
+        if (Input.GetKey(KeyCode.R) && currentGun.ReloadAble()) {
             //애니메이션이 끝나고 장전이 실행된다.
             //장전 - > iDLE
             anim.SetTrigger("Reload");
+            reload = true;
             
         }
+        
+
 
         //1번을 누르면 메인 무기
         if (Input.GetKey(KeyCode.Alpha1)) {
@@ -113,9 +130,9 @@ public class PlayerTest1 : MonoBehaviour
         //컨트롤 키를 눌렀을때 스트라타잼을 호출할수있다.
         //일단 간단하게 자신의 위치에서 던지자.
         if (Input.GetKeyDown(KeyCode.LeftControl)){
-            GameObject ammo = Instantiate(Ammo,trBody.position,trBody.rotation);
+            GameObject ammo = Instantiate(Ammo,trBody.position + Vector3.up ,trBody.rotation);
             Rigidbody arbody = ammo.GetComponent<Rigidbody>();
-            arbody.AddForce(trBody.forward * 10, ForceMode.Impulse);
+            arbody.AddForce(trBody.forward * 7 + trBody.up * 5, ForceMode.Impulse);
         }
 
         if (Input.GetKeyDown(KeyCode.E) && currentGemObj != null) {
@@ -133,7 +150,9 @@ public class PlayerTest1 : MonoBehaviour
         anim.SetBool("Fire", false);
     }
 
-
+    public void Reloading() {
+        currentGun.Reload();
+    }
 
     public void Aiming() {
         if (Input.GetButtonUp("Fire2"))

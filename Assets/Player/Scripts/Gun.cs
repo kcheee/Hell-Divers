@@ -93,16 +93,20 @@ public class Gun : MonoBehaviour
 
 
     //여기는 자동 Reload 가 없습니다
-    public bool Reload() {
+    public bool ReloadAble() {
         //탄창이 0보다 크고 현재 총알이 최대 총알보다 작을때 장전을 할수있음!
         if (currentManganize > 0 && currentBullet < maxBullet) {
-            Debug.Log("Reloading!!!");
-            currentBullet = maxBullet;
-            currentManganize--;
+
             return true;
         }
         return false;
         
+    }
+
+    public void Reload() {
+        Debug.Log("Reloading!!!");
+        currentBullet = maxBullet;
+        currentManganize--;
     }
 
     IEnumerator FireWait() {

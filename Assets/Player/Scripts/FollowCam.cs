@@ -25,13 +25,14 @@ public class FollowCam : MonoBehaviour
         float distance = Vector3.Distance(pos, target);
 
         //다시 원래 y로 돌려놓음.
-        pos.y = camY;
-        target.z += -4;
+        pos.y = camY;        
         target.y = camY;
+        target.z += -5;
+
 
         //밑으로 갈때는 -7이니까 아래인것. 나중에 고쳥야진
-        Debug.Log(distance);
+        //Debug.Log(distance);
         //거리에 따라서 스피드가 달라지도록 설정한다.
-        transform.position = Vector3.Lerp(pos, target, Time.smoothDeltaTime * distance );
+        transform.position = Vector3.Lerp(pos, target, Time.smoothDeltaTime * 10  );
     }
 }
