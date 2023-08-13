@@ -15,6 +15,9 @@ public class EJBombFire : MonoBehaviour
     GameObject bomb;
     GameObject bombMuzzleImpact;
 
+    //bombMuzzleFX
+    public GameObject bombMuzzleFactory;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -42,7 +45,6 @@ public class EJBombFire : MonoBehaviour
     public IEnumerator MakeBomb()
     {
         isBombDone = false;
-        Debug.Log("fds");
         for (int i = 0; i < bombCount; i++)
         {
             //bomb 积己
@@ -52,12 +54,15 @@ public class EJBombFire : MonoBehaviour
             bomb.transform.up = bombPos.transform.up;
 
             //bombMuzzle 积己
-            bombMuzzleImpact = EJObjectPoolMgr.instance.GetbombImpactQueue();
+            GameObject bombMuzzleImpact = Instantiate(bombMuzzleFactory);
 
             bombMuzzleImpact.transform.position = bombPos.position;
+            bombMuzzleImpact.transform.localScale = Vector3.one * 4;
             bombMuzzleImpact.transform.up = bombPos.transform.forward;
 
+            //酿鸥烙
             yield return new WaitForSeconds(0.5f);
+            BossFSM.Sflag = false;
         }
 
         isBombDone = true;        

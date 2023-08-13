@@ -29,8 +29,7 @@ public class Flaregun : MonoBehaviour {
 		}
 		if(Input.GetKeyDown(KeyCode.R) && !GetComponent<Animation>().isPlaying)
 		{
-			Reload();
-			
+			Reload();			
 		}
 	
 	}

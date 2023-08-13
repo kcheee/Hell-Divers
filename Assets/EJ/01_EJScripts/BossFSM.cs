@@ -33,17 +33,20 @@ public class BossFSM : MonoBehaviour
     public float Attack_LDistance = 3f;
     public float Attack_XLDistance = 5f;
 
-    bool flag = false;
+    //bool
+    static public bool Sflag = false;
+    static public bool Mflag = false;
+    static public bool Lflag = false;
+    static public bool XLflag = false;
 
     //time
     float curTime = 0;
-    float waitTime = 3f;
+    float waitTime = 3f;    
 
     private void Awake()
     {
         instance = this;
     }
-
 
     // Start is called before the first frame update
     void Start()
@@ -92,7 +95,6 @@ public class BossFSM : MonoBehaviour
     }
 
 
-
     private void UpdatePatrol()
     {
 
@@ -102,75 +104,71 @@ public class BossFSM : MonoBehaviour
     private void UpdateChase()
     {
         OnNavMesh();
-        //nav.SetDestination(player.transform.position);
         nav.destination = player.transform.position;
-
 
         //공격가능범위 안으로 들어오면 Attack
         if (DistanceBoss2Player <= Attack_XLDistance)
         {
             print("공격XLDistance에 들어왔어요");
             B_state = BossState.Wait;
-            //anim.SetTrigger("Attack");
         }
+
     }
 
+    //쿨타임을 걸어두고 앞으로 걸어나가면 공격 다르게 발사되는 상태
     private void UpdateAttack()
     {
-        //DistanceBoss2Player = Vector3.Distance(transform.position, player.transform.position);
-
-        //curTime = 0;
-        //print("AttackState에 들어왔습니다");
-
-        if (DistanceBoss2Player <= Attack_SDistance &&!flag )
+        if (DistanceBoss2Player <= Attack_SDistance && !Sflag)
         {
             print(" 1= " + DistanceBoss2Player);
-            //붙여주기만 하면 실행되지 않겠지
-           StartCoroutine(transform.GetComponent<EJBombFire>().MakeBomb());
-            flag = true;
+            StartCoroutine(transform.GetComponent<EJBombFire>().MakeBomb());
+            Sflag = true;
+            B_state = BossState.Wait;
         }
-    /*    else if (DistanceBoss2Player > Attack_SDistance && DistanceBoss2Player <= Attack_MDistance)
+        else if (DistanceBoss2Player <= Attack_SDistance && !Mflag)
         {
-            print("2= " + DistanceBoss2Player);
-            StartCoroutine(GetComponent<EJBombFire>().MakeBomb());
+            print(" 1= " + DistanceBoss2Player);
+            StartCoroutine(transform.GetComponent<EJBombFire>().MakeBomb());
+            Mflag = true;
+            B_state = BossState.Wait;
         }
-        else if (DistanceBoss2Player > Attack_MDistance && DistanceBoss2Player <= Attack_LDistance)
+        else if (DistanceBoss2Player > Attack_MDistance && DistanceBoss2Player <= Attack_LDistance && !Lflag)
         {
             print("3= " + DistanceBoss2Player);
             StartCoroutine(GetComponent<EJMachineGun>().MachineGunFire());
+            Lflag = true;
+            B_state = BossState.Wait;
         }
-        else if (DistanceBoss2Player > Attack_LDistance && DistanceBoss2Player <= Attack_XLDistance)
+        else if (DistanceBoss2Player > Attack_LDistance && DistanceBoss2Player <= Attack_XLDistance && !XLflag)
         {
             print("4= " + DistanceBoss2Player);
             StartCoroutine(GetComponent<EJGausCannonFire>().CannonFire());
-        }*/
+            XLflag = true;
+            B_state = BossState.Wait;
+        }
 
         //공격 범위에서 벗어나면 Chase모드
         if (DistanceBoss2Player > Attack_XLDistance)
-        {
-            print("Attack할 수 있는 거리가 아닙니다");
-            B_state = BossState.Chase;
-            //anim.SetTrigger("Chase");
-        }
+            {
+                print("Attack할 수 있는 거리가 아닙니다");
+                B_state = BossState.Chase;
+                //anim.SetTrigger("Chase");
+            }       
     }
 
     private void UpdateDie()
     {
         if (EJBossHP.instance.HP < 0)
             B_state = BossState.Die;
-        //anim.SetTrigger("Die");
     }
 
     private void UpdateWait()
     {
         OffNavMesh();
-
         curTime += Time.deltaTime;
 
         if (curTime > waitTime)
         {
-            //OffNavMesh();
-            //다음 트리거를 발동한다? 다음 줄을 실행한다를 어떻게 하는 거임?
             B_state = BossState.Attack;
             curTime = 0;
         }
@@ -189,7 +187,6 @@ public class BossFSM : MonoBehaviour
         this.nav.isStopped = true;
         this.nav.updatePosition = false;
         this.nav.updateRotation = false;
-
     }
 }
 

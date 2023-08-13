@@ -15,6 +15,7 @@ public class EJMachineGun : MonoBehaviour
     //machineGun Effect
     //public GameObject machineImpactFactory;
     GameObject machineGunImpact;
+    public GameObject machineGunFactory;
 
     // Start is called before the first frame update
     void Start()
@@ -47,21 +48,27 @@ public class EJMachineGun : MonoBehaviour
         for (int i = 0; i < machineCount; i++)
         {
             if (Physics.Raycast(machineGunPos.position, machineGunPos.up, out machineGunHitInfo, float.MaxValue))
-            {
+            {                             
+                Debug.DrawRay(machineGunPos.position, machineGunPos.up, Color.red);
+
                 //01.machineGunEffect Enqueue
-                machineGunImpact = EJObjectPoolMgr.instance.GetmachineGunImpactQueue();
+                //machineGunImpact = EJObjectPoolMgr.instance.GetmachineGunImpactQueue();
+                GameObject machineGunImpact = Instantiate(machineGunFactory);
 
                 //02.machineGunEffect position
                 machineGunImpact.transform.position = machineGunHitInfo.point;
                 machineGunImpact.transform.forward = machineGunHitInfo.normal;
+                machineGunImpact.transform.localScale = Vector3.one * 3;
                 //machineGunImpact.transform.parent = machineGunHitInfo.transform;
 
-                //03.일정 시간 후 Dequeue
-                if (machineGunImpact.activeSelf)
+                print("머신건이 닿은 곳은 "+ machineGunHitInfo.point);
+
+                //03.일정 시간 후 Dequeue해줄 필요 없이 particle destroy
+                /*  if (machineGunImpact.activeSelf)
                 {
-                    yield return new WaitForSeconds(0.1f);
+                    yield return new WaitForSeconds(3f);
                     EJObjectPoolMgr.instance.ReturnmachineGunImpactQueue(machineGunImpact);
-                }
+                }*/
             }           
 
             //04. machineGunPos가 일정량만큼 Z축 회전
