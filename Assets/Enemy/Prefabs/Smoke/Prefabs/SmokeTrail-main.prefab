@@ -8,6 +8,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 1317682996261828086, guid: f573daf280705d9478fe107dc6708842, type: 3}
+      propertyPath: stopAction
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1317682996261828086, guid: f573daf280705d9478fe107dc6708842, type: 3}
       propertyPath: InitialModule.startColor.maxColor.b
       value: 1
       objectReference: {fileID: 0}
@@ -25,7 +29,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7619163746114801994, guid: f573daf280705d9478fe107dc6708842, type: 3}
       propertyPath: m_Name
-      value: SmokeTrail
+      value: SmokeTrail-main
       objectReference: {fileID: 0}
     - target: {fileID: 8162205454551847868, guid: f573daf280705d9478fe107dc6708842, type: 3}
       propertyPath: m_RootOrder

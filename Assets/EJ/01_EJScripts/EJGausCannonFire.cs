@@ -14,9 +14,10 @@ public class EJGausCannonFire : MonoBehaviour
     Vector3 originCannonAngle;
     //public GameObject cannonImpactFactory;
     GameObject cannonImpact;
+    public GameObject gausCannonMuzzleFactory;
 
     //궤적line 변수
-    public LineRenderer cannonLine;
+    LineRenderer cannonLine;
 
     // Start is called before the first frame update
     void Start()
@@ -63,11 +64,16 @@ public class EJGausCannonFire : MonoBehaviour
             cannonLine.SetPosition(0, cannonPos.position);
 
             //cannonMuzzleImpact 생성
-            GameObject gausCannonMuzzleImpact = EJObjectPoolMgr.instance.GetGausCannonMuzzleImpactQueue();
+            GameObject gausCannonMuzzleImpact = Instantiate(gausCannonMuzzleFactory);
+            gausCannonMuzzleImpact.transform.localScale = Vector3.one * 5;
+            gausCannonMuzzleImpact.transform.position = cannonPos.transform.position;
+            gausCannonMuzzleImpact.transform.up = cannonPos.transform.up;
 
             //floor에 생기는 하얀 연기FX
             if (Physics.Raycast(cannonPos.position, cannonPos.up, out cannonHitInfo, float.MaxValue))
             {
+                Debug.DrawRay(cannonPos.position, cannonPos.up);
+
                 cannonImpact = EJObjectPoolMgr.instance.GetGausCannonImpactQueue();
                 
                 //02. 맞은 곳에 Effect
@@ -80,10 +86,13 @@ public class EJGausCannonFire : MonoBehaviour
                 cannonLine.SetPosition(1, cannonHitInfo.point);
                 cannonLine.enabled = true;
 
-                EJObjectPoolMgr.instance.ReturnGausCannonImpactQueue(cannonImpact);             
+                EJObjectPoolMgr.instance.ReturnGausCannonImpactQueue(cannonImpact);
+                
             }
 
             cannonPos.Rotate(new Vector3(cannonPosX, 0, 5 * cannonPosZDir), Space.Self);
+
+            print("gausCannon이 맞은 곳은" + cannonHitInfo.point);
             
             yield return new WaitForSeconds(cannonDelayTime);
         }

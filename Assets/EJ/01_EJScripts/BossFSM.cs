@@ -28,10 +28,10 @@ public class BossFSM : MonoBehaviour
 
     //Player와의 거리
     public float DistanceBoss2Player;
-    public float Attack_SDistance = 1f;
-    public float Attack_MDistance = 2f;
-    public float Attack_LDistance = 3f;
-    public float Attack_XLDistance = 5f;
+    public float Attack_SDistance = 7.5f;
+    public float Attack_MDistance = 12.5f;
+    public float Attack_LDistance = 17.5f;
+    public float Attack_XLDistance = 22.5f;
 
     //bool
     static public bool Sflag = false;
@@ -165,6 +165,10 @@ public class BossFSM : MonoBehaviour
     private void UpdateWait()
     {
         OffNavMesh();
+
+        //움직이는 player를 바라보게 해야 한다.
+
+        
         curTime += Time.deltaTime;
 
         if (curTime > waitTime)
