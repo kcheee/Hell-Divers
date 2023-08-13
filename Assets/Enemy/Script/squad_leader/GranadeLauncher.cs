@@ -1,3 +1,4 @@
+using DG.Tweening;
 using Mono.Cecil.Cil;
 using System;
 using System.Collections;
@@ -34,6 +35,7 @@ public class GranadeLauncher : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         GameObject Player = GameObject.Find("Player");
         Shoot(gameObject, transform.position, Player.transform.position, g, max_height);
+        //rot.transform.DORotate(transform.right * 30 + transform.forward * 50, 1.5f);
     }
 
     private void FixedUpdate()
@@ -122,6 +124,7 @@ public class GranadeLauncher : MonoBehaviour
         if(collision.collider.name == "Plane")
         {
             onground = true;
+            transform.GetComponent<GranadeLauncher>().enabled = false;
             //rb.useGravity = true;
         }
     }

@@ -28,6 +28,7 @@ public class Enemy1 : Enemy_Fun
 
     public GameObject Gun;
     public GameObject I_bullet;
+    public GameObject I_Muzzle;
     public GameObject I_FirePos;
 
     bool flag = false;
@@ -74,6 +75,9 @@ public class Enemy1 : Enemy_Fun
 
             Vector3 bulletpos = pos + transform.forward * T + transform.right * Random.Range(-1f, 1f);
             GameObject bullet = Instantiate(I_bullet, I_FirePos.transform.position, Quaternion.identity);
+            /*GameObject bullet = */Instantiate(I_Muzzle, I_FirePos.transform.position, Quaternion.identity);
+
+            //Debug.Log(bullet.transform.position);
 
             //bullet.transform.forward = TsetG.transform.position - transform.position;
             // 밑방향으로 힘을 줘야함.
@@ -143,12 +147,14 @@ public class Enemy1 : Enemy_Fun
         // 원겨리 공격
         base.F_rangedattack();
 
-        anim.Play("Ranged_Attack");
+        //anim.Play("Ranged_Attack");
+        anim.SetTrigger("Ranged_Attack");
         if(!flag)
         StartCoroutine(I_RangedAttack());
         currrTime += Time.deltaTime;
         if (currrTime > 2)
         {
+            equip_flag = false;
             flag = false;
             currrTime = 0;
             E_state = EnemyState.chase;
@@ -158,11 +164,17 @@ public class Enemy1 : Enemy_Fun
         // 밑에서 위로 쏘는 형식.
     }
 
+    bool equip_flag= false;
     protected override void F_wait()
     {
         // 장전 애니메이션
         anim.SetBool("walk", false);
-        anim.Play("Equip");
+        if (!equip_flag)
+        {
+            anim.Play("Equip");
+            //anim.SetTrigger("equip");
+            //equip_flag=true;
+        }
 
         // Enemy 앞방향 Player를 향하게 설정.
         //transform.forward = target.transform.position - transform.position;
