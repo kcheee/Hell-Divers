@@ -27,7 +27,7 @@ public class Grenade : MonoBehaviour
         yield return new WaitForSeconds(1.5f);
             Instantiate(bombEft,transform.position, Quaternion.identity);
         // 사운드 넣어야 함.
-            Destroy(gameObject);
+            Destroy(gameObject,0.25f);
     }
     private void OnCollisionEnter(Collision collision)
     {

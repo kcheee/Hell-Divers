@@ -120,7 +120,7 @@ public class Enemy_Fun : EnemyInfo
 
             Quaternion adjustedRotation = Quaternion.Euler(eulerAngles);
             transform.rotation = adjustedRotation;
-            
+            Debug.Log("rotation");
             //transform.rotation = newRotation;
         }
     }
@@ -138,6 +138,7 @@ public class Enemy_Fun : EnemyInfo
             //die
             Debug.Log("die");
             anim.Play("Die");
+            Destroy(gameObject,1);
 
         }
         // 부모로 설정.

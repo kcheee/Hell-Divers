@@ -54,15 +54,14 @@ public class FlameAttack : MonoBehaviour
         audioSource.Play();
         transform.DOLocalRotate(targetRotation, 1f).OnComplete(() =>
         {
-            Debug.Log(transform.rotation);
+
             audioSource.Play();
             targetRotation = new Vector3(0, -rotationAngle, 0); /** Quaternion.LookRotation(forwardDirection)*/;
             transform.DOLocalRotate(targetRotation, 1f).OnComplete(() =>
             {
-                Debug.Log(transform.rotation);
+
                 FireBaseScript.instance.FlameStop();
                 transform.localRotation = originpos;
-                Debug.Log(transform.rotation);
 
                 // 자기자신 false
                 GetComponent<FlameAttack>().enabled = false;

@@ -29,11 +29,14 @@ public class SquadLeader : Enemy_Fun
 
     bool flag = false;
 
+    AudioSource audioSource;
+
     // 컴포넌트 
     void getcomponent()
     {
         agent = GetComponent<NavMeshAgent>();
         anim = GetComponent<Animator>();
+        audioSource = GetComponent<AudioSource>();
     }
 
     private void Start()
@@ -69,6 +72,8 @@ public class SquadLeader : Enemy_Fun
 
         yield return new WaitForSeconds(1f); // 임의로
 
+        audioSource.PlayOneShot(ENEMY.sound_Normal[0], 1);
+        //ENEMY.sound_Normal[0].
         Instantiate(Flare, FirePos.transform.position, Quaternion.identity);
 
         // 플레어건이 터진 위치 기억
@@ -100,6 +105,7 @@ public class SquadLeader : Enemy_Fun
         anim.SetTrigger("Ranged_Attack");
 
         yield return new WaitForSeconds(0.3f);
+        audioSource.PlayOneShot(ENEMY.sound_Normal[1], 1);
         Instantiate(GranadeLancher, FirePos.transform.position, Quaternion.identity);
     }
 
@@ -156,6 +162,8 @@ public class SquadLeader : Enemy_Fun
         // Enemy 앞방향 Player를 향하게 설정.
         // 회전
         f_rotation();
+
+        //Vector3.Lerp(transform.forward, target.transform.position - transform.position, 0.1f);
 
         currTime += Time.deltaTime;
         // 총을 꺼내는 시간.
