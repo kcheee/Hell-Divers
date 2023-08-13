@@ -256,6 +256,8 @@ public class SquadLeader : Enemy_Fun
     {
         anim.SetBool("walk", false);
 
+        f_rotation();
+
         if (transform.forward != (target.transform.position - transform.position))
         {
             f_rotation();

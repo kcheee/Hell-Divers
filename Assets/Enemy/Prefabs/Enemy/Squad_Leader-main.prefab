@@ -8,9 +8,17 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 166060642595310652, guid: 55a9db039713a4c449dc462c8f9298f9, type: 3}
+      propertyPath: BloodEft
+      value: 
+      objectReference: {fileID: 5737861413046029104, guid: 3884844a02ff2d9478fe8171a628d26c, type: 3}
+    - target: {fileID: 166060642595310652, guid: 55a9db039713a4c449dc462c8f9298f9, type: 3}
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 166060642595310652, guid: 55a9db039713a4c449dc462c8f9298f9, type: 3}
+      propertyPath: E_Initiate
+      value: 
+      objectReference: {fileID: 9042049321303404334, guid: a675b80c1c9a6de4bb13c16aa1b35598, type: 3}
     - target: {fileID: 2708282110279931943, guid: 55a9db039713a4c449dc462c8f9298f9, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.116
@@ -49,7 +57,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5899568716399026974, guid: 55a9db039713a4c449dc462c8f9298f9, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5899568716399460158, guid: 55a9db039713a4c449dc462c8f9298f9, type: 3}
       propertyPath: m_RootOrder
@@ -125,3 +133,21 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 55a9db039713a4c449dc462c8f9298f9, type: 3}
+--- !u!1 &6688899477312184022 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5899568716399026974, guid: 55a9db039713a4c449dc462c8f9298f9, type: 3}
+  m_PrefabInstance: {fileID: 940342884933418440}
+  m_PrefabAsset: {fileID: 0}
+--- !u!65 &-6010069439105358955
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6688899477312184022}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1.8, z: 0.54206085}
+  m_Center: {x: 0, y: 1, z: -0.047288895}

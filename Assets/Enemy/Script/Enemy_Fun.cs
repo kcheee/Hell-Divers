@@ -114,12 +114,35 @@ public class Enemy_Fun : EnemyInfo
             Quaternion targetRotation = Quaternion.LookRotation(targetDirection, transform.up);
             Quaternion newRotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * ENEMY.turnSpeed);
 
-            //newRotation.eulerAngles = new Vector3 (0, newRotation.y, 0);
-            //Debug.Log(newRotation.eulerAngles);
-            transform.rotation = newRotation;
+            Vector3 eulerAngles = newRotation.eulerAngles;
+            eulerAngles.x = 0; // x값을 0으로 설정
+            eulerAngles.z = 0; // z값을 0으로 설정
+
+            Quaternion adjustedRotation = Quaternion.Euler(eulerAngles);
+            transform.rotation = adjustedRotation;
+            
+            //transform.rotation = newRotation;
         }
     }
 
+    public void E_Hit(Vector3 pos)
+    {
+        anim.SetTrigger("Hit");
+        GameObject gm = Instantiate(BloodEft, pos, Quaternion.identity);
+        Destroy(gm, 2);
+
+        ENEMY.hp -= 10;
+
+        if (ENEMY.hp <= 0)
+        {
+            //die
+            Debug.Log("die");
+            anim.Play("Die");
+
+        }
+        // 부모로 설정.
+        gm.transform.parent = transform;
+    }
 
     // navmeshagent 설정
     #region

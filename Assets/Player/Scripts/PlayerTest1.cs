@@ -84,9 +84,7 @@ public class PlayerTest1 : MonoBehaviour
                     //Debug.Log(angle);
                     trBody.Rotate(new Vector3(0, -5, 0));
                 }
-            }
-            
-
+            }           
             //trBody.forward = Vector3.Lerp(trBody.forward, dir,Time.deltaTime * 20);
 
         }
