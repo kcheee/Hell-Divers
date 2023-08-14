@@ -65,7 +65,7 @@ public class EJGausCannonFire : MonoBehaviour
 
             //cannonMuzzleImpact »ý¼º
             GameObject gausCannonMuzzleImpact = Instantiate(gausCannonMuzzleFactory);
-            gausCannonMuzzleImpact.transform.localScale = Vector3.one * 5;
+            gausCannonMuzzleImpact.transform.localScale = Vector3.one *0.5f;
             gausCannonMuzzleImpact.transform.position = cannonPos.transform.position;
             gausCannonMuzzleImpact.transform.up = cannonPos.transform.up;
 
@@ -101,5 +101,7 @@ public class EJGausCannonFire : MonoBehaviour
         cannonPos.transform.localEulerAngles = originCannonAngle;
         cannonLine.enabled = false;
         isCannonDone = true;
+
+        BossFSM.XLflag = false;
     }       
 }

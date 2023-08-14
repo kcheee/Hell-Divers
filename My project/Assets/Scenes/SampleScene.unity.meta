@@ -1,6 +1,11 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:My project/Assets/Scenes/SampleScene.unity.meta
 guid: 9fc0d4010bbf28b4594072e72b8655ab
 DefaultImporter:
+========
+guid: d6d1432b1a3b3bd40b077d65f1b40e04
+PrefabImporter:
+>>>>>>>> 30003d54fa8d80549635791e3a6894c43659f324:Assets/Player/Model/Animation/Player1234.prefab.meta
   externalObjects: {}
   userData: 
   assetBundleName: 
