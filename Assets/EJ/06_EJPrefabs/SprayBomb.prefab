@@ -128,8 +128,8 @@ Transform:
   m_GameObject: {fileID: 9129263048663043606}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 6892084657123231882}
   - {fileID: 3470214414937375468}
@@ -336,7 +336,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 438a5497f860d6644966e844f34f5251, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bombTrail: {fileID: 7846125704352849145}
 --- !u!1001 &2283062445802115682
 PrefabInstance:
   m_ObjectHideFlags: 0

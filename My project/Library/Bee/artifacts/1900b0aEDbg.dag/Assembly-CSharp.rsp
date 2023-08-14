@@ -354,6 +354,7 @@
 "Assets/Sketchfab For Unity/Scripts/SketchfabExporter.cs"
 "Assets/Sketchfab For Unity/Scripts/SketchfabImporter.cs"
 "Assets/Sketchfab For Unity/Scripts/SketchfabPlugin.cs"
+"Assets/Test.cs"
 -langversion:9.0
 
 /deterministic

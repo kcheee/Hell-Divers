@@ -28,10 +28,10 @@ public class BossFSM : MonoBehaviour
 
     //Player와의 거리
     public float DistanceBoss2Player;
-    public float Attack_SDistance = 7.5f;
-    public float Attack_MDistance = 12.5f;
-    public float Attack_LDistance = 17.5f;
-    public float Attack_XLDistance = 22.5f;
+    public float bombDistanceS = 7.5f;
+    public float machineGunDistanceM = 12.5f;
+    public float GausCannonDistanceL = 17.5f;
+    public float NoAttackDistance = 22.5f;
 
     //bool
     static public bool Sflag = false;
@@ -41,7 +41,10 @@ public class BossFSM : MonoBehaviour
 
     //time
     float curTime = 0;
-    float waitTime = 3f;    
+    float waitTime = 3f;
+
+    //head rotation axis
+    public GameObject headAxis;
 
     private void Awake()
     {
@@ -82,6 +85,8 @@ public class BossFSM : MonoBehaviour
                 UpdateDie();
                 break;
         }
+
+
     }
 
 
@@ -105,9 +110,10 @@ public class BossFSM : MonoBehaviour
     {
         OnNavMesh();
         nav.destination = player.transform.position;
+        OnWheelMesh();
 
         //공격가능범위 안으로 들어오면 Attack
-        if (DistanceBoss2Player <= Attack_XLDistance)
+        if (DistanceBoss2Player <= NoAttackDistance)
         {
             print("공격XLDistance에 들어왔어요");
             B_state = BossState.Wait;
@@ -118,42 +124,38 @@ public class BossFSM : MonoBehaviour
     //쿨타임을 걸어두고 앞으로 걸어나가면 공격 다르게 발사되는 상태
     private void UpdateAttack()
     {
-        if (DistanceBoss2Player <= Attack_SDistance && !Sflag)
+
+        if (DistanceBoss2Player <= bombDistanceS && !Sflag)
         {
-            print(" 1= " + DistanceBoss2Player);
+            print("MakeBomb");
             StartCoroutine(transform.GetComponent<EJBombFire>().MakeBomb());
             Sflag = true;
             B_state = BossState.Wait;
         }
-        else if (DistanceBoss2Player <= Attack_SDistance && !Mflag)
+        else if (DistanceBoss2Player > machineGunDistanceM && DistanceBoss2Player <= GausCannonDistanceL && !Lflag)
         {
-            print(" 1= " + DistanceBoss2Player);
-            StartCoroutine(transform.GetComponent<EJBombFire>().MakeBomb());
-            Mflag = true;
-            B_state = BossState.Wait;
-        }
-        else if (DistanceBoss2Player > Attack_MDistance && DistanceBoss2Player <= Attack_LDistance && !Lflag)
-        {
-            print("3= " + DistanceBoss2Player);
+            print("MachineGunFire");
             StartCoroutine(GetComponent<EJMachineGun>().MachineGunFire());
             Lflag = true;
             B_state = BossState.Wait;
         }
-        else if (DistanceBoss2Player > Attack_LDistance && DistanceBoss2Player <= Attack_XLDistance && !XLflag)
+        else if (DistanceBoss2Player > GausCannonDistanceL && DistanceBoss2Player <= NoAttackDistance && !XLflag)
         {
-            print("4= " + DistanceBoss2Player);
+            print("GausCannonFire");
             StartCoroutine(GetComponent<EJGausCannonFire>().CannonFire());
             XLflag = true;
             B_state = BossState.Wait;
         }
 
         //공격 범위에서 벗어나면 Chase모드
-        if (DistanceBoss2Player > Attack_XLDistance)
+        if (DistanceBoss2Player > NoAttackDistance)
             {
                 print("Attack할 수 있는 거리가 아닙니다");
                 B_state = BossState.Chase;
                 //anim.SetTrigger("Chase");
-            }       
+            }
+
+        AllFlagFalse();
     }
 
     private void UpdateDie()
@@ -165,9 +167,12 @@ public class BossFSM : MonoBehaviour
     private void UpdateWait()
     {
         OffNavMesh();
+        OffWheelMesh();
 
         //움직이는 player를 바라보게 해야 한다.
-
+        headAxis.transform.LookAt(player.transform);
+        float X = headAxis.transform.localEulerAngles.x;
+        X = Mathf.Clamp(X,-30, 30); 
         
         curTime += Time.deltaTime;
 
@@ -191,6 +196,24 @@ public class BossFSM : MonoBehaviour
         this.nav.isStopped = true;
         this.nav.updatePosition = false;
         this.nav.updateRotation = false;
+    }
+
+    void AllFlagFalse()
+    {
+        Sflag = false;
+        Mflag = false;
+        Lflag = false;
+        XLflag = false;
+    }
+
+    void OnWheelMesh()
+    {
+        GetComponent<EJWheel>().enabled = true;
+    }
+
+    void OffWheelMesh()
+    {
+        GetComponent<EJWheel>().enabled = false;
     }
 }
 
