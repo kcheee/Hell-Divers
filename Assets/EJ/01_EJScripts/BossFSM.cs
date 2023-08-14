@@ -142,7 +142,7 @@ public class BossFSM : MonoBehaviour
         else if (DistanceBoss2Player > GausCannonDistanceL && DistanceBoss2Player <= NoAttackDistance && !XLflag)
         {
             print("GausCannonFire");
-            StartCoroutine(GetComponent<EJGausCannonFire>().CannonFire());
+            StartCoroutine(GetComponent<EJGausCannonFireInstantiate>().CannonFire());
             XLflag = true;
             B_state = BossState.Wait;
         }

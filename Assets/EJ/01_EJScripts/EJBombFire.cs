@@ -1,13 +1,12 @@
-using System;
+
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class EJBombFire : MonoBehaviour
 {
     //bomb
     bool isBombDone = true;
-    int bombCount = 4;
+    int bombCount = 10;
 
     //bombPos
     public Transform bombPos;
@@ -62,7 +61,7 @@ public class EJBombFire : MonoBehaviour
             bombMuzzleImpact.transform.up = bombPos.transform.forward;
 
             //ÄðÅ¸ÀÓ
-            yield return new WaitForSeconds(0.5f);
+            yield return new WaitForSeconds(Random.Range(0.1f,0.3f));
             BossFSM.Sflag = false;
         }
 

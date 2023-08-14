@@ -97,7 +97,7 @@ Light:
   m_Shape: 0
   m_Color: {r: 1, g: 0.042179987, b: 0, a: 1}
   m_Intensity: 2
-  m_Range: 2.5
+  m_Range: 5
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
   m_CookieSize: 6.91
@@ -262,7 +262,7 @@ Halo:
   m_Color:
     serializedVersion: 2
     rgba: 1929391103
-  m_Size: 0
+  m_Size: 3.24
 --- !u!198 &19883576
 ParticleSystem:
   m_ObjectHideFlags: 0
@@ -515,7 +515,7 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0.8
+      scalar: 1.07
       minScalar: 1
       maxCurve:
         serializedVersion: 2
@@ -1097,7 +1097,7 @@ ParticleSystem:
     rateOverTime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 60
+      scalar: 1000
       minScalar: 10
       maxCurve:
         serializedVersion: 2

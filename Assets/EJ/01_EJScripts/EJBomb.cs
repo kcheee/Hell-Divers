@@ -28,12 +28,14 @@ public class EJBomb : MonoBehaviour
         rot.y += Random.Range(-5, 5);
         rot.z += Random.Range(-5, 5);
         transform.eulerAngles = rot;
+        rb = GetComponent<Rigidbody>();
+        rb.AddForce(transform.up * 20, ForceMode.Impulse);
     }
 
     // Update is called once per frame
     void Update()
     {
-        transform.position += transform.up * bombSpeed * Time.deltaTime;
+        //transform.position += transform.up * bombSpeed * Time.deltaTime;
     }
 
 /*    private void OnTriggerEnter(Collider other)
