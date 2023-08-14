@@ -153,7 +153,7 @@ public
         //    E_state = EnemyState.ranged_attack;        
         //}
 
-        transform.forward = target.transform.position - transform.position;
+        f_rotation();
 
         // 애니메이션 취소 후 근거리 공격을 바꿈.
         // 일정시간 안에 플레이어가 일정 거리 오면 chase 하고 근거리 공격으로 바꿈.

@@ -33,11 +33,13 @@ public class Enemy1 : Enemy_Fun
 
     bool flag = false;
 
+    AudioSource audioSource;
     // ÄÄÆ÷³ÍÆ® 
     void getcomponent()
     {
         agent = GetComponent<NavMeshAgent>();
         anim = GetComponent<Animator>();
+        audioSource = GetComponent<AudioSource>();
     }
 
     private void Start()
@@ -67,15 +69,18 @@ public class Enemy1 : Enemy_Fun
         flag = true;
         yield return new WaitForSeconds(0.2f);
         Vector3 pos = new Vector3(transform.position.x, -1.2f, transform.position.z);
-
         float T = 3;
         for (int i = 0; i < 10; i++)
         {
             T += Random.Range(0.8f, 2f);
+             audioSource.Play();
+
 
             Vector3 bulletpos = pos + transform.forward * T + transform.right * Random.Range(-1f, 1f);
             GameObject bullet = Instantiate(I_bullet, I_FirePos.transform.position, Quaternion.identity);
-            /*GameObject bullet = */Instantiate(I_Muzzle, I_FirePos.transform.position, Quaternion.identity);
+            Instantiate(I_Muzzle, I_FirePos.transform.position, Quaternion.identity).transform.parent = transform;
+
+            bullet.transform.parent = transform;
 
             //Debug.Log(bullet.transform.position);
 

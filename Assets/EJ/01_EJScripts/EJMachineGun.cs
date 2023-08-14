@@ -58,7 +58,7 @@ public class EJMachineGun : MonoBehaviour
                 //02.machineGunEffect position
                 machineGunImpact.transform.position = machineGunHitInfo.point;
                 machineGunImpact.transform.forward = machineGunHitInfo.normal;
-                machineGunImpact.transform.localScale = Vector3.one * 3;
+                machineGunImpact.transform.localScale = Vector3.one * 0.7f;
                 //machineGunImpact.transform.parent = machineGunHitInfo.transform;
 
                 print("머신건이 닿은 곳은 "+ machineGunHitInfo.point);
@@ -79,6 +79,7 @@ public class EJMachineGun : MonoBehaviour
 
         //04. machineGunPos Angle 초기화
         machineGunPos.localEulerAngles = originMachineAngle;
-        isMachineDone = true;      
+        isMachineDone = true;
+        BossFSM.Lflag = false;
     }
 }

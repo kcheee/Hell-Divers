@@ -27,7 +27,7 @@ public class FollowCam : MonoBehaviour
         //다시 원래 y로 돌려놓음.
         pos.y = camY;        
         target.y = camY;
-        target.z += -5;
+        target.z += -20f;
 
 
         //밑으로 갈때는 -7이니까 아래인것. 나중에 고쳥야진

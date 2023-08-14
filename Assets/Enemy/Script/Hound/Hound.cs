@@ -123,6 +123,8 @@ public class Hound : Enemy_Fun
 
         f_rotation();
 
+        //Vector3.Lerp(transform.forward, target.transform.position - transform.position, 0.2f);
+
         // 플레이어와 각도가 비슷하면 agent다시 enable
         if (angleToPlayer < 10)
         {
@@ -135,6 +137,7 @@ public class Hound : Enemy_Fun
     // 근거리 공격
     protected override void F_meleeattack()
     {
+        // 쿨타임.
 
         Vector3 toPlayer = target.transform.position - transform.position;
         toPlayer.y = 0f; // y축 제외
@@ -143,18 +146,20 @@ public class Hound : Enemy_Fun
         float angleToPlayer = Vector3.Angle(transform.forward, toPlayer);
 
         // 돌진 공격
-        if (angleToPlayer < 10&&!flag)
+        if (angleToPlayer <= 10&&!flag)
         {
             // 1. agent 멈추고
             // 2. 돌진 공격
             // 3. agent 다시 실행.
             StopNavSetting();
 
-            Debug.Log(transform.position);
+            HoundAttack_anim.Hound_anim_falg = false;
+
+            Debug.Log("몇번 실행");
             Vector3 targetPosition = transform.position + transform.forward * 8;
             agent.enabled = false;
 
-            transform.DOMove(targetPosition, 1).OnComplete(() => {
+            transform.DOMove(targetPosition, 1.3f).OnComplete(() => {
                 //Debug.Log(agent.transform.position);
                 agent.enabled = true;
                 // 이 조건문이 한번 실행하기 위한 flag
@@ -166,11 +171,19 @@ public class Hound : Enemy_Fun
 
             Debug.Log("실행");
             anim.SetTrigger("Attack");
+            
+            // attack 애니메이션이 끝나면
             // 콜라이더 on
             flag = true;
         }
+        //else if (angleToPlayer > 10)
+        //{
+        //    TraceNavSetting();
+        //    E_state = EnemyState.chase;
+        //}
 
-        if(distance > 5)
+        // 애니메이션이 진행되고 있으면 움직이면 안됌.
+        if (distance > 7&&HoundAttack_anim.Hound_anim_falg)
         {
             agent.enabled = true;
             TraceNavSetting();

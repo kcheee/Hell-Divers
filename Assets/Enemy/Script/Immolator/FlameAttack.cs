@@ -40,24 +40,28 @@ public class FlameAttack : MonoBehaviour
     private void OnDisable()
     {
         // 각도 0으로 만듦.
-        transform.rotation = Quaternion.Euler(0, 0, 0);
+        //transform.rotation = Quaternion.Euler(0, 0, 0);
     }
 
     // 자신을 기준으로 오른쪽으로 회전
     private void RotateRight(Vector3 forwardDirection)
     {
         // 1초동안 오른쪽으로 갔다가 왼쪽으로 감
-        Quaternion targetRotation = Quaternion.Euler(0, rotationAngle, 0) * Quaternion.LookRotation(forwardDirection);
+        //Quaternion targetRotation = Quaternion.Euler(0, rotationAngle, 0) * Quaternion.LookRotation(forwardDirection);
 
+        Vector3 targetRotation = new Vector3(0, rotationAngle, 0);
+        Quaternion originpos = transform.localRotation;
         audioSource.Play();
-        transform.DORotateQuaternion(targetRotation, 1f).OnComplete(() =>
+        transform.DOLocalRotate(targetRotation, 1f).OnComplete(() =>
         {
+
             audioSource.Play();
-            targetRotation = Quaternion.Euler(0, -rotationAngle, 0) * Quaternion.LookRotation(forwardDirection);
-            transform.DORotateQuaternion(targetRotation, 1f).OnComplete(() =>
+            targetRotation = new Vector3(0, -rotationAngle, 0); /** Quaternion.LookRotation(forwardDirection)*/;
+            transform.DOLocalRotate(targetRotation, 1f).OnComplete(() =>
             {
+
                 FireBaseScript.instance.FlameStop();
-                transform.rotation = Quaternion.Euler(0, 0, 0);
+                transform.localRotation = originpos;
 
                 // 자기자신 false
                 GetComponent<FlameAttack>().enabled = false;

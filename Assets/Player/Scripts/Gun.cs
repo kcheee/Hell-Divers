@@ -72,7 +72,13 @@ public class Gun : MonoBehaviour
             Ray ray = new Ray(transform.position,transform.forward);
             Instantiate(FireEft, FirePos);
             RaycastHit hit;
+            // 나중에 layer로 설정
             if (Physics.Raycast(ray, out hit,MaxDistance)) {
+                
+                if (hit.collider.tag == "Enemy")
+                {
+                    hit.collider.GetComponent<Enemy_Fun>().E_Hit(hit.point);
+                }
                 EnemyTest enemy = hit.collider.gameObject.GetComponent<EnemyTest>();
                 if (enemy)
                 {
