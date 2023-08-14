@@ -6,6 +6,13 @@ using RootMotion.Demos;
 
 public class Test1 : MonoBehaviour
 {
+    MeshRenderer mesh;
+
+    private void Start()
+    {
+        mesh = GetComponent<MeshRenderer>();
+    }
+
 
     private void OnCollisionEnter(Collision collision)
     {
@@ -13,6 +20,15 @@ public class Test1 : MonoBehaviour
         {
 
         Debug.Log(transform.position);
+        }
+    }
+
+
+    private void Update()
+    {
+        if(Input.GetKey(KeyCode.M))
+        {
+            mesh.material.mainTextureOffset += new Vector2(0,0.5f);
         }
     }
 
