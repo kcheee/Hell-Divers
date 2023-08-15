@@ -20,7 +20,8 @@ public class PlayerTest1 : MonoBehaviour
     Animator anim;
 
     //현재 가까이 다가가서 활성화 되어있는 오브젝트
-
+    public AudioClip testclip;
+    public AudioClip testclip2;
     public GameObject stratagemObj;
     public Stratagems current_stratagem;
     public Stratagems C_Stratagem {
@@ -76,6 +77,26 @@ public class PlayerTest1 : MonoBehaviour
         anim.SetFloat("RunSpeed", speed);
 
 
+        //컨트롤 키를 눌렀을때 스트라타잼 입력을 받고싶다.
+        if (Input.GetKey(KeyCode.LeftControl))
+        {
+            PlayerUI.instance.StratagemImage.gameObject.SetActive(true);
+            //입력 코드를 입력할때
+            code_input.input(() => {
+                //(원래 여기서 사운드 하는거 아님. 테스트임.)
+                SoundManager.instance.Play(testclip2);
+                //코드가 진짜 코드와 맞는지 계속 확인해준다.
+                int count = code_input.KeyInputList.Count - 1;
+                List<KeyType.Key> list = code_input.KeyInputList;
+                Stratagems stratagem = stratagemManager.CompareCode(list, count);
+                if (stratagem)
+                {
+                    Debug.Log("Str");
+                    C_Stratagem = stratagem;
+                }
+            }); //end lambda.
+            return;
+        } //end Input.
         //만약에 움직이고 있다면(sqr은 루트 ㄴㄴ)
         if (dir.sqrMagnitude > 0)
         {
@@ -134,7 +155,7 @@ public class PlayerTest1 : MonoBehaviour
             //장전 - > iDLE
             anim.SetTrigger("Reload");
             reload = true;
-            
+            SoundManager.instance.Play(testclip);
         }
        
 
@@ -148,26 +169,12 @@ public class PlayerTest1 : MonoBehaviour
             ChangeGun(subGun);
         }
 
-        //컨트롤 키를 눌렀을때 스트라타잼 입력을 받고싶다.
-        if (Input.GetKey(KeyCode.LeftControl)){
 
-            //입력 코드를 입력할때
-            code_input.input(() => {
-            //코드가 진짜 코드와 맞는지 계속 확인해준다.
-            int count = code_input.KeyInputList.Count - 1;
-            List<KeyType.Key> list = code_input.KeyInputList;
-            Stratagems stratagem = stratagemManager.CompareCode(list, count);
-            if (stratagem) {
-                    Debug.Log("Str");
-                    C_Stratagem = stratagem;
-                }
-            }); //end lambda.
-           
-        } //end Input.
 
         //땠으면
         //전부 초기화 한다.
         if (Input.GetKeyUp(KeyCode.LeftControl)) {
+            PlayerUI.instance.StratagemImage.gameObject.SetActive(false);
             code_input.init();
             stratagemManager.init();
         }

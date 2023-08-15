@@ -22,12 +22,13 @@ public class StratagemManager : MonoBehaviour
         KeyType.Key key = list[index];
         //내가 가지고 있는 스트라타잼들의 코드가 
         //지금 입력받은 코드와 일치하느냐
-        foreach (Stratagems Stratagem in current_Stratagems) {
+        
+        foreach (Stratagems Stratagem in current_Stratagems) { //이거때문에 있는거에서 해야한다니까..오류어류./
 
             //인덱스가 크다 : 문제가 있다.
             //하지만 인덱스로 비교를 안해도 그냥 다 비교했을때 같은게 ㅇ벗다면 
             if (Stratagem.CallCode.Count -1 < index) {
-                active_Stratagems.Remove(Stratagem);
+                continue;
             }
 
             //지금 들어온 입력값과 인덱스가 스트라타잼의 코드와 입력값과 같니?

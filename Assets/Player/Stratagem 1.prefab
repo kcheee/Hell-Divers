@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 6748436930970804413}
   - component: {fileID: 6748436930970804410}
   m_Layer: 0
-  m_Name: Stratagem
+  m_Name: Stratagem 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -127,8 +127,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd0ea89dac088c641802ffcfca7168d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  callTime: 5.06
+  callTime: 10
   startTime: 1
   Item: {fileID: 4698562533961449482, guid: d5019988e723a9145bdbb3eda441de40, type: 3}
   clip: {fileID: 8300000, guid: ff0e42dd5037454478c8caa1440933ba, type: 3}
-  CallCode: 01000000010000000000000002000000
+  CallCode: 0000000000000000000000000000000002000000
