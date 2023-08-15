@@ -12,6 +12,11 @@ public class Stratagems : MonoBehaviour
     //스트라타잼으로 생성할 무언가
     public GameObject Item;
 
+
+    //호출 코드 리스트
+    //플레이어 입력이 이 호출코드와 같다면 호출된다.
+    public List<KeyType.Key> CallCode = new List<KeyType.Key>();
+
     void Start()
     {
         rbody = GetComponent<Rigidbody>();

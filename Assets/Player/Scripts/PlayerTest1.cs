@@ -21,9 +21,24 @@ public class PlayerTest1 : MonoBehaviour
 
     //현재 가까이 다가가서 활성화 되어있는 오브젝트
 
-    public GameObject Ammo;
+    public GameObject stratagemObj;
+    public Stratagems current_stratagem;
+    public Stratagems C_Stratagem {
+        get { return current_stratagem; }
+        set { current_stratagem = value;
+            //스트라타잼 애니메이션 후 잡는다.
+            GameObject stratagemobj = Instantiate(stratagemObj, trBody.position + Vector3.up ,trBody.rotation);
+            Stratagems stratagem = stratagemobj.GetComponent<Stratagems>();
+            stratagem = value;
+            Rigidbody arbody = stratagemobj.GetComponent<Rigidbody>();
+            arbody.AddForce(trBody.forward * 7 + trBody.up * 5, ForceMode.Impulse);
+        }
+    }
+
     public I_StratagemObject currentGemObj;
-    
+
+    public Code_InputManager code_input;
+    public StratagemManager stratagemManager;
 
     void Start()
     {
@@ -31,6 +46,11 @@ public class PlayerTest1 : MonoBehaviour
         //test
         ManganizeText.text = currentGun.currentManganize.ToString();
         BulletText.text = currentGun.maxBullet + " / " + currentGun.currentBullet;
+
+        //만약, mine 이라면
+        //add component.
+        code_input = gameObject.AddComponent<Code_InputManager>();
+        stratagemManager = GetComponent<StratagemManager>();
     }
 
     void Update()
@@ -93,6 +113,7 @@ public class PlayerTest1 : MonoBehaviour
 
         if (Input.GetMouseButton(0) && !reload)
         {
+            CancelInvoke("ResetSpread");
             //anim.SetTrigger("Fire2");
             bool IsAnim = currentGun.Fire();
             
@@ -100,7 +121,10 @@ public class PlayerTest1 : MonoBehaviour
         }
         if (Input.GetMouseButtonUp(0))
         {
+            CancelInvoke("ResetSpread");
             anim.SetBool("Fire", false);
+            Invoke("ResetSpread",0.5f);
+            
         }
 
 
@@ -112,8 +136,7 @@ public class PlayerTest1 : MonoBehaviour
             reload = true;
             
         }
-        
-
+       
 
         //1번을 누르면 메인 무기
         if (Input.GetKey(KeyCode.Alpha1)) {
@@ -125,13 +148,30 @@ public class PlayerTest1 : MonoBehaviour
             ChangeGun(subGun);
         }
 
-        //컨트롤 키를 눌렀을때 스트라타잼을 호출할수있다.
-        //일단 간단하게 자신의 위치에서 던지자.
-        if (Input.GetKeyDown(KeyCode.LeftControl)){
-            GameObject ammo = Instantiate(Ammo,trBody.position + Vector3.up ,trBody.rotation);
-            Rigidbody arbody = ammo.GetComponent<Rigidbody>();
-            arbody.AddForce(trBody.forward * 7 + trBody.up * 5, ForceMode.Impulse);
+        //컨트롤 키를 눌렀을때 스트라타잼 입력을 받고싶다.
+        if (Input.GetKey(KeyCode.LeftControl)){
+
+            //입력 코드를 입력할때
+            code_input.input(() => {
+            //코드가 진짜 코드와 맞는지 계속 확인해준다.
+            int count = code_input.KeyInputList.Count - 1;
+            List<KeyType.Key> list = code_input.KeyInputList;
+            Stratagems stratagem = stratagemManager.CompareCode(list, count);
+            if (stratagem) {
+                    Debug.Log("Str");
+                    C_Stratagem = stratagem;
+                }
+            }); //end lambda.
+           
+        } //end Input.
+
+        //땠으면
+        //전부 초기화 한다.
+        if (Input.GetKeyUp(KeyCode.LeftControl)) {
+            code_input.init();
+            stratagemManager.init();
         }
+
 
         if (Input.GetKeyDown(KeyCode.E) && currentGemObj != null) {
             currentGemObj.Add();
@@ -153,6 +193,7 @@ public class PlayerTest1 : MonoBehaviour
     }
 
     public void Aiming() {
+        
         if (Input.GetButtonUp("Fire2"))
         {
             anim.SetBool("PistolAiming", false);
@@ -161,6 +202,10 @@ public class PlayerTest1 : MonoBehaviour
         //마우스 우클릭
         if (Input.GetButton("Fire2"))
         {
+
+
+            
+
             //만약 총을 들고있다면 
             //조준 애니메이션을 실행합니다.
 
@@ -194,11 +239,21 @@ public class PlayerTest1 : MonoBehaviour
                 //맞은곳 - 자신의 위치를 target으로 한다. y값은 사용하지 않으니 0으로 한다.
                 Vector3 target = hitInfo.point - transform.position;
                 target.y = 0;
+                //일단 이렇게 하고 수정합시당.
                 trBody.forward = target;
+                //trBody.forward = Vector3.Lerp(trBody.forward,target,Time.deltaTime * 5);
             }
+
+            Vector2 myDir = new Vector2(trBody.forward.x, trBody.forward.z);
+            anim.SetFloat("MyHorizontal", myDir.x);
+            anim.SetFloat("MyVertical", myDir.y);
 
         }
 
     }
 
+
+    public void ResetSpread() {
+        currentGun.ResetSpread();
+    }
 }
