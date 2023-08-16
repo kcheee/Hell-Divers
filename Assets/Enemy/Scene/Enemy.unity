@@ -134,6 +134,10 @@ PrefabInstance:
       propertyPath: MaxDistance
       value: 50
       objectReference: {fileID: 0}
+    - target: {fileID: 4861421871180131832, guid: 42b3349b6b7919742bfa35ecb7168c2e, type: 3}
+      propertyPath: m_Constraints
+      value: 126
+      objectReference: {fileID: 0}
     - target: {fileID: 4861421871180131838, guid: 42b3349b6b7919742bfa35ecb7168c2e, type: 3}
       propertyPath: BulletText
       value: 
@@ -160,7 +164,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6213909395125962997, guid: 42b3349b6b7919742bfa35ecb7168c2e, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 121.9
+      value: -2.3
       objectReference: {fileID: 0}
     - target: {fileID: 6213909395125962997, guid: 42b3349b6b7919742bfa35ecb7168c2e, type: 3}
       propertyPath: m_LocalPosition.y
@@ -168,7 +172,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6213909395125962997, guid: 42b3349b6b7919742bfa35ecb7168c2e, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 9
+      value: 3.4
       objectReference: {fileID: 0}
     - target: {fileID: 6213909395125962997, guid: 42b3349b6b7919742bfa35ecb7168c2e, type: 3}
       propertyPath: m_LocalRotation.w
@@ -220,6 +224,10 @@ PrefabInstance:
       propertyPath: patrolT.Array.data[1]
       value: 
       objectReference: {fileID: 2001656932}
+    - target: {fileID: 1723141160, guid: 39297bb48813d18498b6e338c534bc5f, type: 3}
+      propertyPath: ENEMYATTACK.attackRange
+      value: 30
+      objectReference: {fileID: 0}
     - target: {fileID: 2634199799408390943, guid: 39297bb48813d18498b6e338c534bc5f, type: 3}
       propertyPath: m_Name
       value: Hound-main
@@ -367,7 +375,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bed33b2f212a2714687f0960810f1718, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  camY: 35
+  camY: 25
   followSpeed: 10
 --- !u!1 &159811555
 GameObject:
@@ -2615,7 +2623,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6772127969006303586, guid: 644d5ec54b738a5498adaacecd683498, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6772127969006303588, guid: 644d5ec54b738a5498adaacecd683498, type: 3}
       propertyPath: m_Enabled
