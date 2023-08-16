@@ -58,6 +58,7 @@ public class EJBomb : MonoBehaviour
 
             //¶¥°ú ºÎµúÈ÷¸é bomb ¾ø¾Ö±â
             EJObjectPoolMgr.instance.ReturnbombQueue(transform.gameObject);
+            EJBossSFX.instance.PlaybombExploSFX();
         }
     }
 

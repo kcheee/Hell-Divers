@@ -64,6 +64,9 @@ public class EJGausCannonFireInstantiate : MonoBehaviour
             gausCannonMuzzleImpact.transform.up = cannonPos.transform.up;
             gausCannonMuzzleImpact.transform.localEulerAngles = cannonPos.transform.parent.localEulerAngles;
 
+            //SFX
+            EJBossSFX.instance.PlaygausCannonSFX();
+
             //gausCannon불빛이 나간다. 
             GameObject gausCannonPrefab = Instantiate(gausCannonPrefabFactory);
             gausCannonPrefab.transform.position = cannonPos.transform.position;

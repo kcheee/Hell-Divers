@@ -14,7 +14,7 @@ public class EJBombFire : MonoBehaviour
     Vector3 originBombAngle;
     GameObject bomb;
     GameObject bombMuzzleImpact;
-    //public GameObject bombHead;
+    public GameObject bombHead;
 
     //bombMuzzleFX
     public GameObject bombMuzzleFactory;
@@ -42,6 +42,7 @@ public class EJBombFire : MonoBehaviour
     public IEnumerator MakeBomb(System.Action<int> complete)
     {
         isBombDone = false;
+
         for (int i = 0; i < bombCount; i++)
         {
             //bomb 생성
@@ -50,8 +51,7 @@ public class EJBombFire : MonoBehaviour
             bomb.transform.position = bombPos.position;
             bomb.transform.up = bombPos.transform.up;
 
-            //생성하면서 반동 생기기 하자마자 하나씩!
-            bombHeadReaction();
+            EJBossSFX.instance.PlaybombFlyingSFX();
 
             //bombMuzzle 생성
             GameObject bombMuzzleImpact = Instantiate(bombMuzzleFactory);
@@ -73,12 +73,4 @@ public class EJBombFire : MonoBehaviour
             complete(0);
         }
     }
-
-    //Coroutine 동시에 발생하도록 어떻게 하더라?
-    void bombHeadReaction()
-    {
-        //bombHead.transform.position = new Vector3(0, 0, 1);
-        //bombHead.transform.position = Vector3.Lerp(bombHead.transform.position, Vector3.one, 0.7f);
-    }
-
 }

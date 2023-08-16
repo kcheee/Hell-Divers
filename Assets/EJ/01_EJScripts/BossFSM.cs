@@ -38,6 +38,7 @@ public class BossFSM : MonoBehaviour
     static public bool Mflag = false;
     static public bool Lflag = false;
     static public bool XLflag = false;
+    bool rotate = false;
 
     //time
     float curTime = 0;
@@ -79,7 +80,7 @@ public class BossFSM : MonoBehaviour
         switch (B_state)
         {
             case BossState.Patrol:
-                UpdatePatrol();
+                UpdateRotate2Player();
                 break;
             case BossState.Chase:
                 UpdateChase();
@@ -96,8 +97,6 @@ public class BossFSM : MonoBehaviour
         }
     }
 
-
-
     public void ChangeState(BossState s)
     {
         if (B_state == s) return;
@@ -107,24 +106,12 @@ public class BossFSM : MonoBehaviour
     }
 
     //한 상태면 다른 상태로 넘어갈 수 없게 하고 싶음
-
-
-    private void UpdatePatrol()
+    private void UpdateRotate2Player()
     {
-        //모르겠는데
-
-        curTime += Time.deltaTime;
-
-        //player와 나와의 거리
-        Vector3 LookingPlayerDir = player.transform.position - transform.position;
-        //다시 쫓아가든, 공격하든 플레이어를 찾아서 총구를 회전하는 상태
-        transform.forward = Vector3.Lerp(transform.forward, LookingPlayerDir, 0.7f);
-
-        if (curTime > 1f)
-        {
-            B_state = BossState.Chase;
-            curTime = 0;
-        }
+            //player와 나와의 거리
+            Vector3 LookingPlayerDir = player.transform.position - transform.position;
+            //다시 쫓아가든, 공격하든 플레이어를 찾아서 총구를 회전하는 상태
+            transform.forward = Vector3.Lerp(transform.forward, LookingPlayerDir, 0.7f * Time.deltaTime  );
     }
 
 
@@ -138,13 +125,12 @@ public class BossFSM : MonoBehaviour
         if (DistanceBoss2Player <= NoAttackDistance)
         {
             print("공격XLDistance에 들어왔어요");
-            B_state = BossState.Attack;
+            B_state = BossState.Wait;
         }
 
         //!!!!!서서히 원래 포지션으로 돌고 싶다.
         transform.localEulerAngles = Vector3.Lerp(transform.localEulerAngles, headAxisOriginal, 0.7f);
     }
-
 
     public void AttackCompleted(int skillIdx)
     {
@@ -152,7 +138,11 @@ public class BossFSM : MonoBehaviour
         if (skillIdx == 1) Lflag = false;
         if (skillIdx == 2) XLflag = false;
 
+        //Attack을 마치면 Wait로 바뀌기 전에 바라보는 방향으로 고개를 틀어야 한다.
+        //UpdateRotate2Player();
+
         B_state = BossState.Wait;
+        //rotate = true;
     }
 
     //쿨타임을 걸어두고 앞으로 걸어나가면 공격 다르게 발사되는 상태
@@ -203,8 +193,9 @@ public class BossFSM : MonoBehaviour
         OffWheelMesh();
 
         //움직이는 player를 바라보게 해야 한다.
-        headAxis.transform.LookAt(player.transform);
+        //headAxis.transform.LookAt(player.transform);
         //UpdatePatrol();
+        UpdateRotate2Player();
         
         //player와 나와의 방향을 구해서 Lerp를 사용한다?        
         Vector3 headAxisAngle = headAxis.transform.localEulerAngles;

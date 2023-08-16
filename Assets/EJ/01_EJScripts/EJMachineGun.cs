@@ -69,6 +69,8 @@ public class EJMachineGun : MonoBehaviour
                     yield return new WaitForSeconds(3f);
                     EJObjectPoolMgr.instance.ReturnmachineGunImpactQueue(machineGunImpact);
                 }*/
+
+                EJBossSFX.instance.PlaymachineGunSFX();
             }           
 
             //04. machineGunPos가 일정량만큼 Z축 회전

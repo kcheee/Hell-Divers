@@ -64,7 +64,7 @@ public class FlameAttack : MonoBehaviour
                 // 자기자신 false
                 GetComponent<FlameAttack>().enabled = false;
 
-            }); ;
+            });
         });
     }
 
