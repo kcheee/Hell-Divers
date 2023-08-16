@@ -39,7 +39,7 @@ public class Stratagems : MonoBehaviour
         yield return new WaitForSeconds(startT);
         //자신의 물리를 끈다.
         SoundManager.instance.Play(clip);
-        rbody.isKinematic = true;
+        //rbody.isKinematic = true;
         //시간을 잰다.
         while (true) {
             yield return new WaitForSeconds(Time.deltaTime);

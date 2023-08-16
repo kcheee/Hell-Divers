@@ -39,6 +39,8 @@ public class Gun : MonoBehaviour
     public float current_spreadRange;
     public float min_spreadRange = 1;
     public float max_spreadRange = 5;
+    //탄퍼짐 증가율
+    public float add_spreadRange = 200;
 
     // Start is called before the first frame update
     void Start()
@@ -63,7 +65,7 @@ public class Gun : MonoBehaviour
         //총알이 있니?
         if (fire) {
             //발사했을때, 탄퍼짐 범위를 증가시킨다.
-            current_spreadRange += Time.deltaTime * 200;
+            current_spreadRange += Time.deltaTime * add_spreadRange;
             //탄퍼짐 범위를 제한한다.
             current_spreadRange = Mathf.Clamp(current_spreadRange, min_spreadRange, max_spreadRange);
 
@@ -86,7 +88,7 @@ public class Gun : MonoBehaviour
             Debug.DrawRay(transform.position, spread * MaxDistance, Color.red, 1);
 
             Ray ray = new Ray(transform.position,spread);
-            Debug.Log(transform.forward);
+            //Debug.Log(transform.forward);
             GameObject fireEft = Instantiate(FireEft, FirePos.position,Quaternion.identity);
             GameObject muzzleEft = Instantiate(MuzzleEft, FirePos.position, Quaternion.identity);
             //fireEft.transform.parent = null;
@@ -97,7 +99,11 @@ public class Gun : MonoBehaviour
             RaycastHit hit;
             // 나중에 layer로 설정
             if (Physics.Raycast(ray, out hit,MaxDistance)) {
-                
+                Debug.Log("Hit" + hit.collider.gameObject.name);
+                I_Entity entity =  hit.collider.gameObject.GetComponent<I_Entity>();
+                if (entity != null) {
+                    entity.damaged(10);
+                }
                 if (hit.collider.tag == "Enemy")
                 {
                     hit.collider.GetComponent<Enemy_Fun>().E_Hit(hit.point);

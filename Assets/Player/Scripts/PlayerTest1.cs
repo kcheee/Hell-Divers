@@ -7,10 +7,6 @@ using TMPro;
 public class PlayerTest1 : MonoBehaviour
 {
     //Test Text
-    public Text ManganizeText;
-    public Text BulletText;
-
-
     public Transform trBody;
     public float speed = 5;
     public Gun currentGun;
@@ -24,6 +20,8 @@ public class PlayerTest1 : MonoBehaviour
     public AudioClip testclip2;
     public GameObject stratagemObj;
     public Stratagems current_stratagem;
+
+
     public Stratagems C_Stratagem {
         get { return current_stratagem; }
         set { current_stratagem = value;
@@ -40,25 +38,41 @@ public class PlayerTest1 : MonoBehaviour
 
     public Code_InputManager code_input;
     public StratagemManager stratagemManager;
-
+    public PlayerHP playerHp;
+    public enum PlayerState { 
+        Live,Die
+    }
+    public PlayerState currentState = PlayerState.Live;
     void Start()
     {
         anim = trBody.GetComponent<Animator>();
         //test
-        ManganizeText.text = currentGun.currentManganize.ToString();
-        BulletText.text = currentGun.maxBullet + " / " + currentGun.currentBullet;
+       // PlayerUI.instance.ManganizeText.text = currentGun.currentManganize.ToString();
+        //PlayerUI.instance.BulletText.text = currentGun.maxBullet + " / " + currentGun.currentBullet;
 
         //만약, mine 이라면
         //add component.
         code_input = gameObject.AddComponent<Code_InputManager>();
         stratagemManager = GetComponent<StratagemManager>();
+        playerHp = GetComponent<PlayerHP>();
+        playerHp.Ondie = () => {
+            if (currentState != PlayerState.Die) {
+                anim.SetTrigger("Die"); 
+                currentState = PlayerState.Die;
+                PlayerManager.instace.PlayerList.Remove(this);
+            }
+        
+        };
     }
 
     void Update()
     {
+        if (currentState == PlayerState.Die) {
+            return;
+        }
         //test
-        ManganizeText.text = currentGun.currentManganize.ToString();
-        BulletText.text = currentGun.maxBullet + " / " + currentGun.currentBullet;
+        //PlayerUI.instance.ManganizeText.text = currentGun.currentManganize.ToString();
+        //PlayerUI.instance.BulletText.text = currentGun.maxBullet + " / " + currentGun.currentBullet;
 
 
         float h = Input.GetAxisRaw("Horizontal");
@@ -83,6 +97,7 @@ public class PlayerTest1 : MonoBehaviour
             PlayerUI.instance.StratagemImage.gameObject.SetActive(true);
             //입력 코드를 입력할때
             code_input.input(() => {
+                code_input.IsInput = !stratagemManager.Isreturn;
                 //(원래 여기서 사운드 하는거 아님. 테스트임.)
                 SoundManager.instance.Play(testclip2);
                 //코드가 진짜 코드와 맞는지 계속 확인해준다.
@@ -91,9 +106,11 @@ public class PlayerTest1 : MonoBehaviour
                 Stratagems stratagem = stratagemManager.CompareCode(list, count);
                 if (stratagem)
                 {
-                    Debug.Log("Str");
                     C_Stratagem = stratagem;
+                    code_input.init();
+                    stratagemManager.init();
                 }
+
             }); //end lambda.
             return;
         } //end Input.
@@ -130,8 +147,34 @@ public class PlayerTest1 : MonoBehaviour
 
         }
         Aiming();
-        transform.position += dir * speed * Time.deltaTime;
 
+        /*Vector3 playerPosition = transform.position;
+        Camera mainCamera = Camera.main;
+        float moveSpeed = 10;
+        // 카메라 시야의 경계를 구합니다.
+        float cameraDistance = mainCamera.transform.position.y - transform.position.y;
+        float cameraHalfHeight = Mathf.Tan(mainCamera.fieldOfView * 0.5f * Mathf.Deg2Rad) * cameraDistance;
+        float cameraHalfWidth = cameraHalfHeight * mainCamera.aspect;
+
+        // 플레이어의 이동 입력을 받습니다.
+        float moveHorizontal = Input.GetAxis("Horizontal");
+        float moveVertical = Input.GetAxis("Vertical");
+
+        // 플레이어의 위치를 업데이트합니다.
+        float newPosX = playerPosition.x + moveHorizontal * moveSpeed * Time.deltaTime;
+        float newPosZ = playerPosition.z + moveVertical * moveSpeed * Time.deltaTime;
+
+        // 카메라 시야 내에 제한합니다.
+        float clampedX = Mathf.Clamp(newPosX, mainCamera.transform.position.x - cameraHalfWidth, mainCamera.transform.position.x + cameraHalfWidth);
+        float clampedZ = Mathf.Clamp(newPosZ, mainCamera.transform.position.z - cameraHalfHeight, mainCamera.transform.position.z + cameraHalfHeight);
+
+        // 제한된 위치로 플레이어의 위치를 업데이트합니다.
+        transform.position = new Vector3(clampedX, playerPosition.y, clampedZ);*/
+
+
+
+        transform.position += dir * speed * Time.deltaTime;
+        
         if (Input.GetMouseButton(0) && !reload)
         {
             CancelInvoke("ResetSpread");

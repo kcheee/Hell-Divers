@@ -5,6 +5,7 @@ using UnityEngine;
 public class Code_InputManager : MonoBehaviour
 {
     public List<KeyType.Key> KeyInputList;
+    public bool IsInput = true;
     // Start is called before the first frame update
     void Start()
     {
@@ -19,9 +20,11 @@ public class Code_InputManager : MonoBehaviour
 
     //입력을 받는다.
     public void input(System.Action action) {
-        
-        //Debug.Log(string.Join("," ,KeyInputList));
-        
+        //입력 나갈래
+        if (!IsInput)
+            return;
+
+        //입력 받는다.
         if (Input.GetKeyDown(KeyCode.W))
         {
             KeyInputList.Add(KeyType.Key.Up);
@@ -46,5 +49,8 @@ public class Code_InputManager : MonoBehaviour
     //초기화 한다.
     public void init() {
         KeyInputList = new List<KeyType.Key>();
+        IsInput = true;
+
+
     }
 }
