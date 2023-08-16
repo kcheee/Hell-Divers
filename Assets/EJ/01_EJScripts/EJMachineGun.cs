@@ -30,12 +30,12 @@ public class EJMachineGun : MonoBehaviour
         {
             if (isMachineDone)
             {
-                StartCoroutine(MachineGunFire());
+                StartCoroutine(MachineGunFire(null));
             }
         }
     }
    
-    public IEnumerator MachineGunFire()
+    public IEnumerator MachineGunFire(System.Action<int> complete)
     {
         RaycastHit machineGunHitInfo;
 
@@ -80,6 +80,11 @@ public class EJMachineGun : MonoBehaviour
         //04. machineGunPos Angle √ ±‚»≠
         machineGunPos.localEulerAngles = originMachineAngle;
         isMachineDone = true;
-        BossFSM.Lflag = false;
+
+        if (complete != null)
+        {
+            complete(1);
+        }
+        //BossFSM.Lflag = false;
     }
 }

@@ -31,12 +31,12 @@ public class EJGausCannonFireInstantiate : MonoBehaviour
         {
             if (isCannonDone)
             {
-                StartCoroutine(CannonFire());
+                StartCoroutine(CannonFire(null));
             }
         }
     }
 
-    public IEnumerator CannonFire()
+    public IEnumerator CannonFire(System.Action<int> complete)
     {
 
         //cannonFire Angle 변수
@@ -70,7 +70,6 @@ public class EJGausCannonFireInstantiate : MonoBehaviour
             gausCannonPrefab.transform.up = cannonPos.transform.up;
 
             //몸이랑 같이 돌아가고 싶다.
-
             Vector3 originAngle = transform.localEulerAngles;    
 
             cannonPos.Rotate(new Vector3(cannonPosX, 0, 5 * cannonPosZDir)+originAngle, Space.Self);
@@ -81,5 +80,10 @@ public class EJGausCannonFireInstantiate : MonoBehaviour
         //CannonPos 초기화
         cannonPos.transform.localEulerAngles = originCannonAngle;
         isCannonDone = true;
+
+        if (complete != null)
+        {
+            complete(2);
+        }
     }
 }
