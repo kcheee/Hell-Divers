@@ -1597,6 +1597,38 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1 &1233366900512187340
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 585095929170111295}
+  m_Layer: 0
+  m_Name: SpawnPosP
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &585095929170111295
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1233366900512187340}
+  m_LocalRotation: {x: -0, y: 1, z: -0, w: -0}
+  m_LocalPosition: {x: 0, y: 0, z: -13.100007}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 8003329492775512134}
+  m_Father: {fileID: 6862431553911092314}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!1 &1240901322609321587
 GameObject:
   m_ObjectHideFlags: 0
@@ -1626,6 +1658,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2830687373438495514}
+  - {fileID: 585095929170111295}
   m_Father: {fileID: 228514940883746486}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -9153,6 +9186,37 @@ Transform:
   m_Father: {fileID: 1889186774903481358}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &6644722023992713063
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8003329492775512134}
+  m_Layer: 0
+  m_Name: SpawnPos
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8003329492775512134
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6644722023992713063}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 5}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 585095929170111295}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6663064455092791076
 GameObject:
   m_ObjectHideFlags: 0
@@ -9620,6 +9684,7 @@ MonoBehaviour:
   cannonPos: {fileID: 6772127968116815459}
   gausCannonMuzzleFactory: {fileID: 8579966591951127539, guid: 34940ba778088e74095f5f57d9c0dc28, type: 3}
   gausCannonPrefabFactory: {fileID: 100002, guid: 1643f2f296912084db639937e195b6b1, type: 3}
+  rightArmReaction: {fileID: 0}
 --- !u!114 &6772127969006303610
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9634,6 +9699,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   machineGunPos: {fileID: 6772127969263830076}
   machineGunFactory: {fileID: 8765008237907036386, guid: ee1c36be32b35c844beaaec7378d2ac4, type: 3}
+  leftArmReaction: {fileID: 0}
 --- !u!114 &6772127969006303611
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9647,7 +9713,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bombPos: {fileID: 6772127969245551755}
+  bombHead: {fileID: 0}
   bombMuzzleFactory: {fileID: 8579966591951127539, guid: 34940ba778088e74095f5f57d9c0dc28, type: 3}
+  headReaction: {fileID: 0}
 --- !u!114 &6772127969006303588
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9732,8 +9800,13 @@ MonoBehaviour:
   bombDistanceS: 7.5
   machineGunDistanceM: 12.5
   GausCannonDistanceL: 17.5
-  NoAttackDistance: 22.5
+  makeLittleBossDistance: 22.5
+  NoAttack_ChaseDistance: 27.5
   headAxis: {fileID: 6772127967208545473}
+  houndFactory: {fileID: 0}
+  turretFactory: {fileID: 0}
+  spawnPosGroup: {fileID: 0}
+  spawnPos: []
 --- !u!114 &6772127969006303615
 MonoBehaviour:
   m_ObjectHideFlags: 0

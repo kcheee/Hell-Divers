@@ -11,6 +11,7 @@ public class Gun : MonoBehaviour
     //총구
     public Transform FirePos;
     public GameObject FireEft;
+    public GameObject MuzzleEft;
 
     public int maxBullet;
     public int currentBullet;
@@ -34,9 +35,17 @@ public class Gun : MonoBehaviour
     public enum GunType { Rifle,Pistol }
     public GunType gunType;
 
+    //탄퍼짐의 범위.
+    public float current_spreadRange;
+    public float min_spreadRange = 1;
+    public float max_spreadRange = 5;
+    //탄퍼짐 증가율
+    public float add_spreadRange = 200;
+
     // Start is called before the first frame update
     void Start()
     {
+        //Max로 해줍니다!
         currentBullet = maxBullet;
         currentManganize = maxManganize;
     }
@@ -55,26 +64,46 @@ public class Gun : MonoBehaviour
         //bool returnfire = currentBullet > 0 && (WaitAnim ? isFire && WaitAnim : true);
         //총알이 있니?
         if (fire) {
+            //발사했을때, 탄퍼짐 범위를 증가시킨다.
+            current_spreadRange += Time.deltaTime * add_spreadRange;
+            //탄퍼짐 범위를 제한한다.
+            current_spreadRange = Mathf.Clamp(current_spreadRange, min_spreadRange, max_spreadRange);
+
+
             animtest.ResetTrigger("Fire2");
             animtest.SetTrigger("Fire2");
-            //action();
             isFire = false;
             StartCoroutine(FireWait());
-            //총알 이팩트를 생성한다
-            //(생성 코드)
 
             //그리고 Ray를 발사한다,.(정확하게 하자면, 총구 위치에서 Ray가 됨.)
             //그리고 사거리.
             //근데 Ray는 직선이니까 하나를 더 쏘거나 아니면 그냥 각도를 내리거나. 1번째 방법이 
-            //더 낫겠지.
-            //노말백터
-            Debug.DrawRay(transform.position, transform.forward * MaxDistance, Color.white,1); Debug.DrawRay(transform.position, transform.forward * MaxDistance, Color.red,1);
-            Ray ray = new Ray(transform.position,transform.forward);
-            Instantiate(FireEft, FirePos);
+            //더 낫겠지.(ㄴㄴ 그냥 이펙트인거같음!)
+            //노말백터\
+
+            //총의 탄퍼짐 값을 구한다.
+            //자신의 앞방향에서 자신의 오른쪽  백터에서 방향값을 곱하고 범위값을 곱한 백터를 더한다.
+            Vector3 spread = transform.forward + transform.right * Random.Range(-1, 2) * Time.deltaTime * current_spreadRange;
+
+            Debug.DrawRay(transform.position, spread * MaxDistance, Color.red, 1);
+
+            Ray ray = new Ray(transform.position,spread);
+            //Debug.Log(transform.forward);
+            GameObject fireEft = Instantiate(FireEft, FirePos.position,Quaternion.identity);
+            GameObject muzzleEft = Instantiate(MuzzleEft, FirePos.position, Quaternion.identity);
+            //fireEft.transform.parent = null;
+            //fireEft.transform.forward = transform.forward ;
+            fireEft.transform.rotation = Quaternion.LookRotation(spread,Vector3.up);
+            muzzleEft.transform.forward = FirePos.forward;
+            
             RaycastHit hit;
             // 나중에 layer로 설정
             if (Physics.Raycast(ray, out hit,MaxDistance)) {
-                
+                Debug.Log("Hit" + hit.collider.gameObject.name);
+                I_Entity entity =  hit.collider.gameObject.GetComponent<I_Entity>();
+                if (entity != null) {
+                    entity.damaged(10);
+                }
                 if (hit.collider.tag == "Enemy")
                 {
                     hit.collider.GetComponent<Enemy_Fun>().E_Hit(hit.point);
@@ -85,8 +114,6 @@ public class Gun : MonoBehaviour
                     enemy.Damaged(damage);
                 }
             }
-            //GameObject bullet = Instantiate(Bullet, transform.position, transform.rotation);
-            //bullet.transform.forward = transform.forward;
             currentBullet--;
         }
         return isFire;
@@ -106,7 +133,6 @@ public class Gun : MonoBehaviour
             return true;
         }
         return false;
-        
     }
 
     public void Reload() {
@@ -120,5 +146,9 @@ public class Gun : MonoBehaviour
         yield return new WaitForSeconds(fireTime);
         
         isFire = true;
+    }
+
+    public void ResetSpread() {
+        current_spreadRange = 0;
     }
 }
