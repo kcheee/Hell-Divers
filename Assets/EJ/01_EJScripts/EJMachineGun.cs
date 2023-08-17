@@ -17,6 +17,8 @@ public class EJMachineGun : MonoBehaviour
     GameObject machineGunImpact;
     public GameObject machineGunFactory;
 
+    bool isLeftArmAnimDone = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -30,12 +32,18 @@ public class EJMachineGun : MonoBehaviour
         {
             if (isMachineDone)
             {
-                StartCoroutine(MachineGunFire());
+                StartCoroutine(MachineGunFire(null));
             }
+        }
+
+
+        if (Input.GetKeyDown(KeyCode.Alpha7))
+        {
+            
         }
     }
    
-    public IEnumerator MachineGunFire()
+    public IEnumerator MachineGunFire(System.Action<int> complete)
     {
         RaycastHit machineGunHitInfo;
 
@@ -69,17 +77,42 @@ public class EJMachineGun : MonoBehaviour
                     yield return new WaitForSeconds(3f);
                     EJObjectPoolMgr.instance.ReturnmachineGunImpactQueue(machineGunImpact);
                 }*/
+
+                //leftArmPos를 반동을 준다
+                //Animator를 켰다가 끈다.
+
+                ONLeftArmAnim();
+
+                EJBossSFX.instance.PlaymachineGunSFX();
             }           
 
             //04. machineGunPos가 일정량만큼 Z축 회전
             machineGunPos.Rotate(new Vector3(0, 0, machineGunRotateZadd), Space.Self);
+
+            
             
             yield return new WaitForSeconds(machineGunDelayTime);
+
         }
 
         //04. machineGunPos Angle 초기화
         machineGunPos.localEulerAngles = originMachineAngle;
         isMachineDone = true;
-        BossFSM.Lflag = false;
+
+        if (complete != null)
+        {
+            complete(1);
+        }
+        //BossFSM.Lflag = false;
     }
+
+    public Animator leftArmReaction;
+
+
+    public void ONLeftArmAnim()
+    {
+        leftArmReaction.SetTrigger("leftFire");
+    }
+
+
 }

@@ -13,9 +13,12 @@ public class EJBombFire : MonoBehaviour
     Vector3 originBombAngle;
     GameObject bomb;
     GameObject bombMuzzleImpact;
+    public GameObject bombHead;
 
     //bombMuzzleFX
     public GameObject bombMuzzleFactory;
+
+    //bombReaction
 
     // Start is called before the first frame update
     void Start()
@@ -30,20 +33,15 @@ public class EJBombFire : MonoBehaviour
         {
             if (isBombDone)
             {
-                StartCoroutine(MakeBomb());
+                StartCoroutine(MakeBomb(null));
             }
         }
     }
 
-    public void Test()
-    {
-        Debug.Log("fds");
-
-
-    }
-    public IEnumerator MakeBomb()
+    public IEnumerator MakeBomb(System.Action<int> complete)
     {
         isBombDone = false;
+
         for (int i = 0; i < bombCount; i++)
         {
             //bomb 持失
@@ -52,11 +50,14 @@ public class EJBombFire : MonoBehaviour
             bomb.transform.position = bombPos.position;
             bomb.transform.up = bombPos.transform.up;
 
+            EJBossSFX.instance.PlaybombFlyingSFX();
+            ONHeadAnim();
+
             //bombMuzzle 持失
             GameObject bombMuzzleImpact = Instantiate(bombMuzzleFactory);
 
             bombMuzzleImpact.transform.position = bombPos.position;
-            bombMuzzleImpact.transform.localEulerAngles = bombPos.transform.parent.localEulerAngles;
+            bombMuzzleImpact.transform.localEulerAngles =bombPos.transform.parent.localEulerAngles;
             bombMuzzleImpact.transform.localScale = Vector3.one ;
             bombMuzzleImpact.transform.up = bombPos.transform.forward;
 
@@ -65,6 +66,19 @@ public class EJBombFire : MonoBehaviour
             BossFSM.Sflag = false;
         }
 
-        isBombDone = true;        
+        isBombDone = true;
+
+        if(complete != null)
+        {
+            complete(0);
+        }
     }
+
+    public Animator headReaction;
+
+    public void ONHeadAnim()
+    {
+        headReaction.SetTrigger("headFire");
+    }
+
 }

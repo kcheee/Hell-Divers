@@ -31,12 +31,12 @@ public class EJGausCannonFireInstantiate : MonoBehaviour
         {
             if (isCannonDone)
             {
-                StartCoroutine(CannonFire());
+                StartCoroutine(CannonFire(null));
             }
         }
     }
 
-    public IEnumerator CannonFire()
+    public IEnumerator CannonFire(System.Action<int> complete)
     {
 
         //cannonFire Angle 변수
@@ -64,22 +64,44 @@ public class EJGausCannonFireInstantiate : MonoBehaviour
             gausCannonMuzzleImpact.transform.up = cannonPos.transform.up;
             gausCannonMuzzleImpact.transform.localEulerAngles = cannonPos.transform.parent.localEulerAngles;
 
+            ONRightArmAnim();
+
+            //SFX
+            EJBossSFX.instance.PlaygausCannonSFX();
+
             //gausCannon불빛이 나간다. 
             GameObject gausCannonPrefab = Instantiate(gausCannonPrefabFactory);
             gausCannonPrefab.transform.position = cannonPos.transform.position;
             gausCannonPrefab.transform.up = cannonPos.transform.up;
 
             //몸이랑 같이 돌아가고 싶다.
-
             Vector3 originAngle = transform.localEulerAngles;    
 
             cannonPos.Rotate(new Vector3(cannonPosX, 0, 5 * cannonPosZDir)+originAngle, Space.Self);
-
+           
             yield return new WaitForSeconds(cannonDelayTime);
+            //OFFRightArmAnim();
         }
 
         //CannonPos 초기화
         cannonPos.transform.localEulerAngles = originCannonAngle;
         isCannonDone = true;
+
+        if (complete != null)
+        {
+            complete(2);
+        }
     }
+
+    public Animator rightArmReaction;
+
+    public void ONRightArmAnim()
+    {
+        rightArmReaction.SetTrigger("Fire");
+            //GameObject.FindWithTag("rigthArm").GetComponentInChildren<Animator>().enabled = true;
+    }
+
+
+
+
 }
