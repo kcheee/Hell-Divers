@@ -33,12 +33,12 @@ public class EJGausCannonFire : MonoBehaviour
         {
             if (isCannonDone)
             {
-                StartCoroutine(CannonFire());
+                StartCoroutine(CannonFire(null));
             }
         }
     }
 
-    public IEnumerator CannonFire()
+    public IEnumerator CannonFire(System.Action<int> complete)
     {
         RaycastHit cannonHitInfo;
 
@@ -102,6 +102,9 @@ public class EJGausCannonFire : MonoBehaviour
         cannonLine.enabled = false;
         isCannonDone = true;
 
-        BossFSM.XLflag = false;
+        if (complete != null)
+        {
+            complete(2);
+        }
     }       
 }

@@ -38,6 +38,7 @@ public class BossFSM : MonoBehaviour
     static public bool Mflag = false;
     static public bool Lflag = false;
     static public bool XLflag = false;
+    bool rotate = false;
 
     //time
     float curTime = 0;
@@ -45,6 +46,7 @@ public class BossFSM : MonoBehaviour
 
     //head rotation axis
     public GameObject headAxis;
+    Vector3 headAxisOriginal;
 
     private void Awake()
     {
@@ -59,18 +61,26 @@ public class BossFSM : MonoBehaviour
 
         player = GameObject.FindGameObjectWithTag("Player");
         Debug.Log(player);
+
+        //왜 chase부터 안들어오지?
         B_state = BossState.Chase;
+
+        //원래 각도 담아두기
+        headAxisOriginal = transform.localEulerAngles;
+
     }
 
     // Update is called once per frame
     void Update()
     {
         DistanceBoss2Player = Vector3.Distance(transform.position, player.transform.position);
+        //움직이는 player를 바라보게 해야 한다.
+        //headAxis.transform.LookAt(player.transform);
 
         switch (B_state)
         {
             case BossState.Patrol:
-                UpdatePatrol();
+                UpdateRotate2Player();
                 break;
             case BossState.Chase:
                 UpdateChase();
@@ -85,11 +95,7 @@ public class BossFSM : MonoBehaviour
                 UpdateDie();
                 break;
         }
-
-
     }
-
-
 
     public void ChangeState(BossState s)
     {
@@ -99,10 +105,15 @@ public class BossFSM : MonoBehaviour
 
     }
 
-
-    private void UpdatePatrol()
+    //한 상태면 다른 상태로 넘어갈 수 없게 하고 싶음
+    private void UpdateRotate2Player()
     {
+        //transform.LookAt(player.transform.position);
 
+            //player와 나와의 거리
+            Vector3 LookingPlayerDir = player.transform.position - transform.position;
+            //다시 쫓아가든, 공격하든 플레이어를 찾아서 총구를 회전하는 상태
+            transform.forward = Vector3.Lerp(transform.forward, LookingPlayerDir, 0.7f * Time.deltaTime  );
     }
 
 
@@ -119,6 +130,21 @@ public class BossFSM : MonoBehaviour
             B_state = BossState.Wait;
         }
 
+        //!!!!!서서히 원래 포지션으로 돌고 싶다.
+        //transform.localEulerAngles = Vector3.Lerp(transform.localEulerAngles, headAxisOriginal, 0.7f);
+    }
+
+    public void AttackCompleted(int skillIdx)
+    {
+        if (skillIdx == 0) Sflag = false;
+        if (skillIdx == 1) Lflag = false;
+        if (skillIdx == 2) XLflag = false;
+
+        //Attack을 마치면 Wait로 바뀌기 전에 바라보는 방향으로 고개를 틀어야 한다.
+        //UpdateRotate2Player();
+
+        B_state = BossState.Wait;
+        //rotate = true;
     }
 
     //쿨타임을 걸어두고 앞으로 걸어나가면 공격 다르게 발사되는 상태
@@ -128,23 +154,23 @@ public class BossFSM : MonoBehaviour
         if (DistanceBoss2Player <= bombDistanceS && !Sflag)
         {
             print("MakeBomb");
-            StartCoroutine(transform.GetComponent<EJBombFire>().MakeBomb());
+            StartCoroutine(transform.GetComponent<EJBombFire>().MakeBomb(AttackCompleted));
             Sflag = true;
-            B_state = BossState.Wait;
+            //B_state = BossState.Wait;
         }
         else if (DistanceBoss2Player > machineGunDistanceM && DistanceBoss2Player <= GausCannonDistanceL && !Lflag)
         {
             print("MachineGunFire");
-            StartCoroutine(GetComponent<EJMachineGun>().MachineGunFire());
+            StartCoroutine(GetComponent<EJMachineGun>().MachineGunFire(AttackCompleted));
             Lflag = true;
-            B_state = BossState.Wait;
+            //B_state = BossState.Wait;
         }
         else if (DistanceBoss2Player > GausCannonDistanceL && DistanceBoss2Player <= NoAttackDistance && !XLflag)
         {
             print("GausCannonFire");
-            StartCoroutine(GetComponent<EJGausCannonFireInstantiate>().CannonFire());
+            StartCoroutine(GetComponent<EJGausCannonFireInstantiate>().CannonFire(AttackCompleted));
             XLflag = true;
-            B_state = BossState.Wait;
+            //B_state = BossState.Wait;
         }
 
         //공격 범위에서 벗어나면 Chase모드
@@ -154,8 +180,7 @@ public class BossFSM : MonoBehaviour
                 B_state = BossState.Chase;
                 //anim.SetTrigger("Chase");
             }
-
-        AllFlagFalse();
+       // AllFlagFalse();
     }
 
     private void UpdateDie()
@@ -170,10 +195,24 @@ public class BossFSM : MonoBehaviour
         OffWheelMesh();
 
         //움직이는 player를 바라보게 해야 한다.
-        headAxis.transform.LookAt(player.transform);
-        float X = headAxis.transform.localEulerAngles.x;
-        X = Mathf.Clamp(X,-30, 30); 
+        //headAxis.transform.LookAt(player.transform);
+        //UpdatePatrol();
+        UpdateRotate2Player();
         
+        //player와 나와의 방향을 구해서 Lerp를 사용한다?        
+        Vector3 headAxisAngle = headAxis.transform.localEulerAngles;
+
+        //-12이하이면, 막아주고 ?
+        if (headAxisAngle.x >= 12)
+        {
+            headAxisAngle.x = 12;
+        }else if(headAxisAngle.x<=-8)
+        {
+            headAxisAngle.x = -8;
+        }
+
+        headAxis.transform.localEulerAngles = headAxisAngle;
+     
         curTime += Time.deltaTime;
 
         if (curTime > waitTime)
@@ -198,6 +237,7 @@ public class BossFSM : MonoBehaviour
         this.nav.updateRotation = false;
     }
 
+    //이것이 필요한 것인가?
     void AllFlagFalse()
     {
         Sflag = false;
