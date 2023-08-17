@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028352, g: 0.22571376, b: 0.30692244, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -281,17 +281,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &490137159 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3095864612242719475, guid: bc72bbe594925a94f8c06ee618703f28, type: 3}
-  m_PrefabInstance: {fileID: 697781826}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3956cd2ab16b4af4c8f4c6faec8abd62, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!4 &490137161 stripped
@@ -952,7 +941,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PlayerList:
   - {fileID: 2125324722}
-  - {fileID: 490137159}
   - {fileID: 809086331}
 --- !u!4 &1798948841
 Transform:
@@ -1123,7 +1111,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 05f75b2f7b7bfa94b909cc1a0799195d, type: 2}
+  - {fileID: 2100000, guid: 6c72dbb3d59647f4ebdb3b83418ca78d, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2751,6 +2739,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   machineGunPos: {fileID: 1074265847}
   machineGunFactory: {fileID: 8765008237907036386, guid: ee1c36be32b35c844beaaec7378d2ac4, type: 3}
+  leftArmReaction: {fileID: 0}
 --- !u!114 &3318166437279568979
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2764,7 +2753,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bombPos: {fileID: 1093461568}
+  bombHead: {fileID: 0}
   bombMuzzleFactory: {fileID: 8579966591951127539, guid: 34940ba778088e74095f5f57d9c0dc28, type: 3}
+  headReaction: {fileID: 0}
 --- !u!114 &3318166437279568980
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2942,6 +2933,7 @@ MonoBehaviour:
   cannonPos: {fileID: 73764008}
   gausCannonMuzzleFactory: {fileID: 8579966591951127539, guid: 34940ba778088e74095f5f57d9c0dc28, type: 3}
   gausCannonPrefabFactory: {fileID: 100002, guid: 1643f2f296912084db639937e195b6b1, type: 3}
+  rightArmReaction: {fileID: 0}
 --- !u!1 &3320135345980783060
 GameObject:
   m_ObjectHideFlags: 0

@@ -84,7 +84,9 @@ public class PlayerTest1 : MonoBehaviour
             test.x = 0.05f;
             pos = Camera.main.ViewportToWorldPoint(test);
             //pos.x = 0.95f;
+            pos.x -= Time.deltaTime * 5;
             transform.position = pos;
+            Camera.main.GetComponent<FollowCam>().Iscam = false;
         }
 
         if (test.x > 0.95)
@@ -95,19 +97,28 @@ public class PlayerTest1 : MonoBehaviour
 
             //pos.x -= Time.deltaTime * 2;
             test.x = 0.95f;
+            pos.x -= Time.deltaTime * 5;
             pos = Camera.main.ViewportToWorldPoint(test);
             //pos.x = 0.95f;
             transform.position = pos;
 
             return;
         }
-        else {
-            Camera.main.GetComponent<FollowCam>().Iscam = true;
+
+        if (test.y < 0.5f) {
+            test.y = 0.05f;
+            //pos = Camera.main.ViewportToWorldPoint(test);
+            //pos.x = 0.95f;
+            pos.z -= Time.deltaTime * 5;
+            transform.position = pos;
         }
-        if (test.y < 0 || test.y > 1)
+        if(test.y > 0.95)
         {
-            transform.position = Camera.main.ViewportToWorldPoint(test);
-           
+            test.y = 0.05f;
+            //pos = Camera.main.ViewportToWorldPoint(test);
+            //pos.x = 0.95f;
+            pos.z -= Time.deltaTime * 5;
+            transform.position = pos;
             return;
         }
         if (currentState == PlayerState.Die) {
