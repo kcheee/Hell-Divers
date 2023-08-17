@@ -108,6 +108,8 @@ public class BossFSM : MonoBehaviour
     //한 상태면 다른 상태로 넘어갈 수 없게 하고 싶음
     private void UpdateRotate2Player()
     {
+        //transform.LookAt(player.transform.position);
+
             //player와 나와의 거리
             Vector3 LookingPlayerDir = player.transform.position - transform.position;
             //다시 쫓아가든, 공격하든 플레이어를 찾아서 총구를 회전하는 상태
@@ -129,7 +131,7 @@ public class BossFSM : MonoBehaviour
         }
 
         //!!!!!서서히 원래 포지션으로 돌고 싶다.
-        transform.localEulerAngles = Vector3.Lerp(transform.localEulerAngles, headAxisOriginal, 0.7f);
+        //transform.localEulerAngles = Vector3.Lerp(transform.localEulerAngles, headAxisOriginal, 0.7f);
     }
 
     public void AttackCompleted(int skillIdx)

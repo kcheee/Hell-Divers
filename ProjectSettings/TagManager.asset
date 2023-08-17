@@ -6,6 +6,8 @@ TagManager:
   tags:
   - Fire
   - Floor
+  - rightArm
+  - leftArm
   layers:
   - Default
   - TransparentFX
