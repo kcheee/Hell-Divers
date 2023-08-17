@@ -65,8 +65,51 @@ public class PlayerTest1 : MonoBehaviour
         };
     }
 
+    Vector3 last;
+
+    public int layer = 0;
+    private void LateUpdate()
+    {
+        last = transform.position;
+    }
+    float h = 0;
+    float v = 0;
     void Update()
     {
+
+        Vector3 test = Camera.main.WorldToViewportPoint(transform.position);
+        Vector3 pos = transform.position;
+        //Debug.Log(test);
+        if (test.x < 0.05) {
+            test.x = 0.05f;
+            pos = Camera.main.ViewportToWorldPoint(test);
+            //pos.x = 0.95f;
+            transform.position = pos;
+        }
+
+        if (test.x > 0.95)
+        {
+            Camera.main.GetComponent<FollowCam>().Iscam = false;
+
+            Debug.Log("ss");
+
+            //pos.x -= Time.deltaTime * 2;
+            test.x = 0.95f;
+            pos = Camera.main.ViewportToWorldPoint(test);
+            //pos.x = 0.95f;
+            transform.position = pos;
+
+            return;
+        }
+        else {
+            Camera.main.GetComponent<FollowCam>().Iscam = true;
+        }
+        if (test.y < 0 || test.y > 1)
+        {
+            transform.position = Camera.main.ViewportToWorldPoint(test);
+           
+            return;
+        }
         if (currentState == PlayerState.Die) {
             return;
         }
@@ -74,10 +117,53 @@ public class PlayerTest1 : MonoBehaviour
         //PlayerUI.instance.ManganizeText.text = currentGun.currentManganize.ToString();
         //PlayerUI.instance.BulletText.text = currentGun.maxBullet + " / " + currentGun.currentBullet;
 
+        if (layer != 1) {
+            h = Input.GetAxisRaw("Horizontal");
+            v = Input.GetAxisRaw("Vertical");
+            Debug.Log("sS" + gameObject.name);
+        }
 
-        float h = Input.GetAxisRaw("Horizontal");
-        float v = Input.GetAxisRaw("Vertical");
+        if (layer == 1) {
+            if (Input.GetKeyDown(KeyCode.T)) {
+                v = 1;
+                Debug.Log("sS");
+            }
+            if (Input.GetKeyDown(KeyCode.G))
+            {
+                v = -1;
+            }
+            if (Input.GetKeyDown(KeyCode.H))
+            {
+                h = 1;
+            }
+            if (Input.GetKeyDown(KeyCode.F))
+            {
+                h = -1;
+            }
+            if (Input.GetKeyUp(KeyCode.T))
+            {
+                v = 0;
+                Debug.Log("sS");
+            }
+            if (Input.GetKeyUp(KeyCode.G))
+            {
+                v = 0;
+            }
+            if (Input.GetKeyUp(KeyCode.H))
+            {
+                h = 0;
+            }
+            if (Input.GetKeyUp(KeyCode.F))
+            {
+                h = 0;
+            }
 
+
+
+
+
+
+        }
 
 
         Vector3 dir = Vector3.right * h + Vector3.forward * v;

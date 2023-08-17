@@ -8,6 +8,7 @@ public class FollowCam : MonoBehaviour
     public float followSpeed = 10;
     public float camZ = 5;
     public Transform Target;
+    public bool Iscam;
     // Start is called before the first frame update
     void Start()
     {
@@ -29,7 +30,12 @@ public class FollowCam : MonoBehaviour
         if (PlayerManager.instace.PlayerList.Count != 1) {
             target /= 2;
         }
-            
+
+
+
+        //Debug.LogError(test);
+
+
 
         Vector3 pos = transform.position;
         pos.y = 0;
@@ -46,6 +52,9 @@ public class FollowCam : MonoBehaviour
 
 
         //백터를 보간한다.
-        transform.position = Vector3.Lerp(pos, target, Time.smoothDeltaTime * 10  );
+        if (Iscam) {
+            transform.position = Vector3.Lerp(pos, target, Time.smoothDeltaTime * 10);
+        }
+
     }
 }

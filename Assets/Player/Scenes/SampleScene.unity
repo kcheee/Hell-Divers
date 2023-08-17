@@ -472,7 +472,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4593030282795132923, guid: bc72bbe594925a94f8c06ee618703f28, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7602503989848447687, guid: bc72bbe594925a94f8c06ee618703f28, type: 3}
       propertyPath: m_Enabled
@@ -619,6 +619,22 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &809086331 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3095864612242719475, guid: bc72bbe594925a94f8c06ee618703f28, type: 3}
+  m_PrefabInstance: {fileID: 1117095682}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3956cd2ab16b4af4c8f4c6faec8abd62, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &809086333 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4593030282795132920, guid: bc72bbe594925a94f8c06ee618703f28, type: 3}
+  m_PrefabInstance: {fileID: 1117095682}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &849600774 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 588664711938707812, guid: dd0bd31b599a88649b6b5e9698224322, type: 3}
@@ -761,7 +777,8 @@ MonoBehaviour:
   camY: 10
   followSpeed: 10
   camZ: -5
-  Target: {fileID: 2125324724}
+  Target: {fileID: 809086333}
+  Iscam: 0
 --- !u!1 &1074265846
 GameObject:
   m_ObjectHideFlags: 0
@@ -831,6 +848,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3095864612242719475, guid: bc72bbe594925a94f8c06ee618703f28, type: 3}
+      propertyPath: layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4593030282795132920, guid: bc72bbe594925a94f8c06ee618703f28, type: 3}
       propertyPath: m_RootOrder
       value: 17
@@ -931,8 +952,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PlayerList:
   - {fileID: 2125324722}
-  - {fileID: 2125324722}
   - {fileID: 490137159}
+  - {fileID: 809086331}
 --- !u!4 &1798948841
 Transform:
   m_ObjectHideFlags: 0
@@ -983,6 +1004,7 @@ MonoBehaviour:
   followSpeed: 10
   camZ: -5
   Target: {fileID: 490137161}
+  Iscam: 0
 --- !u!81 &1951237241
 AudioListener:
   m_ObjectHideFlags: 0
@@ -1163,16 +1185,11 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 4314168805787338068}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3956cd2ab16b4af4c8f4c6faec8abd62, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!4 &2125324724 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 4593030282795132920, guid: bc72bbe594925a94f8c06ee618703f28, type: 3}
-  m_PrefabInstance: {fileID: 4314168805787338068}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &38334729615411753
 GameObject:
   m_ObjectHideFlags: 0
@@ -3284,15 +3301,19 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2364859072220297821, guid: bc72bbe594925a94f8c06ee618703f28, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3095864612242719475, guid: bc72bbe594925a94f8c06ee618703f28, type: 3}
+      propertyPath: layer
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3095864612242719475, guid: bc72bbe594925a94f8c06ee618703f28, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3095864612242719476, guid: bc72bbe594925a94f8c06ee618703f28, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4593030282795132920, guid: bc72bbe594925a94f8c06ee618703f28, type: 3}
       propertyPath: m_RootOrder
@@ -3344,7 +3365,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7602503989848447687, guid: bc72bbe594925a94f8c06ee618703f28, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7714425486838846115, guid: bc72bbe594925a94f8c06ee618703f28, type: 3}
       propertyPath: add_spreadRange
