@@ -77,7 +77,7 @@ public class PlayerTest1 : MonoBehaviour
     void Update()
     {
 
-        Vector3 test = Camera.main.WorldToViewportPoint(transform.position);
+        Vector3 test = Camera.main.WorldToViewportPoint(transform.position); 
         Vector3 pos = transform.position;
         //Debug.Log(test);
         if (test.x < 0.05) {
@@ -165,11 +165,6 @@ public class PlayerTest1 : MonoBehaviour
             {
                 h = 0;
             }
-
-
-
-
-
 
         }
 
