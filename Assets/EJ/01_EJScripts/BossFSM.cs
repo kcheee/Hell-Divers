@@ -10,7 +10,7 @@ public class BossFSM : MonoBehaviour
 
     public enum BossState
     {
-        Patrol,
+        MakeLittleBoss,
         Chase,
         Attack,
         Wait,
@@ -31,13 +31,15 @@ public class BossFSM : MonoBehaviour
     public float bombDistanceS = 7.5f;
     public float machineGunDistanceM = 12.5f;
     public float GausCannonDistanceL = 17.5f;
-    public float NoAttackDistance = 22.5f;
-
+    public float makeLittleBossDistance = 22.5f;
+    public float NoAttack_ChaseDistance = 27.5f;
+     
     //bool
     static public bool Sflag = false;
     static public bool Mflag = false;
     static public bool Lflag = false;
     static public bool XLflag = false;
+    static public bool XXLflag = false;
     bool rotate = false;
 
     //time
@@ -47,6 +49,15 @@ public class BossFSM : MonoBehaviour
     //head rotation axis
     public GameObject headAxis;
     Vector3 headAxisOriginal;
+
+    //makeLittleBoss 
+    public GameObject houndFactory;
+    public GameObject turretFactory;
+    GameObject[] littleBoss = new GameObject[2];
+
+    bool isHoundDone = false;
+    bool isTurretDone = false;
+    
 
     private void Awake()
     {
@@ -68,6 +79,9 @@ public class BossFSM : MonoBehaviour
         //원래 각도 담아두기
         headAxisOriginal = transform.localEulerAngles;
 
+        //littleBoss 순서대로 넣고 싶음
+        littleBoss = new GameObject[] { houndFactory, turretFactory};
+
     }
 
     // Update is called once per frame
@@ -79,8 +93,8 @@ public class BossFSM : MonoBehaviour
 
         switch (B_state)
         {
-            case BossState.Patrol:
-                UpdateRotate2Player();
+            case BossState.MakeLittleBoss:
+                MakeLittleBoss();
                 break;
             case BossState.Chase:
                 UpdateChase();
@@ -105,11 +119,61 @@ public class BossFSM : MonoBehaviour
 
     }
 
+    public Transform spawnPosGroup;
+    public Vector3[] spawnPos;
+
+    private void MakeLittleBoss()
+    {
+        if (!isHoundDone)
+        {
+            isHoundDone = true;
+            spawnPos = new Vector3[3];
+
+            //hound spawnPos
+            float angle = 360 / spawnPos.Length;
+            for (int i = 0; i < spawnPos.Length; i++)
+            {
+                GameObject hound = Instantiate(houndFactory);
+
+                spawnPosGroup.Rotate(0, angle, 0);
+                spawnPos[i] = spawnPosGroup.position + spawnPosGroup.forward * 2;
+
+                hound.transform.position = spawnPos[i];
+            }           
+        }
+
+        if (!isTurretDone)
+        {
+            isTurretDone = true;
+            spawnPos = new Vector3[1];
+
+            //turret spawnPos
+            GameObject turret = Instantiate(turretFactory);
+
+            turret.transform.position = spawnPos[0];
+            isTurretDone = false;
+            isHoundDone = false;
+        }
+        
+        
+        //공격 범위에서 벗어나면 Chase모드
+        if (DistanceBoss2Player > NoAttack_ChaseDistance)
+        {
+            print("Attack할 수 있는 거리가 아닙니다");
+            B_state = BossState.Chase;
+        }
+
+        //공격 범위라면 Attack
+        if (DistanceBoss2Player < NoAttack_ChaseDistance)
+        {
+            B_state = BossState.Attack;
+        }
+    }
+
     //한 상태면 다른 상태로 넘어갈 수 없게 하고 싶음
     private void UpdateRotate2Player()
     {
         //transform.LookAt(player.transform.position);
-
             //player와 나와의 거리
             Vector3 LookingPlayerDir = player.transform.position - transform.position;
             //다시 쫓아가든, 공격하든 플레이어를 찾아서 총구를 회전하는 상태
@@ -124,7 +188,7 @@ public class BossFSM : MonoBehaviour
         OnWheelMesh();
 
         //공격가능범위 안으로 들어오면 Attack
-        if (DistanceBoss2Player <= NoAttackDistance)
+        if (DistanceBoss2Player <= NoAttack_ChaseDistance)
         {
             print("공격XLDistance에 들어왔어요");
             B_state = BossState.Wait;
@@ -165,16 +229,24 @@ public class BossFSM : MonoBehaviour
             Lflag = true;
             //B_state = BossState.Wait;
         }
-        else if (DistanceBoss2Player > GausCannonDistanceL && DistanceBoss2Player <= NoAttackDistance && !XLflag)
+        else if (DistanceBoss2Player > GausCannonDistanceL && DistanceBoss2Player <= makeLittleBossDistance && !XLflag)
         {
             print("GausCannonFire");
             StartCoroutine(GetComponent<EJGausCannonFireInstantiate>().CannonFire(AttackCompleted));
             XLflag = true;
             //B_state = BossState.Wait;
         }
+        else if(DistanceBoss2Player >makeLittleBossDistance && DistanceBoss2Player<=NoAttack_ChaseDistance && !XXLflag)
+        {
+            print("makelittleBoss");
+            MakeLittleBoss();
+            XXLflag = true;
+        }
+
+
 
         //공격 범위에서 벗어나면 Chase모드
-        if (DistanceBoss2Player > NoAttackDistance)
+        if (DistanceBoss2Player > NoAttack_ChaseDistance)
             {
                 print("Attack할 수 있는 거리가 아닙니다");
                 B_state = BossState.Chase;
@@ -217,8 +289,10 @@ public class BossFSM : MonoBehaviour
 
         if (curTime > waitTime)
         {
-            B_state = BossState.Attack;
-            curTime = 0;
+
+                B_state = BossState.Attack;
+                curTime = 0;
+
         }
     }
 
