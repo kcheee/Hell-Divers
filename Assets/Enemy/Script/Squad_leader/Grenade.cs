@@ -23,9 +23,11 @@ public class Grenade : MonoBehaviour
     IEnumerator delay()
     {
         yield return new WaitForSeconds(1);
-            smoke.SetActive(false);
+            //smoke.SetActive(false);
         yield return new WaitForSeconds(1.5f);
-            Instantiate(bombEft,transform.position, Quaternion.identity);
+        Camera.main.transform.DOShakePosition(0.3f, 0.5f);
+
+        Instantiate(bombEft,transform.position, Quaternion.identity);
         // 사운드 넣어야 함.
             Destroy(gameObject,0.25f);
     }
