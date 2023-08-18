@@ -38,7 +38,7 @@ public class Stratagems : MonoBehaviour
         //일정 시간이 흐르고
         yield return new WaitForSeconds(startT);
         //자신의 물리를 끈다.
-        SoundManager.instance.Play(clip);
+        SoundManager.instance.SfxPlay(clip);
         //rbody.isKinematic = true;
         //시간을 잰다.
         while (true) {

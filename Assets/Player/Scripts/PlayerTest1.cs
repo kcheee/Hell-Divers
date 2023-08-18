@@ -82,19 +82,16 @@ public class PlayerTest1 : MonoBehaviour
         //Debug.Log(test);
         if (test.x < 0.05) {
             test.x = 0.05f;
-            pos = Camera.main.ViewportToWorldPoint(test);
+            //pos = Camera.main.ViewportToWorldPoint(test);
             //pos.x = 0.95f;
-            pos.x -= Time.deltaTime * 5;
+            pos.x += Time.deltaTime * 5;
             transform.position = pos;
-            Camera.main.GetComponent<FollowCam>().Iscam = false;
+            //Camera.main.GetComponent<FollowCam>().Iscam = false;
         }
 
         if (test.x > 0.95)
         {
-            Camera.main.GetComponent<FollowCam>().Iscam = false;
-
-            Debug.Log("ss");
-
+            //Camera.main.GetComponent<FollowCam>().Iscam = false;
             //pos.x -= Time.deltaTime * 2;
             test.x = 0.95f;
             pos.x -= Time.deltaTime * 5;
@@ -104,19 +101,19 @@ public class PlayerTest1 : MonoBehaviour
 
             return;
         }
-
-        if (test.y < 0.5f) {
+        Debug.Log(gameObject.name +  test);
+        if (test.y < 0.05f) {
             test.y = 0.05f;
-            //pos = Camera.main.ViewportToWorldPoint(test);
-            //pos.x = 0.95f;
-            pos.z -= Time.deltaTime * 5;
+            pos = Camera.main.ViewportToWorldPoint(test);
+            pos.y = 0;
+            pos.z += Time.deltaTime * 5;
             transform.position = pos;
         }
         if(test.y > 0.95)
         {
-            test.y = 0.05f;
-            //pos = Camera.main.ViewportToWorldPoint(test);
-            //pos.x = 0.95f;
+            test.y = 0.95f;
+            pos = Camera.main.ViewportToWorldPoint(test);
+            pos.y = 0;
             pos.z -= Time.deltaTime * 5;
             transform.position = pos;
             return;
@@ -195,8 +192,9 @@ public class PlayerTest1 : MonoBehaviour
             //입력 코드를 입력할때
             code_input.input(() => {
                 code_input.IsInput = !stratagemManager.Isreturn;
-                //(원래 여기서 사운드 하는거 아님. 테스트임.)
-                SoundManager.instance.Play(testclip2);
+                
+                SoundManager.instance.SfxPlay(PlayerSound.instance.GetClip(PlayerSound.P_SOUND.Input));
+
                 //코드가 진짜 코드와 맞는지 계속 확인해준다.
                 int count = code_input.KeyInputList.Count - 1;
                 List<KeyType.Key> list = code_input.KeyInputList;
@@ -290,12 +288,12 @@ public class PlayerTest1 : MonoBehaviour
 
 
         //재장전 키를 눌렀고 Gun한테 장전을 할수 있는지 물어본다.
-        if (Input.GetKey(KeyCode.R) && currentGun.ReloadAble()) {
+        if (Input.GetKeyDown(KeyCode.R) && currentGun.ReloadAble()) {
             //애니메이션이 끝나고 장전이 실행된다.
             //장전 - > iDLE
             anim.SetTrigger("Reload");
             reload = true;
-            SoundManager.instance.Play(testclip);
+            SoundManager.instance.SfxPlay(PlayerSound.instance.GetClip(PlayerSound.P_SOUND.Reloading));
         }
        
 
