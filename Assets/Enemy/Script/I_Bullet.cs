@@ -9,7 +9,7 @@ public class I_Bullet : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         //Debug.Log(collision.ToString());
-        if (collision.gameObject.name == "Plane")
+        if (collision.gameObject.tag == "Floor")
         {
             //Debug.Log(collision.transform.position);
             Instantiate(eft,gameObject.transform.position, Quaternion.identity);

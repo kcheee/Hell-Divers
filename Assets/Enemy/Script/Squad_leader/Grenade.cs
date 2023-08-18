@@ -31,7 +31,7 @@ public class Grenade : MonoBehaviour
     }
     private void OnCollisionEnter(Collision collision)
     {
-        if(collision.collider.name == "Plane")
+        if(collision.collider.tag == "Floor")
         {
             StartCoroutine(delay());
         }

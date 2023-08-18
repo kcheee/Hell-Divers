@@ -4,15 +4,12 @@ using UnityEngine;
 
 public class CameraShake_Control : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+   public static CameraShake_Control Instance;
+
+    private void Awake()
     {
-        
+        Instance = this;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+
 }
