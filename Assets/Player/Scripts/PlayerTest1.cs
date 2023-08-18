@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-
-public class PlayerTest1 : MonoBehaviour
+using Photon.Pun;
+public class PlayerTest1 : MonoBehaviourPun,IPunObservable
 {
     //Test Text
     public Transform trBody;
@@ -26,7 +26,7 @@ public class PlayerTest1 : MonoBehaviour
         get { return current_stratagem; }
         set { current_stratagem = value;
             //스트라타잼 애니메이션 후 잡는다.
-            GameObject stratagemobj = Instantiate(stratagemObj, trBody.position + Vector3.up ,trBody.rotation);
+            GameObject stratagemobj = PhotonNetwork.Instantiate("Stratagem",trBody.position,Quaternion.identity);  //Instantiate(stratagemObj, trBody.position + Vector3.up ,trBody.rotation);
             Stratagems stratagem = stratagemobj.GetComponent<Stratagems>();
             stratagem = value;
             Rigidbody arbody = stratagemobj.GetComponent<Rigidbody>();
@@ -63,11 +63,16 @@ public class PlayerTest1 : MonoBehaviour
             }
         
         };
+
+
+        PlayerManager.instace.PlayerList.Add(this);
     }
 
     Vector3 last;
 
     public int layer = 0;
+
+    Coroutine currCoroutine;
     private void LateUpdate()
     {
         last = transform.position;
@@ -101,7 +106,7 @@ public class PlayerTest1 : MonoBehaviour
 
             return;
         }
-        Debug.Log(gameObject.name +  test);
+        //Debug.Log(gameObject.name +  test);
         if (test.y < 0.05f) {
             test.y = 0.05f;
             pos = Camera.main.ViewportToWorldPoint(test);
@@ -125,205 +130,159 @@ public class PlayerTest1 : MonoBehaviour
         //PlayerUI.instance.ManganizeText.text = currentGun.currentManganize.ToString();
         //PlayerUI.instance.BulletText.text = currentGun.maxBullet + " / " + currentGun.currentBullet;
 
-        if (layer != 1) {
+        Vector3 dir = Vector3.right * h + Vector3.forward * v;
+        dir.Normalize();
+        if (photonView.IsMine)
+        {
             h = Input.GetAxisRaw("Horizontal");
             v = Input.GetAxisRaw("Vertical");
-            Debug.Log("sS" + gameObject.name);
+            dir = Vector3.right * h + Vector3.forward * v;
+            dir.Normalize();
+            speed = 4;
+            if (Input.GetMouseButtonDown(0) && !reload)
+            {
+                int rand = Random.Range(-1, 2);
+                photonView.RPC(nameof(Fire), RpcTarget.All,rand);
+            }
+            if (Input.GetMouseButtonUp(0))
+            {
+                Debug.LogWarning("너는 올렸다.");
+                //CancelInvoke("ResetSpread");
+                if(currCoroutine != null)
+                {
+                    StopCoroutine(currCoroutine);
+                }
+                anim.SetBool("Fire", false);
+                //Invoke("ResetSpread", 0.5f);
+                currCoroutine = StartCoroutine(ResetSpread());
+                Debug.LogWarning("Invoke 호출");
+
+            }
+
+            //컨트롤 키를 눌렀을때 스트라타잼 입력을 받고싶다.
+            if (Input.GetKey(KeyCode.LeftControl))
+            {
+                PlayerUI.instance.StratagemImage.gameObject.SetActive(true);
+                //입력 코드를 입력할때
+                code_input.input(() => {
+                    code_input.IsInput = !stratagemManager.Isreturn;
+
+                    SoundManager.instance.SfxPlay(PlayerSound.instance.GetClip(PlayerSound.P_SOUND.Input));
+
+                    //코드가 진짜 코드와 맞는지 계속 확인해준다.
+                    int count = code_input.KeyInputList.Count - 1;
+                    List<KeyType.Key> list = code_input.KeyInputList;
+                    Stratagems stratagem = stratagemManager.CompareCode(list, count);
+                    if (stratagem)
+                    {
+                        C_Stratagem = stratagem;
+                        code_input.init();
+                        stratagemManager.init();
+                    }
+
+                }); //end lambda.
+                return;
+            } //end Input.
+              //만약에 움직이고 있다면(sqr은 루트 ㄴㄴ)
+
+
+            //재장전 키를 눌렀고 Gun한테 장전을 할수 있는지 물어본다.
+            if (Input.GetKeyDown(KeyCode.R) && currentGun.ReloadAble())
+            {
+                //애니메이션이 끝나고 장전이 실행된다.
+                //장전 - > iDLE
+                photonView.RPC(nameof(PlayAnim), RpcTarget.All, "Reload");
+                reload = true;
+                SoundManager.instance.SfxPlay(PlayerSound.instance.GetClip(PlayerSound.P_SOUND.Reloading));
+            }
+
+
+            //1번을 누르면 메인 무기
+            if (Input.GetKey(KeyCode.Alpha1))
+            {
+                ChangeGun(mainGun);
+            }
+            //2번을 누르면 보조 무기
+            if (Input.GetKey(KeyCode.Alpha2))
+            {
+                ChangeGun(subGun);
+            }
+
+
+
+            //땠으면
+            //전부 초기화 한다.
+            if (Input.GetKeyUp(KeyCode.LeftControl))
+            {
+                PlayerUI.instance.StratagemImage.gameObject.SetActive(false);
+                code_input.init();
+                stratagemManager.init();
+            }
+
+
+            if (Input.GetKeyDown(KeyCode.E) && currentGemObj != null)
+            {
+                currentGemObj.Add();
+            }
+
+            if (dir.sqrMagnitude > 0)
+            {
+                //SmoothDemp?
+                // transform.forward = dir;
+                if (Input.GetKey(KeyCode.LeftShift))
+                {
+
+                    speed = 10;
+                    
+                }
+
+
+
+                // 이동 방향과 Body 의 오른쪽 벡터의 사이각을 구하자
+                float angle = Vector3.Angle(dir, trBody.right);
+
+                //만약에 각도가 90보다 작으면 오른쪽을 회전
+                //원작에 회전이 생각보다 빠르게 된다.
+                if (!(Vector3.Magnitude(trBody.forward - dir) < 0.1))
+                {
+                    if (angle < 90)
+                    {
+                        trBody.Rotate(new Vector3(0, 5, 0));
+                        //Debug.Log(angle);
+                    }
+                    //그렇지않으면 왼쪽으로 회전
+                    else
+                    {
+                        //Debug.Log(angle);
+                        trBody.Rotate(new Vector3(0, -5, 0));
+                    }
+                }
+                //trBody.forward = Vector3.Lerp(trBody.forward, dir,Time.deltaTime * 20);
+
+            }
+
+
+
+            Aiming();
+            //Debug.LogError(speed);
+            transform.position += dir * speed * Time.deltaTime;
         }
-
-        if (layer == 1) {
-            if (Input.GetKeyDown(KeyCode.T)) {
-                v = 1;
-                Debug.Log("sS");
-            }
-            if (Input.GetKeyDown(KeyCode.G))
-            {
-                v = -1;
-            }
-            if (Input.GetKeyDown(KeyCode.H))
-            {
-                h = 1;
-            }
-            if (Input.GetKeyDown(KeyCode.F))
-            {
-                h = -1;
-            }
-            if (Input.GetKeyUp(KeyCode.T))
-            {
-                v = 0;
-                Debug.Log("sS");
-            }
-            if (Input.GetKeyUp(KeyCode.G))
-            {
-                v = 0;
-            }
-            if (Input.GetKeyUp(KeyCode.H))
-            {
-                h = 0;
-            }
-            if (Input.GetKeyUp(KeyCode.F))
-            {
-                h = 0;
-            }
+        //End Ming
 
 
 
-
-
-
-        }
-
-
-        Vector3 dir = Vector3.right * h + Vector3.forward * v;
-
-        //
-        dir.Normalize();
-        speed = 4;
         anim.SetFloat("Horizontal", h);
         anim.SetFloat("Vertical", v);
-        anim.SetFloat("speed", dir.magnitude);
+        anim.SetFloat("speed",dir.magnitude);
         anim.SetFloat("RunSpeed", speed);
-
-
-        //컨트롤 키를 눌렀을때 스트라타잼 입력을 받고싶다.
-        if (Input.GetKey(KeyCode.LeftControl))
-        {
-            PlayerUI.instance.StratagemImage.gameObject.SetActive(true);
-            //입력 코드를 입력할때
-            code_input.input(() => {
-                code_input.IsInput = !stratagemManager.Isreturn;
-                
-                SoundManager.instance.SfxPlay(PlayerSound.instance.GetClip(PlayerSound.P_SOUND.Input));
-
-                //코드가 진짜 코드와 맞는지 계속 확인해준다.
-                int count = code_input.KeyInputList.Count - 1;
-                List<KeyType.Key> list = code_input.KeyInputList;
-                Stratagems stratagem = stratagemManager.CompareCode(list, count);
-                if (stratagem)
-                {
-                    C_Stratagem = stratagem;
-                    code_input.init();
-                    stratagemManager.init();
-                }
-
-            }); //end lambda.
-            return;
-        } //end Input.
-        //만약에 움직이고 있다면(sqr은 루트 ㄴㄴ)
-        if (dir.sqrMagnitude > 0)
-        {
-            //SmoothDemp?
-           // transform.forward = dir;
-            if (Input.GetKey(KeyCode.LeftShift))
-            {
-                speed = 10;
-                anim.SetFloat("RunSpeed", speed);
-            }
-
-            // 이동 방향과 Body 의 오른쪽 벡터의 사이각을 구하자
-            float angle = Vector3.Angle(dir, trBody.right);
-
-            //만약에 각도가 90보다 작으면 오른쪽을 회전
-            //원작에 회전이 생각보다 빠르게 된다.
-            if (! (Vector3.Magnitude(trBody.forward - dir) < 0.1)) {
-                if (angle < 90)
-                {
-                    trBody.Rotate(new Vector3(0, 5, 0));
-                    //Debug.Log(angle);
-                }
-                //그렇지않으면 왼쪽으로 회전
-                else
-                {
-                    //Debug.Log(angle);
-                    trBody.Rotate(new Vector3(0, -5, 0));
-                }
-            }           
-            //trBody.forward = Vector3.Lerp(trBody.forward, dir,Time.deltaTime * 20);
-
-        }
-        Aiming();
-
-        /*Vector3 playerPosition = transform.position;
-        Camera mainCamera = Camera.main;
-        float moveSpeed = 10;
-        // 카메라 시야의 경계를 구합니다.
-        float cameraDistance = mainCamera.transform.position.y - transform.position.y;
-        float cameraHalfHeight = Mathf.Tan(mainCamera.fieldOfView * 0.5f * Mathf.Deg2Rad) * cameraDistance;
-        float cameraHalfWidth = cameraHalfHeight * mainCamera.aspect;
-
-        // 플레이어의 이동 입력을 받습니다.
-        float moveHorizontal = Input.GetAxis("Horizontal");
-        float moveVertical = Input.GetAxis("Vertical");
-
-        // 플레이어의 위치를 업데이트합니다.
-        float newPosX = playerPosition.x + moveHorizontal * moveSpeed * Time.deltaTime;
-        float newPosZ = playerPosition.z + moveVertical * moveSpeed * Time.deltaTime;
-
-        // 카메라 시야 내에 제한합니다.
-        float clampedX = Mathf.Clamp(newPosX, mainCamera.transform.position.x - cameraHalfWidth, mainCamera.transform.position.x + cameraHalfWidth);
-        float clampedZ = Mathf.Clamp(newPosZ, mainCamera.transform.position.z - cameraHalfHeight, mainCamera.transform.position.z + cameraHalfHeight);
-
-        // 제한된 위치로 플레이어의 위치를 업데이트합니다.
-        transform.position = new Vector3(clampedX, playerPosition.y, clampedZ);*/
-
-
-
-        transform.position += dir * speed * Time.deltaTime;
-        
-        if (Input.GetMouseButton(0) && !reload)
-        {
-            CancelInvoke("ResetSpread");
-            //anim.SetTrigger("Fire2");
-            bool IsAnim = currentGun.Fire();
-            
-            
-        }
-        if (Input.GetMouseButtonUp(0))
-        {
-            CancelInvoke("ResetSpread");
-            anim.SetBool("Fire", false);
-            Invoke("ResetSpread",0.5f);
-            
-        }
-
-
-        //재장전 키를 눌렀고 Gun한테 장전을 할수 있는지 물어본다.
-        if (Input.GetKeyDown(KeyCode.R) && currentGun.ReloadAble()) {
-            //애니메이션이 끝나고 장전이 실행된다.
-            //장전 - > iDLE
-            anim.SetTrigger("Reload");
-            reload = true;
-            SoundManager.instance.SfxPlay(PlayerSound.instance.GetClip(PlayerSound.P_SOUND.Reloading));
-        }
-       
-
-        //1번을 누르면 메인 무기
-        if (Input.GetKey(KeyCode.Alpha1)) {
-            ChangeGun(mainGun);
-        }
-        //2번을 누르면 보조 무기
-        if (Input.GetKey(KeyCode.Alpha2))
-        {
-            ChangeGun(subGun);
-        }
-
-
-
-        //땠으면
-        //전부 초기화 한다.
-        if (Input.GetKeyUp(KeyCode.LeftControl)) {
-            PlayerUI.instance.StratagemImage.gameObject.SetActive(false);
-            code_input.init();
-            stratagemManager.init();
-        }
-
-
-        if (Input.GetKeyDown(KeyCode.E) && currentGemObj != null) {
-            currentGemObj.Add();
-        }
-
     }
 
+    [PunRPC]
+    public void Fire(int rand) {
+        photonView.RPC("Res_Spr",RpcTarget.All);
+        Debug.LogError(rand);
+        currentGun.Fire(rand);
+    }
     public void ChangeGun(Gun gun) {
         currentGun.gameObject.SetActive(false);
         currentGun = gun;
@@ -341,8 +300,8 @@ public class PlayerTest1 : MonoBehaviour
         
         if (Input.GetButtonUp("Fire2"))
         {
-            anim.SetBool("PistolAiming", false);
-            anim.SetBool("RifleAiming", false);
+            photonView.RPC(nameof(PlayAnim), RpcTarget.All, "RifleAiming", false);
+
         }
         //마우스 우클릭
         if (Input.GetButton("Fire2"))
@@ -359,7 +318,7 @@ public class PlayerTest1 : MonoBehaviour
             switch (currentGun.gunType)
             {
                 case Gun.GunType.Rifle:
-                    anim.SetBool("RifleAiming", true);
+                    photonView.RPC(nameof(PlayAnim), RpcTarget.All, "RifleAiming", true);
 
                     break;
                 case Gun.GunType.Pistol:
@@ -390,15 +349,72 @@ public class PlayerTest1 : MonoBehaviour
             }
 
             Vector2 myDir = new Vector2(trBody.forward.x, trBody.forward.z);
-            anim.SetFloat("MyHorizontal", myDir.x);
-            anim.SetFloat("MyVertical", myDir.y);
+            photonView.RPC(nameof(PlayAnim), RpcTarget.All, "MyHorizontal", myDir.x);
+            photonView.RPC(nameof(PlayAnim), RpcTarget.All, "MyVertical", myDir.y);
+            /*anim.SetFloat("MyHorizontal", myDir.x);
+            anim.SetFloat("MyVertical", myDir.y);*/
 
         }
 
     }
 
-
-    public void ResetSpread() {
+    //RPC는 인보크를 사용할수없으니ㄷ까
+    public IEnumerator ResetSpread() {
+        yield return new WaitForSeconds(0.5f);
+        Debug.LogWarning("RESETSPR인보크호출");
+        photonView.RPC(nameof(ResetSpreadRPC), RpcTarget.All);
+        //currCoroutine = null;
+    }
+    [PunRPC]
+    public void ResetSpreadRPC() {
+        Debug.LogWarning("RPC");
         currentGun.ResetSpread();
+    }
+
+
+    public enum AnimationType { 
+        Trigger,Bool,Float
+    }
+    [PunRPC]
+    public void PlayAnim(string name) {
+        anim.SetTrigger(name);
+    }
+
+    [PunRPC]
+    public void PlayAnim(string name,float value)
+    {
+        Debug.Log("HELLO!" + value);
+        anim.SetFloat(name,value);
+    }
+
+    [PunRPC]
+    public void PlayAnim(string name, bool value)
+    {
+        anim.SetBool(name, value);
+    }
+
+    [PunRPC]
+    public void Res_Spr()
+    {
+        CancelInvoke("ResetSpread");
+    }
+
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        //너가 나냐
+        if (stream.IsWriting)
+        {
+            stream.SendNext(h);
+            stream.SendNext(v);
+            stream.SendNext(speed);
+        }
+        //누구냐
+        else {
+            
+            h = (float)stream.ReceiveNext();
+            v = (float)stream.ReceiveNext();
+            speed = (float)stream.ReceiveNext();
+            Debug.LogError("누구의 스피드" + speed);
+        }
     }
 }

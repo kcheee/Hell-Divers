@@ -64,7 +64,7 @@ public class PlayerTest : MonoBehaviour
         if (Input.GetMouseButton(0))
         {
             //anim.SetTrigger("Fire2");
-            bool IsAnim = currentGun.Fire();
+            //bool IsAnim = currentGun.Fire();
             
         }
 

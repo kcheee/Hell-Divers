@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 6748436930970804412}
   - component: {fileID: 6748436930970804413}
   - component: {fileID: 6748436930970804410}
+  - component: {fileID: -4876737968526962705}
   m_Layer: 0
   m_Name: Stratagem
   m_TagString: Untagged
@@ -132,3 +133,25 @@ MonoBehaviour:
   Item: {fileID: 4698562533961449482, guid: d5019988e723a9145bdbb3eda441de40, type: 3}
   clip: {fileID: 8300000, guid: ff0e42dd5037454478c8caa1440933ba, type: 3}
   CallCode: 01000000010000000000000002000000
+--- !u!114 &-4876737968526962705
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6748436930970804411}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
