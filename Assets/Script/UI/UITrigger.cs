@@ -39,13 +39,13 @@ public class UITrigger : MonoBehaviour
 
             uiElement.SetActive(true);
 
-            text.DOColor(T_C, 1f);
+            text.DOColor(T_C, 0.5f);
         }
         else if (distance >= UI_on && T_flag)
         {
             T_flag = false; // UI 비활성화됨으로 표시
 
-            text.DOColor(F_C, 0.2f).OnComplete(() =>
+            text.DOColor(F_C, 0.5f).OnComplete(() =>
             {
                 uiElement.SetActive(false);
             });
