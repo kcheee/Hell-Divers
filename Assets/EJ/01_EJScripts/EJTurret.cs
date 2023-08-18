@@ -81,24 +81,34 @@ public class EJTurret : MonoBehaviour
         }
         turretHead.transform.localEulerAngles = new Vector3(0, ry, 0);
     }
-    
+
+    // 한번만 실행
+    bool isTurretDone = false;
+    // 코루틴으로 Update
+    float delayTime = 1f;
+    // 탈출루트 설정: while문으로 distance보다 멀어졌을 때 감지는 이미 위에서 Idle상태로 가고 있음
 
     IEnumerator UpdateTurretFire()
     {
-        //Vector3 pos = new Vector3(transform.position.x, -1.2f, transform.position.z);
-        //float T = 3;
-        //T += Random.Range(0.8f, 2f);
-        //Vector3 bulletpos = pos + transform.forward * T + transform.right * Random.Range(-1f, 1f);
-
+        if (!isTurretDone)
+        {
+            isTurretDone = true;
             GameObject bullet = Instantiate(turretBulletFactory, turretFirePos.transform.position, Quaternion.identity);
+
+            //forward방향 맞춰주는 법??
             Instantiate(turretMuzzleFactory, turretFirePos.transform.position, Quaternion.identity).transform.parent = transform;
+
             bullet.transform.parent = transform;
 
             ONturretHeadAnim();
 
-            bullet.GetComponent<Rigidbody>().AddForce(turretFirePos.forward, ForceMode.Impulse);
+            bullet.GetComponent<Rigidbody>().AddForce(turretFirePos.forward*10, ForceMode.Impulse);
 
-            yield return new WaitForSeconds(0.15f);
+            yield return new WaitForSeconds(delayTime);
+            isTurretDone = false;
+        }
+
+            
         
     }
 
