@@ -50,11 +50,15 @@ public class FollowCam : MonoBehaviour
         target.y = camY;
         target.z += camZ;
 
-
-        //백터를 보간한다.
-        if (Iscam) {
-            transform.position = Vector3.Lerp(pos, target, Time.smoothDeltaTime * 10);
+        if (!Iscam) {
+            Debug.Log("Ss");
+            target.x = pos.x;
+            Iscam = true;
         }
+        //백터를 보간한다.
+        
+            transform.position = Vector3.Lerp(pos, target, Time.smoothDeltaTime * 10);
+
 
     }
 }

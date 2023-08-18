@@ -5,12 +5,12 @@ using UnityEngine;
 public class SoundManager : MonoBehaviour
 {
     public static SoundManager instance;
-    public AudioSource source;
-    
+    public AudioSource BGMSrc;
+    public AudioSource SFXSrc;
+
     private void Awake()
     {
         instance = this;
-        source = GetComponent<AudioSource>();
     }
     // Start is called before the first frame update
     void Start()
@@ -24,8 +24,9 @@ public class SoundManager : MonoBehaviour
         
     }
 
-    public void Play(AudioClip clip) {
-        source.clip = clip;
-        source.Play();
+    public void SfxPlay(AudioClip clip)
+    {
+        SFXSrc.PlayOneShot(clip);
+
     }
 }
