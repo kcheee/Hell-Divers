@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using Photon.Pun;
 public class PlayerManager : MonoBehaviour
 {
     public static PlayerManager instace;
@@ -20,7 +20,11 @@ public class PlayerManager : MonoBehaviour
     void Start()
     {
         instace = this;
-        
+        //RPC »£√‚ ∫Ûµµ
+        PhotonNetwork.SendRate = 30;
+        //OnPhotonSeriallizeView »£√‚ ∫Ûµµ
+        PhotonNetwork.SerializationRate = 30;
+        GameObject player =  PhotonNetwork.Instantiate("AlphaPlayer 1", Vector3.zero,Quaternion.identity);
 
     }
 

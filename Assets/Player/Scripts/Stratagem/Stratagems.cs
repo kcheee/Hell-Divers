@@ -14,6 +14,8 @@ public class Stratagems : MonoBehaviour
     public GameObject Item;
     public AudioClip clip;
 
+    bool isUse;
+    Animator anim;
     //호출 코드 리스트
     //플레이어 입력이 이 호출코드와 같다면 호출된다.
     public List<KeyType.Key> CallCode = new List<KeyType.Key>();
@@ -23,7 +25,8 @@ public class Stratagems : MonoBehaviour
         rbody = GetComponent<Rigidbody>();
         //현재 시간을 호출 시간으로 설정
         time = callTime;
-        StartCoroutine(CallStratagem(startTime));
+        anim = GetComponent<Animator>();
+        //rbody.AddForce(transform.forward * 7 + transform.up * 5, ForceMode.Impulse);
     }
 
     // Update is called once per frame
@@ -34,9 +37,9 @@ public class Stratagems : MonoBehaviour
 
 
     float time;
-    IEnumerator CallStratagem(float startT) {
+    IEnumerator CallStratagem() {
         //일정 시간이 흐르고
-        yield return new WaitForSeconds(startT);
+        
         //자신의 물리를 끈다.
         SoundManager.instance.SfxPlay(clip);
         //rbody.isKinematic = true;
@@ -58,10 +61,33 @@ public class Stratagems : MonoBehaviour
         }
     }
 
+    public void Call() {
+        StartCoroutine(CallStratagem());
+    }
+
     private void OnCollisionEnter(Collision collision)
     {
 
-        rbody.isKinematic = collision.gameObject.CompareTag("Floor");
+        //rbody.isKinematic = collision.gameObject.CompareTag("Floor");
+
+
+        if (collision.gameObject.CompareTag("Floor")){
+            //코루틴으로 처리한다.(예정)
+
+            //rbody.isKinematic = true;
+            StartCoroutine(GroundDelay(2f));
+            
+            
+        }
         
+    }
+
+
+    IEnumerator GroundDelay(float t) {
+        yield return new WaitForSeconds(t);
+        rbody.isKinematic = true;
+        transform.rotation = Quaternion.identity;
+        anim.SetTrigger("Land");
+        Call();
     }
 }

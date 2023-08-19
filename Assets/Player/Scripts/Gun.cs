@@ -57,7 +57,7 @@ public class Gun : MonoBehaviour
     }
     //Fire의 같은경우 한번 더 플레이 해 보니까
     //Ray로 되있는것같다.
-    public bool Fire() {
+    public bool Fire(int rand) {
 
         //이거같은경우는 나중에 프로퍼티로 bool 변수를 빼가지고 하는게 더 나을려나
         bool fire = currentBullet > 0 && isFire;
@@ -65,7 +65,8 @@ public class Gun : MonoBehaviour
         //총알이 있니?
         if (fire) {
             //발사했을때, 탄퍼짐 범위를 증가시킨다.
-            current_spreadRange += Time.deltaTime * add_spreadRange;
+            current_spreadRange += 0.01f * add_spreadRange;
+            Debug.LogError("계산된 탄퍼짐!" + current_spreadRange);
             //탄퍼짐 범위를 제한한다.
             current_spreadRange = Mathf.Clamp(current_spreadRange, min_spreadRange, max_spreadRange);
 
@@ -83,8 +84,8 @@ public class Gun : MonoBehaviour
 
             //총의 탄퍼짐 값을 구한다.
             //자신의 앞방향에서 자신의 오른쪽  백터에서 방향값을 곱하고 범위값을 곱한 백터를 더한다.
-            Vector3 spread = transform.forward + transform.right * Random.Range(-1, 2) * Time.deltaTime * current_spreadRange;
-
+            Vector3 spread = transform.forward + transform.right * rand * 0.01f * current_spreadRange;
+            Debug.LogError("이것이 탄퍼짐이다." + spread);
             Debug.DrawRay(transform.position, spread * MaxDistance, Color.red, 1);
 
             Ray ray = new Ray(transform.position,spread);
