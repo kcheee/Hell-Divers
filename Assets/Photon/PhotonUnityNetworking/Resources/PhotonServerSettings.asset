@@ -42,6 +42,7 @@ MonoBehaviour:
   - PlayAnim
   - Res_Spr
   - ResetSpreadRPC
+  - GetItem
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 0

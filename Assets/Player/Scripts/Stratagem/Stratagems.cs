@@ -23,7 +23,7 @@ public class Stratagems : MonoBehaviour
         rbody = GetComponent<Rigidbody>();
         //현재 시간을 호출 시간으로 설정
         time = callTime;
-        StartCoroutine(CallStratagem(startTime));
+        //rbody.AddForce(transform.forward * 7 + transform.up * 5, ForceMode.Impulse);
     }
 
     // Update is called once per frame
@@ -58,10 +58,20 @@ public class Stratagems : MonoBehaviour
         }
     }
 
+    public void Call() {
+        StartCoroutine(CallStratagem(startTime));
+    }
+
     private void OnCollisionEnter(Collision collision)
     {
 
-        rbody.isKinematic = collision.gameObject.CompareTag("Floor");
+        //rbody.isKinematic = collision.gameObject.CompareTag("Floor");
+
+
+        if (collision.gameObject.CompareTag("Floor")){
+            rbody.isKinematic = true;
+            Call();
+        }
         
     }
 }

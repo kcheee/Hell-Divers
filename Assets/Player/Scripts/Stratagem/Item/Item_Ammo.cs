@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
 
 public class Item_Ammo : Item,I_StratagemObject
@@ -16,6 +17,7 @@ public class Item_Ammo : Item,I_StratagemObject
 
         Player.currentGemObj = null;
         Destroy(gameObject);
+        //PhotonNetwork.Destroy(gameObject);
     }
 
     //활성화 되었을때

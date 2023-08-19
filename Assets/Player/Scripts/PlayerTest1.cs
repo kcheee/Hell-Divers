@@ -8,6 +8,8 @@ public class PlayerTest1 : MonoBehaviourPun,IPunObservable
 {
     //Test Text
     public Transform trBody;
+    public Transform RightHand;
+
     public float speed = 5;
     public Gun currentGun;
     public Gun mainGun;
@@ -21,17 +23,28 @@ public class PlayerTest1 : MonoBehaviourPun,IPunObservable
     public GameObject stratagemObj;
     public Stratagems current_stratagem;
 
-
+    //던지려고 하는 물체
+    public GameObject throwObject;
     public Stratagems C_Stratagem {
         get { return current_stratagem; }
         set { current_stratagem = value;
             //스트라타잼 애니메이션 후 잡는다.
-            GameObject stratagemobj = PhotonNetwork.Instantiate("Stratagem",trBody.position,Quaternion.identity);  //Instantiate(stratagemObj, trBody.position + Vector3.up ,trBody.rotation);
-            Stratagems stratagem = stratagemobj.GetComponent<Stratagems>();
-            stratagem = value;
-            Rigidbody arbody = stratagemobj.GetComponent<Rigidbody>();
-            arbody.AddForce(trBody.forward * 7 + trBody.up * 5, ForceMode.Impulse);
+            //anim.SetTrigger("Grenade");
+            photonView.RPC(nameof(PlayAnim), RpcTarget.All, "Grenade");
+            //currentGun.gameObject.SetActive(false);
+            //GameObject stratagemobj = PhotonNetwork.Instantiate("Stratagem",trBody.position,Quaternion.identity);  //Instantiate(stratagemObj, trBody.position + Vector3.up ,trBody.rotation);'
+
+            //Stratagems stratagem = stratagemobj.GetComponent<Stratagems>();
+            //stratagem = value;
+
         }
+    }
+
+    public void FireGrenade() {
+        GameObject stratagemobj = Instantiate((GameObject)Resources.Load("Stratagem"),RightHand.position,Quaternion.identity); //PhotonNetwork.Instantiate("Stratagem", RightHand.position, Quaternion.identity);
+        Rigidbody rbody = stratagemobj.GetComponent<Rigidbody>();
+        rbody.AddForce(trBody.forward * 7 + trBody.up * 5, ForceMode.Impulse);
+
     }
 
     public I_StratagemObject currentGemObj;
@@ -139,10 +152,13 @@ public class PlayerTest1 : MonoBehaviourPun,IPunObservable
             dir = Vector3.right * h + Vector3.forward * v;
             dir.Normalize();
             speed = 4;
-            if (Input.GetMouseButtonDown(0) && !reload)
+            if (Input.GetMouseButton(0) && !reload)
             {
                 int rand = Random.Range(-1, 2);
-                photonView.RPC(nameof(Fire), RpcTarget.All,rand);
+
+                
+                photonView.RPC(nameof(PlayAnim), RpcTarget.All,"Throw");
+                //photonView.RPC(nameof(Fire), RpcTarget.All,rand);
             }
             if (Input.GetMouseButtonUp(0))
             {
@@ -222,7 +238,7 @@ public class PlayerTest1 : MonoBehaviourPun,IPunObservable
 
             if (Input.GetKeyDown(KeyCode.E) && currentGemObj != null)
             {
-                currentGemObj.Add();
+                photonView.RPC(nameof(GetItem), RpcTarget.All);
             }
 
             if (dir.sqrMagnitude > 0)
@@ -358,13 +374,22 @@ public class PlayerTest1 : MonoBehaviourPun,IPunObservable
 
     }
 
-    //RPC는 인보크를 사용할수없으니ㄷ까
+
+
+    //RPC는 인보크를 사용할수없으니ㄷ까(인보크가 안되어서 코루틴으로 작성 왜 안되지?)
     public IEnumerator ResetSpread() {
         yield return new WaitForSeconds(0.5f);
         Debug.LogWarning("RESETSPR인보크호출");
         photonView.RPC(nameof(ResetSpreadRPC), RpcTarget.All);
         //currCoroutine = null;
     }
+
+    //모든 PC야 내가 아이템을 주웠어 네네들 다 삭제해
+    [PunRPC]
+    public void GetItem() {
+        currentGemObj.Add();
+    }
+
     [PunRPC]
     public void ResetSpreadRPC() {
         Debug.LogWarning("RPC");
@@ -383,7 +408,7 @@ public class PlayerTest1 : MonoBehaviourPun,IPunObservable
     [PunRPC]
     public void PlayAnim(string name,float value)
     {
-        Debug.Log("HELLO!" + value);
+        //Debug.Log("HELLO!" + value);
         anim.SetFloat(name,value);
     }
 
@@ -414,7 +439,7 @@ public class PlayerTest1 : MonoBehaviourPun,IPunObservable
             h = (float)stream.ReceiveNext();
             v = (float)stream.ReceiveNext();
             speed = (float)stream.ReceiveNext();
-            Debug.LogError("누구의 스피드" + speed);
+            
         }
     }
 }
