@@ -26,6 +26,7 @@ public class PlayerAnimationController : MonoBehaviour
 
 
     public void fire() {
+        Debug.Log("FIreGrenade!");
         Player.FireGrenade();
     }
     public void Grenade() {
@@ -36,6 +37,6 @@ public class PlayerAnimationController : MonoBehaviour
     public void GrenadeOff()
     {
         testGun.SetActive(true);
-
+        Player.current_stratagem = null;
     }
 }

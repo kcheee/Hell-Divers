@@ -41,10 +41,10 @@ public class PlayerTest1 : MonoBehaviourPun,IPunObservable
     }
 
     public void FireGrenade() {
-        GameObject stratagemobj = Instantiate((GameObject)Resources.Load("Stratagem"),RightHand.position,Quaternion.identity); //PhotonNetwork.Instantiate("Stratagem", RightHand.position, Quaternion.identity);
+        GameObject stratagemobj = Instantiate((GameObject)Resources.Load("str01"),RightHand.position,Quaternion.identity); //PhotonNetwork.Instantiate("Stratagem", RightHand.position, Quaternion.identity);
         Rigidbody rbody = stratagemobj.GetComponent<Rigidbody>();
         rbody.AddForce(trBody.forward * 7 + trBody.up * 5, ForceMode.Impulse);
-
+        rbody.AddTorque(Vector3.forward * 1000 + Vector3.right * 500 + Vector3.up * 400,ForceMode.Impulse);
     }
 
     public I_StratagemObject currentGemObj;
@@ -154,15 +154,20 @@ public class PlayerTest1 : MonoBehaviourPun,IPunObservable
             speed = 4;
             if (Input.GetMouseButton(0) && !reload)
             {
-                int rand = Random.Range(-1, 2);
+                if (current_stratagem)
+                {
+                    photonView.RPC(nameof(PlayAnim), RpcTarget.All, "Throw");
 
-                
-                photonView.RPC(nameof(PlayAnim), RpcTarget.All,"Throw");
-                //photonView.RPC(nameof(Fire), RpcTarget.All,rand);
+                }
+                else {
+                    int rand = Random.Range(-1, 2);
+                    photonView.RPC(nameof(Fire), RpcTarget.All, rand);
+                }
+
             }
             if (Input.GetMouseButtonUp(0))
             {
-                Debug.LogWarning("³Ê´Â ¿Ã·È´Ù.");
+                
                 //CancelInvoke("ResetSpread");
                 if(currCoroutine != null)
                 {
