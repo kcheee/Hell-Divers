@@ -2099,7 +2099,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 22654050072928336, guid: 7acda830bc3b51b4f9a251fc4d3960be, type: 3}
       propertyPath: lengthInSec
-      value: 3
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 22654050072928336, guid: 7acda830bc3b51b4f9a251fc4d3960be, type: 3}
       propertyPath: simulationSpeed
