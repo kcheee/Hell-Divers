@@ -48,4 +48,6 @@ public class EnemyInfo : MonoBehaviour
     // 플레이어와의 거리.
     public float distance;
     public GameObject BloodEft;
+    public GameObject DieEft;
+
 }

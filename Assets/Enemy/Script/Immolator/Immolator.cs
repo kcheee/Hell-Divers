@@ -19,7 +19,7 @@ public class Immolator : Enemy_Fun
 
     float currrTime = 0;
 
-public 
+    public FlameAttack flameattack;
 
     bool flag = false;
 
@@ -53,7 +53,7 @@ public
     // 화염방사 공격.
     IEnumerator I_RangedAttack()
     {
-        FlameAttack.instance.enabled = true;
+        flameattack.enabled = true;
         yield return  null;
     }
 

@@ -35,7 +35,7 @@ public class Enemy_Fun : EnemyInfo
 
     // patrol
     int targetIndex = 0;
-    
+
     // 시간 딜레이를 주기 위한 변수
     protected float currTime = 0;
     Vector3 P_targt;
@@ -51,7 +51,7 @@ public class Enemy_Fun : EnemyInfo
             E_state = EnemyState.chase;
         }
         else
-        P_targt = patrolT[targetIndex].transform.position;
+            P_targt = patrolT[targetIndex].transform.position;
 
         agent.SetDestination(P_targt);
 
@@ -81,7 +81,7 @@ public class Enemy_Fun : EnemyInfo
 
     protected virtual void F_chase()
     {
-       
+
     }
 
     // 공격1을 위한 대기시간.
@@ -92,7 +92,7 @@ public class Enemy_Fun : EnemyInfo
     protected virtual void F_rangedattack()
     {
         // 애니메이션 진행 후 chase로 바꿈.
-        
+
         // chase 
     }
     protected virtual void F_meleeattack()
@@ -137,8 +137,11 @@ public class Enemy_Fun : EnemyInfo
         {
             //die
             Debug.Log("die");
+
+            GameObject diegm = Instantiate(DieEft, pos, Quaternion.identity);
+
             anim.Play("Die");
-            Destroy(gameObject,1);
+            Destroy(gameObject);
 
         }
         // 부모로 설정.
@@ -156,10 +159,10 @@ public class Enemy_Fun : EnemyInfo
 
     protected void StopNavSetting()
     {
-        this.agent.isStopped=true;
+        this.agent.isStopped = true;
         this.agent.updatePosition = false;
         this.agent.updateRotation = false;
-        this.agent.velocity= Vector3.zero;
+        this.agent.velocity = Vector3.zero;
     }
     #endregion
 }

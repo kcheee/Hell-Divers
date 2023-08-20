@@ -384,6 +384,7 @@ MonoBehaviour:
   - {fileID: 0}
   distance: 0
   BloodEft: {fileID: 5737861413046029104, guid: 3884844a02ff2d9478fe8171a628d26c, type: 3}
+  DieEft: {fileID: 3745372705267084804, guid: 65e02a903274745498131b7d24a24198, type: 3}
   E_state: 0
 --- !u!195 &1723141161
 NavMeshAgent:

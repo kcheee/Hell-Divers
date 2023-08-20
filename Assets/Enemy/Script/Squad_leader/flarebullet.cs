@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using static UnityEngine.ParticleSystem;
+using DG.Tweening;
 
 public class flarebullet : MonoBehaviour {
 			
@@ -22,6 +23,7 @@ public class flarebullet : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 
+		Camera.main.transform.DOShakePosition(0.5f, 0.3f);
 		StartCoroutine("flareLightoff");
 		
 		GetComponent<AudioSource>().PlayOneShot(flareBurningSound);
