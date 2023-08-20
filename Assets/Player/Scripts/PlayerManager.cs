@@ -38,6 +38,7 @@ public class PlayerManager : MonoBehaviourPun
         //OnPhotonSeriallizeView 호출 빈도
         PhotonNetwork.SerializationRate = 60;
         Debug.Log("스타트 함수 실행!!");
+
         //너 혼자니?
         if (PhotonNetwork.CurrentRoom.PlayerCount <= 1)
         {

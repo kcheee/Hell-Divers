@@ -9529,6 +9529,7 @@ GameObject:
   - component: {fileID: 6772127969006303591}
   - component: {fileID: 6772127969006303584}
   - component: {fileID: 6772127969006303615}
+  - component: {fileID: 6496799388666563252}
   m_Layer: 0
   m_Name: Tank-2nd
   m_TagString: Untagged
@@ -9549,6 +9550,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7028181850951474329}
+  - {fileID: 7545769987826998282}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -9685,6 +9687,7 @@ MonoBehaviour:
   gausCannonMuzzleFactory: {fileID: 8579966591951127539, guid: 34940ba778088e74095f5f57d9c0dc28, type: 3}
   gausCannonPrefabFactory: {fileID: 100002, guid: 1643f2f296912084db639937e195b6b1, type: 3}
   rightArmReaction: {fileID: 0}
+  bodyReaction: {fileID: 0}
 --- !u!114 &6772127969006303610
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9700,6 +9703,7 @@ MonoBehaviour:
   machineGunPos: {fileID: 6772127969263830076}
   machineGunFactory: {fileID: 8765008237907036386, guid: ee1c36be32b35c844beaaec7378d2ac4, type: 3}
   leftArmReaction: {fileID: 0}
+  bodyReaction: {fileID: 0}
 --- !u!114 &6772127969006303611
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9716,6 +9720,7 @@ MonoBehaviour:
   bombHead: {fileID: 0}
   bombMuzzleFactory: {fileID: 8579966591951127539, guid: 34940ba778088e74095f5f57d9c0dc28, type: 3}
   headReaction: {fileID: 0}
+  bodyReaction: {fileID: 0}
 --- !u!114 &6772127969006303588
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9749,6 +9754,7 @@ MonoBehaviour:
   bombMuzzleImpactPrefab: {fileID: 8579966591951127539, guid: 34940ba778088e74095f5f57d9c0dc28, type: 3}
   bombExploImpactPrefab: {fileID: 8579966591951127539, guid: 34940ba778088e74095f5f57d9c0dc28, type: 3}
   bodyExploImpactPrefab: {fileID: 100006, guid: e076683e0305e35498b8e8834978c0fa, type: 3}
+  ObjectPool: {fileID: 7239203177727414990}
 --- !u!114 &6772127969006303590
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9803,8 +9809,8 @@ MonoBehaviour:
   makeLittleBossDistance: 22.5
   NoAttack_ChaseDistance: 27.5
   headAxis: {fileID: 6772127967208545473}
-  houndFactory: {fileID: 0}
-  turretFactory: {fileID: 0}
+  houndFactory: {fileID: 2634199799408390943, guid: 39297bb48813d18498b6e338c534bc5f, type: 3}
+  turretFactory: {fileID: 4661463343417660342, guid: 12ae03f655fb30241a35af2cd429df9f, type: 3}
   spawnPosGroup: {fileID: 0}
   spawnPos: []
 --- !u!114 &6772127969006303615
@@ -9821,6 +9827,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   wheelMeshR: {fileID: 4558555741262724699}
   wheelMeshL: {fileID: 3124646781541821560}
+--- !u!114 &6496799388666563252
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6772127969006303586}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1adf2424068ef5b47b0b2d01512ca7db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cannonPos: {fileID: 6772127968116815459}
+  gausCannonMuzzleFactory: {fileID: 8579966591951127539, guid: 34940ba778088e74095f5f57d9c0dc28, type: 3}
+  gausCannonPrefabFactory: {fileID: 100002, guid: 1643f2f296912084db639937e195b6b1, type: 3}
+  rightArmReaction: {fileID: 0}
+  bodyReaction: {fileID: 0}
 --- !u!1 &6772127969245551860
 GameObject:
   m_ObjectHideFlags: 0
@@ -10264,6 +10287,37 @@ Transform:
   - {fileID: 3387862853169443759}
   m_Father: {fileID: 6315279408836594758}
   m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &7239203177727414990
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7545769987826998282}
+  m_Layer: 0
+  m_Name: objPool
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7545769987826998282
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7239203177727414990}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6772127969006303585}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7283946000730591096
 GameObject:

@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &51314101273824193
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7370031999303596455}
+  m_Layer: 0
+  m_Name: SpawnPos
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7370031999303596455
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 51314101273824193}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 133}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2070771797293437711}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &456817835622855721
 GameObject:
   m_ObjectHideFlags: 0
@@ -544,6 +575,7 @@ Transform:
   m_Children:
   - {fileID: 3652600928002399603}
   - {fileID: 3652600927911941270}
+  - {fileID: 7370031999303596455}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -564,7 +596,13 @@ MonoBehaviour:
   bombDistanceS: 7.5
   machineGunDistanceM: 12.5
   GausCannonDistanceL: 17.5
-  NoAttackDistance: 22.5
+  makeLittleBossDistance: 22.5
+  NoAttack_ChaseDistance: 27.5
+  headAxis: {fileID: 0}
+  houndFactory: {fileID: 0}
+  turretFactory: {fileID: 0}
+  spawnPosGroup: {fileID: 0}
+  spawnPos: []
 --- !u!195 &2070771797293437713
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -618,6 +656,7 @@ MonoBehaviour:
   bombMuzzleImpactPrefab: {fileID: 8579966591951127539, guid: 34940ba778088e74095f5f57d9c0dc28, type: 3}
   bombExploImpactPrefab: {fileID: 8579966591951127539, guid: 34940ba778088e74095f5f57d9c0dc28, type: 3}
   bodyExploImpactPrefab: {fileID: 100006, guid: e076683e0305e35498b8e8834978c0fa, type: 3}
+  ObjectPool: {fileID: 0}
 --- !u!114 &2070771797293437716
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -645,7 +684,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bombPos: {fileID: 3652600929717477632}
+  bombHead: {fileID: 0}
   bombMuzzleFactory: {fileID: 8579966591951127539, guid: 34940ba778088e74095f5f57d9c0dc28, type: 3}
+  headReaction: {fileID: 0}
+  bodyReaction: {fileID: 0}
 --- !u!114 &2070771797293437714
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -660,6 +702,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   machineGunPos: {fileID: 3652600929736817079}
   machineGunFactory: {fileID: 8765008237907036386, guid: ee1c36be32b35c844beaaec7378d2ac4, type: 3}
+  leftArmReaction: {fileID: 0}
+  bodyReaction: {fileID: 0}
 --- !u!120 &2070771797293437720
 LineRenderer:
   m_ObjectHideFlags: 0
@@ -792,6 +836,8 @@ MonoBehaviour:
   cannonPos: {fileID: 3652600928732384232}
   gausCannonMuzzleFactory: {fileID: 8579966591951127539, guid: 34940ba778088e74095f5f57d9c0dc28, type: 3}
   gausCannonPrefabFactory: {fileID: 100002, guid: 1643f2f296912084db639937e195b6b1, type: 3}
+  rightArmReaction: {fileID: 0}
+  bodyReaction: {fileID: 0}
 --- !u!1 &2523996909159005962
 GameObject:
   m_ObjectHideFlags: 0

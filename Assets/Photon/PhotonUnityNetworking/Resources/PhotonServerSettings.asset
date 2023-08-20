@@ -17,7 +17,7 @@ MonoBehaviour:
     AppIdFusion: 
     AppIdChat: 
     AppIdVoice: 
-    AppVersion: 1.0
+    AppVersion: 1.1
     UseNameServer: 1
     FixedRegion: asia
     Server: 
@@ -53,6 +53,30 @@ MonoBehaviour:
   - CannonFirebyRPC
   - StartCannonFirebyRPC
   - CannonFireByRPC
+  - OffWheelMesh
+  - OnWheelMesh
+  - StartGausCannonByRPC
+  - StartMachineGunByRPC
+  - StartMakeBombByRPC
+  - MachineGunFire
+  - CannonFire
+  - MakeBomb
+  - GetbodyExploImpactQueue
+  - GetbombExploImpactQueue
+  - GetbombImpactQueue
+  - GetbombQueue
+  - GetGausCannonImpactQueue
+  - GetGausCannonMuzzleImpactQueue
+  - GetmachineGunImpactQueue
+  - ReturnbodyExploImpactQueue
+  - ReturnbombExploImpactQueue
+  - ReturnbombImpactQueue
+  - ReturnbombQueue
+  - ReturnGausCannonImpactQueue
+  - ReturnGausCannonMuzzleImpactQueue
+  - ReturnmachineGunImpactQueue
+  - OffNavMesh
+  - OnNavMesh
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 0

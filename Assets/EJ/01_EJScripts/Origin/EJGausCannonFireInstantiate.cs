@@ -2,10 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using Photon.Pun;
 using UnityEngine;
+using Photon.Pun;
 
 //RPC로 쓴다면 원래 상태로 돌려두면 된다.
 
-public class EJGausCannonFireInstantiate_photon : MonoBehaviour
+public class EJGausCannonFireInstantiate : MonoBehaviourPun
 {
     //cannonFire 변수
     int cannonCount = 25;
@@ -47,7 +48,7 @@ public class EJGausCannonFireInstantiate_photon : MonoBehaviour
     }
 
 
-
+    [PunRPC]
     public IEnumerator CannonFire(System.Action<int> complete)
     {
 

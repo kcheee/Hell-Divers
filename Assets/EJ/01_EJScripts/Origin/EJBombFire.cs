@@ -1,8 +1,9 @@
 
 using System.Collections;
 using UnityEngine;
+using Photon.Pun;
 
-public class EJBombFire : MonoBehaviour
+public class EJBombFire : MonoBehaviourPun
 {
     //bomb
     bool isBombDone = true;
@@ -38,29 +39,35 @@ public class EJBombFire : MonoBehaviour
         }
     }
 
+    [PunRPC]
     public IEnumerator MakeBomb(System.Action<int> complete)
     {
         isBombDone = false;
 
         for (int i = 0; i < bombCount; i++)
         {
+
             //bomb 积己
             bomb = EJObjectPoolMgr.instance.GetbombQueue();
 
-            bomb.transform.position = bombPos.position;
-            bomb.transform.up = bombPos.transform.up;
+            if (bomb != null)
+            {
+                bomb.transform.position = bombPos.position;
+                bomb.transform.up = bombPos.transform.up;
 
-            EJBossSFX.instance.PlaybombFlyingSFX();
-            ONHeadAnim();
-            ONBodyAnim();
+                EJBossSFX.instance.PlaybombFlyingSFX();
+                ONHeadAnim();
+                ONBodyAnim();
 
-            //bombMuzzle 积己
-            GameObject bombMuzzleImpact = Instantiate(bombMuzzleFactory);
+                //bombMuzzle 积己
+                GameObject bombMuzzleImpact = Instantiate(bombMuzzleFactory);
 
-            bombMuzzleImpact.transform.position = bombPos.position;
-            bombMuzzleImpact.transform.localEulerAngles =bombPos.transform.parent.localEulerAngles;
-            bombMuzzleImpact.transform.localScale = Vector3.one ;
-            bombMuzzleImpact.transform.up = bombPos.transform.forward;
+                bombMuzzleImpact.transform.position = bombPos.position;
+                bombMuzzleImpact.transform.localEulerAngles = bombPos.transform.parent.localEulerAngles;
+                bombMuzzleImpact.transform.localScale = Vector3.one;
+                bombMuzzleImpact.transform.up = bombPos.transform.forward;
+            }
+            
 
             //酿鸥烙
             yield return new WaitForSeconds(Random.Range(0.1f,0.3f));

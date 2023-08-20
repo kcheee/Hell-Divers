@@ -44,10 +44,8 @@ public class Enemy1 : Enemy_Fun
     }
 
     private void Start()
-    {
-        
+    {        
         //target = GameObject.FindWithTag("Player");
-
         E_state = EnemyState.patrol;
     }
 
@@ -56,7 +54,6 @@ public class Enemy1 : Enemy_Fun
         // 플레이어가 없으면 리턴
         if (PlayerManager.instace.PlayerList.Count == 0)
             return;
-
 
         if (photonView.IsMine)
         {
@@ -82,6 +79,7 @@ public class Enemy1 : Enemy_Fun
     {
         StartCoroutine(I_RangedAttack());
     }
+
     [PunRPC]
     IEnumerator I_RangedAttack()
     {      
