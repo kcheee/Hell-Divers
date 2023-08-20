@@ -4,9 +4,10 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 using Photon.Pun;
+using System;
 
 // Enemy 공통된 기능.
-public class Enemy_Fun : EnemyInfo, IPunObservable
+public class Enemy_Fun : EnemyInfo, IPunObservable,I_Entity
 {
     // Enemy 상태
     public enum EnemyState
@@ -233,5 +234,31 @@ public class Enemy_Fun : EnemyInfo, IPunObservable
         //}
     }
     #endregion
+    [PunRPC]
+    public void damaged(Vector3 pos,int damage = 0)
+    {
+        Debug.Log("Damaged");
+        anim.SetTrigger("Hit");
+        ENEMY.hp -= damage;
+        GameObject gm = Instantiate(BloodEft, pos, Quaternion.identity);
+        Destroy(gm, 2);
+        if (ENEMY.hp <= 0)
+        {
+            //die
+            Debug.Log("die");
+            GameObject diegm = Instantiate(DieEft, pos, Quaternion.identity);
+            //GameObject diegm = Instantiate(DieEft, pos, Quaternion.identity);
+
+            anim.Play("Die");
+            Destroy(gameObject);
+
+        }
+    }
+
+    public void die(Action action)
+    {
+        Debug.Log("DAmage!!");
+    }
+
 
 }

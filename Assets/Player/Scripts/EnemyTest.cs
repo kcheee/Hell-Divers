@@ -2,7 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using Photon.Pun;
 public class EnemyTest : MonoBehaviour,I_Entity
 {
     public float Hp = 10;
@@ -17,12 +17,8 @@ public class EnemyTest : MonoBehaviour,I_Entity
     {
         
     }
-
-    public void Damaged(float damage) {
-
-    }
-
-    public void damaged(int damage = 0)
+    [PunRPC]
+    public void damaged(Vector3 pos,int damage = 0)
     {
         Debug.Log("Èå¾Ó ¾ÆÆÄ¿ë¤Ð");
         Hp -= damage;

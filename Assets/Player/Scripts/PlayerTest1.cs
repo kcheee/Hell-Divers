@@ -6,8 +6,6 @@ using TMPro;
 using Photon.Pun;
 public class PlayerTest1 : MonoBehaviourPun,IPunObservable
 {
-
-    public static PlayerTest1 Instance;
     //Test Text
     public Transform trBody;
     public Transform RightHand;
@@ -61,7 +59,6 @@ public class PlayerTest1 : MonoBehaviourPun,IPunObservable
 
     private void Awake()
     {
-        Instance=this;
         Debug.Log("어웨이크 함수 실행!!");
         
         //PlayerManager.instace.action();
@@ -83,6 +80,7 @@ public class PlayerTest1 : MonoBehaviourPun,IPunObservable
                 anim.SetTrigger("Die"); 
                 currentState = PlayerState.Die;
                 PlayerManager.instace.PlayerList.Remove(this);
+                PlayerManager.instace.DeathList.Add(this);
             }
         
         };
@@ -461,14 +459,10 @@ public class PlayerTest1 : MonoBehaviourPun,IPunObservable
         }
     }
 
-    public void delegatecount()
+
+    //플레이어가 나가면 등록 종료
+    private void OnDestroy()
     {
-        photonView.RPC(nameof(count), RpcTarget.All);
-    }
-    [PunRPC]
-    public void count()
-    {
-        LobbySceneChange.playerReady++;
-        Debug.Log(LobbySceneChange.playerReady);
+        PlayerManager.instace.PLAYER_LIST.Remove(this);
     }
 }

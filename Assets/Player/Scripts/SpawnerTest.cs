@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using Photon.Pun;
 public class SpawnerTest : MonoBehaviour
 {
     public GameObject Entity;
@@ -10,6 +10,7 @@ public class SpawnerTest : MonoBehaviour
     void Start()
     {
         instance = this;
+        Spawn(0.5f);
     }
 
     // Update is called once per frame
@@ -20,7 +21,7 @@ public class SpawnerTest : MonoBehaviour
 
     public void Spawn(float t) {
         StartCoroutine(SpawnTime(t, ()=> {
-            Instantiate(Entity, transform.position, transform.rotation);
+            PhotonNetwork.Instantiate("dum", transform.position, transform.rotation);
         }));
         
 
