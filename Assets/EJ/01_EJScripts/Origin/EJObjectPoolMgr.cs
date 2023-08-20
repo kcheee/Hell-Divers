@@ -45,10 +45,6 @@ public class EJObjectPoolMgr : MonoBehaviourPun
     void Awake()
     {
         instance = this;
-
-
-
-
         //gausCanon 미리 생성 후 꺼두기
         for (int i = 0; i < gausCannonNum; i++)
         {

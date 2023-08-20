@@ -107,7 +107,7 @@ public class BossFSM : MonoBehaviourPun
         switch (B_state)
         {
             case BossState.MakeLittleBoss:
-                MakeLittleBoss();
+                photonView.RPC(nameof(MakeLittleBoss),RpcTarget.All);
                 break;
             case BossState.Chase:
                 UpdateChase();
@@ -137,6 +137,7 @@ public class BossFSM : MonoBehaviourPun
     public Transform spawnPosGroup;
     public Vector3[] spawnPos;
 
+    [PunRPC]
     private void MakeLittleBoss()
     {
         if (!isHoundDone)
@@ -149,6 +150,7 @@ public class BossFSM : MonoBehaviourPun
             for (int i = 0; i < spawnPos.Length; i++)
             {
                 GameObject hound = Instantiate(houndFactory);
+                hound.GetComponent<Hound>().E_state = Enemy_Fun.EnemyState.chase;
 
                 spawnPosGroup.Rotate(0, angle, 0);
                 spawnPos[i] = spawnPosGroup.position + spawnPosGroup.forward * 2;
