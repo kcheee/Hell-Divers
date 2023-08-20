@@ -52,6 +52,7 @@ MonoBehaviour:
   - I_RangedAttack
   - CannonFirebyRPC
   - StartCannonFirebyRPC
+  - CannonFireByRPC
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 0
