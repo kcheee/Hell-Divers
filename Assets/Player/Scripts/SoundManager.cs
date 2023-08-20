@@ -29,4 +29,10 @@ public class SoundManager : MonoBehaviour
         SFXSrc.PlayOneShot(clip);
 
     }
+    public void BgmPlay(AudioClip clip)
+    {
+        BGMSrc.clip = clip;
+        BGMSrc.Play();
+
+    }
 }

@@ -72,8 +72,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   callTime: 5
   startTime: 5
+  Platform: {fileID: 5681520340206640054, guid: d9604ffd5624cbd4584464cfc1cbd73c, type: 3}
   Item: {fileID: 4698562533961449482, guid: d5019988e723a9145bdbb3eda441de40, type: 3}
-  clip: {fileID: 8300000, guid: 9ae271abe0e89b742a0be570f4ddf614, type: 3}
+  clip: {fileID: 8300000, guid: ff0e42dd5037454478c8caa1440933ba, type: 3}
+  timeText: {fileID: 7354023627979589584, guid: ef49ff0c2c5629d43b1f717a4c115dc3, type: 3}
   CallCode: 00000000000000000100000001000000
 --- !u!114 &-3338962294268940043
 MonoBehaviour:

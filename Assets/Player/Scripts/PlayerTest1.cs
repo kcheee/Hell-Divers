@@ -56,6 +56,13 @@ public class PlayerTest1 : MonoBehaviourPun,IPunObservable
         Live,Die
     }
     public PlayerState currentState = PlayerState.Live;
+
+    private void Awake()
+    {
+        Debug.Log("어웨이크 함수 실행!!");
+        
+        //PlayerManager.instace.action();
+    }
     void Start()
     {
         anim = trBody.GetComponent<Animator>();
@@ -78,7 +85,10 @@ public class PlayerTest1 : MonoBehaviourPun,IPunObservable
         };
 
 
-        PlayerManager.instace.PlayerList.Add(this);
+        if (photonView.IsMine) {
+            PlayerManager.instace.action = null;
+        }
+        PlayerManager.instace.Addlist(this);
     }
 
     Vector3 last;
@@ -301,7 +311,7 @@ public class PlayerTest1 : MonoBehaviourPun,IPunObservable
     [PunRPC]
     public void Fire(int rand) {
         photonView.RPC("Res_Spr",RpcTarget.All);
-        Debug.LogError(rand);
+        //Debug.LogError(rand);
         currentGun.Fire(rand);
     }
     public void ChangeGun(Gun gun) {

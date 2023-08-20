@@ -2,12 +2,19 @@ using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
 public class Platform : MonoBehaviour
 {
     public GameObject particle1;
     public GameObject particle2;
     AudioSource audiosource;
+
+    
+
+    //player add
+    public GameObject Item;
+    public System.Action action;
 
     IEnumerator move()
     {
@@ -20,6 +27,17 @@ public class Platform : MonoBehaviour
             
             fun();
 
+            //player add
+            if (action != null) {
+                action();
+            }
+
+            if (Item)
+            {
+                Instantiate(Item,transform.position + Vector3.up , Quaternion.identity);
+
+            }
+            //Instantiate(Item, transform.position, Quaternion.identity);
         });
     }
 

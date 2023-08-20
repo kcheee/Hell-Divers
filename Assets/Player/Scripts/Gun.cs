@@ -66,7 +66,7 @@ public class Gun : MonoBehaviour
         if (fire) {
             //발사했을때, 탄퍼짐 범위를 증가시킨다.
             current_spreadRange += 0.01f * add_spreadRange;
-            Debug.LogError("계산된 탄퍼짐!" + current_spreadRange);
+            //Debug.LogError("계산된 탄퍼짐!" + current_spreadRange);
             //탄퍼짐 범위를 제한한다.
             current_spreadRange = Mathf.Clamp(current_spreadRange, min_spreadRange, max_spreadRange);
 
@@ -85,7 +85,7 @@ public class Gun : MonoBehaviour
             //총의 탄퍼짐 값을 구한다.
             //자신의 앞방향에서 자신의 오른쪽  백터에서 방향값을 곱하고 범위값을 곱한 백터를 더한다.
             Vector3 spread = transform.forward + transform.right * rand * 0.01f * current_spreadRange;
-            Debug.LogError("이것이 탄퍼짐이다." + spread);
+            //Debug.LogError("이것이 탄퍼짐이다." + spread);
             Debug.DrawRay(transform.position, spread * MaxDistance, Color.red, 1);
 
             Ray ray = new Ray(transform.position,spread);
