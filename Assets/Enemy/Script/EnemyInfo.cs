@@ -2,8 +2,9 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
-public class EnemyInfo : MonoBehaviour
+public class EnemyInfo : MonoBehaviourPun
 {  
     [Serializable]
     public struct enemyinfo
@@ -49,5 +50,6 @@ public class EnemyInfo : MonoBehaviour
     public float distance;
     public GameObject BloodEft;
     public GameObject DieEft;
+
 
 }

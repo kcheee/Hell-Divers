@@ -2,10 +2,10 @@
 using System.Collections;
 using static UnityEngine.ParticleSystem;
 using DG.Tweening;
+using Photon.Pun;
 
-public class flarebullet : MonoBehaviour {
+public class flarebullet : MonoBehaviourPun {
 			
-
 	private Light flarelight;
 	private AudioSource flaresound;
 	private ParticleSystemRenderer smokepParSystem;
@@ -17,15 +17,35 @@ public class flarebullet : MonoBehaviour {
 	private float smooth = 1.5f;
 	public 	float flareTimer = 9;
 	public AudioClip flareBurningSound;
+	public int spawnPos;
 
 	Rigidbody rb;
+
+	IEnumerator spawn()
+	{
+		yield return new WaitForSeconds(4);
+        float angle = 360 / spawnPos;
+        Transform tf = gameObject.transform;
+        Vector3 FlarePo = new Vector3(transform.position.x,0,transform.position.z);
+        for (int i = 0; i < spawnPos; i++)
+        {
+            Vector3 Po = FlarePo + new Vector3(Random.Range(-4f, 4), Random.Range(-4f, 4), Random.Range(-4f, 4));
+
+            PhotonNetwork.Instantiate("Initiate_E-main", Po, Quaternion.identity);
+
+            yield return new WaitForSeconds(Random.Range(0.2f, 1f));
+        }
+    }
 
 	// Use this for initialization
 	void Start () {
 
+		// 카메라 쉐이크 모두 되게 설정해야함.
 		Camera.main.transform.DOShakePosition(0.5f, 0.3f);
 		StartCoroutine("flareLightoff");
-		
+
+		StartCoroutine(spawn());
+
 		GetComponent<AudioSource>().PlayOneShot(flareBurningSound);
 		flarelight = GetComponent<Light>();
 		flaresound = GetComponent<AudioSource>();
