@@ -726,7 +726,7 @@ MonoBehaviour:
   isFire: 1
   damage: 1
   WaitAnim: 0
-  animtest: {fileID: 7785566048963915787}
+  animtest: {fileID: 4837097170677732449}
   gunType: 0
   current_spreadRange: 0
   min_spreadRange: 1
@@ -1842,7 +1842,7 @@ MonoBehaviour:
   isFire: 1
   damage: 10
   WaitAnim: 0
-  animtest: {fileID: 7785566048963915787}
+  animtest: {fileID: 0}
   gunType: 1
   current_spreadRange: 0
   min_spreadRange: 1
@@ -2086,6 +2086,27 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: f70d5c5bad9e14a4a8a19d4fb294c77b, type: 3}
   m_PrefabInstance: {fileID: 4422946857137032602}
   m_PrefabAsset: {fileID: 0}
+--- !u!95 &4837097170677732449
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3575892646341144779}
+  m_Enabled: 1
+  m_Avatar: {fileID: 9000000, guid: f70d5c5bad9e14a4a8a19d4fb294c77b, type: 3}
+  m_Controller: {fileID: 9100000, guid: a65e64b0458757740b3011367afc4821, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!114 &1301188215681869166
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2192,11 +2213,6 @@ Transform:
 --- !u!4 &7448129614548293721 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6502182839619065283, guid: f70d5c5bad9e14a4a8a19d4fb294c77b, type: 3}
-  m_PrefabInstance: {fileID: 4422946857137032602}
-  m_PrefabAsset: {fileID: 0}
---- !u!95 &7785566048963915787 stripped
-Animator:
-  m_CorrespondingSourceObject: {fileID: 5866666021909216657, guid: f70d5c5bad9e14a4a8a19d4fb294c77b, type: 3}
   m_PrefabInstance: {fileID: 4422946857137032602}
   m_PrefabAsset: {fileID: 0}
 --- !u!4 &7820321747108706546 stripped

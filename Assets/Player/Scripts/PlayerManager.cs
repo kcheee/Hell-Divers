@@ -51,7 +51,10 @@ public class PlayerManager : MonoBehaviourPun
         //OnPhotonSeriallizeView 호출 빈도
         PhotonNetwork.SerializationRate = 60;
         Debug.Log("스타트 함수 실행!!");
+<<<<<<< HEAD
         Debug.Log(PhotonNetwork.CurrentRoom.PlayerCount);
+=======
+>>>>>>> fdfdffdfdf
 
         //너 혼자니?
         StartCoroutine(spawn());

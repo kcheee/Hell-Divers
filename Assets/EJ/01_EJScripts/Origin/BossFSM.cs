@@ -3,8 +3,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using Photon.Pun;
 
-public class BossFSM : MonoBehaviour
+
+//Pun을 안쓴다면 RPC를 써야 한다?
+
+public class BossFSM : MonoBehaviourPun
 {
     public static BossFSM instance;
 
@@ -21,7 +25,10 @@ public class BossFSM : MonoBehaviour
 
     //navigation
     NavMeshAgent nav;
-    GameObject player;
+
+
+    //가장 가까운 Player을 return
+    private Transform closestObject;
 
     //Animation
     //public Animator anim;
@@ -70,8 +77,9 @@ public class BossFSM : MonoBehaviour
         nav = GetComponent<NavMeshAgent>();
         //nav.transform.forward =transform.forward;
 
-        player = GameObject.FindGameObjectWithTag("Player");
-        Debug.Log(player);
+        //closest = GameObject.FindGameObjectWithTag("Player");
+        //Debug.Log(closest);
+        //closestObject = FindClosestObject();
 
         //왜 chase부터 안들어오지?
         B_state = BossState.Chase;
@@ -81,20 +89,25 @@ public class BossFSM : MonoBehaviour
 
         //littleBoss 순서대로 넣고 싶음
         littleBoss = new GameObject[] { houndFactory, turretFactory};
-
     }
 
     // Update is called once per frame
     void Update()
     {
-        DistanceBoss2Player = Vector3.Distance(transform.position, player.transform.position);
+        if (PlayerManager.instace.PlayerList.Count == 0) return;
+        Debug.Log(closestObject);
+
+        if (photonView.IsMine)
+        {
+            closestObject = FindClosestObject();
+            DistanceBoss2Player = Vector3.Distance(transform.position, closestObject.transform.position);
+
         //움직이는 player를 바라보게 해야 한다.
         //headAxis.transform.LookAt(player.transform);
-
         switch (B_state)
         {
             case BossState.MakeLittleBoss:
-                MakeLittleBoss();
+                photonView.RPC(nameof(MakeLittleBoss),RpcTarget.All);
                 break;
             case BossState.Chase:
                 UpdateChase();
@@ -109,8 +122,10 @@ public class BossFSM : MonoBehaviour
                 UpdateDie();
                 break;
         }
+        }
     }
 
+    #region 상태
     public void ChangeState(BossState s)
     {
         if (B_state == s) return;
@@ -122,6 +137,7 @@ public class BossFSM : MonoBehaviour
     public Transform spawnPosGroup;
     public Vector3[] spawnPos;
 
+    [PunRPC]
     private void MakeLittleBoss()
     {
         if (!isHoundDone)
@@ -134,6 +150,7 @@ public class BossFSM : MonoBehaviour
             for (int i = 0; i < spawnPos.Length; i++)
             {
                 GameObject hound = Instantiate(houndFactory);
+                hound.GetComponent<Hound>().E_state = Enemy_Fun.EnemyState.chase;
 
                 spawnPosGroup.Rotate(0, angle, 0);
                 spawnPos[i] = spawnPosGroup.position + spawnPosGroup.forward * 2;
@@ -175,7 +192,7 @@ public class BossFSM : MonoBehaviour
     {
         //transform.LookAt(player.transform.position);
             //player와 나와의 거리
-            Vector3 LookingPlayerDir = player.transform.position - transform.position;
+            Vector3 LookingPlayerDir = closestObject.transform.position - transform.position;
             //다시 쫓아가든, 공격하든 플레이어를 찾아서 총구를 회전하는 상태
             transform.forward = Vector3.Lerp(transform.forward, LookingPlayerDir, 0.7f * Time.deltaTime  );
     }
@@ -183,9 +200,11 @@ public class BossFSM : MonoBehaviour
 
     private void UpdateChase()
     {
-        OnNavMesh();
-        nav.destination = player.transform.position;
-        OnWheelMesh();
+        photonView.RPC(nameof(OnNavMesh),RpcTarget.All);
+      
+        nav.destination = closestObject.transform.position;
+        photonView.RPC(nameof(OnWheelMesh), RpcTarget.All);
+
 
         //공격가능범위 안으로 들어오면 Attack
         if (DistanceBoss2Player <= NoAttack_ChaseDistance)
@@ -211,6 +230,22 @@ public class BossFSM : MonoBehaviour
         //rotate = true;
     }
 
+    [PunRPC]
+    void StartMakeBombByRPC()
+    {
+        StartCoroutine(transform.GetComponent<EJBombFire>().MakeBomb(AttackCompleted));
+    }
+    [PunRPC]
+    void StartGausCannonByRPC()
+    {
+        StartCoroutine(transform.GetComponent<EJGausCannonFireInstantiate>().CannonFire(AttackCompleted));
+    }
+    [PunRPC]
+    void StartMachineGunByRPC()
+    {
+        StartCoroutine(transform.GetComponent<EJMachineGun>().MachineGunFire(AttackCompleted));
+    }
+
     //쿨타임을 걸어두고 앞으로 걸어나가면 공격 다르게 발사되는 상태
     private void UpdateAttack()
     {
@@ -218,28 +253,36 @@ public class BossFSM : MonoBehaviour
         if (DistanceBoss2Player <= bombDistanceS && !Sflag)
         {
             print("MakeBomb");
-            StartCoroutine(transform.GetComponent<EJBombFire>().MakeBomb(AttackCompleted));
+            //StartCoroutine(transform.GetComponent<EJBombFire>().MakeBomb(AttackCompleted));
+
+            photonView.RPC(nameof(StartMakeBombByRPC), RpcTarget.All);
+            //StartCoroutine(transform.GetComponent<>)
             Sflag = true;
             //B_state = BossState.Wait;
         }
         else if (DistanceBoss2Player > machineGunDistanceM && DistanceBoss2Player <= GausCannonDistanceL && !Lflag)
         {
             print("MachineGunFire");
-            StartCoroutine(GetComponent<EJMachineGun>().MachineGunFire(AttackCompleted));
+            //StartCoroutine(GetComponent<EJMachineGun>().MachineGunFire(AttackCompleted));
+
+            photonView.RPC(nameof(StartMachineGunByRPC), RpcTarget.All);
             Lflag = true;
             //B_state = BossState.Wait;
         }
         else if (DistanceBoss2Player > GausCannonDistanceL && DistanceBoss2Player <= makeLittleBossDistance && !XLflag)
         {
             print("GausCannonFire");
-            StartCoroutine(GetComponent<EJGausCannonFireInstantiate_photon>().CannonFire(AttackCompleted));
+            //StartCoroutine(GetComponent<EJGausCannonFireInstantiate>().CannonFire(AttackCompleted));
+            //RPC되어 있는 스크립트로 가져오기
+            photonView.RPC(nameof(StartGausCannonByRPC), RpcTarget.All);
+            StartCoroutine(GetComponent<PhotonGausCannon.EJGausCannonFireInstantiate_photon>().CannonFireByRPC(AttackCompleted));
             XLflag = true;
             //B_state = BossState.Wait;
         }
         else if(DistanceBoss2Player >makeLittleBossDistance && DistanceBoss2Player<=NoAttack_ChaseDistance && !XXLflag)
         {
             print("makelittleBoss");
-            MakeLittleBoss();
+            photonView.RPC(nameof(MakeLittleBoss), RpcTarget.All);
             XXLflag = true;
 
             B_state = BossState.Wait;
@@ -263,8 +306,8 @@ public class BossFSM : MonoBehaviour
 
     private void UpdateWait()
     {
-        OffNavMesh();
-        OffWheelMesh();
+        photonView.RPC(nameof(OffNavMesh), RpcTarget.All);
+        photonView.RPC(nameof(OffWheelMesh),RpcTarget.All);
 
         //움직이는 player를 바라보게 해야 한다.
         //headAxis.transform.LookAt(player.transform);
@@ -294,7 +337,28 @@ public class BossFSM : MonoBehaviour
              curTime = 0;
         }
     }
+    #endregion
 
+    // 가까운 플레이어 찾는 함수.
+    protected Transform FindClosestObject()
+    {
+        Transform closest = PlayerManager.instace.PlayerList[0].transform;
+        float closestDistance = Vector3.Distance(transform.position, closest.position);
+
+        foreach (PlayerTest1 obj in PlayerManager.instace.PlayerList)
+        {
+            float distance = Vector3.Distance(transform.position, obj.transform.position);
+            if (distance < closestDistance)
+            {
+                closest = obj.transform;
+                closestDistance = distance;
+            }
+        }
+
+        return closest;
+    }
+
+    [PunRPC]
     void OnNavMesh()
     {
         this.nav.isStopped = false;
@@ -302,6 +366,7 @@ public class BossFSM : MonoBehaviour
         this.nav.updateRotation = true;
     }
 
+    [PunRPC]
     void OffNavMesh()
     {
         this.nav.velocity = Vector3.zero;
@@ -318,12 +383,13 @@ public class BossFSM : MonoBehaviour
         Lflag = false;
         XLflag = false;
     }
-
+    
+    [PunRPC]
     void OnWheelMesh()
     {
         GetComponent<EJWheel>().enabled = true;
     }
-
+    [PunRPC]
     void OffWheelMesh()
     {
         GetComponent<EJWheel>().enabled = false;

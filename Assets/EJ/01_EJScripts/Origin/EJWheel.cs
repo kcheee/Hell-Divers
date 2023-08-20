@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
-public class EJWheel : MonoBehaviour
+public class EJWheel : MonoBehaviourPun
 {
     public MeshRenderer wheelMeshR;
     public MeshRenderer wheelMeshL;

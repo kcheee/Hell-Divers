@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
-public class EJMachineGun : MonoBehaviour
+public class EJMachineGun : MonoBehaviourPun
 {
     //machinGunFireº¯¼ö
     bool isMachineDone = true;
@@ -43,6 +44,7 @@ public class EJMachineGun : MonoBehaviour
         }
     }
    
+    [PunRPC]
     public IEnumerator MachineGunFire(System.Action<int> complete)
     {
         RaycastHit machineGunHitInfo;
