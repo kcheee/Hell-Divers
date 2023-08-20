@@ -43,6 +43,8 @@ MonoBehaviour:
   - Res_Spr
   - ResetSpreadRPC
   - GetItem
+  - CannonFirebyRPC
+  - StartCannonFirebyRPC
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 0
