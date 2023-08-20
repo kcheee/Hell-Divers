@@ -78,6 +78,7 @@ public class UITrigger : MonoBehaviour
             {
                 Debug.Log(LobbySceneChange.playerReady);
                 LobbySceneChange.playerReady++;
+                GetComponent<UITrigger>().enabled = false;
             }
         }
 
