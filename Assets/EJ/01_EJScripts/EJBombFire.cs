@@ -52,6 +52,7 @@ public class EJBombFire : MonoBehaviour
 
             EJBossSFX.instance.PlaybombFlyingSFX();
             ONHeadAnim();
+            ONBodyAnim();
 
             //bombMuzzle »ý¼º
             GameObject bombMuzzleImpact = Instantiate(bombMuzzleFactory);
@@ -75,10 +76,17 @@ public class EJBombFire : MonoBehaviour
     }
 
     public Animator headReaction;
+    public Animator bodyReaction;
 
     public void ONHeadAnim()
     {
         headReaction.SetTrigger("headFire");
+    }
+
+    //turretHeadAnim
+    public void ONBodyAnim()
+    {
+        bodyReaction.SetTrigger("HeadReaction");
     }
 
 }

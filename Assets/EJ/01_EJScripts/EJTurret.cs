@@ -116,7 +116,8 @@ public class EJTurret : MonoBehaviour
     public void ONturretHeadAnim()
     {
         turretHeadReaction.SetTrigger("turretFire");
-    }
+    }    
+
 
     public void fireCountReset()
     {

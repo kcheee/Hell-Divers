@@ -59,7 +59,7 @@ public class EJUITitle_Logo : MonoBehaviour
         //mainLogo Scale : 좌우로 스트레치 되었다가 원래
         //mainLogo Opacity: dissolve
 
-        DOTween.To(() => mainLogoScale, x => mainLogoScale = x, Vector3.one * 3, 1);
+        DOTween.To(() => mainLogoScale, x => mainLogoScale = x, Vector3.one * 3, 2);
         mainLogo.transform.localScale = mainLogoScale;
         //DOTween.To(() => mainLogoOpacity, x => mainLogoOpacity = x, 225, 1);
 

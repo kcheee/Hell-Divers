@@ -241,9 +241,9 @@ public class BossFSM : MonoBehaviour
             print("makelittleBoss");
             MakeLittleBoss();
             XXLflag = true;
+
+            B_state = BossState.Wait;
         }
-
-
 
         //공격 범위에서 벗어나면 Chase모드
         if (DistanceBoss2Player > NoAttack_ChaseDistance)
@@ -289,10 +289,9 @@ public class BossFSM : MonoBehaviour
 
         if (curTime > waitTime)
         {
-
-                B_state = BossState.Attack;
-                curTime = 0;
-
+            print("공격 딜레이 시간이 지나고 Attack상태로 접어듭니다");
+             B_state = BossState.Attack;
+             curTime = 0;
         }
     }
 

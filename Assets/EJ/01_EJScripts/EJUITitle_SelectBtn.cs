@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class EJUITitle_SelectBtn : Button
 {
     //type
     public int n;
+    Color color;
 
     //Image image;
     // Monobehavior 속 Start 호출 방법
@@ -20,8 +22,21 @@ public class EJUITitle_SelectBtn : Button
     // Update is called once per frame
     void Update()
     {
-     //e누르고
-     //color값이 203이고 n값에 따라서 실행되는 함수 설정
+        //color값이 203이고 n값에 따라서 실행되는 함수 설정
+        //e누르고
+        if(Input.GetKeyDown(KeyCode.E) && color.a ==203)
+        {
+                if (n == 1)
+                {
+                    //게임신으로 이동
+                    SceneManager.LoadScene(0);
+                }else
+                {
+                    //뭔가 다른 씬으로 이동
+                    SceneManager.LoadScene(1);
+                }                  
+        }
+     
     }
 
     public override void OnPointerEnter(PointerEventData eventData)
@@ -33,8 +48,7 @@ public class EJUITitle_SelectBtn : Button
         //colorBlock.normalColor = normal;
         //colors = colorBlock;
 
-
-        Color color = image.color;
+        color = image.color;
         color.a = 203;
         image.color = color;
     }
