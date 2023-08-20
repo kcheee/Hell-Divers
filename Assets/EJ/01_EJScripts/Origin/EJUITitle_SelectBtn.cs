@@ -16,7 +16,7 @@ public class EJUITitle_SelectBtn : Button
     protected override void Start()
     {
         base.Start();
-        print(n);
+
     }
 
     // Update is called once per frame
@@ -29,11 +29,13 @@ public class EJUITitle_SelectBtn : Button
                 if (n == 1)
                 {
                     //게임신으로 이동
-                    SceneManager.LoadScene(0);
+                    SceneManager.LoadScene("ConnectionScene");
                 }else
                 {
-                    //뭔가 다른 씬으로 이동
-                    SceneManager.LoadScene(1);
+
+
+                //뭔가 다른 씬으로 이동
+                SceneManager.LoadScene("ConnectionScene");
                 }                  
         }
      

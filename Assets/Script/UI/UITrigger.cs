@@ -4,8 +4,10 @@ using UnityEngine;
 using DG.Tweening;
 using UnityEngine.UI;
 using UnityEngine.Experimental.GlobalIllumination;
+using JetBrains.Annotations;
+using Photon.Pun;
 
-public class UITrigger : MonoBehaviour
+public class UITrigger : MonoBehaviourPun
 {
     public GameObject uiElement; // 활성화할 UI 요소
     public GameObject buttonElement; // 활성화할 UI 요소
@@ -21,17 +23,22 @@ public class UITrigger : MonoBehaviour
     Color F_C;
     bool T_flag=false;
     bool B_flag =false;
+    // 가까운 오브젝트 
+    private Transform closestObject;
+
     private void Start()
     {
         text = uiElement.GetComponent<Text>();
         T_C = new Color(255, 255, 255, 1);
         F_C = new Color(255, 255, 255, 0);
-        player = GameObject.Find("Player");
+
     }
     private void Update()
     {
- 
-        distance = Vector3.Distance(transform.position,player.transform.position);
+
+        closestObject = FindClosestObject();
+
+        distance = Vector3.Distance(transform.position, closestObject.position);
 
         if (distance < UI_on && !T_flag)
         {
@@ -55,7 +62,7 @@ public class UITrigger : MonoBehaviour
         // 버튼
         if (distance < button_on && !B_flag)
         {
-            
+
             B_flag = true; // UI 활성화됨으로 표시
             buttonElement.SetActive(true);
             text.DOColor(Color.yellow, 0.1f);
@@ -68,48 +75,51 @@ public class UITrigger : MonoBehaviour
             buttonElement.SetActive(false);
             text.DOColor(T_C, 0.1f).OnComplete(() =>
             {
-                
+
             });
         }
 
-        if(B_flag)
+        if (B_flag)
         {
             if (Input.GetKeyDown(KeyCode.E))
             {
                 Debug.Log(LobbySceneChange.playerReady);
-                LobbySceneChange.playerReady++;
-                GetComponent<UITrigger>().enabled = false;
+                photonView.RPC(nameof(ReadyCount), RpcTarget.All);
             }
         }
 
-        //if (distance < button_on)
-        //{
-        //    text.DOColor(F_C, 0.2f).OnComplete(() =>
-        //            {
-        //                uiElement.SetActive(false);
-        //            });
-        //    Debug.Log("실행");
-        //}
+        if (distance < button_on)
+        {
+            text.DOColor(F_C, 0.2f).OnComplete(() =>
+                    {
+                        uiElement.SetActive(false);
+                    });
+        }
     }
 
-    //void OnTriggerEnter(Collider other)
-    //{
-    //    if (other.CompareTag("Player")) // 플레이어와의 충돌 감지
-    //    {        
-    //        uiElement.SetActive(true);
+    protected Transform FindClosestObject()
+    {
+        Transform closest = PlayerManager.instace.PlayerList[0].transform;
+        float closestDistance = Vector3.Distance(transform.position, closest.position);
 
-    //        text.DOColor(T_C, 0.2f);
-    //    }
-    //}
+        foreach (PlayerTest1 obj in PlayerManager.instace.PlayerList)
+        {
+            float distance = Vector3.Distance(transform.position, obj.transform.position);
+            if (distance < closestDistance)
+            {
+                closest = obj.transform;
+                closestDistance = distance;
+            }
+        }
+        return closest;
+    }
 
-    //void OnTriggerExit(Collider other)
-    //{
-    //    if (other.CompareTag("Player")) // 플레이어와의 충돌 해제 감지
-    //    {
-    //        text.DOColor(F_C, 0.2f).OnComplete(() =>
-    //        {
-    //         uiElement.SetActive(false);
-    //        });
-    //    }
-    //}
+
+    [PunRPC]
+    void ReadyCount()
+    {
+        Debug.Log("t실행");
+        LobbySceneChange.playerReady++;
+    }
+
 }

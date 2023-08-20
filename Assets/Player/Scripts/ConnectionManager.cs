@@ -57,7 +57,6 @@ public class ConnectionManager : MonoBehaviourPunCallbacks
         base.OnJoinedRoom();
         print(nameof(OnJoinedRoom));
         //Game Scene ¿Ãµø
-        PhotonNetwork.LoadLevel("SampleScene");
-
+        PhotonNetwork.LoadLevel("Lobby");
     }
 }

@@ -25,12 +25,14 @@ public class Platform : MonoBehaviour
         transform.DOMove(new Vector3(transform.position.x, 0.5f, transform.position.z), 2.3f).SetEase(Ease.InCirc).OnComplete(() => {
             // 실행시킬 내용 
             
-            fun();
 
             //player add
             if (action != null) {
+                Debug.Log("action");
                 action();
             }
+
+            fun();
 
             if (Item)
             {

@@ -70,7 +70,6 @@ public class EJUITitle_Logo : MonoBehaviour
 
         //왜 할당되지 않는가!
         //DOTween.To(() => subLogoOpacity, x => subLogoOpacity = x, 225, 1);
-        Debug.Log(subLogoOpacity);
         //정답찾기
 
         //subLogoOpacity.DOColor(Color(), 1);

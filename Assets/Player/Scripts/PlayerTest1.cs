@@ -6,6 +6,8 @@ using TMPro;
 using Photon.Pun;
 public class PlayerTest1 : MonoBehaviourPun,IPunObservable
 {
+
+    public static PlayerTest1 Instance;
     //Test Text
     public Transform trBody;
     public Transform RightHand;
@@ -59,6 +61,7 @@ public class PlayerTest1 : MonoBehaviourPun,IPunObservable
 
     private void Awake()
     {
+        Instance=this;
         Debug.Log("어웨이크 함수 실행!!");
         
         //PlayerManager.instace.action();
@@ -456,5 +459,16 @@ public class PlayerTest1 : MonoBehaviourPun,IPunObservable
             speed = (float)stream.ReceiveNext();
             
         }
+    }
+
+    public void delegatecount()
+    {
+        photonView.RPC(nameof(count), RpcTarget.All);
+    }
+    [PunRPC]
+    public void count()
+    {
+        LobbySceneChange.playerReady++;
+        Debug.Log(LobbySceneChange.playerReady);
     }
 }
