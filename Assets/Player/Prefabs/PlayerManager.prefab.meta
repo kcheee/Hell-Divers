@@ -1,12 +1,6 @@
 fileFormatVersion: 2
-<<<<<<<< HEAD:Assets/EJ/01_EJScripts/PhotonRPC.meta
-guid: 6a32c5d8bb7db7b4483834b3d1299a5c
-folderAsset: yes
-DefaultImporter:
-========
 guid: 3c406c049824f7245958ac5a37656f5f
 PrefabImporter:
->>>>>>>> kdh:Assets/Player/Prefabs/PlayerManager.prefab.meta
   externalObjects: {}
   userData: 
   assetBundleName: 
