@@ -80,6 +80,7 @@ public class PlayerTest1 : MonoBehaviourPun,IPunObservable
                 anim.SetTrigger("Die"); 
                 currentState = PlayerState.Die;
                 PlayerManager.instace.PlayerList.Remove(this);
+                PlayerManager.instace.DeathList.Add(this);
             }
         
         };
@@ -456,5 +457,12 @@ public class PlayerTest1 : MonoBehaviourPun,IPunObservable
             speed = (float)stream.ReceiveNext();
             
         }
+    }
+
+
+    //플레이어가 나가면 등록 종료
+    private void OnDestroy()
+    {
+        PlayerManager.instace.PLAYER_LIST.Remove(this);
     }
 }

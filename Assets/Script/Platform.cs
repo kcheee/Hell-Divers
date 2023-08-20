@@ -29,6 +29,7 @@ public class Platform : MonoBehaviour
 
             //player add
             if (action != null) {
+                Debug.Log("Adc");
                 action();
             }
 

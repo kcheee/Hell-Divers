@@ -9,7 +9,7 @@ public class Item_Ammo : Item,I_StratagemObject
     PlayerTest1 test;
     public void Add()
     {
-        test.mainGun.currentManganize = 10;
+        test.mainGun.Current_Manganize = 10;
         I_Destroy();
     }
     public void I_Destroy()

@@ -76,7 +76,8 @@ MonoBehaviour:
   Item: {fileID: 4593030282795132923, guid: bc72bbe594925a94f8c06ee618703f28, type: 3}
   clip: {fileID: 8300000, guid: ff0e42dd5037454478c8caa1440933ba, type: 3}
   timeText: {fileID: 7354023627979589584, guid: ef49ff0c2c5629d43b1f717a4c115dc3, type: 3}
-  CallCode: 00000000000000000200000001000000
+  CallCode: 0000000001000000020000000300000000000000
+  Image: {fileID: 0}
 --- !u!114 &-3338962294268940043
 MonoBehaviour:
   m_ObjectHideFlags: 0

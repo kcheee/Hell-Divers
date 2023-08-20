@@ -2,8 +2,9 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
-public class PlayerHP : MonoBehaviour,I_Entity
+public class PlayerHP : MonoBehaviourPun,I_Entity
 {
     public System.Action Ondie;
     Animator anim;
@@ -13,6 +14,7 @@ public class PlayerHP : MonoBehaviour,I_Entity
         get { return hp; }
         set { hp = value; 
             if (hp < 0) {
+                //photonView.RPC(nameof(die), RpcTarget.All, Ondie);
                 die(Ondie);
             } 
         }
@@ -26,7 +28,8 @@ public class PlayerHP : MonoBehaviour,I_Entity
         anim = GetComponentInChildren<Animator>();
         
     }
-    public void damaged(int damage)
+    [PunRPC]
+    public void damaged(Vector3 pos ,int damage)
     {
         HP -= damage;
         Debug.Log("Player Damaged");
@@ -38,9 +41,15 @@ public class PlayerHP : MonoBehaviour,I_Entity
         
     }
 
+
     public void die(Action action)
     {
+        Debug.Log("ししししししししし!!");
         action();
-        Destroy(gameObject, 3f);
+        Invoke("activeFalse", 3f);
+    }
+    public void activeFalse()
+    {
+        gameObject.SetActive(false);
     }
 }

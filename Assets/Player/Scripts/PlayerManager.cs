@@ -14,15 +14,17 @@ public class PlayerManager : MonoBehaviourPun
     //죽은 플레이어를 소환한다.
 
     public List<PlayerTest1> PlayerList = new List<PlayerTest1>();
+    public List<PlayerTest1> DeathList = new List<PlayerTest1>();
+
     public AudioClip clip;
 
     public System.Action<Vector3> action;
+
+    
     public List<PlayerTest1> PLAYER_LIST
     {
         get {  return PlayerList;  }
         set { PlayerList = value;
-            
-            
         }
     }
     //RPC 함수 실행?
@@ -39,7 +41,8 @@ public class PlayerManager : MonoBehaviourPun
         PhotonNetwork.SerializationRate = 60;
         Debug.Log("스타트 함수 실행!!");
         //너 혼자니?
-        if (PhotonNetwork.CurrentRoom.PlayerCount <= 1)
+        StartCoroutine(Spawn());
+        /*if (PhotonNetwork.CurrentRoom.PlayerCount <= 1)
         {
             Debug.Log("혼스폰 ㅠㅠ");
             StartSpawn(Vector3.zero);
@@ -47,7 +50,7 @@ public class PlayerManager : MonoBehaviourPun
         else {
             Debug.Log("HOHOHOOHOHOHOHOHOO");
             action += StartSpawn;
-        }
+        }*/
 
     }
     
@@ -79,12 +82,50 @@ public class PlayerManager : MonoBehaviourPun
             //PlatformObj.transform.position = PLAYER_LIST[0].gameObject.transform.position;
     }
 
+    //중간스폰
+    public void StartSpawn(Vector3 pos,PlayerTest1 Player)
+    {
+        int rand = Random.Range(-2, 2);
+        pos.x += rand;
+        pos.z += rand;
+
+        GameObject PlatformObj = PhotonNetwork.Instantiate("Platform-Main", pos + Vector3.up * 30, Quaternion.Euler(-89.98f, 0, 0));
+        //GameObject player = PhotonNetwork.Instantiate("AlphaPlayer 1", pos , Quaternion.identity);
+        //player.SetActive(false);
+
+        Platform platform = PlatformObj.GetComponent<Platform>();
+        platform.action = () => { 
+            GameObject playerObj = PhotonNetwork.Instantiate("AlphaPlayer 1", pos, Quaternion.identity);
+            PlayerTest1 player = playerObj.GetComponent<PlayerTest1>();
+            player = Player;
+            PhotonNetwork.Destroy(PlatformObj); 
+            
+        };
+        //action -= StartSpawn;
+
+        //if (PLAYER_LIST.Count >= 1)
+        //PlatformObj.transform.position = PLAYER_LIST[0].gameObject.transform.position;
+    }
+
     public void Addlist(PlayerTest1 player ) {
         PLAYER_LIST.Add(player);
         if (action != null) {
             Debug.Log(PLAYER_LIST[0].transform.position);
             action(PLAYER_LIST[0].transform.position);
         }
-            
+    }
+
+
+    IEnumerator Spawn()
+    {
+        yield return null;
+        if (PLAYER_LIST.Count <= 1)
+        {
+            StartSpawn(Vector3.zero);
+
+        }
+        else {
+            action += StartSpawn;
+        }
     }
 }
