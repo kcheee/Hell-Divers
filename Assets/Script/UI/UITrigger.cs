@@ -55,9 +55,12 @@ public class UITrigger : MonoBehaviour
         // 버튼
         if (distance < button_on && !B_flag)
         {
+            
             B_flag = true; // UI 활성화됨으로 표시
             buttonElement.SetActive(true);
             text.DOColor(Color.yellow, 0.1f);
+
+            // E키를 눌렀을 때
         }
         else if (distance >= button_on && B_flag)
         {
@@ -67,8 +70,16 @@ public class UITrigger : MonoBehaviour
             {
                 
             });
+        }
 
-            //Debug.Log("실행");
+        if(B_flag)
+        {
+            if (Input.GetKeyDown(KeyCode.E))
+            {
+                Debug.Log(LobbySceneChange.playerReady);
+                LobbySceneChange.playerReady++;
+                GetComponent<UITrigger>().enabled = false;
+            }
         }
 
         //if (distance < button_on)

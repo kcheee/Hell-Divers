@@ -178,8 +178,8 @@ public class Enemy1 : Enemy_Fun
         anim.SetTrigger("Ranged_Attack");
         if(!flag)
         {
-            //photonView.RPC(nameof(pun_I_RangedAttack), RpcTarget.All);
-            StartCoroutine(I_RangedAttack());
+            photonView.RPC(nameof(pun_I_RangedAttack), RpcTarget.All);
+            //StartCoroutine(I_RangedAttack());
         }
         currrTime += Time.deltaTime;
         if (currrTime > 2)
