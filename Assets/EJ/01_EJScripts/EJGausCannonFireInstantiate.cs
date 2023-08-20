@@ -65,6 +65,7 @@ public class EJGausCannonFireInstantiate : MonoBehaviour
             gausCannonMuzzleImpact.transform.localEulerAngles = cannonPos.transform.parent.localEulerAngles;
 
             ONRightArmAnim();
+            ONBodyAnim();
 
             //SFX
             EJBossSFX.instance.PlaygausCannonSFX();
@@ -94,6 +95,7 @@ public class EJGausCannonFireInstantiate : MonoBehaviour
     }
 
     public Animator rightArmReaction;
+    public Animator bodyReaction;
 
     public void ONRightArmAnim()
     {
@@ -101,7 +103,8 @@ public class EJGausCannonFireInstantiate : MonoBehaviour
             //GameObject.FindWithTag("rigthArm").GetComponentInChildren<Animator>().enabled = true;
     }
 
-
-
-
+    public void ONBodyAnim()
+    {
+        bodyReaction.SetTrigger("HeadReaction");
+    }
 }

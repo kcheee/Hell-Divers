@@ -82,6 +82,7 @@ public class EJMachineGun : MonoBehaviour
                 //Animator¸¦ Ä×´Ù°¡ ²ö´Ù.
 
                 ONLeftArmAnim();
+                bodyReactionAnim();
 
                 EJBossSFX.instance.PlaymachineGunSFX();
             }           
@@ -107,12 +108,15 @@ public class EJMachineGun : MonoBehaviour
     }
 
     public Animator leftArmReaction;
-
+    public Animator bodyReaction;
 
     public void ONLeftArmAnim()
     {
         leftArmReaction.SetTrigger("leftFire");
     }
-
+    public void bodyReactionAnim()
+    {
+        leftArmReaction.SetTrigger("HeadReaction");
+    }
 
 }
