@@ -96,6 +96,7 @@ namespace PhotonGausCannon
             }
         }
 
+        [PunRPC]
         public IEnumerator CannonFireByRPC(System.Action<int> complete)
         {
             //cannonFire Angle º¯¼ö
