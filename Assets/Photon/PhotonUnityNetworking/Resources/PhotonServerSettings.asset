@@ -43,8 +43,13 @@ MonoBehaviour:
   - Res_Spr
   - ResetSpreadRPC
   - GetItem
-  - CannonFirebyRPC
-  - StartCannonFirebyRPC
+  - PlayAnim_T
+  - Squad_Flare
+  - pun_I_RangedAttack
+  - pun_Squad_Flare
+  - pun_FireGrenada
+  - FireGrenada
+  - I_RangedAttack
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 0

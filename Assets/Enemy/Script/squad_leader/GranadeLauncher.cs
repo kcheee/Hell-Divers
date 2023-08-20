@@ -24,6 +24,9 @@ public class GranadeLauncher : MonoBehaviour
     public float max_height;
     private float t;
 
+    // ÆøÅº Æ÷Áö¼Ç
+    static public Transform GrenadaPos;
+
     private Vector3 start_pos;
     private Vector3 end_pos;
     private float dat;
@@ -33,8 +36,8 @@ public class GranadeLauncher : MonoBehaviour
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
-        GameObject Player = GameObject.Find("Player");
-        Shoot(gameObject, transform.position, Player.transform.position, g, max_height);
+
+        Shoot(gameObject, transform.position, new Vector3(0,0,0), g, max_height);
         //rot.transform.DORotate(transform.right * 30 + transform.forward * 50, 1.5f);
     }
 

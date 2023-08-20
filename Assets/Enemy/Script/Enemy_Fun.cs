@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.Tilemaps;
+using Photon.Pun;
 
 // Enemy 공통된 기능.
-public class Enemy_Fun : EnemyInfo
+public class Enemy_Fun : EnemyInfo, IPunObservable
 {
     // Enemy 상태
     public enum EnemyState
@@ -24,9 +24,6 @@ public class Enemy_Fun : EnemyInfo
     }
     public EnemyState E_state;
 
-    // 플레이어 타겟 (나중에 수정해야함.)
-    protected GameObject target;
-
     // agent
     protected NavMeshAgent agent;
 
@@ -39,6 +36,11 @@ public class Enemy_Fun : EnemyInfo
     // 시간 딜레이를 주기 위한 변수
     protected float currTime = 0;
     Vector3 P_targt;
+
+    // 플레이어 위치
+    public List<Transform> objects; // 오브젝트들의 Transform을 리스트로 저장
+
+    protected Transform closestObject;
 
     protected virtual void F_patrol()
     {
@@ -106,7 +108,7 @@ public class Enemy_Fun : EnemyInfo
     protected virtual void f_rotation()
     {
         Vector3 currentDirection = transform.forward;
-        Vector3 targetDirection = target.transform.position - transform.position;
+        Vector3 targetDirection = closestObject.transform.position - transform.position;
 
         // 만약 현재 방향과 목표 방향이 다르다면 회전 실행
         if (Vector3.Dot(currentDirection.normalized, targetDirection.normalized) < 0.99f)
@@ -120,7 +122,7 @@ public class Enemy_Fun : EnemyInfo
 
             Quaternion adjustedRotation = Quaternion.Euler(eulerAngles);
             transform.rotation = adjustedRotation;
-            Debug.Log("rotation");
+
             //transform.rotation = newRotation;
         }
     }
@@ -165,4 +167,71 @@ public class Enemy_Fun : EnemyInfo
         this.agent.velocity = Vector3.zero;
     }
     #endregion
+
+    // 가장 가까운 플레이어 찾기
+    protected Transform FindClosestObject()
+    {
+        Transform closest = PlayerManager.instace.PlayerList[0].transform;
+        float closestDistance = Vector3.Distance(transform.position, closest.position);
+
+        foreach (PlayerTest1 obj in PlayerManager.instace.PlayerList)
+        {
+            float distance = Vector3.Distance(transform.position, obj.transform.position);
+            if (distance < closestDistance)
+            {
+                closest = obj.transform;
+                closestDistance = distance;
+            }
+        }
+        return closest;
+    }
+
+
+    #region photon 설정
+
+    [PunRPC]
+    public void PlayAnim(string name)
+    {
+        anim.SetTrigger(name);
+    }
+
+    [PunRPC]
+    public void PlayAnim(string name, float value)
+    {
+        anim.SetFloat(name, value);
+    }
+
+    [PunRPC]
+    public void PlayAnim(string name, bool value)
+    {
+        anim.SetBool(name, value);
+    }
+    [PunRPC]
+    public void PlayAnim_T(string name)
+    {
+        anim.Play(name);
+    }
+
+
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        ////너가 나냐
+        //if (stream.IsWriting)
+        //{
+        //    stream.SendNext(h);
+        //    stream.SendNext(v);
+        //    stream.SendNext(speed);
+        //}
+        ////누구냐
+        //else
+        //{
+
+        //    h = (float)stream.ReceiveNext();
+        //    v = (float)stream.ReceiveNext();
+        //    speed = (float)stream.ReceiveNext();
+
+        //}
+    }
+    #endregion
+
 }

@@ -21,9 +21,9 @@ public class PlayerManager : MonoBehaviour
     {
         instace = this;
         //RPC »£√‚ ∫Ûµµ
-        PhotonNetwork.SendRate = 30;
+        PhotonNetwork.SendRate = 60;
         //OnPhotonSeriallizeView »£√‚ ∫Ûµµ
-        PhotonNetwork.SerializationRate = 30;
+        PhotonNetwork.SerializationRate = 60;
         GameObject player =  PhotonNetwork.Instantiate("AlphaPlayer 1", Vector3.zero,Quaternion.identity);
 
     }
