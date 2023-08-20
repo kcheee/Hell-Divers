@@ -2210,6 +2210,8 @@ GameObject:
   - component: {fileID: 8991070023036125921}
   - component: {fileID: 3291048469547271626}
   - component: {fileID: 2580864437606366360}
+  - component: {fileID: 3979698212901756839}
+  - component: {fileID: -4660011348846301835}
   m_Layer: 20
   m_Name: Squad-Leader-Main
   m_TagString: Enemy
@@ -2293,9 +2295,10 @@ MonoBehaviour:
   BloodEft: {fileID: 5737861413046029104, guid: 3884844a02ff2d9478fe8171a628d26c, type: 3}
   DieEft: {fileID: 3745372705267084804, guid: 65e02a903274745498131b7d24a24198, type: 3}
   E_state: 0
+  objects: []
   Flare: {fileID: 100002, guid: 502f397bde12655448ff152eac00cdc7, type: 3}
   FirePos: {fileID: 8991070023404119075}
-  GranadeLancher: {fileID: 8831480508261283643, guid: 83d9511322f0b5f4db013dfc2b2655ae, type: 3}
+  Granade: {fileID: 8831480508261283643, guid: 83d9511322f0b5f4db013dfc2b2655ae, type: 3}
   E_Initiate: {fileID: 5666187499236632703, guid: a675b80c1c9a6de4bb13c16aa1b35598, type: 3}
   spawnPos: 5
 --- !u!195 &8991070023036125921
@@ -2429,6 +2432,46 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 2, z: 1}
   m_Center: {x: 0, y: 1, z: 0}
+--- !u!114 &3979698212901756839
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8072662051345450249}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents:
+  - {fileID: 8991070023036125920}
+  - {fileID: -4660011348846301835}
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
+--- !u!114 &-4660011348846301835
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8072662051345450249}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizePosition: 1
+  m_SynchronizeRotation: 1
+  m_SynchronizeScale: 0
+  m_UseLocal: 1
 --- !u!1 &8708504760156363566
 GameObject:
   m_ObjectHideFlags: 0

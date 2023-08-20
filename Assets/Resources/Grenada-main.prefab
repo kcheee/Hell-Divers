@@ -1788,6 +1788,7 @@ GameObject:
   - component: {fileID: 6243119951422424841}
   - component: {fileID: -8195516190420509517}
   - component: {fileID: 1103817260596919689}
+  - component: {fileID: -6262485851063261748}
   m_Layer: 0
   m_Name: Grenada-main
   m_TagString: Untagged
@@ -1870,6 +1871,28 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   smoke: {fileID: 1107225787277408911}
   bombEft: {fileID: 100008, guid: 1dbc518224e49f34095aab42fe05751a, type: 3}
+--- !u!114 &-6262485851063261748
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8831480508261283643}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &9056161982865394265
 GameObject:
   m_ObjectHideFlags: 0

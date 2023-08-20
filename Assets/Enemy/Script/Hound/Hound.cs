@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using DG.Tweening;
 using TMPro;
+using Photon.Pun;
 
 public class Hound : Enemy_Fun
 {
@@ -32,21 +33,31 @@ public class Hound : Enemy_Fun
 
     private void Start()
     {
-        target = GameObject.Find("Player");
+        // 고쳐야함
+        //closestObject = GameObject.Find("Player");
         E_state = EnemyState.patrol;
     }
 
     private void Update()
     {
-        // 플레이어와의 거리
-        distance = Vector3.Distance(this.transform.position, target.transform.position);
-        switch (E_state)
-        {
-            case EnemyState.patrol: F_patrol(); break;
-            case EnemyState.wait: F_wait(); break;
-            case EnemyState.chase: F_chase(); break;
-            case EnemyState.melee_attack: F_meleeattack(); break;
+        // 플레이어가 없으면 리턴
+        if (PlayerManager.instace.PlayerList.Count == 0)
+            return;
 
+        if (photonView.IsMine)
+        {
+            // 가까운 플레이어 구함.
+            closestObject = FindClosestObject();
+
+            // 플레이어와의 거리
+            distance = Vector3.Distance(this.transform.position, closestObject.transform.position);
+            switch (E_state)
+            {
+                case EnemyState.patrol: F_patrol(); break;
+                case EnemyState.wait: F_wait(); break;
+                case EnemyState.chase: F_chase(); break;
+                case EnemyState.melee_attack: F_meleeattack(); break;
+            }
         }
     }
 
@@ -62,13 +73,13 @@ public class Hound : Enemy_Fun
         agent.isStopped = false;
 
         // agent야 너의 목적지는 target의 위치야
-        agent.destination = target.transform.position;
+        agent.destination = closestObject.transform.position;
 
         // 목적지와 나의 거리를 재고싶다.
-        distance = Vector3.Distance(this.transform.position, target.transform.position);
+        distance = Vector3.Distance(this.transform.position, closestObject.transform.position);
 
 
-        Vector3 toPlayer = target.transform.position - transform.position;
+        Vector3 toPlayer = closestObject.transform.position - transform.position;
         toPlayer.y = 0f; // y축 제외
 
         // 플레이어와 몬스터 사이의 각도 계산
@@ -77,11 +88,13 @@ public class Hound : Enemy_Fun
         // 시야각 30도 안에 플레이어가 들어오면
         if (angleToPlayer < 30)
         {
-            anim.SetBool("Run", true);
+            photonView.RPC(nameof(PlayAnim), RpcTarget.All, "Run",true);
+            //anim.SetBool("Run", true);
         }
         else
         {
-            anim.SetBool("Run", false);
+            photonView.RPC(nameof(PlayAnim), RpcTarget.All, "Run", false);
+            //anim.SetBool("Run", false);
             E_state = EnemyState.wait;
         }
 
@@ -103,7 +116,9 @@ public class Hound : Enemy_Fun
     protected override void F_patrol()
     {
         // 걷는 애니메이션
-        anim.SetBool("Walk", true);
+        photonView.RPC(nameof(PlayAnim), RpcTarget.All, "Walk", true);
+        //anim.SetBool("Walk", true);
+
         agent.speed = 4;
         base.F_patrol();
     }
@@ -115,7 +130,7 @@ public class Hound : Enemy_Fun
         // agent 멈춤
         StopNavSetting();
 
-        Vector3 toPlayer = target.transform.position - transform.position;
+        Vector3 toPlayer = closestObject.transform.position - transform.position;
         toPlayer.y = 0f; // y축 제외
 
         // 플레이어와 몬스터 사이의 각도 계산
@@ -139,7 +154,7 @@ public class Hound : Enemy_Fun
     {
         // 쿨타임.
 
-        Vector3 toPlayer = target.transform.position - transform.position;
+        Vector3 toPlayer = closestObject.transform.position - transform.position;
         toPlayer.y = 0f; // y축 제외
 
         // 플레이어와 몬스터 사이의 각도 계산
@@ -155,7 +170,6 @@ public class Hound : Enemy_Fun
 
             HoundAttack_anim.Hound_anim_falg = false;
 
-            Debug.Log("몇번 실행");
             Vector3 targetPosition = transform.position + transform.forward * 8;
             agent.enabled = false;
 
@@ -169,9 +183,9 @@ public class Hound : Enemy_Fun
 
             });
 
-            Debug.Log("실행");
-            anim.SetTrigger("Attack");
-            
+            photonView.RPC(nameof(PlayAnim), RpcTarget.All, "Attack");
+            //anim.SetTrigger("Attack");
+
             // attack 애니메이션이 끝나면
             // 콜라이더 on
             flag = true;

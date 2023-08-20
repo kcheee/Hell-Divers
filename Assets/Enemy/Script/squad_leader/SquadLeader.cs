@@ -1,8 +1,8 @@
 using DG.Tweening;
+using Photon.Pun;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
-
 
 public class SquadLeader : Enemy_Fun
 {
@@ -13,9 +13,9 @@ public class SquadLeader : Enemy_Fun
     // 공격
     public GameObject Flare;
     public GameObject FirePos;
-    public GameObject GranadeLancher;
+    public GameObject Granade;
     public GameObject E_Initiate;
-    public int spawnPos=5;
+    public int spawnPos = 5;
     bool flare_flag = true;
 
     private void Awake()
@@ -41,29 +41,45 @@ public class SquadLeader : Enemy_Fun
 
     private void Start()
     {
-        target = GameObject.Find("Player");
+        // 고쳐야함
+        //closestObject = GameObject.Find("Player");
         E_state = EnemyState.patrol;
     }
 
     private void Update()
     {
-        // 플레이어와의 거리
-        distance = Vector3.Distance(this.transform.position, target.transform.position);
-        switch (E_state)
+        // 플레이어가 없으면 리턴
+        if (PlayerManager.instace.PlayerList.Count == 0)
+            return;
+
+        if (photonView.IsMine)
         {
-            case EnemyState.patrol: F_patrol(); break;
-            case EnemyState.wait: F_wait(); break;
-            case EnemyState.chase: F_chase(); break;
-            case EnemyState.ranged_attack: F_rangedattack(); break;
-            case EnemyState.melee_attack: F_meleeattack(); break;
-            case EnemyState.escape: F_escape(); break;
+            closestObject = FindClosestObject();
+
+            // 플레이어와의 거리
+            distance = Vector3.Distance(this.transform.position, closestObject.transform.position);
+            switch (E_state)
+            {
+                case EnemyState.patrol: F_patrol(); break;
+                case EnemyState.wait: F_wait(); break;
+                case EnemyState.chase: F_chase(); break;
+                case EnemyState.ranged_attack: F_rangedattack(); break;
+                case EnemyState.melee_attack: F_meleeattack(); break;
+                case EnemyState.escape: F_escape(); break;
+            }
         }
+
     }
 
 
     #region 유탄 발사
 
     // 플레어건 발사
+    [PunRPC]
+    void pun_Squad_Flare()
+    {
+        StartCoroutine(Squad_Flare());
+    }
     IEnumerator Squad_Flare()
     {
         flare_flag = false;
@@ -85,28 +101,32 @@ public class SquadLeader : Enemy_Fun
         flag = true;
         yield return new WaitForSeconds(4);
         // 쫄따구들 소환.
-        
-        float angle = 360 / spawnPos;
-        Transform tf = gameObject.transform;
-        for (int i = 0; i < spawnPos; i++)
-        {
-            Vector3 Po = FlarePo + new Vector3(Random.Range(-4f, 4), Random.Range(-4f, 4), Random.Range(-4f, 4));
 
-            Instantiate(E_Initiate, Po, Quaternion.identity);
-            
-            yield return new WaitForSeconds(Random.Range(0.2f,1f));
-        }
+        //float angle = 360 / spawnPos;
+        //Transform tf = gameObject.transform;
+        //for (int i = 0; i < spawnPos; i++)
+        //{
+        //    Vector3 Po = FlarePo + new Vector3(Random.Range(-4f, 4), Random.Range(-4f, 4), Random.Range(-4f, 4));
+
+        //    PhotonNetwork.Instantiate("Initiate_E-main", Po, Quaternion.identity);
+
+        //    yield return new WaitForSeconds(Random.Range(0.2f, 1f));
+        //}
 
     }
-
+    [PunRPC]
+    void pun_FireGrenada()
+    {
+        StartCoroutine(FireGrenada());
+    }
     IEnumerator FireGrenada()
     {
-
         anim.SetTrigger("Ranged_Attack");
-
+        flag = false;
         yield return new WaitForSeconds(0.3f);
         audioSource.PlayOneShot(ENEMY.sound_Normal[1], 1);
-        Instantiate(GranadeLancher, FirePos.transform.position, Quaternion.identity);
+        GranadeLauncher.GrenadaPos = closestObject;
+        Instantiate(Granade, FirePos.transform.position, Quaternion.identity);
     }
 
     #endregion
@@ -114,15 +134,16 @@ public class SquadLeader : Enemy_Fun
     protected override void F_chase()
     {
         // 걷는 애니메이션
-        anim.Play("Walk");
+        //anim.Play("Walk");
+        photonView.RPC(nameof(PlayAnim_T), RpcTarget.All, "Walk");
 
         agent.isStopped = false;
 
         // agent야 너의 목적지는 target의 위치야
-        agent.destination = target.transform.position;
+        agent.destination = closestObject.transform.position;
 
         // 목적지와 나의 거리를 재고싶다.
-        distance = Vector3.Distance(this.transform.position, target.transform.position);
+        distance = Vector3.Distance(this.transform.position, closestObject.transform.position);
 
         // 원거리 공격보다 작고 근거리 공격 거리보다 크면 wait로
         if (distance < ENEMYATTACK.ranged_attack_possible &&
@@ -147,14 +168,19 @@ public class SquadLeader : Enemy_Fun
     protected override void F_patrol()
     {
         // 걷는 애니메이션
-        anim.Play("Walk");
+        //anim.Play("Walk");
+        photonView.RPC(nameof(PlayAnim_T), RpcTarget.All, "Walk");
+
         base.F_patrol();
     }
 
     protected override void F_wait()
     {
         anim.SetBool("walk", false);
-        anim.Play("Equip");
+
+        //anim.Play("Equip");
+        photonView.RPC(nameof(PlayAnim_T), RpcTarget.All, "Equip");
+
 
         // agent 미끄러짐 방지
         StopNavSetting();
@@ -201,19 +227,22 @@ public class SquadLeader : Enemy_Fun
     }
     protected void F_escape()
     {
-        anim.Play("Walk");
+        //anim.Play("Walk");
+        photonView.RPC(nameof(PlayAnim_T), RpcTarget.All, "Walk");
+
 
         // 도망가기 위한 코드
-        Vector3 fleeDirection = transform.position - target.transform.position;
+        Vector3 fleeDirection = transform.position - closestObject.transform.position;
         Vector3 targetPosition = transform.position + fleeDirection.normalized * 10;
 
         NavMeshHit hit;
+        // 도망침
         if (NavMesh.SamplePosition(targetPosition, out hit, 10, NavMesh.AllAreas))
         {
             agent.destination = hit.position;
 
         }
-        if (distance >= ENEMYATTACK.ranged_attack_possible-10)
+        if (distance >= ENEMYATTACK.ranged_attack_possible - 10)
         {
             E_state = EnemyState.wait;
         }
@@ -229,20 +258,26 @@ public class SquadLeader : Enemy_Fun
     {
         // 원겨리 공격
         base.F_rangedattack();
-        agent.velocity= Vector3.zero;
+        agent.velocity = Vector3.zero;
 
         f_rotation();
 
         // 플레어 건 | 한번만 실행하기 위한 코드
         if (flare_flag)
-            StartCoroutine(Squad_Flare());
+        {
+            photonView.RPC(nameof(pun_Squad_Flare), RpcTarget.All);
+
+            //StartCoroutine(Squad_Flare());
+        }
+
         // 유탄 발사.
-        if(flag&& !flare_flag)
+        if (flag && !flare_flag)
         {
             // 유탄발사
-            StartCoroutine(FireGrenada());
+            //StartCoroutine(FireGrenada());
 
-            flag = false;
+            photonView.RPC(nameof(pun_FireGrenada), RpcTarget.All);
+
         }
 
         //anim.Play("Flare");
@@ -252,7 +287,7 @@ public class SquadLeader : Enemy_Fun
         {
             flag = true;
             currrTime = 0;
-            TraceNavSetting();        
+            TraceNavSetting();
             E_state = EnemyState.chase;
         }
 
@@ -266,7 +301,7 @@ public class SquadLeader : Enemy_Fun
 
         f_rotation();
 
-        if (transform.forward != (target.transform.position - transform.position))
+        if (transform.forward != (closestObject.transform.position - transform.position))
         {
             f_rotation();
             //Debug.Log(transform.rotation + " " + newRotation);
@@ -277,7 +312,7 @@ public class SquadLeader : Enemy_Fun
         }
         // 근접공격 코드 아직 안짬. 애니메이션 없음
         Debug.Log("근접공격");
-        if(distance > 4)
+        if (distance > 4)
         {
             TraceNavSetting();
             E_state = EnemyState.escape;
