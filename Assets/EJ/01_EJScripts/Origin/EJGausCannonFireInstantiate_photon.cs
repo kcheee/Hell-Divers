@@ -34,7 +34,8 @@ namespace PhotonGausCannon
             {
                 if (isCannonDone)
                 {
-                    StartCoroutine(CannonFire(null));
+                    //StartCoroutine(CannonFire(null));
+                    photonView.RPC(nameof(CannonFireByRPC), RpcTarget.All);
                 }
             }
         }
@@ -94,6 +95,12 @@ namespace PhotonGausCannon
             {
                 complete(2);
             }
+        }
+
+        [PunRPC]
+        void StartCannonFirebyRPC()
+        {
+            StartCoroutine(CannonFireByRPC(null));
         }
 
         [PunRPC]

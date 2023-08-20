@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
+  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1195,6 +1195,63 @@ Transform:
   m_Father: {fileID: 2577946545711021367}
   m_RootOrder: 14
   m_LocalEulerAnglesHint: {x: 14, y: 0, z: 0}
+--- !u!1001 &1108681592
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2070771797293437711, guid: ff035f28071e13c4bbb5b4e811871dd3, type: 3}
+      propertyPath: m_RootOrder
+      value: 22
+      objectReference: {fileID: 0}
+    - target: {fileID: 2070771797293437711, guid: ff035f28071e13c4bbb5b4e811871dd3, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 4.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 2070771797293437711, guid: ff035f28071e13c4bbb5b4e811871dd3, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.49
+      objectReference: {fileID: 0}
+    - target: {fileID: 2070771797293437711, guid: ff035f28071e13c4bbb5b4e811871dd3, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -8.73
+      objectReference: {fileID: 0}
+    - target: {fileID: 2070771797293437711, guid: ff035f28071e13c4bbb5b4e811871dd3, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2070771797293437711, guid: ff035f28071e13c4bbb5b4e811871dd3, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2070771797293437711, guid: ff035f28071e13c4bbb5b4e811871dd3, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2070771797293437711, guid: ff035f28071e13c4bbb5b4e811871dd3, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2070771797293437711, guid: ff035f28071e13c4bbb5b4e811871dd3, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2070771797293437711, guid: ff035f28071e13c4bbb5b4e811871dd3, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2070771797293437711, guid: ff035f28071e13c4bbb5b4e811871dd3, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2508548157665435917, guid: ff035f28071e13c4bbb5b4e811871dd3, type: 3}
+      propertyPath: m_Name
+      value: TankBoss-main (1)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: ff035f28071e13c4bbb5b4e811871dd3, type: 3}
 --- !u!1001 &1117095682
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3337,6 +3394,7 @@ MonoBehaviour:
   machineGunPos: {fileID: 1074265847}
   machineGunFactory: {fileID: 8765008237907036386, guid: ee1c36be32b35c844beaaec7378d2ac4, type: 3}
   leftArmReaction: {fileID: 0}
+  bodyReaction: {fileID: 0}
 --- !u!114 &3318166437279568979
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3353,6 +3411,7 @@ MonoBehaviour:
   bombHead: {fileID: 0}
   bombMuzzleFactory: {fileID: 8579966591951127539, guid: 34940ba778088e74095f5f57d9c0dc28, type: 3}
   headReaction: {fileID: 0}
+  bodyReaction: {fileID: 0}
 --- !u!114 &3318166437279568980
 MonoBehaviour:
   m_ObjectHideFlags: 0

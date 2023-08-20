@@ -3,8 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using Photon.Pun;
 
-public class BossFSM : MonoBehaviour
+public class BossFSM : MonoBehaviourPun
 {
     public static BossFSM instance;
 
@@ -94,7 +95,8 @@ public class BossFSM : MonoBehaviour
         switch (B_state)
         {
             case BossState.MakeLittleBoss:
-                MakeLittleBoss();
+                photonView.RPC(nameof(MakeLittleBoss), RpcTarget.All);
+                    //MakeLittleBoss();
                 break;
             case BossState.Chase:
                 UpdateChase();
@@ -122,6 +124,7 @@ public class BossFSM : MonoBehaviour
     public Transform spawnPosGroup;
     public Vector3[] spawnPos;
 
+    [PunRPC]
     private void MakeLittleBoss()
     {
         if (!isHoundDone)
@@ -218,21 +221,24 @@ public class BossFSM : MonoBehaviour
         if (DistanceBoss2Player <= bombDistanceS && !Sflag)
         {
             print("MakeBomb");
-            StartCoroutine(transform.GetComponent<EJBombFire>().MakeBomb(AttackCompleted));
+            //StartCoroutine(transform.GetComponent<EJBombFire>().MakeBomb(AttackCompleted));
+            StartCoroutine(GetComponent<PhotonBombFire.EJBombFire>().MakeBombByRPC(AttackCompleted));
             Sflag = true;
             //B_state = BossState.Wait;
         }
         else if (DistanceBoss2Player > machineGunDistanceM && DistanceBoss2Player <= GausCannonDistanceL && !Lflag)
         {
             print("MachineGunFire");
-            StartCoroutine(GetComponent<EJMachineGun>().MachineGunFire(AttackCompleted));
+            //StartCoroutine(GetComponent<EJMachineGun>().MachineGunFire(AttackCompleted));
+            StartCoroutine(GetComponent<PhotonMachineGun.EJMachineGun>().MachineGunFireByRPC(AttackCompleted));
             Lflag = true;
             //B_state = BossState.Wait;
         }
         else if (DistanceBoss2Player > GausCannonDistanceL && DistanceBoss2Player <= makeLittleBossDistance && !XLflag)
         {
             print("GausCannonFire");
-            StartCoroutine(GetComponent<EJGausCannonFireInstantiate_photon>().CannonFire(AttackCompleted));
+            //StartCoroutine(GetComponent<EJGausCannonFireInstantiate_photon>().CannonFire(AttackCompleted));
+            StartCoroutine(GetComponent<PhotonGausCannon.EJGausCannonFireInstantiate_photon>().CannonFireByRPC(AttackCompleted));
             XLflag = true;
             //B_state = BossState.Wait;
         }

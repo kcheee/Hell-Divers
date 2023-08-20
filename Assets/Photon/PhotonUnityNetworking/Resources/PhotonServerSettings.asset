@@ -52,6 +52,13 @@ MonoBehaviour:
   - I_RangedAttack
   - CannonFirebyRPC
   - StartCannonFirebyRPC
+  - CannonFireByRPC
+  - MachineGunFireByRPC
+  - StartMachineGunByRPC
+  - MakeBombByRPC
+  - StartMakeBomb
+  - photonViewMakeBomb
+  - MakeLittleBoss
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 0
