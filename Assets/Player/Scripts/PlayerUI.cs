@@ -8,7 +8,7 @@ public class PlayerUI : MonoBehaviour
     public static PlayerUI instance;
     public Text ManganizeText;
     public Text BulletText;
-    public Text TimeText;
+    public Transform StratagemTime;
     public Image StratagemImage;
     // Start is called before the first frame update
     void Start()
