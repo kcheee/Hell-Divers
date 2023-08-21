@@ -123,6 +123,9 @@ public class PlayerTest1 : MonoBehaviourPun,IPunObservable
     }
     float h = 0;
     float v = 0;
+    private Vector3 targetPsition;
+    private Quaternion targetRotation;
+
     void Update()
     {
 
@@ -320,6 +323,11 @@ public class PlayerTest1 : MonoBehaviourPun,IPunObservable
             transform.position += dir * speed * Time.deltaTime;
         }
         //End Ming
+        else
+        {
+            transform.position = Vector3.Lerp(transform.position, targetPsition, Time.deltaTime * 5);
+            transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, Time.deltaTime * 5);
+        }
 
 
 
@@ -468,6 +476,8 @@ public class PlayerTest1 : MonoBehaviourPun,IPunObservable
             stream.SendNext(h);
             stream.SendNext(v);
             stream.SendNext(speed);
+            stream.SendNext(targetPsition);
+            stream.SendNext(targetRotation);
         }
         //´©±¸³Ä
         else {
@@ -475,7 +485,8 @@ public class PlayerTest1 : MonoBehaviourPun,IPunObservable
             h = (float)stream.ReceiveNext();
             v = (float)stream.ReceiveNext();
             speed = (float)stream.ReceiveNext();
-            
+            targetPsition = (Vector3)stream.ReceiveNext();
+            targetRotation = (Quaternion)stream.ReceiveNext();
         }
     }
 
