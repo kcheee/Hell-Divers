@@ -62,6 +62,33 @@ MonoBehaviour:
   - damaged
   - deleShoot
   - Shoot
+  - CannonFire
+  - GetbodyExploImpactQueue
+  - GetbombExploImpactQueue
+  - GetbombImpactQueue
+  - GetbombQueue
+  - GetGausCannonImpactQueue
+  - GetGausCannonMuzzleImpactQueue
+  - GetmachineGunImpactQueue
+  - MachineGunFire
+  - MakeBomb
+  - MakeLittleBoss
+  - OffNavMesh
+  - OffWheelMesh
+  - OnNavMesh
+  - OnWheelMesh
+  - ReturnbodyExploImpactQueue
+  - ReturnbombExploImpactQueue
+  - ReturnbombImpactQueue
+  - ReturnbombQueue
+  - ReturnGausCannonImpactQueue
+  - ReturnGausCannonMuzzleImpactQueue
+  - ReturnmachineGunImpactQueue
+  - StartGausCannonByRPC
+  - StartMachineGunByRPC
+  - StartMakeBombByRPC
+  - StartUpdateTurretFire
+  - UpdateTurretFire
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 0
