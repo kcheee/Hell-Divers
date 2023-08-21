@@ -1459,6 +1459,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7028181850951474329}
+  - component: {fileID: 4568542648904171496}
   m_Layer: 0
   m_Name: TankBoss2nd
   m_TagString: Untagged
@@ -1482,6 +1483,19 @@ Transform:
   m_Father: {fileID: 6772127969006303585}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
+--- !u!135 &4568542648904171496
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1061885354060361534}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 17
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1110906486200006649
 GameObject:
   m_ObjectHideFlags: 0
@@ -9525,6 +9539,7 @@ GameObject:
   - component: {fileID: 6772127969006303611}
   - component: {fileID: 6772127969006303588}
   - component: {fileID: 6772127969006303589}
+  - component: {fileID: 199737434510436711}
   - component: {fileID: 6772127969006303590}
   - component: {fileID: 6772127969006303591}
   - component: {fileID: 6772127969006303584}
@@ -9755,6 +9770,18 @@ MonoBehaviour:
   bombExploImpactPrefab: {fileID: 8579966591951127539, guid: 34940ba778088e74095f5f57d9c0dc28, type: 3}
   bodyExploImpactPrefab: {fileID: 100006, guid: e076683e0305e35498b8e8834978c0fa, type: 3}
   ObjectPool: {fileID: 7239203177727414990}
+--- !u!114 &199737434510436711
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6772127969006303586}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f68384311c0c114484e460a5b7d83b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &6772127969006303590
 MonoBehaviour:
   m_ObjectHideFlags: 0

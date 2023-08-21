@@ -129,9 +129,12 @@ public class Gun : MonoBehaviourPun
                 {
                     Debug.Log("Hit" + hit.collider.gameObject.name);
                     PhotonView view = hit.collider.gameObject.GetComponent<PhotonView>();
+                    Debug.Log(view +"포톤뷰를 가져왔슴");
                     I_Entity entity = hit.collider.gameObject.GetComponent<I_Entity>();
+
                     if (entity != null)
                     {
+                        Debug.Log("Gun 스크립트 실행중");
                         view.RPC("damaged",RpcTarget.All, hit.point, 10);
                         //entity.damaged(10);
                         //기본적으로 포톤은 커스텀 타입을 지원해주지 않는다.
