@@ -31,7 +31,7 @@ public class FollowCam : MonoBehaviour
         //각 플레이어들의 백터의 중간을 구한다.
         if (PlayerManager.instace.PlayerList.Count != 1)
         {
-            target /= 2;
+            target /= PlayerManager.instace.PLAYER_LIST.Count;
         }
 
         //Debug.LogError(test);
