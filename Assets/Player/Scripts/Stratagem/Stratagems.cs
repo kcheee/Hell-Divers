@@ -2,8 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Photon.Pun;
 
-public class Stratagems : MonoBehaviour
+public class Stratagems : MonoBehaviourPun
 {
 
     Rigidbody rbody;
@@ -65,15 +66,24 @@ public class Stratagems : MonoBehaviour
                 //Ω∫∆Æ∂Û≈∏¿Î¿ª »£√‚«—¥Ÿ.
                 Vector3 pos = transform.position + Vector3.up * 20;
                 Quaternion rot = Quaternion.Euler(-89.98f, 0, 0);
-                GameObject platObj = Instantiate(Platform,pos, rot);
-                Platform platform = platObj.GetComponent<Platform>();
-                platform.Item = this.Item;
-                Destroy(gameObject);
+                if (PhotonNetwork.IsMasterClient) {
+                    //PhotonNetwork.Instantiate("Platform-Main", pos,rot);
+                    photonView.RPC(nameof(Spawn), RpcTarget.All,pos,rot);
+                }
+
                 break;
             }
         }
     }
 
+    [PunRPC]
+    public void Spawn(Vector3 pos,Quaternion rot) {
+        Debug.LogWarning("∆˜≈Ê∆˜≈Ê~");
+        GameObject platObj = Instantiate(Platform, pos, rot);
+        Platform platform = platObj.GetComponent<Platform>();
+        platform.Item = this.Item;
+        Destroy(gameObject);
+    }
     public void Call() {
         StartCoroutine(CallStratagem());
     }
@@ -92,6 +102,13 @@ public class Stratagems : MonoBehaviour
         
     }
 
+    [PunRPC]
+    public void Throw(Vector3 forward,Vector3 up) {
+        Debug.LogWarning("SSSSSSFFFFF");
+        Rigidbody rbody = this.GetComponent<Rigidbody>();
+        rbody.AddForce(forward * 7 + up * 5, ForceMode.Impulse);
+        rbody.AddTorque(Vector3.forward * 1000 + Vector3.right * 500 + Vector3.up * 400, ForceMode.Impulse);
+    }
 
     IEnumerator GroundDelay(float t) {
         yield return new WaitForSeconds(t);
