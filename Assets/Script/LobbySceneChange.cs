@@ -2,7 +2,6 @@ using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Photon.Pun;
 
 public class LobbySceneChange : MonoBehaviourPun
 {
@@ -19,21 +18,25 @@ public class LobbySceneChange : MonoBehaviourPun
     private void Start()
     {
         GameObject player =  PhotonNetwork.Instantiate("LobbyPlayer", spawnPos.transform.position, Quaternion.identity);
+
+        // master가 씬을 넘기면 같이 넘어감.
         PhotonNetwork.AutomaticallySyncScene = true;
     }
     private void Update()
     {
-        if (playerReady == 3&& !flag)
+        if (playerReady >= 3&& !flag)
         {
             flag = true;
             Debug.Log("다음 씬으로 넘어감.");
-            PhotonNetwork.LoadLevel("SampleScene");
+            PhotonNetwork.LoadLevel("MainScene");
         }
+        //테스트용 씬 넘김.
         if (Input.GetKeyDown(KeyCode.U))
         {
             Debug.Log(LobbySceneChange.playerReady);
-
-            //PhotonNetwork.LoadLevel("SampleScene");
+            // playermanager에 있는 모든 요소 삭제 후 이동.
+            //PlayerManager.instace.PlayerList.Clear();
+            PhotonNetwork.LoadLevel("MainScene");
         }
     }
 

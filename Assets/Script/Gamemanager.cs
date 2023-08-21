@@ -4,15 +4,25 @@ using UnityEngine;
 
 public class Gamemanager : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+
+    #region ΩÃ±€≈Ê
+    static public Gamemanager instance;
+    private void Awake()
     {
-        
+        instance = this; 
+    }
+    #endregion
+
+    public FollowCam followCam_start;
+
+    IEnumerator camstart()
+    {
+        yield return new WaitForSeconds(5);
+        followCam_start.enabled = true;
     }
 
-    // Update is called once per frame
-    void Update()
+     void Start()
     {
-        
+        StartCoroutine(camstart());
     }
 }

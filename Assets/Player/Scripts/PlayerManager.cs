@@ -31,14 +31,25 @@ public class PlayerManager : MonoBehaviourPun
     }
     //RPC 함수 실행?
 
+    // mainscene에서 spawn
+    Vector3 playerSpawn = new Vector3(220, 0, 250);
+
     IEnumerator spawn()
     {
         yield return null;
-        if (PLAYER_LIST.Count == 0)
-        {
-            StartSpawn(Vector3.zero);
-        }
-        else action += StartSpawn;
+        Debug.Log(PLAYER_LIST.Count);
+        //if (PLAYER_LIST.Count == 0)
+        //{
+        //    Debug.Log("실행");
+        //    StartSpawn(new Vector3(0, 0, 0));
+        //}
+        //else
+        //{
+        //    action += StartSpawn;
+        //    Debug.Log("이거 실행되는지");
+        //}
+        StartSpawn(playerSpawn + new Vector3(Random.Range(-10,10), 0, Random.Range(-10, 10)));
+
     }
     // Start is called before the first frame update
     void Start()
@@ -51,7 +62,7 @@ public class PlayerManager : MonoBehaviourPun
         //OnPhotonSeriallizeView 호출 빈도
         PhotonNetwork.SerializationRate = 60;
         Debug.Log("스타트 함수 실행!!");
-        Debug.Log(PhotonNetwork.CurrentRoom.PlayerCount);
+
 
         //너 혼자니?
         StartCoroutine(spawn());
@@ -83,23 +94,23 @@ public class PlayerManager : MonoBehaviourPun
     //잘못설계했음! 이건 RPC였다.
     public void StartSpawn(Vector3 pos)
     {
-        int rand = Random.Range(-2, 2);
+        int rand = Random.Range(-10, 10);
         pos.x += rand;
         pos.z += rand;
+
         Debug.Log(SceneManager.GetActiveScene().name);
         if (SceneManager.GetActiveScene().name != "Lobby")
         {
-            Debug.Log("테스트");
 
             GameObject PlatformObj = PhotonNetwork.Instantiate("Platform-Main", pos + Vector3.up * 30, Quaternion.Euler(-89.98f, 0, 0));
             //GameObject player = PhotonNetwork.Instantiate("AlphaPlayer 1", pos , Quaternion.identity);
             //player.SetActive(false);
 
             Platform platform = PlatformObj.GetComponent<Platform>();
-            Debug.Log(platform);
+
             platform.action = () =>
             {
-                Debug.Log("gfdgdf");
+                Debug.Log("플레이어 소환");
                 GameObject player = PhotonNetwork.Instantiate("AlphaPlayer 1", pos, Quaternion.identity); PhotonNetwork.Destroy(PlatformObj);
             };
 
@@ -113,7 +124,7 @@ public class PlayerManager : MonoBehaviourPun
 
     public void Addlist(PlayerTest1 player)
     {
-
+        Debug.Log("몇번실행됐는지");
         PLAYER_LIST.Add(player);
         if (action != null)
         {

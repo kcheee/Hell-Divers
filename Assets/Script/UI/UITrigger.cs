@@ -83,7 +83,6 @@ public class UITrigger : MonoBehaviourPun
         {
             if (Input.GetKeyDown(KeyCode.E))
             {
-                Debug.Log(LobbySceneChange.playerReady);
                 photonView.RPC(nameof(ReadyCount), RpcTarget.All);
             }
         }
@@ -118,7 +117,6 @@ public class UITrigger : MonoBehaviourPun
     [PunRPC]
     void ReadyCount()
     {
-        Debug.Log("t½ÇÇà");
         LobbySceneChange.playerReady++;
     }
 

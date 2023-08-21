@@ -10,6 +10,7 @@ public class SquadLeader : Enemy_Fun
     #region sigleton
     static public SquadLeader Instance;
 
+    public float escape=15;
     // 공격
     public GameObject Flare;
     public GameObject FirePos;
@@ -125,8 +126,8 @@ public class SquadLeader : Enemy_Fun
         flag = false;
         yield return new WaitForSeconds(0.3f);
         audioSource.PlayOneShot(ENEMY.sound_Normal[1], 1);
-        GranadeLauncher.GrenadaPos = closestObject;
-        Instantiate(Granade, FirePos.transform.position, Quaternion.identity);
+        GameObject Grenda = Instantiate(Granade, FirePos.transform.position, Quaternion.identity);
+        Grenda.GetComponent<GranadeLauncher>().value(closestObject.position);
     }
 
     #endregion
@@ -198,7 +199,7 @@ public class SquadLeader : Enemy_Fun
         // 총 꺼내는 애니메이션
 
         // 일정 시간이 지나면 F_rangedattack으로
-        if (currTime > 2)
+        if (currTime > 2f)
         {
             currTime = 0;
             E_state = EnemyState.ranged_attack;
@@ -208,7 +209,7 @@ public class SquadLeader : Enemy_Fun
         // 애니메이션 취소 후 근거리 공격을 바꿈.
         // 일정시간 안에 플레이어가 일정 거리 오면 chase 하고 근거리 공격으로 바꿈.
         // 근거리 공격하러 쫒아감.
-        if (distance < 18)
+        if (distance < escape)
         {
             // agent 다시 세팅
             TraceNavSetting();
@@ -242,7 +243,7 @@ public class SquadLeader : Enemy_Fun
             agent.destination = hit.position;
 
         }
-        if (distance >= ENEMYATTACK.ranged_attack_possible - 10)
+        if (distance >= ENEMYATTACK.ranged_attack_possible - 3)
         {
             E_state = EnemyState.wait;
         }

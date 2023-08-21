@@ -5,8 +5,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
+using Photon.Pun;
 
-public class GranadeLauncher : MonoBehaviour
+public class GranadeLauncher : MonoBehaviourPun
 {
     static public GranadeLauncher instance;
     private void Awake()
@@ -33,11 +34,26 @@ public class GranadeLauncher : MonoBehaviour
     Rigidbody rb;
 
     bool onground;
+
+
+    public void value(Vector3 pos)
+    {
+        //photonView.RPC(nameof(Shoot), RpcTarget.All, gameObject, transform.position, pos, g, max_height);
+        //photonView.RPC(nameof(deleShoot), RpcTarget.All, pos);
+        Shoot(gameObject, transform.position, pos, g, max_height);
+    }
+
+    void deleShoot(Vector3 pos)
+    {
+        Debug.Log("tlfgod");
+        Shoot(gameObject, transform.position, pos, g, max_height);
+    }
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
 
-        Shoot(gameObject, transform.position, new Vector3(0,0,0), g, max_height);
+        //Vector3 destination
+        //Shoot(gameObject, transform.position, new Vector3(0,0,0), g, max_height);
         //rot.transform.DORotate(transform.right * 30 + transform.forward * 50, 1.5f);
     }
 
@@ -46,6 +62,7 @@ public class GranadeLauncher : MonoBehaviour
         // ¹Ù´Ú¿¡ ºÎµúÇûÀ»¶§ false
 
     }
+
     // Æ÷¹°¼± ¿îµ¿ °ø½Ä
     public void Shoot(GameObject bullet, Vector3 startPos, Vector3 endPos, float g, float max_height)
     {

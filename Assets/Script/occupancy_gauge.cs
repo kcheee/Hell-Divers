@@ -22,6 +22,7 @@ public class occupancy_gauge : MonoBehaviour
     public Text text;
     Animator anim;
     float gaze;
+    private Transform closestObject;
     float distance;
 
     bool flag=false;
@@ -36,14 +37,35 @@ public class occupancy_gauge : MonoBehaviour
         anim = GetComponent<Animator>();
         audioSource= GetComponent<AudioSource>();
     }
+    protected Transform FindClosestObject()
+    {
+        Transform closest = PlayerManager.instace.PlayerList[0].transform;
+        float closestDistance = Vector3.Distance(transform.position, closest.position);
 
+        foreach (PlayerTest1 obj in PlayerManager.instace.PlayerList)
+        {
+            float distance = Vector3.Distance(transform.position, obj.transform.position);
+            if (distance < closestDistance)
+            {
+                closest = obj.transform;
+                closestDistance = distance;
+            }
+        }
+        return closest;
+    }
 
     // 점령 게이지
     void FixedUpdate()
     {
         if (flag)
             return;
-        distance = Vector3.Distance(transform.position, player.transform.position);
+
+        if (PlayerManager.instace.PlayerList[0] == null) return;
+
+        closestObject = FindClosestObject();
+        //Debug.Log(closestObject.position);
+
+        distance = Vector3.Distance(this.transform.position, closestObject.transform.position);
 
         switch (occupationGaze)
         {

@@ -12,7 +12,7 @@ public class FollowCam : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-       
+
         //Target = GameObject.FindWithTag("Player").transform; 
     }
 
@@ -20,24 +20,21 @@ public class FollowCam : MonoBehaviour
     void Update()
     {
         if (PlayerManager.instace.PlayerList.Count == 0) return;
-        
 
-        Vector3 target = Vector3.zero ;
+        Vector3 target = Vector3.zero;
         //플레이어 리스트에서 플레이어를 가지고 온다.
-        foreach (PlayerTest1 player in PlayerManager.instace.PlayerList) {
+        foreach (PlayerTest1 player in PlayerManager.instace.PlayerList)
+        {
             //각 플레이어들의 백터를 더한다.
             target += player.transform.position;
         }
         //각 플레이어들의 백터의 중간을 구한다.
-        if (PlayerManager.instace.PlayerList.Count != 1) {
+        if (PlayerManager.instace.PlayerList.Count != 1)
+        {
             target /= 2;
         }
 
-
-
         //Debug.LogError(test);
-
-
 
         Vector3 pos = transform.position;
         pos.y = 0;
@@ -48,19 +45,19 @@ public class FollowCam : MonoBehaviour
         float distance = Vector3.Distance(pos, target);
 
         //다시 원래 y로 돌려놓음.
-        pos.y = camY;        
+        pos.y = camY;
         target.y = camY;
         target.z += camZ;
 
-        if (!Iscam) {
+        if (!Iscam)
+        {
             Debug.Log("Ss");
             target.x = pos.x;
             Iscam = true;
         }
         //백터를 보간한다.
-        
-            transform.position = Vector3.Lerp(pos, target, Time.smoothDeltaTime * 10);
 
+        transform.position = Vector3.Lerp(pos, target, Time.smoothDeltaTime * 10);
 
     }
 }

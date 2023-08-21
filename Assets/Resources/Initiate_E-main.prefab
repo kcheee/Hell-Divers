@@ -1614,9 +1614,9 @@ MonoBehaviour:
     sound_Hurt: {fileID: 0}
     sound_Dead: {fileID: 0}
   ENEMYATTACK:
-    melee_attack_possible: 10
-    ranged_attack_possible: 20
-    attackRange: 30
+    melee_attack_possible: 5
+    ranged_attack_possible: 10
+    attackRange: 20
     farDistance: 80
   patrolT:
   - {fileID: 0}

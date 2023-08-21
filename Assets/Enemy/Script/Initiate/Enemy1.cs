@@ -227,7 +227,7 @@ public class Enemy1 : Enemy_Fun
         // 애니메이션 취소 후 근거리 공격을 바꿈.
         // 일정시간 안에 플레이어가 일정 거리 오면 chase 하고 근거리 공격으로 바꿈.
         // 근거리 공격하러 쫒아감.
-        if (distance < 8)
+        if (distance < 5)
         {
             E_state = EnemyState.chase;
             currTime = 0;
