@@ -41,10 +41,22 @@ public class PlayerTest1 : MonoBehaviourPun,IPunObservable
     }
 
     public void FireGrenade() {
-        GameObject stratagemobj = Instantiate((GameObject)Resources.Load("str01"),RightHand.position,Quaternion.identity); //PhotonNetwork.Instantiate("Stratagem", RightHand.position, Quaternion.identity);
-        Rigidbody rbody = stratagemobj.GetComponent<Rigidbody>();
-        rbody.AddForce(trBody.forward * 7 + trBody.up * 5, ForceMode.Impulse);
-        rbody.AddTorque(Vector3.forward * 1000 + Vector3.right * 500 + Vector3.up * 400,ForceMode.Impulse);
+        Throw();
+    }
+    [PunRPC]
+    public void Throw() {
+        //모두 Throw애니메이션을 하지만 마스터 클라이언트에서만 생성
+        //하지만 PhotonInstantiate라서 모든 PC에서 생성하니까 별 문제가 없다.
+        //문제는 위치를 동기화하는것
+        if (PhotonNetwork.IsMasterClient)
+        {
+            GameObject stratagemobj = PhotonNetwork.Instantiate("str01", RightHand.position, Quaternion.identity); //Instantiate((GameObject)Resources.Load("str01"), RightHand.position, Quaternion.identity); //
+            //그러니까 이놈의 포톤뷰를 가져와서 모든 PC에 RPC를 한다! 
+            PhotonView view = stratagemobj.GetComponent<PhotonView>();
+            view.RPC("Throw", RpcTarget.All, trBody.forward,trBody.up);
+
+        }
+
     }
 
     public I_StratagemObject currentGemObj;
@@ -59,6 +71,7 @@ public class PlayerTest1 : MonoBehaviourPun,IPunObservable
 
     private void Awake()
     {
+        Debug.Log("어웨이크 함수 실행!!");
         
         //PlayerManager.instace.action();
     }
@@ -80,7 +93,6 @@ public class PlayerTest1 : MonoBehaviourPun,IPunObservable
                 currentState = PlayerState.Die;
                 PlayerManager.instace.PlayerList.Remove(this);
                 //PlayerManager.instace.DeathList.Add(this);
-                Debug.Log("remove 되는지 테스트");
             }
         
         };
