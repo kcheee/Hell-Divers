@@ -97,7 +97,10 @@ public class BossFSM : MonoBehaviourPun
 
         Debug.Log("플레이어는" + closestObject);
 
-        if (/*photonView.IsMine*/true)
+        //이러면 photonView가 붙은 Boss를 만든 방장?과의 위치만 잰다?
+
+        //자기 자신이 생성한 것인가? 아닌가?
+        if (photonView.IsMine)
         {
             Debug.Log("photonViewisMine이 실행되고 있습니다");
             closestObject = FindClosestObject();
