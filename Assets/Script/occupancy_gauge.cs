@@ -22,28 +22,62 @@ public class occupancy_gauge : MonoBehaviour
     public Text text;
     Animator anim;
     float gaze;
+    private Transform closestObject;
     float distance;
 
     bool flag=false;
-
+    bool delayflag = false;
     // 사운드 넣어야 함. 
     public AudioClip[] audioclip;
     AudioSource audioSource;
 
+    IEnumerator delay()
+    {
+        yield return new WaitForSeconds(5);
+        delayflag = true;
+    }
     private void Start()
     {
         occupationGaze = OccupationGaze.idle;
         anim = GetComponent<Animator>();
-        audioSource= GetComponent<AudioSource>();
+        audioSource = GetComponent<AudioSource>();
+        StartCoroutine(delay());
     }
+    protected Transform FindClosestObject()
+    {
 
+        if (PlayerManager.instace.PlayerList[0] == null)
+        {
+            Debug.Log(PlayerManager.instace.PlayerList);
+            return null;
+        }
+        Transform closest = PlayerManager.instace.PlayerList[0].transform;
+        float closestDistance = Vector3.Distance(transform.position, closest.position);
+
+        foreach (PlayerTest1 obj in PlayerManager.instace.PlayerList)
+        {
+            float distance = Vector3.Distance(transform.position, obj.transform.position);
+            if (distance < closestDistance)
+            {
+                closest = obj.transform;
+                closestDistance = distance;
+            }
+        }
+        return closest;
+    }
 
     // 점령 게이지
     void FixedUpdate()
     {
+        if (!delayflag) return;
+
         if (flag)
             return;
-        distance = Vector3.Distance(transform.position, player.transform.position);
+
+        closestObject = FindClosestObject();
+        //Debug.Log(closestObject.position);
+
+        distance = Vector3.Distance(this.transform.position, closestObject.transform.position);
 
         switch (occupationGaze)
         {

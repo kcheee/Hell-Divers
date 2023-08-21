@@ -2272,7 +2272,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ENEMY:
     monsterName: squad_leader
-    hp: 30
+    hp: 200
     Walkspeed: 5
     turnSpeed: 2
     anim: {fileID: 0}
@@ -2285,8 +2285,8 @@ MonoBehaviour:
     sound_Dead: {fileID: 8300000, guid: 92f9e83fee5bc0f468d280c410a25bc9, type: 3}
   ENEMYATTACK:
     melee_attack_possible: 10
-    ranged_attack_possible: 30
-    attackRange: 40
+    ranged_attack_possible: 20
+    attackRange: 35
     farDistance: 80
   patrolT:
   - {fileID: 0}

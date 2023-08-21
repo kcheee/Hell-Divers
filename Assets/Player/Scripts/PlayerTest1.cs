@@ -59,7 +59,6 @@ public class PlayerTest1 : MonoBehaviourPun,IPunObservable
 
     private void Awake()
     {
-        Debug.Log("어웨이크 함수 실행!!");
         
         //PlayerManager.instace.action();
     }
@@ -80,7 +79,8 @@ public class PlayerTest1 : MonoBehaviourPun,IPunObservable
                 anim.SetTrigger("Die"); 
                 currentState = PlayerState.Die;
                 PlayerManager.instace.PlayerList.Remove(this);
-                PlayerManager.instace.DeathList.Add(this);
+                //PlayerManager.instace.DeathList.Add(this);
+                Debug.Log("remove 되는지 테스트");
             }
         
         };

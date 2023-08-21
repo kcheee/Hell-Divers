@@ -23,7 +23,7 @@ public class Gun : MonoBehaviourPun
         get { return currentBullet; }
         set {
             currentBullet = value;
-            PlayerUI.instance.BulletText.text = value.ToString();
+            //PlayerUI.instance.BulletText.text = value.ToString();
         }
     }
 
@@ -34,7 +34,7 @@ public class Gun : MonoBehaviourPun
     {
         get { return currentManganize; }
         set { currentManganize = value;
-            PlayerUI.instance.ManganizeText.text = value.ToString();
+            //PlayerUI.instance.ManganizeText.text = value.ToString();
         }
     }
     //총의 사거리다.
