@@ -1338,7 +1338,6 @@ MonoBehaviour:
   maxBullet: 100
   currentBullet: 20
   maxManganize: 10
-  currentManganize: 10
   MaxDistance: 20
   fireTime: 0.05
   isFire: 1
@@ -9036,7 +9035,6 @@ MonoBehaviour:
   maxBullet: 6
   currentBullet: 6
   maxManganize: 10
-  currentManganize: 10
   MaxDistance: 10
   fireTime: 2
   isFire: 1

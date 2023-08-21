@@ -41,6 +41,15 @@ public class EJUITitle_SelectBtn : Button
      
     }
 
+    
+    public void ClickSceneMove()
+    {
+
+            SceneManager.LoadScene("ConnectionScene");
+
+    }
+
+
     public override void OnPointerEnter(PointerEventData eventData)
     {
         base.OnPointerEnter(eventData);

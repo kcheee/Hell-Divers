@@ -7,10 +7,16 @@ using DG.Tweening;
 
 public class EJUITitle_Logo : MonoBehaviour
 {
+    //1번째 뜨는 것
+    public GameObject first;
+
     public GameObject mainLogo;
     public GameObject minLogo;
     public GameObject bg;
     public GameObject PressAnyKeyText;
+
+    //2번째에 뜨는 것
+    public GameObject Second;
 
     //mainLogo
     Vector3 mainLogoScale;
@@ -50,6 +56,8 @@ public class EJUITitle_Logo : MonoBehaviour
         //pressAnyKey
         pressAnyKeyOpacity = PressAnyKeyText.GetComponent<TextMeshProUGUI>();
         mainLogoScale = mainLogo.transform.localScale;
+
+        StartCoroutine(firstUION());
     }
 
     // Update is called once per frame
@@ -61,6 +69,8 @@ public class EJUITitle_Logo : MonoBehaviour
 
         DOTween.To(() => mainLogoScale, x => mainLogoScale = x, Vector3.one * 3, 2);
         mainLogo.transform.localScale = mainLogoScale;
+
+        
         //DOTween.To(() => mainLogoOpacity, x => mainLogoOpacity = x, 225, 1);
 
         //mainLogo.transform.DOScale(Vector3.one * 3, 1f);
@@ -86,6 +96,31 @@ public class EJUITitle_Logo : MonoBehaviour
 
         //04.
         //PressAnykey 깜빡이기
-        
+        if (first.activeSelf && Input.anyKeyDown)
+        {
+            first.SetActive(false);
+            Second.SetActive(true);
+        }
+    }
+
+
+    IEnumerator firstUION()
+    {
+        yield return new WaitForSeconds(0.3f);
+        //첫번째를 키고
+        first.SetActive(true);
+
+            
+    } 
+
+    IEnumerator secondUION()
+    {
+        if (!Second.activeSelf)
+        {
+            //두번째를 킨다
+            Second.SetActive(true);
+            yield return null;
+        }
+       
     }
 }

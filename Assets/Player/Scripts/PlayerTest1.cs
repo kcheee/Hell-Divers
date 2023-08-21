@@ -80,7 +80,7 @@ public class PlayerTest1 : MonoBehaviourPun,IPunObservable
                 anim.SetTrigger("Die"); 
                 currentState = PlayerState.Die;
                 PlayerManager.instace.PlayerList.Remove(this);
-                PlayerManager.instace.DeathList.Add(this);
+                //PlayerManager.instace.DeathList.Add(this);
             }
         
         };

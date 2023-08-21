@@ -936,6 +936,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PlayerList:
   - {fileID: 83823127}
+  clip: {fileID: 0}
 --- !u!4 &333842327
 Transform:
   m_ObjectHideFlags: 0
@@ -3197,6 +3198,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2463147330721929833, guid: bc72bbe594925a94f8c06ee618703f28, type: 3}
+      propertyPath: sceneViewId
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 2484305891249759256, guid: bc72bbe594925a94f8c06ee618703f28, type: 3}
       propertyPath: sceneViewId
       value: 1
