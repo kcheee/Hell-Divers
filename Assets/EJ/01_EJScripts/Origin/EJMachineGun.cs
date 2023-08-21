@@ -43,8 +43,7 @@ public class EJMachineGun : MonoBehaviourPun
             
         }
     }
-   
-    [PunRPC]
+
     public IEnumerator MachineGunFire(System.Action<int> complete)
     {
         RaycastHit machineGunHitInfo;
