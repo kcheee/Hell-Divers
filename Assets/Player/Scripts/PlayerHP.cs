@@ -51,5 +51,6 @@ public class PlayerHP : MonoBehaviourPun,I_Entity
     public void activeFalse()
     {
         gameObject.SetActive(false);
+        
     }
 }

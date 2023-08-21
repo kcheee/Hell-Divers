@@ -574,7 +574,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   current_Stratagems:
-  - {fileID: 6050659758489103777, guid: 251820fc9e23a004e974d7b16493854c, type: 3}
+  - {fileID: 0}
   - {fileID: 6050659758489103777, guid: a9240324f3248974cb451f8e8461b295, type: 3}
   active_Stratagems: []
   Isreturn: 0

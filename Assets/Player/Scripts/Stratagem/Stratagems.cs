@@ -17,6 +17,8 @@ public class Stratagems : MonoBehaviourPun
     public GameObject Item;
     public AudioClip clip;
     public GameObject timeText;
+    public string id;
+
     bool isUse;
     Animator anim;
     //호출 코드 리스트
@@ -24,15 +26,22 @@ public class Stratagems : MonoBehaviourPun
     public List<KeyType.Key> CallCode = new List<KeyType.Key>();
     public Image Image;
 
+    public System.Action<Vector3,Quaternion> action;
+
     void Start()
     {
+        /*rbody = GetComponent<Rigidbody>();
+        //현재 시간을 호출 시간으로 설정
+        time = callTime;
+        anim = GetComponent<Animator>();*/
+        //rbody.AddForce(transform.forward * 7 + transform.up * 5, ForceMode.Impulse);
+    }
+    public void start() {
         rbody = GetComponent<Rigidbody>();
         //현재 시간을 호출 시간으로 설정
         time = callTime;
         anim = GetComponent<Animator>();
-        //rbody.AddForce(transform.forward * 7 + transform.up * 5, ForceMode.Impulse);
     }
-
     // Update is called once per frame
     void Update()
     {
@@ -41,6 +50,8 @@ public class Stratagems : MonoBehaviourPun
 
 
     float time;
+
+    Text text;
     IEnumerator CallStratagem() {
         //일정 시간이 흐르고
         
@@ -50,7 +61,7 @@ public class Stratagems : MonoBehaviourPun
 
         Transform Str_time = PlayerUI.instance.StratagemTime;
         GameObject textObj = Instantiate(timeText, Str_time);
-        Text text = textObj.GetComponent<Text>();
+        text = textObj.GetComponent<Text>();
         //시간을 잰다.
 
         while (true) {
@@ -63,9 +74,12 @@ public class Stratagems : MonoBehaviourPun
             if (time < 0) {
                 text.text = "0";
                 Destroy(textObj);
+
                 //스트라타잼을 호출한다.
-                Vector3 pos = transform.position + Vector3.up * 20;
-                Quaternion rot = Quaternion.Euler(-89.98f, 0, 0);
+
+                
+                Vector3 pos = transform.position;
+                Quaternion rot = Quaternion.identity;
                 if (PhotonNetwork.IsMasterClient) {
                     //PhotonNetwork.Instantiate("Platform-Main", pos,rot);
                     photonView.RPC(nameof(Spawn), RpcTarget.All,pos,rot);
@@ -78,10 +92,13 @@ public class Stratagems : MonoBehaviourPun
 
     [PunRPC]
     public void Spawn(Vector3 pos,Quaternion rot) {
+        
         Debug.LogWarning("포톤포톤~");
-        GameObject platObj = Instantiate(Platform, pos, rot);
+        Destroy(text.gameObject);
+        SpawnAction(pos,rot);
+        /*GameObject platObj = Instantiate(Platform, pos, rot);
         Platform platform = platObj.GetComponent<Platform>();
-        platform.Item = this.Item;
+        platform.Item = this.Item;*/
         Destroy(gameObject);
     }
     public void Call() {
@@ -116,5 +133,9 @@ public class Stratagems : MonoBehaviourPun
         transform.rotation = Quaternion.identity;
         anim.SetTrigger("Land");
         Call();
+    }
+
+    protected virtual void SpawnAction(Vector3 pos,Quaternion rot) {
+        Debug.Log("Spawn");
     }
 }

@@ -30,7 +30,9 @@ public class PlayerTest1 : MonoBehaviourPun,IPunObservable
         set { current_stratagem = value;
             //스트라타잼 애니메이션 후 잡는다.
             //anim.SetTrigger("Grenade");
+
             photonView.RPC(nameof(PlayAnim), RpcTarget.All, "Grenade");
+            photonView.RPC(nameof(test1), RpcTarget.All, C_Stratagem.id);
             //currentGun.gameObject.SetActive(false);
             //GameObject stratagemobj = PhotonNetwork.Instantiate("Stratagem",trBody.position,Quaternion.identity);  //Instantiate(stratagemObj, trBody.position + Vector3.up ,trBody.rotation);'
 
@@ -39,18 +41,24 @@ public class PlayerTest1 : MonoBehaviourPun,IPunObservable
 
         }
     }
+    string id;
+    [PunRPC]
+    public void test1(string s) {
+        id = s;
+    }
 
     public void FireGrenade() {
-        Throw();
+        Debug.Log(id);
+        Throw(id);
     }
     [PunRPC]
-    public void Throw() {
+    public void Throw(string name) {
         //모두 Throw애니메이션을 하지만 마스터 클라이언트에서만 생성
         //하지만 PhotonInstantiate라서 모든 PC에서 생성하니까 별 문제가 없다.
         //문제는 위치를 동기화하는것
         if (PhotonNetwork.IsMasterClient)
         {
-            GameObject stratagemobj = PhotonNetwork.Instantiate("str01", RightHand.position, Quaternion.identity); //Instantiate((GameObject)Resources.Load("str01"), RightHand.position, Quaternion.identity); //
+            GameObject stratagemobj = PhotonNetwork.Instantiate(name, RightHand.position, Quaternion.identity); //Instantiate((GameObject)Resources.Load("str01"), RightHand.position, Quaternion.identity); //
             //그러니까 이놈의 포톤뷰를 가져와서 모든 PC에 RPC를 한다! 
             PhotonView view = stratagemobj.GetComponent<PhotonView>();
             view.RPC("Throw", RpcTarget.All, trBody.forward,trBody.up);
@@ -92,7 +100,7 @@ public class PlayerTest1 : MonoBehaviourPun,IPunObservable
                 anim.SetTrigger("Die"); 
                 currentState = PlayerState.Die;
                 PlayerManager.instace.PlayerList.Remove(this);
-                //PlayerManager.instace.DeathList.Add(this);
+                PlayerManager.instace.DeathList.Add(this);
             }
         
         };
@@ -118,7 +126,7 @@ public class PlayerTest1 : MonoBehaviourPun,IPunObservable
     void Update()
     {
 
-        Vector3 test = Camera.main.WorldToViewportPoint(transform.position);
+/*        Vector3 test = Camera.main.WorldToViewportPoint(transform.position);
         Vector3 pos = transform.position;
         //Debug.Log(test);
         if (test.x < 0.05) {
@@ -158,7 +166,7 @@ public class PlayerTest1 : MonoBehaviourPun,IPunObservable
             pos.z -= Time.deltaTime * 5;
             transform.position = pos;
             return;
-        }
+        }*/
         if (currentState == PlayerState.Die) {
             return;
         }
