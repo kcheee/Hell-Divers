@@ -77,6 +77,7 @@ public class Enemy_Fun : EnemyInfo, IPunObservable,I_Entity
         // attackRange만큼 가까워지면 추적.
         if (distance < ENEMYATTACK.attackRange)
         {
+            photonView.RPC(nameof(PlayAnim_T), RpcTarget.All, "Walk", true);
             E_state = EnemyState.chase;
         }
 

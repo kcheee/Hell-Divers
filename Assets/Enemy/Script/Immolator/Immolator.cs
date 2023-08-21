@@ -38,7 +38,7 @@ public class Immolator : Enemy_Fun
         E_state = EnemyState.patrol;
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
 
         // 플레이어가 없으면 리턴

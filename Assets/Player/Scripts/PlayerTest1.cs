@@ -409,8 +409,8 @@ public class PlayerTest1 : MonoBehaviourPun,IPunObservable
             }
 
             Vector2 myDir = new Vector2(trBody.forward.x, trBody.forward.z);
-            photonView.RPC(nameof(PlayAnim), RpcTarget.All, "MyHorizontal", myDir.x);
-            photonView.RPC(nameof(PlayAnim), RpcTarget.All, "MyVertical", myDir.y);
+            //  photonView.RPC(nameof(PlayAnim), RpcTarget.All, "MyHorizontal", myDir.x);
+           // photonView.RPC(nameof(PlayAnim), RpcTarget.All, "MyVertical", myDir.y);
             /*anim.SetFloat("MyHorizontal", myDir.x);
             anim.SetFloat("MyVertical", myDir.y);*/
 

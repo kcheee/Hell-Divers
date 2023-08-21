@@ -49,7 +49,7 @@ public class Enemy1 : Enemy_Fun
         E_state = EnemyState.patrol;
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         // 플레이어가 없으면 리턴
         if (PlayerManager.instace.PlayerList.Count == 0)
