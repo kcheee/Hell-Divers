@@ -186,6 +186,15 @@ public class PlayerTest1 : MonoBehaviourPun,IPunObservable
             dir = Vector3.right * h + Vector3.forward * v;
             dir.Normalize();
             speed = 4;
+            if (Input.GetMouseButtonDown(0)) {
+                           
+                
+                    int rand = Random.Range(-1, 2);
+                    photonView.RPC(nameof(Fire), RpcTarget.All, rand);
+                
+            }
+
+
             if (Input.GetMouseButton(0) && !reload)
             {
                 if (current_stratagem)
@@ -193,10 +202,7 @@ public class PlayerTest1 : MonoBehaviourPun,IPunObservable
                     photonView.RPC(nameof(PlayAnim), RpcTarget.All, "Throw");
 
                 }
-                else {
-                    int rand = Random.Range(-1, 2);
-                    photonView.RPC(nameof(Fire), RpcTarget.All, rand);
-                }
+
 
             }
             if (Input.GetMouseButtonUp(0))
