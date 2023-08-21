@@ -89,6 +89,10 @@ MonoBehaviour:
   - StartMakeBombByRPC
   - StartUpdateTurretFire
   - UpdateTurretFire
+  - Spawn
+  - Throw
+  - test
+  - test1
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 0

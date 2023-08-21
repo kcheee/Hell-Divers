@@ -16,14 +16,18 @@ public class PlayerManager : MonoBehaviourPun
     //죽은 플레이어를 소환한다.
 
     public List<PlayerTest1> PlayerList = new List<PlayerTest1>();
+    public List<PlayerTest1> DeathList = new List<PlayerTest1>();
     public AudioClip clip;
 
-    public System.Action<Vector3> action;
+    public System.Func<Vector3, GameObject> action;
+
+
     public List<PlayerTest1> PLAYER_LIST
     {
         get { return PlayerList; }
         set
         {
+
             PlayerList = value;
 
 
@@ -93,7 +97,7 @@ public class PlayerManager : MonoBehaviourPun
     }
 
     //잘못설계했음! 이건 RPC였다.
-    public void StartSpawn(Vector3 pos)
+    public GameObject StartSpawn(Vector3 pos)
     {
         int rand = Random.Range(-10, 10);
         pos.x += rand;
@@ -108,15 +112,15 @@ public class PlayerManager : MonoBehaviourPun
             //player.SetActive(false);
 
             Platform platform = PlatformObj.GetComponent<Platform>();
-
+            GameObject player = null;
             platform.action = () =>
             {
                 Debug.Log("플레이어 소환");
-                GameObject player = PhotonNetwork.Instantiate("AlphaPlayer 1", pos, Quaternion.identity); PhotonNetwork.Destroy(PlatformObj);
+                player = PhotonNetwork.Instantiate("AlphaPlayer 1", pos, Quaternion.identity); PhotonNetwork.Destroy(PlatformObj);
             };
-
+            return player;
         }
-
+        return null;
         //action -= StartSpawn;
 
         //if (PLAYER_LIST.Count >= 1)

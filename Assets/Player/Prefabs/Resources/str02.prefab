@@ -12,9 +12,9 @@ GameObject:
   - component: {fileID: 95378519953944822}
   - component: {fileID: -3338962294268940043}
   - component: {fileID: 7619430361882847069}
-  - component: {fileID: -2552785712126413264}
+  - component: {fileID: -5539414565337158051}
   m_Layer: 11
-  m_Name: str01
+  m_Name: str02
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -96,7 +96,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &-2552785712126413264
+--- !u!114 &-5539414565337158051
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -105,17 +105,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 179448}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 17bfa767703b1914abd421e5bfc8bd8c, type: 3}
+  m_Script: {fileID: 11500000, guid: 8e518e07c1253694c8fa175eca79f69f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   callTime: 5
   startTime: 5
-  Platform: {fileID: 5681520340206640054, guid: d9604ffd5624cbd4584464cfc1cbd73c, type: 3}
-  Item: {fileID: 4698562533961449482, guid: d5019988e723a9145bdbb3eda441de40, type: 3}
+  Platform: {fileID: 5681520340206640054, guid: e47420ba5b2ada34b8651d1b8b5697a5, type: 3}
+  Item: {fileID: 0}
   clip: {fileID: 8300000, guid: ff0e42dd5037454478c8caa1440933ba, type: 3}
   timeText: {fileID: 7354023627979589584, guid: ef49ff0c2c5629d43b1f717a4c115dc3, type: 3}
-  id: str01
-  CallCode: 0000000000000000010000000100000002000000
+  id: str02
+  CallCode: 01000000000000000100000002000000
   Image: {fileID: 0}
 --- !u!1 &1024437098237574
 GameObject:

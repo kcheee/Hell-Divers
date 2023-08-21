@@ -43,6 +43,7 @@ public class StratagemManager : MonoBehaviour
                 }
                 //인덱스가 같고 코드의 길이가 들어온 인덱스와 같으면
                 //스킬을 사용한다.
+                Debug.Log(Stratagem.CallCode.Count - 1 + " " + index + 1);
                 if (Stratagem.CallCode.Count - 1 == index) {
                     Debug.Log("스킬사용!!");
                     //인덱스를 초기화 하고싶다.
