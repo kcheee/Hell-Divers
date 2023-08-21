@@ -7,7 +7,6 @@ using Photon.Pun;
 
 
 //Pun을 안쓴다면 RPC를 써야 한다?
-
 public class BossFSM : MonoBehaviourPun
 {
     public static BossFSM instance;
@@ -95,20 +94,26 @@ public class BossFSM : MonoBehaviourPun
     void Update()
     {
         if (PlayerManager.instace.PlayerList.Count == 0) return;
-        Debug.Log(closestObject);
 
-        if (photonView.IsMine)
+        Debug.Log("플레이어는" + closestObject);
+
+        if (/*photonView.IsMine*/true)
         {
+            Debug.Log("photonViewisMine이 실행되고 있습니다");
             closestObject = FindClosestObject();
+
+            Debug.Log("플레이어는" + closestObject);
             DistanceBoss2Player = Vector3.Distance(transform.position, closestObject.transform.position);
+
 
         //움직이는 player를 바라보게 해야 한다.
         //headAxis.transform.LookAt(player.transform);
         switch (B_state)
         {
-            case BossState.MakeLittleBoss:
-                photonView.RPC(nameof(MakeLittleBoss),RpcTarget.All);
-                break;
+            //case BossState.MakeLittleBoss:
+                //photonView.RPC(nameof(MakeLittleBoss),RpcTarget.All);
+                //MakeLittleBoss();
+                //break;
             case BossState.Chase:
                 UpdateChase();
                 break;
@@ -133,6 +138,9 @@ public class BossFSM : MonoBehaviourPun
         B_state = s;
 
     }
+
+    // State를 바꿀 때마다 RPC를 보낸다.
+
 
     public Transform spawnPosGroup;
     public Vector3[] spawnPos;
@@ -199,18 +207,19 @@ public class BossFSM : MonoBehaviourPun
 
 
     private void UpdateChase()
-    {
-        photonView.RPC(nameof(OnNavMesh),RpcTarget.All);
-      
+    {  
+        Debug.Log(nav.destination);
         nav.destination = closestObject.transform.position;
-        photonView.RPC(nameof(OnWheelMesh), RpcTarget.All);
+        //photonView.RPC(nameof(OnWheelMesh), RpcTarget.All);
 
 
         //공격가능범위 안으로 들어오면 Attack
         if (DistanceBoss2Player <= NoAttack_ChaseDistance)
         {
             print("공격XLDistance에 들어왔어요");
+            OffNavMesh();
             B_state = BossState.Wait;
+
         }
 
         //!!!!!서서히 원래 포지션으로 돌고 싶다.
@@ -235,11 +244,13 @@ public class BossFSM : MonoBehaviourPun
     {
         StartCoroutine(transform.GetComponent<EJBombFire>().MakeBomb(AttackCompleted));
     }
+
     [PunRPC]
     void StartGausCannonByRPC()
     {
         StartCoroutine(transform.GetComponent<EJGausCannonFireInstantiate>().CannonFire(AttackCompleted));
     }
+
     [PunRPC]
     void StartMachineGunByRPC()
     {
@@ -282,7 +293,7 @@ public class BossFSM : MonoBehaviourPun
         else if(DistanceBoss2Player >makeLittleBossDistance && DistanceBoss2Player<=NoAttack_ChaseDistance && !XXLflag)
         {
             print("makelittleBoss");
-            photonView.RPC(nameof(MakeLittleBoss), RpcTarget.All);
+            //photonView.RPC(nameof(MakeLittleBoss), RpcTarget.All);
             XXLflag = true;
 
             B_state = BossState.Wait;
@@ -292,6 +303,7 @@ public class BossFSM : MonoBehaviourPun
         if (DistanceBoss2Player > NoAttack_ChaseDistance)
             {
                 print("Attack할 수 있는 거리가 아닙니다");
+            OnNavMesh();
                 B_state = BossState.Chase;
                 //anim.SetTrigger("Chase");
             }
@@ -306,8 +318,8 @@ public class BossFSM : MonoBehaviourPun
 
     private void UpdateWait()
     {
-        photonView.RPC(nameof(OffNavMesh), RpcTarget.All);
-        photonView.RPC(nameof(OffWheelMesh),RpcTarget.All);
+        //photonView.RPC(nameof(OffNavMesh), RpcTarget.All);
+        //photonView.RPC(nameof(OffWheelMesh),RpcTarget.All);
 
         //움직이는 player를 바라보게 해야 한다.
         //headAxis.transform.LookAt(player.transform);

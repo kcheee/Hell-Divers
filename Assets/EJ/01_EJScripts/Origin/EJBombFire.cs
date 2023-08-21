@@ -39,7 +39,7 @@ public class EJBombFire : MonoBehaviourPun
         }
     }
 
-    [PunRPC]
+
     public IEnumerator MakeBomb(System.Action<int> complete)
     {
         isBombDone = false;
@@ -66,8 +66,7 @@ public class EJBombFire : MonoBehaviourPun
                 bombMuzzleImpact.transform.localEulerAngles = bombPos.transform.parent.localEulerAngles;
                 bombMuzzleImpact.transform.localScale = Vector3.one;
                 bombMuzzleImpact.transform.up = bombPos.transform.forward;
-            }
-            
+            }           
 
             //ÄðÅ¸ÀÓ
             yield return new WaitForSeconds(Random.Range(0.1f,0.3f));
