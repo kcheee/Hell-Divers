@@ -192,20 +192,21 @@ public class Enemy_Fun : EnemyInfo, IPunObservable,I_Entity
     #region photon ¼³Á¤
 
     [PunRPC]
-    public void PlayAnim(string name)
+    public void PlayAnimS(string name)
     {
         anim.SetTrigger(name);
     }
 
     [PunRPC]
-    public void PlayAnim(string name, float value)
+    public void PlayAnimF(string name, float value)
     {
         anim.SetFloat(name, value);
     }
 
     [PunRPC]
-    public void PlayAnim(string name, bool value)
+    public void PlayAnimB(string name, bool value)
     {
+        Debug.Log("tklfg");
         anim.SetBool(name, value);
     }
     [PunRPC]

@@ -74,6 +74,9 @@ public class BossFSM : MonoBehaviourPun
     void Start()
     {
         nav = GetComponent<NavMeshAgent>();
+
+        nav.Warp(transform.position);
+
         //nav.transform.forward =transform.forward;
 
         //closest = GameObject.FindGameObjectWithTag("Player");

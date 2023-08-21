@@ -88,12 +88,12 @@ public class Hound : Enemy_Fun
         // 시야각 30도 안에 플레이어가 들어오면
         if (angleToPlayer < 30)
         {
-            photonView.RPC(nameof(PlayAnim), RpcTarget.All, "Run",true);
+            photonView.RPC(nameof(PlayAnimB), RpcTarget.All, "Run",true);
             //anim.SetBool("Run", true);
         }
         else
         {
-            photonView.RPC(nameof(PlayAnim), RpcTarget.All, "Run", false);
+            photonView.RPC(nameof(PlayAnimB), RpcTarget.All, "Run", false);
             //anim.SetBool("Run", false);
             E_state = EnemyState.wait;
         }
@@ -116,7 +116,7 @@ public class Hound : Enemy_Fun
     protected override void F_patrol()
     {
         // 걷는 애니메이션
-        photonView.RPC(nameof(PlayAnim), RpcTarget.All, "Walk", true);
+        photonView.RPC(nameof(PlayAnimB), RpcTarget.All, "Walk", true);
         //anim.SetBool("Walk", true);
 
         agent.speed = 4;
@@ -183,7 +183,7 @@ public class Hound : Enemy_Fun
 
             });
 
-            photonView.RPC(nameof(PlayAnim), RpcTarget.All, "Attack");
+            photonView.RPC(nameof(PlayAnim_T), RpcTarget.All, "Attack");
             //anim.SetTrigger("Attack");
 
             // attack 애니메이션이 끝나면

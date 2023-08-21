@@ -94,6 +94,9 @@ MonoBehaviour:
   - test
   - test1
   - SpawnBoss
+  - PlayAnimB
+  - PlayAnimF
+  - PlayAnimS
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 0

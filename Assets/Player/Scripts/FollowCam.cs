@@ -51,7 +51,6 @@ public class FollowCam : MonoBehaviour
 
         if (!Iscam)
         {
-            Debug.Log("Ss");
             target.x = pos.x;
             Iscam = true;
         }

@@ -44,8 +44,9 @@ public class Enemy1 : Enemy_Fun
     }
 
     private void Start()
-    {        
+    {
         //target = GameObject.FindWithTag("Player");
+        photonView.RPC(nameof(PlayAnimB), RpcTarget.All, "Walk", true);
         E_state = EnemyState.patrol;
     }
 
@@ -54,6 +55,11 @@ public class Enemy1 : Enemy_Fun
         // 플레이어가 없으면 리턴
         if (PlayerManager.instace.PlayerList.Count == 0)
             return;
+
+        if(Input.GetKeyDown(KeyCode.M))
+        {
+            photonView.RPC(nameof(PlayAnimB), RpcTarget.All, "Walk", true);
+        }
 
         if (photonView.IsMine)
         {
@@ -120,7 +126,9 @@ public class Enemy1 : Enemy_Fun
     {
         // 걷는 애니메이션
         //anim.Play("Walk");
-        photonView.RPC(nameof(PlayAnim_T), RpcTarget.All,"Walk");
+
+        // 한번만 실행되게 수정
+        //photonView.RPC(nameof(PlayAnim_T), RpcTarget.All,"Walk");
 
 
         agent.isStopped = false;
@@ -136,6 +144,7 @@ public class Enemy1 : Enemy_Fun
         if (distance < ENEMYATTACK.ranged_attack_possible &&
             distance > ENEMYATTACK.melee_attack_possible)
         {
+            photonView.RPC(nameof(PlayAnimB), RpcTarget.All,"Walk", false);
             // 공격상태로 전이하고싶다.
             E_state = EnemyState.wait;
             //anim.SetTrigger("Attack");
@@ -162,7 +171,8 @@ public class Enemy1 : Enemy_Fun
     protected override void F_patrol()
     {
         // 걷는 애니메이션
-        anim.Play("Walk");
+
+        //anim.Play("Walk");
 
         base.F_patrol();
     }
@@ -185,6 +195,7 @@ public class Enemy1 : Enemy_Fun
             equip_flag = false;
             flag = false;
             currrTime = 0;
+            photonView.RPC(nameof(PlayAnimB), RpcTarget.All, "Walk", true);
             E_state = EnemyState.chase;
         }
 
@@ -196,10 +207,12 @@ public class Enemy1 : Enemy_Fun
     protected override void F_wait()
     {
         // 장전 애니메이션
-        anim.SetBool("walk", false);
+        //anim.SetBool("walk", false);
         if (!equip_flag)
         {
             anim.Play("Equip");
+            photonView.RPC(nameof(PlayAnim_T), RpcTarget.All, "Equip");
+
             //anim.SetTrigger("equip");
             //equip_flag=true;
         }
@@ -227,6 +240,7 @@ public class Enemy1 : Enemy_Fun
         // 근거리 공격하러 쫒아감.
         if (distance < 5)
         {
+            photonView.RPC(nameof(PlayAnimB), RpcTarget.All,"Walk", true);
             E_state = EnemyState.chase;
             currTime = 0;
         }
@@ -234,6 +248,7 @@ public class Enemy1 : Enemy_Fun
         // 공격 거리 벗어났을 경우
         if (distance > ENEMYATTACK.attackRange)
         {
+            photonView.RPC(nameof(PlayAnimB), RpcTarget.All,"Walk", true);
             E_state = EnemyState.chase;
             currTime = 0;
         }
@@ -245,13 +260,16 @@ public class Enemy1 : Enemy_Fun
     {
         // 근거리 공격
         //anim.Play("Melee_Attack");
-        //photonView.RPC(nameof(PlayAnim_T), RpcTarget.All, "Melee_Attack");
+
+        // 애니메이션 수정해야함.
+        photonView.RPC(nameof(PlayAnim_T), RpcTarget.All, "Melee_Attack");
 
         currrTime += Time.deltaTime;
         // 테스트용
         if (currrTime > 2)
         {
             currrTime = 0;
+            photonView.RPC(nameof(PlayAnimB), RpcTarget.All, "Walk", true);
             E_state = EnemyState.chase;
         }
     }
