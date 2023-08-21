@@ -48,7 +48,7 @@ public class EJGausCannonFireInstantiate : MonoBehaviourPun
     }
 
 
-    [PunRPC]
+
     public IEnumerator CannonFire(System.Action<int> complete)
     {
 

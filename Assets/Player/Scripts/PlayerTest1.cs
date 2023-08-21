@@ -106,47 +106,49 @@ public class PlayerTest1 : MonoBehaviourPun,IPunObservable
     void Update()
     {
 
-        Vector3 test = Camera.main.WorldToViewportPoint(transform.position);
-        Vector3 pos = transform.position;
+        //Vector3 test = Camera.main.WorldToViewportPoint(transform.position);
+        //Vector3 pos = transform.position;
         //Debug.Log(test);
-        if (test.x < 0.05) {
-            test.x = 0.05f;
-            //pos = Camera.main.ViewportToWorldPoint(test);
-            //pos.x = 0.95f;
-            pos.x += Time.deltaTime * 5;
-            transform.position = pos;
-            //Camera.main.GetComponent<FollowCam>().Iscam = false;
-        }
+        //if (test.x < 0.05)
+        //{
+        //    test.x = 0.05f;
+        //    pos = Camera.main.ViewportToWorldPoint(test);
+        //    pos.x = 0.95f;
+        //    pos.x += Time.deltaTime * 5;
+        //    transform.position = pos;
+        //    Camera.main.GetComponent<FollowCam>().Iscam = false;
+        //}
 
-        if (test.x > 0.95)
-        {
-            //Camera.main.GetComponent<FollowCam>().Iscam = false;
-            //pos.x -= Time.deltaTime * 2;
-            test.x = 0.95f;
-            pos.x -= Time.deltaTime * 5;
-            pos = Camera.main.ViewportToWorldPoint(test);
-            //pos.x = 0.95f;
-            transform.position = pos;
+        //if (test.x > 0.95)
+        //{
+        //    Camera.main.GetComponent<FollowCam>().Iscam = false;
+        //    pos.x -= Time.deltaTime * 2;
+        //    test.x = 0.95f;
+        //    pos.x -= Time.deltaTime * 5;
+        //    pos = Camera.main.ViewportToWorldPoint(test);
+        //    pos.x = 0.95f;
+        //    transform.position = pos;
 
-            return;
-        }
-        //Debug.Log(gameObject.name +  test);
-        if (test.y < 0.05f) {
-            test.y = 0.05f;
-            pos = Camera.main.ViewportToWorldPoint(test);
-            pos.y = 0;
-            pos.z += Time.deltaTime * 5;
-            transform.position = pos;
-        }
-        if(test.y > 0.95)
-        {
-            test.y = 0.95f;
-            pos = Camera.main.ViewportToWorldPoint(test);
-            pos.y = 0;
-            pos.z -= Time.deltaTime * 5;
-            transform.position = pos;
-            return;
-        }
+        //    return;
+        //}
+        //Debug.Log(gameObject.name + test);
+        //if (test.y < 0.05f)
+        //{
+        //    test.y = 0.05f;
+        //    pos = Camera.main.ViewportToWorldPoint(test);
+        //    pos.y = 0;
+        //    pos.z += Time.deltaTime * 5;
+        //    transform.position = pos;
+        //}
+        //if (test.y > 0.95)
+        //{
+        //    test.y = 0.95f;
+        //    pos = Camera.main.ViewportToWorldPoint(test);
+        //    pos.y = 0;
+        //    pos.z -= Time.deltaTime * 5;
+        //    transform.position = pos;
+        //    return;
+        //}
         if (currentState == PlayerState.Die) {
             return;
         }
