@@ -24,7 +24,7 @@ public class LobbySceneChange : MonoBehaviourPun
     }
     private void Update()
     {
-        if (playerReady >= 3&& !flag)
+        if (playerReady >= 4&& !flag)
         {
             flag = true;
             Debug.Log("다음 씬으로 넘어감.");

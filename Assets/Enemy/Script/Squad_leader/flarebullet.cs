@@ -29,7 +29,7 @@ public class flarebullet : MonoBehaviourPun {
         Vector3 FlarePo = new Vector3(transform.position.x,0,transform.position.z);
         for (int i = 0; i < spawnPos; i++)
         {
-            Vector3 Po = FlarePo + new Vector3(Random.Range(-4f, 4), Random.Range(-4f, 4), Random.Range(-4f, 4));
+            Vector3 Po = FlarePo + new Vector3(Random.Range(-4f, 4),0, Random.Range(-4f, 4));
 
             PhotonNetwork.Instantiate("Initiate_E-main", Po, Quaternion.identity);
 

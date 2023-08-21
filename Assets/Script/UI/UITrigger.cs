@@ -28,7 +28,7 @@ public class UITrigger : MonoBehaviourPun
     bool flag = false;
     IEnumerator delay()
     {
-        yield return null;
+        yield return new WaitForSeconds(2);
         flag = true;
     }
 
@@ -37,7 +37,7 @@ public class UITrigger : MonoBehaviourPun
         text = uiElement.GetComponent<Text>();
         T_C = new Color(255, 255, 255, 1);
         F_C = new Color(255, 255, 255, 0);
-        
+        StartCoroutine(delay());
     }
     private void Update()
     {
@@ -106,12 +106,6 @@ public class UITrigger : MonoBehaviourPun
 
     protected Transform FindClosestObject()
     {
-
-        if (PlayerManager.instace.PlayerList[0] == null)
-        {
-            Debug.Log(PlayerManager.instace.PlayerList);
-            return null;
-        }
 
         Transform closest = PlayerManager.instace.PlayerList[0].transform;
         float closestDistance = Vector3.Distance(transform.position, closest.position);

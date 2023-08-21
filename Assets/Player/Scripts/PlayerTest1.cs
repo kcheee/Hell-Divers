@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using Photon.Pun;
-public class PlayerTest1 : MonoBehaviourPun,IPunObservable
+public class PlayerTest1 : MonoBehaviourPun, IPunObservable
 {
     //Test Text
     public Transform trBody;
@@ -25,9 +25,12 @@ public class PlayerTest1 : MonoBehaviourPun,IPunObservable
 
     //던지려고 하는 물체
     public GameObject throwObject;
-    public Stratagems C_Stratagem {
+    public Stratagems C_Stratagem
+    {
         get { return current_stratagem; }
-        set { current_stratagem = value;
+        set
+        {
+            current_stratagem = value;
             //스트라타잼 애니메이션 후 잡는다.
             //anim.SetTrigger("Grenade");
             photonView.RPC(nameof(PlayAnim), RpcTarget.All, "Grenade");
@@ -40,11 +43,12 @@ public class PlayerTest1 : MonoBehaviourPun,IPunObservable
         }
     }
 
-    public void FireGrenade() {
-        GameObject stratagemobj = Instantiate((GameObject)Resources.Load("str01"),RightHand.position,Quaternion.identity); //PhotonNetwork.Instantiate("Stratagem", RightHand.position, Quaternion.identity);
+    public void FireGrenade()
+    {
+        GameObject stratagemobj = Instantiate((GameObject)Resources.Load("str01"), RightHand.position, Quaternion.identity); //PhotonNetwork.Instantiate("Stratagem", RightHand.position, Quaternion.identity);
         Rigidbody rbody = stratagemobj.GetComponent<Rigidbody>();
         rbody.AddForce(trBody.forward * 7 + trBody.up * 5, ForceMode.Impulse);
-        rbody.AddTorque(Vector3.forward * 1000 + Vector3.right * 500 + Vector3.up * 400,ForceMode.Impulse);
+        rbody.AddTorque(Vector3.forward * 1000 + Vector3.right * 500 + Vector3.up * 400, ForceMode.Impulse);
     }
 
     public I_StratagemObject currentGemObj;
@@ -52,21 +56,22 @@ public class PlayerTest1 : MonoBehaviourPun,IPunObservable
     public Code_InputManager code_input;
     public StratagemManager stratagemManager;
     public PlayerHP playerHp;
-    public enum PlayerState { 
-        Live,Die
+    public enum PlayerState
+    {
+        Live, Die
     }
     public PlayerState currentState = PlayerState.Live;
 
     private void Awake()
     {
-        
+
         //PlayerManager.instace.action();
     }
     void Start()
     {
         anim = trBody.GetComponent<Animator>();
         //test
-       // PlayerUI.instance.ManganizeText.text = currentGun.currentManganize.ToString();
+        // PlayerUI.instance.ManganizeText.text = currentGun.currentManganize.ToString();
         //PlayerUI.instance.BulletText.text = currentGun.maxBullet + " / " + currentGun.currentBullet;
 
         //만약, mine 이라면
@@ -74,19 +79,22 @@ public class PlayerTest1 : MonoBehaviourPun,IPunObservable
         code_input = gameObject.AddComponent<Code_InputManager>();
         stratagemManager = GetComponent<StratagemManager>();
         playerHp = GetComponent<PlayerHP>();
-        playerHp.Ondie = () => {
-            if (currentState != PlayerState.Die) {
-                anim.SetTrigger("Die"); 
+        playerHp.Ondie = () =>
+        {
+            if (currentState != PlayerState.Die)
+            {
+                anim.SetTrigger("Die");
                 currentState = PlayerState.Die;
                 PlayerManager.instace.PlayerList.Remove(this);
                 //PlayerManager.instace.DeathList.Add(this);
                 Debug.Log("remove 되는지 테스트");
             }
-        
+
         };
 
 
-        if (photonView.IsMine) {
+        if (photonView.IsMine)
+        {
             PlayerManager.instace.action = null;
         }
         PlayerManager.instace.Addlist(this);
@@ -106,48 +114,49 @@ public class PlayerTest1 : MonoBehaviourPun,IPunObservable
     void Update()
     {
 
-        Vector3 test = Camera.main.WorldToViewportPoint(transform.position);
-        Vector3 pos = transform.position;
-        //Debug.Log(test);
-        if (test.x < 0.05) {
-            test.x = 0.05f;
-            //pos = Camera.main.ViewportToWorldPoint(test);
-            //pos.x = 0.95f;
-            pos.x += Time.deltaTime * 5;
-            transform.position = pos;
-            //Camera.main.GetComponent<FollowCam>().Iscam = false;
-        }
+        //Vector3 test = Camera.main.WorldToViewportPoint(transform.position);
+        //Vector3 pos = transform.position;
+        ////Debug.Log(test);
+        //if (test.x < 0.05) {
+        //    test.x = 0.05f;
+        //    //pos = Camera.main.ViewportToWorldPoint(test);
+        //    //pos.x = 0.95f;
+        //    pos.x += Time.deltaTime * 5;
+        //    transform.position = pos;
+        //    //Camera.main.GetComponent<FollowCam>().Iscam = false;
+        //}
 
-        if (test.x > 0.95)
-        {
-            //Camera.main.GetComponent<FollowCam>().Iscam = false;
-            //pos.x -= Time.deltaTime * 2;
-            test.x = 0.95f;
-            pos.x -= Time.deltaTime * 5;
-            pos = Camera.main.ViewportToWorldPoint(test);
-            //pos.x = 0.95f;
-            transform.position = pos;
+        //if (test.x > 0.95)
+        //{
+        //    //Camera.main.GetComponent<FollowCam>().Iscam = false;
+        //    //pos.x -= Time.deltaTime * 2;
+        //    test.x = 0.95f;
+        //    pos.x -= Time.deltaTime * 5;
+        //    pos = Camera.main.ViewportToWorldPoint(test);
+        //    //pos.x = 0.95f;
+        //    transform.position = pos;
 
-            return;
-        }
-        //Debug.Log(gameObject.name +  test);
-        if (test.y < 0.05f) {
-            test.y = 0.05f;
-            pos = Camera.main.ViewportToWorldPoint(test);
-            pos.y = 0;
-            pos.z += Time.deltaTime * 5;
-            transform.position = pos;
-        }
-        if(test.y > 0.95)
+        //    return;
+        //}
+        ////Debug.Log(gameObject.name +  test);
+        //if (test.y < 0.05f) {
+        //    test.y = 0.05f;
+        //    pos = Camera.main.ViewportToWorldPoint(test);
+        //    pos.y = 0;
+        //    pos.z += Time.deltaTime * 5;
+        //    transform.position = pos;
+        //}
+        //if(test.y > 0.95)
+        //{
+        //    test.y = 0.95f;
+        //    pos = Camera.main.ViewportToWorldPoint(test);
+        //    pos.y = 0;
+        //    pos.z -= Time.deltaTime * 5;
+        //    transform.position = pos;
+        //    return;
+        //}
+        if (currentState == PlayerState.Die)
         {
-            test.y = 0.95f;
-            pos = Camera.main.ViewportToWorldPoint(test);
-            pos.y = 0;
-            pos.z -= Time.deltaTime * 5;
-            transform.position = pos;
-            return;
-        }
-        if (currentState == PlayerState.Die) {
             return;
         }
         //test
@@ -170,7 +179,8 @@ public class PlayerTest1 : MonoBehaviourPun,IPunObservable
                     photonView.RPC(nameof(PlayAnim), RpcTarget.All, "Throw");
 
                 }
-                else {
+                else
+                {
                     int rand = Random.Range(-1, 2);
                     photonView.RPC(nameof(Fire), RpcTarget.All, rand);
                 }
@@ -178,9 +188,9 @@ public class PlayerTest1 : MonoBehaviourPun,IPunObservable
             }
             if (Input.GetMouseButtonUp(0))
             {
-                
+
                 //CancelInvoke("ResetSpread");
-                if(currCoroutine != null)
+                if (currCoroutine != null)
                 {
                     StopCoroutine(currCoroutine);
                 }
@@ -196,7 +206,8 @@ public class PlayerTest1 : MonoBehaviourPun,IPunObservable
             {
                 PlayerUI.instance.StratagemImage.gameObject.SetActive(true);
                 //입력 코드를 입력할때
-                code_input.input(() => {
+                code_input.input(() =>
+                {
                     code_input.IsInput = !stratagemManager.Isreturn;
 
                     SoundManager.instance.SfxPlay(PlayerSound.instance.GetClip(PlayerSound.P_SOUND.Input));
@@ -265,7 +276,7 @@ public class PlayerTest1 : MonoBehaviourPun,IPunObservable
                 {
 
                     speed = 10;
-                    
+
                 }
 
 
@@ -300,36 +311,49 @@ public class PlayerTest1 : MonoBehaviourPun,IPunObservable
             transform.position += dir * speed * Time.deltaTime;
         }
         //End Ming
+        else
+        {
+            transform.position = Vector3.Lerp(transform.position, targetPsition, Time.deltaTime * 5);
+            transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, Time.deltaTime * 5);
+        }
 
 
 
         anim.SetFloat("Horizontal", h);
         anim.SetFloat("Vertical", v);
-        anim.SetFloat("speed",dir.magnitude);
+        anim.SetFloat("speed", dir.magnitude);
         anim.SetFloat("RunSpeed", speed);
     }
 
+    Vector3 targetPsition;
+    Quaternion targetRotation;
+
     [PunRPC]
-    public void Fire(int rand) {
-        photonView.RPC("Res_Spr",RpcTarget.All);
+    public void Fire(int rand)
+    {
+        photonView.RPC("Res_Spr", RpcTarget.All);
         //Debug.LogError(rand);
         currentGun.Fire(rand);
     }
-    public void ChangeGun(Gun gun) {
+    public void ChangeGun(Gun gun)
+    {
         currentGun.gameObject.SetActive(false);
         currentGun = gun;
         currentGun.gameObject.SetActive(true);
     }
-    public void test() {
+    public void test()
+    {
         anim.SetBool("Fire", false);
     }
 
-    public void Reloading() {
+    public void Reloading()
+    {
         currentGun.Reload();
     }
 
-    public void Aiming() {
-        
+    public void Aiming()
+    {
+
         if (Input.GetButtonUp("Fire2"))
         {
             photonView.RPC(nameof(PlayAnim), RpcTarget.All, "RifleAiming", false);
@@ -340,7 +364,7 @@ public class PlayerTest1 : MonoBehaviourPun,IPunObservable
         {
 
 
-            
+
 
             //만약 총을 들고있다면 
             //조준 애니메이션을 실행합니다.
@@ -354,10 +378,10 @@ public class PlayerTest1 : MonoBehaviourPun,IPunObservable
 
                     break;
                 case Gun.GunType.Pistol:
-                    anim.SetBool("PistolAiming",true);
+                    anim.SetBool("PistolAiming", true);
 
                     break;
-                
+
             }
             //anim.SetBool("Aiming", true);
 
@@ -393,7 +417,8 @@ public class PlayerTest1 : MonoBehaviourPun,IPunObservable
 
 
     //RPC는 인보크를 사용할수없으니ㄷ까(인보크가 안되어서 코루틴으로 작성 왜 안되지?)
-    public IEnumerator ResetSpread() {
+    public IEnumerator ResetSpread()
+    {
         yield return new WaitForSeconds(0.5f);
         Debug.LogWarning("RESETSPR인보크호출");
         photonView.RPC(nameof(ResetSpreadRPC), RpcTarget.All);
@@ -402,30 +427,34 @@ public class PlayerTest1 : MonoBehaviourPun,IPunObservable
 
     //모든 PC야 내가 아이템을 주웠어 네네들 다 삭제해
     [PunRPC]
-    public void GetItem() {
+    public void GetItem()
+    {
         currentGemObj.Add();
     }
 
     [PunRPC]
-    public void ResetSpreadRPC() {
+    public void ResetSpreadRPC()
+    {
         Debug.LogWarning("RPC");
         currentGun.ResetSpread();
     }
 
 
-    public enum AnimationType { 
-        Trigger,Bool,Float
+    public enum AnimationType
+    {
+        Trigger, Bool, Float
     }
     [PunRPC]
-    public void PlayAnim(string name) {
+    public void PlayAnim(string name)
+    {
         anim.SetTrigger(name);
     }
 
     [PunRPC]
-    public void PlayAnim(string name,float value)
+    public void PlayAnim(string name, float value)
     {
         //Debug.Log("HELLO!" + value);
-        anim.SetFloat(name,value);
+        anim.SetFloat(name, value);
     }
 
     [PunRPC]
@@ -448,14 +477,20 @@ public class PlayerTest1 : MonoBehaviourPun,IPunObservable
             stream.SendNext(h);
             stream.SendNext(v);
             stream.SendNext(speed);
+            stream.SendNext(transform.position);
+            stream.SendNext(transform.rotation);
+          
+
         }
         //누구냐
-        else {
-            
+        else if (stream.IsReading)
+        {
+
             h = (float)stream.ReceiveNext();
             v = (float)stream.ReceiveNext();
             speed = (float)stream.ReceiveNext();
-            
+            targetPsition = (Vector3)stream.ReceiveNext();
+            targetRotation = (Quaternion)stream.ReceiveNext();
         }
     }
 
