@@ -325,8 +325,8 @@ public class PlayerTest1 : MonoBehaviourPun,IPunObservable
         //End Ming
         else
         {
-            transform.position = Vector3.Lerp(transform.position, targetPsition, Time.deltaTime * 5);
-            transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, Time.deltaTime * 5);
+            //transform.position = Vector3.Lerp(transform.position, targetPsition, Time.deltaTime * 5);
+            //transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, Time.deltaTime * 5);
         }
 
 
