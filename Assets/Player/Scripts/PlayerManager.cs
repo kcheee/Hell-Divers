@@ -63,9 +63,9 @@ public class PlayerManager : MonoBehaviourPun
 
         instace = this;
         //RPC 호출 빈도
-        PhotonNetwork.SendRate = 60;
+        PhotonNetwork.SendRate = 30;
         //OnPhotonSeriallizeView 호출 빈도
-        PhotonNetwork.SerializationRate = 60;
+        PhotonNetwork.SerializationRate = 30;
         Debug.Log("스타트 함수 실행!!");
 
 
