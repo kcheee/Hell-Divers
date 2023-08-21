@@ -43,11 +43,7 @@ public class GranadeLauncher : MonoBehaviourPun
         Shoot(gameObject, transform.position, pos, g, max_height);
     }
 
-    void deleShoot(Vector3 pos)
-    {
-        Debug.Log("tlfgod");
-        Shoot(gameObject, transform.position, pos, g, max_height);
-    }
+
     private void Start()
     {
         rb = GetComponent<Rigidbody>();

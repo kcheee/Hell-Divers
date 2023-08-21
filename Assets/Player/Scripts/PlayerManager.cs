@@ -38,17 +38,18 @@ public class PlayerManager : MonoBehaviourPun
     {
         yield return null;
         Debug.Log(PLAYER_LIST.Count);
-        //if (PLAYER_LIST.Count == 0)
-        //{
-        //    Debug.Log("실행");
-        //    StartSpawn(new Vector3(0, 0, 0));
-        //}
-        //else
-        //{
-        //    action += StartSpawn;
-        //    Debug.Log("이거 실행되는지");
-        //}
-        StartSpawn(playerSpawn + new Vector3(Random.Range(-10,10), 0, Random.Range(-10, 10)));
+        if (PLAYER_LIST.Count == 0)
+        {
+            Debug.Log("실행");
+            StartSpawn(playerSpawn + new Vector3(Random.Range(-10, 10), 0, Random.Range(-10, 10)));
+        }
+        else
+        {
+            action += StartSpawn;
+            Debug.Log("이거 실행되는지");
+        }
+
+        //StartSpawn(playerSpawn + new Vector3(Random.Range(-10,10), 0, Random.Range(-10, 10)));
 
     }
     // Start is called before the first frame update
@@ -128,7 +129,6 @@ public class PlayerManager : MonoBehaviourPun
         PLAYER_LIST.Add(player);
         if (action != null)
         {
-            Debug.Log(PLAYER_LIST[0].transform.position);
             action(PLAYER_LIST[0].transform.position);
         }
 

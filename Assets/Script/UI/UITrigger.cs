@@ -15,8 +15,7 @@ public class UITrigger : MonoBehaviourPun
     public float distance;
     public float UI_on;
     public float button_on;
-    GameObject player;
-    
+
     Text text;
     private float initialAlpha;
     Color T_C;
@@ -26,15 +25,24 @@ public class UITrigger : MonoBehaviourPun
     // 가까운 오브젝트 
     private Transform closestObject;
 
+    bool flag = false;
+    IEnumerator delay()
+    {
+        yield return null;
+        flag = true;
+    }
+
     private void Start()
     {
         text = uiElement.GetComponent<Text>();
         T_C = new Color(255, 255, 255, 1);
         F_C = new Color(255, 255, 255, 0);
-
+        
     }
     private void Update()
     {
+        if (!flag) return;
+
 
         closestObject = FindClosestObject();
 
@@ -98,6 +106,13 @@ public class UITrigger : MonoBehaviourPun
 
     protected Transform FindClosestObject()
     {
+
+        if (PlayerManager.instace.PlayerList[0] == null)
+        {
+            Debug.Log(PlayerManager.instace.PlayerList);
+            return null;
+        }
+
         Transform closest = PlayerManager.instace.PlayerList[0].transform;
         float closestDistance = Vector3.Distance(transform.position, closest.position);
 

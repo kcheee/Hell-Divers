@@ -115,19 +115,20 @@ public class SquadLeader : Enemy_Fun
         //}
 
     }
+
     [PunRPC]
-    void pun_FireGrenada()
+    void pun_FireGrenada(Vector3 pos)
     {
-        StartCoroutine(FireGrenada());
+        StartCoroutine(FireGrenada(pos));
     }
-    IEnumerator FireGrenada()
+    IEnumerator FireGrenada(Vector3 POS)
     {
         anim.SetTrigger("Ranged_Attack");
         flag = false;
         yield return new WaitForSeconds(0.3f);
         audioSource.PlayOneShot(ENEMY.sound_Normal[1], 1);
         GameObject Grenda = Instantiate(Granade, FirePos.transform.position, Quaternion.identity);
-        Grenda.GetComponent<GranadeLauncher>().value(closestObject.position);
+        Grenda.GetComponent<GranadeLauncher>().value(POS);
     }
 
     #endregion
@@ -277,7 +278,7 @@ public class SquadLeader : Enemy_Fun
             // À¯Åº¹ß»ç
             //StartCoroutine(FireGrenada());
 
-            photonView.RPC(nameof(pun_FireGrenada), RpcTarget.All);
+            photonView.RPC(nameof(pun_FireGrenada), RpcTarget.All,closestObject.position);
 
         }
 

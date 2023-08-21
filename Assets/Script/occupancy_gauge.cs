@@ -26,19 +26,31 @@ public class occupancy_gauge : MonoBehaviour
     float distance;
 
     bool flag=false;
-
+    bool delayflag = false;
     // 사운드 넣어야 함. 
     public AudioClip[] audioclip;
     AudioSource audioSource;
 
+    IEnumerator delay()
+    {
+        yield return new WaitForSeconds(5);
+        delayflag = true;
+    }
     private void Start()
     {
         occupationGaze = OccupationGaze.idle;
         anim = GetComponent<Animator>();
-        audioSource= GetComponent<AudioSource>();
+        audioSource = GetComponent<AudioSource>();
+        StartCoroutine(delay());
     }
     protected Transform FindClosestObject()
     {
+
+        if (PlayerManager.instace.PlayerList[0] == null)
+        {
+            Debug.Log(PlayerManager.instace.PlayerList);
+            return null;
+        }
         Transform closest = PlayerManager.instace.PlayerList[0].transform;
         float closestDistance = Vector3.Distance(transform.position, closest.position);
 
@@ -57,10 +69,10 @@ public class occupancy_gauge : MonoBehaviour
     // 점령 게이지
     void FixedUpdate()
     {
+        if (!delayflag) return;
+
         if (flag)
             return;
-
-        if (PlayerManager.instace.PlayerList[0] == null) return;
 
         closestObject = FindClosestObject();
         //Debug.Log(closestObject.position);
