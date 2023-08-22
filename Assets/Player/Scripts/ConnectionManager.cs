@@ -5,6 +5,7 @@ using Photon.Pun;
 using Photon.Realtime;
 public class ConnectionManager : MonoBehaviourPunCallbacks
 {
+    public string StartScene;
     // Start is called before the first frame update
     void Start()
     {
@@ -57,6 +58,6 @@ public class ConnectionManager : MonoBehaviourPunCallbacks
         base.OnJoinedRoom();
         print(nameof(OnJoinedRoom));
         //Game Scene ¿Ãµø
-        PhotonNetwork.LoadLevel("Lobby");
+        PhotonNetwork.LoadLevel(StartScene);
     }
 }

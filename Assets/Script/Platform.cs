@@ -34,9 +34,10 @@ public class Platform : MonoBehaviour
 
             fun();
 
-            if (Item)
+            if (Item && PhotonNetwork.IsMasterClient)
             {
-                Instantiate(Item,transform.position + Vector3.up , Quaternion.identity);
+                //이것으로 같은 위치에 생성됨을 보장한다.
+                PhotonNetwork.Instantiate("Item",transform.position + Vector3.up , Quaternion.identity);
 
             }
             //Instantiate(Item, transform.position, Quaternion.identity);

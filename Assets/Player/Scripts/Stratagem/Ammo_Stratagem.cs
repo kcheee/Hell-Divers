@@ -19,7 +19,7 @@ public class Ammo_Stratagem : Stratagems
     protected override void SpawnAction(Vector3 pos,Quaternion rot)
     {
         base.SpawnAction(pos,rot);
-        GameObject platObj = Instantiate(Platform, pos + Vector3.up * 20, Quaternion.Euler(90,0,0));
+        GameObject platObj = Instantiate(Platform, pos + Vector3.up * 20, Quaternion.Euler(-90,0,0));
         Platform platform = platObj.GetComponent<Platform>();
         platform.Item = this.Item;
 

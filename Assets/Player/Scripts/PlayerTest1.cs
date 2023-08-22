@@ -41,12 +41,20 @@ public class PlayerTest1 : MonoBehaviourPun,IPunObservable
 
         }
     }
+
+    //문제 : 스트라타잼 코드를 입력 후 던지는데 
+    //내 PC에서는 무엇을 던졌는지 아는데
+    //상대 PC에서는 무엇을 던지는지 몰라서 스트라타잼 ID를 같이 보낸다.
+    //하지만,누적되는것이 마음에 들지 않는다.,
     string id;
     [PunRPC]
     public void test1(string s) {
         id = s;
     }
 
+
+
+    //던지는 애니메이션이 끝난 후 이 함수가 실행된다. 
     public void FireGrenade() {
         Debug.Log(id);
         Throw(id);
@@ -61,6 +69,8 @@ public class PlayerTest1 : MonoBehaviourPun,IPunObservable
             GameObject stratagemobj = PhotonNetwork.Instantiate(name, RightHand.position, Quaternion.identity); //Instantiate((GameObject)Resources.Load("str01"), RightHand.position, Quaternion.identity); //
             //그러니까 이놈의 포톤뷰를 가져와서 모든 PC에 RPC를 한다! 
             PhotonView view = stratagemobj.GetComponent<PhotonView>();
+            //스트라타잼을 던지는 사람의 forward와 up 방향을 받아서 물리적으로 힘을 부여함
+            //RPC를 최소화하는게 목적이나, 스트라타잼은 많이 호출되지 않음.
             view.RPC("Throw", RpcTarget.All, trBody.forward,trBody.up);
 
         }
@@ -126,9 +136,11 @@ public class PlayerTest1 : MonoBehaviourPun,IPunObservable
     private Vector3 targetPsition;
     private Quaternion targetRotation;
 
+
+    Vector2 myDir;
     void Update()
     {
-
+        myDir = new Vector2(transform.forward.x, transform.forward.z);
 /*        Vector3 test = Camera.main.WorldToViewportPoint(transform.position);
         Vector3 pos = transform.position;
         //Debug.Log(test);
@@ -186,7 +198,7 @@ public class PlayerTest1 : MonoBehaviourPun,IPunObservable
             dir = Vector3.right * h + Vector3.forward * v;
             dir.Normalize();
             speed = 4;
-            if (Input.GetMouseButtonDown(0)) {
+            if (Input.GetMouseButtonDown(0) && !reload) {
                            
                 
                     int rand = Random.Range(-1, 2);
@@ -202,8 +214,6 @@ public class PlayerTest1 : MonoBehaviourPun,IPunObservable
                     photonView.RPC(nameof(PlayAnim), RpcTarget.All, "Throw");
 
                 }
-
-
             }
             if (Input.GetMouseButtonUp(0))
             {
@@ -280,7 +290,7 @@ public class PlayerTest1 : MonoBehaviourPun,IPunObservable
                 stratagemManager.init();
             }
 
-
+            //아이템!
             if (Input.GetKeyDown(KeyCode.E) && currentGemObj != null)
             {
                 photonView.RPC(nameof(GetItem), RpcTarget.All);
@@ -331,8 +341,8 @@ public class PlayerTest1 : MonoBehaviourPun,IPunObservable
         //End Ming
         else
         {
-            //transform.position = Vector3.Lerp(transform.position, targetPsition, Time.deltaTime * 5);
-            //transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, Time.deltaTime * 5);
+            transform.position = Vector3.Lerp(transform.position, targetPsition, Time.smoothDeltaTime * 5);
+            trBody.rotation = Quaternion.Lerp(trBody.rotation,  targetRotation, Time.smoothDeltaTime * 5);
         }
 
 
@@ -341,6 +351,8 @@ public class PlayerTest1 : MonoBehaviourPun,IPunObservable
         anim.SetFloat("Vertical", v);
         anim.SetFloat("speed",dir.magnitude);
         anim.SetFloat("RunSpeed", speed);
+        anim.SetFloat("MyHorizontal",myDir.x);
+        anim.SetFloat("MyVertical",myDir.y);
     }
 
     [PunRPC]
@@ -372,10 +384,6 @@ public class PlayerTest1 : MonoBehaviourPun,IPunObservable
         //마우스 우클릭
         if (Input.GetButton("Fire2"))
         {
-
-
-            
-
             //만약 총을 들고있다면 
             //조준 애니메이션을 실행합니다.
 
@@ -415,6 +423,10 @@ public class PlayerTest1 : MonoBehaviourPun,IPunObservable
             }
 
             Vector2 myDir = new Vector2(trBody.forward.x, trBody.forward.z);
+
+
+            //RPC 없어도 가능. 성능 저하 발생!!
+
             //  photonView.RPC(nameof(PlayAnim), RpcTarget.All, "MyHorizontal", myDir.x);
            // photonView.RPC(nameof(PlayAnim), RpcTarget.All, "MyVertical", myDir.y);
             /*anim.SetFloat("MyHorizontal", myDir.x);
@@ -434,10 +446,13 @@ public class PlayerTest1 : MonoBehaviourPun,IPunObservable
         //currCoroutine = null;
     }
 
-    //모든 PC야 내가 아이템을 주웠어 네네들 다 삭제해
+    //모든 PC야 내가 이 아이템을 주웠어 네네들 다 삭제해줘!
     [PunRPC]
     public void GetItem() {
-        currentGemObj.Add();
+        //포톤은 마스터 클라이언트거나 내 객체만 삭제가 가능한것으로 보임 따라서 
+        //마스터 PC에 있는놈만 이것을 실행하면 된다!
+        if(PhotonNetwork.IsMasterClient && currentGemObj != null)
+            currentGemObj.Add();
     }
 
     [PunRPC]
@@ -482,8 +497,9 @@ public class PlayerTest1 : MonoBehaviourPun,IPunObservable
             stream.SendNext(h);
             stream.SendNext(v);
             stream.SendNext(speed);
-            stream.SendNext(targetPsition);
-            stream.SendNext(targetRotation);
+            stream.SendNext(transform.position);
+            stream.SendNext(trBody.rotation);
+            
         }
         //누구냐
         else {
