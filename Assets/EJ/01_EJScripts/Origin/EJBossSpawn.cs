@@ -7,7 +7,7 @@ using UnityEngine.AI;
 public class EJBossSpawn : MonoBehaviourPun
 {
     float currTime;
-    float BossSpawnTIme = 0.1f;
+    //float BossSpawnTIme = 0.1f;
 
     public GameObject bossSpawnFactory;
     public GameObject SpawnPoint;
@@ -15,7 +15,7 @@ public class EJBossSpawn : MonoBehaviourPun
     
 
     bool isBossDone = false;
-    int BossCount = 0;
+    //int BossCount = 0;
 
     // Start is called before the first frame update
     void Start()
@@ -33,10 +33,11 @@ public class EJBossSpawn : MonoBehaviourPun
     }
     
 
-    [PunRPC]
     void SpawnBoss()
     {
         Debug.Log("0.1f가 지났습니다.");
+
+        //
         GameObject boss = PhotonNetwork.Instantiate("Tank-2nd",SpawnPoint.transform.position, Quaternion.identity);
         //boss.transform.parent = SpawnPoint.transform;
         //boss.transform.position = SpawnPoint.transform.localPosition;
@@ -52,10 +53,14 @@ public class EJBossSpawn : MonoBehaviourPun
 
     private void OnTriggerEnter(Collider other)
     {
+        if (PhotonNetwork.IsMasterClient)
+        {
+
         if (!isBossDone)
         {
             SpawnBoss();
             isBossDone = true;
+        }
         }
     }
 }

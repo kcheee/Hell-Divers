@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
+  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -4424,7 +4424,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1060002514}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 127.1, y: -0.4, z: 175.5}
+  m_LocalPosition: {x: 206.03827, y: -0.0004005432, z: 201.6}
   m_LocalScale: {x: 27.529327, y: 29.58, z: 29.58}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -4444,7 +4444,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bossSpawnFactory: {fileID: 6772127969006303586, guid: 644d5ec54b738a5498adaacecd683498, type: 3}
-  SpawnPoint: {fileID: 426664000}
+  SpawnPoint: {fileID: 1085577385}
   bossTrigger: {fileID: 1060002514}
 --- !u!1 &1076360737
 GameObject:
@@ -4531,7 +4531,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1085577385}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -123.8, y: 0, z: 109.6}
+  m_LocalPosition: {x: 6.27, y: 1.94, z: 91.15}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

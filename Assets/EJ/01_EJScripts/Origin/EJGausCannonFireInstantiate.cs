@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using Photon.Pun;
 using UnityEngine;
-using Photon.Pun;
 
 //RPC로 쓴다면 원래 상태로 돌려두면 된다.
 
@@ -20,6 +19,8 @@ public class EJGausCannonFireInstantiate : MonoBehaviourPun
     GameObject cannonImpact;
     public GameObject gausCannonMuzzleFactory;
     public GameObject gausCannonPrefabFactory;
+
+    public GameObject floorEffectFactory;
 
     //PhotonView
     PhotonView photonview;
@@ -51,7 +52,6 @@ public class EJGausCannonFireInstantiate : MonoBehaviourPun
 
     public IEnumerator CannonFire(System.Action<int> complete)
     {
-
         //cannonFire Angle 변수
         int cannonPosZDir = -1;
         float cannonPosX = 0;
@@ -87,6 +87,8 @@ public class EJGausCannonFireInstantiate : MonoBehaviourPun
             GameObject gausCannonPrefab = Instantiate(gausCannonPrefabFactory);
             gausCannonPrefab.transform.position = cannonPos.transform.position;
             gausCannonPrefab.transform.up = cannonPos.transform.up;
+
+
 
             //몸이랑 같이 돌아가고 싶다.
             Vector3 originAngle = transform.localEulerAngles;    
@@ -183,5 +185,20 @@ public class EJGausCannonFireInstantiate : MonoBehaviourPun
     public void ONBodyAnim()
     {
         bodyReaction.SetTrigger("HeadReaction");
+    }
+
+    [PunRPC]
+    void ShowGausCannonImpact(Vector3 pos, Vector3 normal, float waitTime)
+    {
+        //collision의 정확한 지점
+        GameObject floorEffect = Instantiate(floorEffectFactory);
+        
+        //floorEffect.transform.position = collision.contacts[0].point;
+        floorEffect.transform.position = pos;
+
+        //성공?
+        //floorEffect.transform.forward = collision.GetContact(0).normal;
+        floorEffect.transform.forward = normal;
+        floorEffect.transform.localScale = Vector3.one * 10;
     }
 }

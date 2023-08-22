@@ -15,7 +15,7 @@ public class EJObjectPoolMgr : MonoBehaviourPun
 
     public GameObject gausCanonMuzzleImpactPrefab;
     public Queue<GameObject> gausCononMuzzleImpactQueue = new Queue<GameObject>();
-    int gausCannonMuzzleNum = 25;
+    //int gausCannonMuzzleNum = 25;
 
     //MachineGun
     public GameObject machineGunImpactPrefab;

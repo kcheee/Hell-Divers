@@ -39,14 +39,14 @@ public class BossFSM : MonoBehaviourPun
     public float GausCannonDistanceL = 17.5f;
     public float makeLittleBossDistance = 22.5f;
     public float NoAttack_ChaseDistance = 27.5f;
-     
+
     //bool
     static public bool Sflag = false;
     static public bool Mflag = false;
     static public bool Lflag = false;
     static public bool XLflag = false;
     static public bool XXLflag = false;
-    bool rotate = false;
+    //bool rotate = false;
 
     //time
     float curTime = 0;
@@ -63,7 +63,7 @@ public class BossFSM : MonoBehaviourPun
 
     bool isHoundDone = false;
     bool isTurretDone = false;
-    
+
 
     private void Awake()
     {
@@ -87,7 +87,7 @@ public class BossFSM : MonoBehaviourPun
         headAxisOriginal = transform.localEulerAngles;
 
         //littleBoss 순서대로 넣고 싶음
-        littleBoss = new GameObject[] { houndFactory, turretFactory};
+        littleBoss = new GameObject[] { houndFactory, turretFactory };
     }
 
     // Update is called once per frame
@@ -100,6 +100,7 @@ public class BossFSM : MonoBehaviourPun
         //이러면 photonView가 붙은 Boss를 만든 방장?과의 위치만 잰다?
 
         //자기 자신이 생성한 것인가? 아닌가?
+        //마스터라면
         if (photonView.IsMine)
         {
             Debug.Log("photonViewisMine이 실행되고 있습니다");
@@ -109,27 +110,23 @@ public class BossFSM : MonoBehaviourPun
             DistanceBoss2Player = Vector3.Distance(transform.position, closestObject.transform.position);
 
 
-        //움직이는 player를 바라보게 해야 한다.
-        //headAxis.transform.LookAt(player.transform);
-        switch (B_state)
-        {
-            //case BossState.MakeLittleBoss:
-                //photonView.RPC(nameof(MakeLittleBoss),RpcTarget.All);
-                //MakeLittleBoss();
-                //break;
-            case BossState.Chase:
-                UpdateChase();
-                break;
-            case BossState.Wait:
-                UpdateWait();
-                break;
-            case BossState.Attack:
-                UpdateAttack();
-                break;
-            case BossState.Die:
-                UpdateDie();
-                break;
-        }
+            //움직이는 player를 바라보게 해야 한다.
+            //headAxis.transform.LookAt(player.transform);
+            switch (B_state)
+            {
+                case BossState.Chase:
+                    UpdateChase();
+                    break;
+                case BossState.Wait:
+                    UpdateWait();
+                    break;
+                case BossState.Attack:
+                    UpdateAttack();
+                    break;
+                case BossState.Die:
+                    UpdateDie();
+                    break;
+            }
         }
     }
 
@@ -167,7 +164,7 @@ public class BossFSM : MonoBehaviourPun
                 spawnPos[i] = spawnPosGroup.position + spawnPosGroup.forward * 2;
 
                 hound.transform.position = spawnPos[i];
-            }           
+            }
         }
 
         if (!isTurretDone)
@@ -182,8 +179,8 @@ public class BossFSM : MonoBehaviourPun
             isTurretDone = false;
             isHoundDone = false;
         }
-        
-        
+
+
         //공격 범위에서 벗어나면 Chase모드
         if (DistanceBoss2Player > NoAttack_ChaseDistance)
         {
@@ -202,15 +199,15 @@ public class BossFSM : MonoBehaviourPun
     private void UpdateRotate2Player()
     {
         //transform.LookAt(player.transform.position);
-            //player와 나와의 거리
-            Vector3 LookingPlayerDir = closestObject.transform.position - transform.position;
-            //다시 쫓아가든, 공격하든 플레이어를 찾아서 총구를 회전하는 상태
-            transform.forward = Vector3.Lerp(transform.forward, LookingPlayerDir, 0.7f * Time.deltaTime  );
+        //player와 나와의 거리
+        Vector3 LookingPlayerDir = closestObject.transform.position - transform.position;
+        //다시 쫓아가든, 공격하든 플레이어를 찾아서 총구를 회전하는 상태
+        transform.forward = Vector3.Lerp(transform.forward, LookingPlayerDir, 0.7f * Time.deltaTime);
     }
 
 
     private void UpdateChase()
-    {  
+    {
         Debug.Log(nav.destination);
         nav.destination = closestObject.transform.position;
         //photonView.RPC(nameof(OnWheelMesh), RpcTarget.All);
@@ -222,7 +219,6 @@ public class BossFSM : MonoBehaviourPun
             print("공격XLDistance에 들어왔어요");
             OffNavMesh();
             B_state = BossState.Wait;
-
         }
 
         //!!!!!서서히 원래 포지션으로 돌고 싶다.
@@ -263,7 +259,13 @@ public class BossFSM : MonoBehaviourPun
     //쿨타임을 걸어두고 앞으로 걸어나가면 공격 다르게 발사되는 상태
     private void UpdateAttack()
     {
-
+        //if(!Sflag)
+        //{
+        //    photonView.RPC(nameof(StartMakeBombByRPC), RpcTarget.All);
+        //    //StartCoroutine(transform.GetComponent<>)
+        //    Sflag = true;
+        //}
+       
         if (DistanceBoss2Player <= bombDistanceS && !Sflag)
         {
             print("MakeBomb");
@@ -293,7 +295,7 @@ public class BossFSM : MonoBehaviourPun
             XLflag = true;
             //B_state = BossState.Wait;
         }
-        else if(DistanceBoss2Player >makeLittleBossDistance && DistanceBoss2Player<=NoAttack_ChaseDistance && !XXLflag)
+        else if (DistanceBoss2Player > makeLittleBossDistance && DistanceBoss2Player <= NoAttack_ChaseDistance && !XXLflag)
         {
             print("makelittleBoss");
             //photonView.RPC(nameof(MakeLittleBoss), RpcTarget.All);
@@ -304,13 +306,13 @@ public class BossFSM : MonoBehaviourPun
 
         //공격 범위에서 벗어나면 Chase모드
         if (DistanceBoss2Player > NoAttack_ChaseDistance)
-            {
-                print("Attack할 수 있는 거리가 아닙니다");
+        {
+            print("Attack할 수 있는 거리가 아닙니다");
             OnNavMesh();
-                B_state = BossState.Chase;
-                //anim.SetTrigger("Chase");
-            }
-       // AllFlagFalse();
+            B_state = BossState.Chase;
+            //anim.SetTrigger("Chase");
+        }
+        // AllFlagFalse();
     }
 
     private void UpdateDie()
@@ -328,7 +330,7 @@ public class BossFSM : MonoBehaviourPun
         //headAxis.transform.LookAt(player.transform);
         //UpdatePatrol();
         UpdateRotate2Player();
-        
+
         //player와 나와의 방향을 구해서 Lerp를 사용한다?        
         Vector3 headAxisAngle = headAxis.transform.localEulerAngles;
 
@@ -336,20 +338,21 @@ public class BossFSM : MonoBehaviourPun
         if (headAxisAngle.x >= 12)
         {
             headAxisAngle.x = 12;
-        }else if(headAxisAngle.x<=-8)
+        }
+        else if (headAxisAngle.x <= -8)
         {
             headAxisAngle.x = -8;
         }
 
         headAxis.transform.localEulerAngles = headAxisAngle;
-     
+
         curTime += Time.deltaTime;
 
         if (curTime > waitTime)
         {
             print("공격 딜레이 시간이 지나고 Attack상태로 접어듭니다");
-             B_state = BossState.Attack;
-             curTime = 0;
+            B_state = BossState.Attack;
+            curTime = 0;
         }
     }
     #endregion
@@ -381,7 +384,6 @@ public class BossFSM : MonoBehaviourPun
         this.nav.updateRotation = true;
     }
 
-    [PunRPC]
     void OffNavMesh()
     {
         this.nav.velocity = Vector3.zero;
@@ -398,7 +400,7 @@ public class BossFSM : MonoBehaviourPun
         Lflag = false;
         XLflag = false;
     }
-    
+
     [PunRPC]
     void OnWheelMesh()
     {

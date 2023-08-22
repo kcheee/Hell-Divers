@@ -22,7 +22,7 @@ public class EJFireArmReaction : MonoBehaviour
     void Start()
     {
         pos1origin = rightArm.transform.localPosition;
-        pos2 = rightArm.transform.localPosition + new Vector3(0, 1 , 1);
+        pos2 = rightArm.transform.localPosition + new Vector3(0, 1, 1);
         pos3 = rightArm.transform.localPosition + new Vector3(0, 1, -0.6f);
     }
 

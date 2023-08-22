@@ -6,7 +6,7 @@ public class EJBodyExplosion : MonoBehaviour
 {
     //explosion 변수
     float radius = 5f;
-    float bombExploDamage = 3f;     //**player의 maxHP로 변경
+    //float bombExploDamage = 3f;     //**player의 maxHP로 변경
     Transform bodyExploPos;
 
     // Start is called before the first frame update

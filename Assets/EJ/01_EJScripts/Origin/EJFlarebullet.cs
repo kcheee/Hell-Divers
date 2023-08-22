@@ -1,14 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
-public class EJFlarebullet : MonoBehaviour
+public class EJFlarebullet : MonoBehaviourPun
 {
 
     float flareBulletSpeed = 50f;
     float destroyTime = 1f;
 
     public GameObject floorEffectFactroy;
+
+    public PhotonView tankPv;
 
     // Start is called before the first frame update
     void Start()
@@ -41,20 +44,35 @@ public class EJFlarebullet : MonoBehaviour
     {
         if (collision.gameObject.layer == LayerMask.NameToLayer("Floor"))
         {
-            //collision의 정확한 지점
-            GameObject floorEffect = Instantiate(floorEffectFactroy);
-            floorEffect.transform.position = collision.contacts[0].point;
-            //성공?
-            floorEffect.transform.forward = collision.GetContact(0).normal;
-            floorEffect.transform.localScale = Vector3.one * 10;
+            if (PhotonNetwork.IsMasterClient)
+            {
+                //부딪힌 곳에 Floor Effect가 나오는 것은 RPC로 할 것임
 
-            StartCoroutine(DestroySelf4Collision(collision));
+                //collision의 정확한 지점
+                //GameObject floorEffect = Instantiate(floorEffectFactroy);
+                //floorEffect.transform.position = collision.contacts[0].point;
+                ////성공?
+                //floorEffect.transform.forward = collision.GetContact(0).normal;
+                //floorEffect.transform.localScale = Vector3.one * 10;
 
+                StartCoroutine(DestroySelf4Collision(collision));
+            }          
             //성공은 했는데 서로 부딪혀서 튕김 이걸 어떻게 해야하는지
         }
     }
+
+
     IEnumerator DestroySelf4Collision(Collision collision)
     {
+        tankPv.RPC("ShowGausCannonImpact", RpcTarget.All, transform.position, collision.GetContact(0).normal);
+
+        #region HP테스트 필요
+        if (collision.gameObject.tag == "Player")
+        {
+            collision.transform.GetComponent<PhotonView>().RPC("damaged", RpcTarget.All, collision, 3);
+        }
+
+        #endregion
         flareBulletSpeed = 0;
         yield return new WaitForSeconds(destroyTime);
 
@@ -63,6 +81,16 @@ public class EJFlarebullet : MonoBehaviour
 
     IEnumerator DestroySelf4Trigger(Collider other)
     {
+        tankPv.RPC("ShowGausCannonImpact", RpcTarget.All, transform.position,other.transform.up);
+
+        #region HP테스트 필요
+        if (other.gameObject.tag == "Player")
+        {
+            other.transform.GetComponent<PhotonView>().RPC("damaged", RpcTarget.All, other, 3);
+        }
+
+        #endregion
+
         flareBulletSpeed = 0;
         yield return new WaitForSeconds(destroyTime);
 

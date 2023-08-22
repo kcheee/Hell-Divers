@@ -12,7 +12,7 @@ public class EJTurret : MonoBehaviourPun
     float attackRange = 5;
     public LayerMask playerLayer;
     int fireCount;
-    int maxFireCount = 5;
+    //int maxFireCount = 5;
 
     GameObject target;
 
