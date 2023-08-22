@@ -66,8 +66,6 @@ public class PlayerManager : MonoBehaviourPun
         PhotonNetwork.SendRate = 30;
         //OnPhotonSeriallizeView 호출 빈도
         PhotonNetwork.SerializationRate = 30;
-        Debug.Log("스타트 함수 실행!!");
-
 
         //너 혼자니?
         StartCoroutine(spawn());
@@ -107,7 +105,7 @@ public class PlayerManager : MonoBehaviourPun
         if (SceneManager.GetActiveScene().name != "Lobby")
         {
 
-            GameObject PlatformObj = PhotonNetwork.Instantiate("Platform-Main", pos + Vector3.up * 30, Quaternion.Euler(-89.98f, 0, 0));
+            GameObject PlatformObj = PhotonNetwork.Instantiate("Platform-Main", pos + Vector3.up * 30, Quaternion.Euler(-90f, 0, 0));
             //GameObject player = PhotonNetwork.Instantiate("AlphaPlayer 1", pos , Quaternion.identity);
             //player.SetActive(false);
 

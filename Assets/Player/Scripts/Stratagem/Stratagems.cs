@@ -99,7 +99,8 @@ public class Stratagems : MonoBehaviourPun
     [PunRPC]
     public void Spawn(Vector3 pos,Quaternion rot) {
         //그때 Text를 지우고 스폰한다.
-        Destroy(text.gameObject);
+        if(text != null)
+            Destroy(text.gameObject);
         SpawnAction(pos,rot);
         /*GameObject platObj = Instantiate(Platform, pos, rot);
         Platform platform = platObj.GetComponent<Platform>();

@@ -11,6 +11,8 @@ public class Gun : MonoBehaviourPun
 
     //총구
     public Transform FirePos;
+
+    public GameObject Fire2Eft;
     public GameObject FireEft;
     public GameObject MuzzleEft;
 
@@ -96,10 +98,12 @@ public class Gun : MonoBehaviourPun
             //Debug.LogError("이것이 탄퍼짐이다." + spread);
 
             GameObject fireEft = Instantiate(FireEft, FirePos.position, Quaternion.identity);
+            //GameObject fire2Eft = Instantiate(Fire2Eft, FirePos.position, Quaternion.identity);
             GameObject muzzleEft = Instantiate(MuzzleEft, FirePos.position, Quaternion.identity);
             //fireEft.transform.parent = null;
             //fireEft.transform.forward = transform.forward ;
             fireEft.transform.rotation = Quaternion.LookRotation(spread, Vector3.up);
+            //fire2Eft.transform.rotation = Quaternion.LookRotation(spread, Vector3.up);
             muzzleEft.transform.forward = FirePos.forward;
             //if (PhotonNetwork.IsMasterClient)
 
@@ -117,7 +121,7 @@ public class Gun : MonoBehaviourPun
 
             Debug.DrawRay(transform.position, spread * MaxDistance, Color.red, 1);
 
-            //정확한 동기화를 위해서 마스터만 실행한다.
+            //맞은 판단은 정확한 동기화를 위해서 마스터만 실행한다.
             if (PhotonNetwork.IsMasterClient) {
                 Ray ray = new Ray(transform.position, spread);
                 //Debug.Log(transform.forward);
@@ -127,14 +131,10 @@ public class Gun : MonoBehaviourPun
                 // 나중에 layer로 설정
                 if (Physics.Raycast(ray, out hit, MaxDistance))
                 {
-                    Debug.Log("Hit" + hit.collider.gameObject.name);
                     PhotonView view = hit.collider.gameObject.GetComponent<PhotonView>();
-                    Debug.Log(view +"포톤뷰를 가져왔슴");
                     I_Entity entity = hit.collider.gameObject.GetComponent<I_Entity>();
-
                     if (entity != null)
                     {
-                        Debug.Log("Gun 스크립트 실행중");
                         view.RPC("damaged",RpcTarget.All, hit.point, 10);
                         //entity.damaged(10);
                         //기본적으로 포톤은 커스텀 타입을 지원해주지 않는다.
@@ -147,11 +147,19 @@ public class Gun : MonoBehaviourPun
                         hit.collider.GetComponent<Enemy_Fun>().E_Hit(hit.point);
                     }*/
                 }
-                Current_Bullet--;
+                //정확한 동기화를 위해 다시 탄약을 동기화시킴 
+                photonView.RPC(nameof(Set_Bullet), RpcTarget.All, Current_Bullet -= 1);
             }
+            
+            //Current_Bullet--;
         }
             
         return isFire;
+    }
+
+    [PunRPC]
+    public void Set_Bullet(int bullet) {
+        Current_Bullet = bullet;
     }
 
     [PunRPC]
