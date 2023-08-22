@@ -26,9 +26,10 @@ public class Grenade : MonoBehaviour
             //smoke.SetActive(false);
         yield return new WaitForSeconds(1.5f);
         Camera.main.transform.DOShakePosition(0.3f, 0.5f);
+        // 데미지 함수 넣어야 함.
 
         Instantiate(bombEft,transform.position, Quaternion.identity);
-        // 사운드 넣어야 함.
+
             Destroy(gameObject,0.25f);
     }
     private void OnCollisionEnter(Collision collision)
