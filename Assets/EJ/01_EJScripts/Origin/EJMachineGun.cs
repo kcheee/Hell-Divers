@@ -18,12 +18,19 @@ public class EJMachineGun : MonoBehaviourPun
     GameObject machineGunImpact;
     public GameObject machineGunFactory;
 
-    bool isLeftArmAnimDone = false;
+    //bool isLeftArmAnimDone = false;
+
+    //Layer
+    int PlayerLayer;
+    int DefaultLayer;
 
     // Start is called before the first frame update
     void Start()
     {
         originMachineAngle = machineGunPos.localEulerAngles;
+
+        PlayerLayer = LayerMask.GetMask("Player");
+        DefaultLayer = LayerMask.GetMask("Default");
     }
 
     // Update is called once per frame
@@ -40,9 +47,10 @@ public class EJMachineGun : MonoBehaviourPun
 
         if (Input.GetKeyDown(KeyCode.Alpha7))
         {
-            
+
         }
     }
+
 
     public IEnumerator MachineGunFire(System.Action<int> complete)
     {
@@ -57,7 +65,7 @@ public class EJMachineGun : MonoBehaviourPun
         for (int i = 0; i < machineCount; i++)
         {
             if (Physics.Raycast(machineGunPos.position, machineGunPos.up, out machineGunHitInfo, float.MaxValue))
-            {                             
+            {
                 Debug.DrawRay(machineGunPos.position, machineGunPos.up, Color.red);
 
                 //01.machineGunEffect Enqueue
@@ -70,7 +78,7 @@ public class EJMachineGun : MonoBehaviourPun
                 machineGunImpact.transform.localScale = Vector3.one * 0.7f;
                 //machineGunImpact.transform.parent = machineGunHitInfo.transform;
 
-                print("머신건이 닿은 곳은 "+ machineGunHitInfo.point);
+                print("머신건이 닿은 곳은 " + machineGunHitInfo.point);
 
                 //03.일정 시간 후 Dequeue해줄 필요 없이 particle destroy
                 /*  if (machineGunImpact.activeSelf)
@@ -82,21 +90,28 @@ public class EJMachineGun : MonoBehaviourPun
                 //leftArmPos를 반동을 준다
                 //Animator를 켰다가 끈다.
 
+                #region  HP 줄어드는 지 테스트 필요
+                //machineGun hitInfo가 player라면 데미지를 준다.
+                if (machineGunHitInfo.transform.tag == "Player")
+                {
+                    machineGunHitInfo.transform.GetComponent<PhotonView>().RPC("damaged", RpcTarget.All, machineGunHitInfo, 3);
+
+                }
+                #endregion
+
                 ONLeftArmAnim();
                 bodyReactionAnim();
 
                 EJBossSFX.instance.PlaymachineGunSFX();
-            }           
+            }
+
 
             //04. machineGunPos가 일정량만큼 Z축 회전
             machineGunPos.Rotate(new Vector3(0, 0, machineGunRotateZadd), Space.Self);
 
-            
-            
             yield return new WaitForSeconds(machineGunDelayTime);
 
         }
-
         //04. machineGunPos Angle 초기화
         machineGunPos.localEulerAngles = originMachineAngle;
         isMachineDone = true;
@@ -105,7 +120,6 @@ public class EJMachineGun : MonoBehaviourPun
         {
             complete(1);
         }
-        //BossFSM.Lflag = false;
     }
 
     public Animator leftArmReaction;

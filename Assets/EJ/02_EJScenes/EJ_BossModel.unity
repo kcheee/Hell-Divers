@@ -762,6 +762,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PlayerList:
   - {fileID: 0}
+  DeathList: []
   clip: {fileID: 0}
 --- !u!4 &1798948841
 Transform:
@@ -4120,6 +4121,26 @@ PrefabInstance:
     - target: {fileID: 6772127969006303586, guid: 644d5ec54b738a5498adaacecd683498, type: 3}
       propertyPath: m_Name
       value: Tank-2nd
+      objectReference: {fileID: 0}
+    - target: {fileID: 6772127969245551755, guid: 644d5ec54b738a5498adaacecd683498, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6772127969245551755, guid: 644d5ec54b738a5498adaacecd683498, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6772127969245551755, guid: 644d5ec54b738a5498adaacecd683498, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6772127969245551755, guid: 644d5ec54b738a5498adaacecd683498, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6772127969245551755, guid: 644d5ec54b738a5498adaacecd683498, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6911231757778707830, guid: 644d5ec54b738a5498adaacecd683498, type: 3}
       propertyPath: sceneViewId

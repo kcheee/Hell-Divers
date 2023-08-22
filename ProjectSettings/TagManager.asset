@@ -7,6 +7,8 @@ TagManager:
   - Fire
   - Floor
   - Enemy
+  - rightArm
+  - leftArm
   layers:
   - Default
   - TransparentFX
@@ -34,8 +36,8 @@ TagManager:
   - 
   - 
   - 
-  - 
-  - 
+  - Boss
+  - BossBullet
   - 
   - 
   - 

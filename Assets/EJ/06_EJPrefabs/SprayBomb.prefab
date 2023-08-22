@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 4697200570132078073}
   - component: {fileID: 1387563418574979215}
   - component: {fileID: 1814243193440332349}
-  m_Layer: 0
+  m_Layer: 27
   m_Name: ObjectForTrail
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -112,7 +112,7 @@ GameObject:
   - component: {fileID: 5827693791389106449}
   - component: {fileID: 7846125704352849145}
   - component: {fileID: 8402476936572049890}
-  m_Layer: 0
+  m_Layer: 27
   m_Name: SprayBomb
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -336,6 +336,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 438a5497f860d6644966e844f34f5251, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rb: {fileID: 5827693791389106449}
+  tankPv: {fileID: 0}
 --- !u!1001 &2283062445802115682
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -411,6 +413,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SmokeTrail-main
       objectReference: {fileID: 0}
+    - target: {fileID: 8909693490739610860, guid: 7acda830bc3b51b4f9a251fc4d3960be, type: 3}
+      propertyPath: m_Layer
+      value: 27
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7acda830bc3b51b4f9a251fc4d3960be, type: 3}
 --- !u!4 &9003761796822094968 stripped
@@ -425,9 +431,21 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 3509581643916522350}
     m_Modifications:
+    - target: {fileID: 133904, guid: 30506e06c40703349b3b014b826e1a01, type: 3}
+      propertyPath: m_Layer
+      value: 27
+      objectReference: {fileID: 0}
+    - target: {fileID: 186130, guid: 30506e06c40703349b3b014b826e1a01, type: 3}
+      propertyPath: m_Layer
+      value: 27
+      objectReference: {fileID: 0}
     - target: {fileID: 191300, guid: 30506e06c40703349b3b014b826e1a01, type: 3}
       propertyPath: m_Name
       value: Deodorant
+      objectReference: {fileID: 0}
+    - target: {fileID: 191300, guid: 30506e06c40703349b3b014b826e1a01, type: 3}
+      propertyPath: m_Layer
+      value: 27
       objectReference: {fileID: 0}
     - target: {fileID: 469398, guid: 30506e06c40703349b3b014b826e1a01, type: 3}
       propertyPath: m_RootOrder
