@@ -7,7 +7,7 @@ using UnityEngine.AI;
 public class SquadLeader : Enemy_Fun
 {
 
-    #region sigleton
+    #region sigleton & 변수
     static public SquadLeader Instance;
 
     public float escape=15;
@@ -18,6 +18,11 @@ public class SquadLeader : Enemy_Fun
     public GameObject E_Initiate;
     public int spawnPos = 5;
     bool flare_flag = true;
+    bool flag = false;
+    bool Equip_flag = false;
+    float currrTime = 0;
+
+    AudioSource audioSource;
 
     private void Awake()
     {
@@ -26,11 +31,8 @@ public class SquadLeader : Enemy_Fun
     }
     #endregion
 
-    float currrTime = 0;
 
-    bool flag = false;
-
-    AudioSource audioSource;
+    
 
     // 컴포넌트 
     void getcomponent()
@@ -44,6 +46,7 @@ public class SquadLeader : Enemy_Fun
     {
         // 고쳐야함
         //closestObject = GameObject.Find("Player");
+        photonView.RPC(nameof(PlayAnimB), RpcTarget.All, "Walk", true);
         E_state = EnemyState.patrol;
     }
 
@@ -137,7 +140,6 @@ public class SquadLeader : Enemy_Fun
     {
         // 걷는 애니메이션
         //anim.Play("Walk");
-        photonView.RPC(nameof(PlayAnim_T), RpcTarget.All, "Walk");
 
         agent.isStopped = false;
 
@@ -152,6 +154,8 @@ public class SquadLeader : Enemy_Fun
             distance > ENEMYATTACK.melee_attack_possible)
         {
             // 공격상태로 전이하고싶다.
+            photonView.RPC(nameof(PlayAnimB), RpcTarget.All, "Walk", false);
+
             E_state = EnemyState.wait;
             //anim.SetTrigger("Attack");
             // agent stop
@@ -161,6 +165,7 @@ public class SquadLeader : Enemy_Fun
         // 만약 추격중에 플레이어와의 거리가 포기거리보다 크다면
         else if (distance > ENEMYATTACK.farDistance)
         {
+
             E_state = EnemyState.patrol;
             // 순찰 상태로 전이하고싶다.
         }
@@ -171,17 +176,21 @@ public class SquadLeader : Enemy_Fun
     {
         // 걷는 애니메이션
         //anim.Play("Walk");
-        photonView.RPC(nameof(PlayAnim_T), RpcTarget.All, "Walk");
 
         base.F_patrol();
     }
-
+    
     protected override void F_wait()
     {
-        anim.SetBool("walk", false);
 
         //anim.Play("Equip");
-        photonView.RPC(nameof(PlayAnim_T), RpcTarget.All, "Equip");
+        
+        // 한번만 실행해야함.
+        if(!Equip_flag)
+        {
+            photonView.RPC(nameof(PlayAnim_T), RpcTarget.All, "Equip");
+            Equip_flag = true;
+        }
 
 
         // agent 미끄러짐 방지
@@ -203,6 +212,7 @@ public class SquadLeader : Enemy_Fun
         if (currTime > 2f)
         {
             currTime = 0;
+            Equip_flag = false;
             E_state = EnemyState.ranged_attack;
         }
 
@@ -212,8 +222,11 @@ public class SquadLeader : Enemy_Fun
         // 근거리 공격하러 쫒아감.
         if (distance < escape)
         {
+            Equip_flag = false;
+
             // agent 다시 세팅
             TraceNavSetting();
+            photonView.RPC(nameof(PlayAnimB), RpcTarget.All, "Walk", true);
             E_state = EnemyState.escape;
             currTime = 0;
         }
@@ -221,7 +234,9 @@ public class SquadLeader : Enemy_Fun
         // 공격 거리 벗어났을 경우
         if (distance > ENEMYATTACK.attackRange)
         {
+            Equip_flag = false;
             TraceNavSetting();
+            photonView.RPC(nameof(PlayAnimB), RpcTarget.All, "Walk", true);
             E_state = EnemyState.chase;
             currTime = 0;
         }
@@ -230,8 +245,6 @@ public class SquadLeader : Enemy_Fun
     protected void F_escape()
     {
         //anim.Play("Walk");
-        photonView.RPC(nameof(PlayAnim_T), RpcTarget.All, "Walk");
-
 
         // 도망가기 위한 코드
         Vector3 fleeDirection = transform.position - closestObject.transform.position;
@@ -246,11 +259,13 @@ public class SquadLeader : Enemy_Fun
         }
         if (distance >= ENEMYATTACK.ranged_attack_possible - 3)
         {
+            photonView.RPC(nameof(PlayAnimB), RpcTarget.All, "Walk", false);
             E_state = EnemyState.wait;
         }
         if (distance < 3)
         {
             StopNavSetting();
+            photonView.RPC(nameof(PlayAnimB), RpcTarget.All, "Walk", false);
             E_state = EnemyState.melee_attack;
         }
         //break;
@@ -290,16 +305,15 @@ public class SquadLeader : Enemy_Fun
             flag = true;
             currrTime = 0;
             TraceNavSetting();
+            photonView.RPC(nameof(PlayAnimB), RpcTarget.All, "Walk", true);
             E_state = EnemyState.chase;
         }
 
         // 총 쏘기.. 
         // 밑에서 위로 쏘는 형식.
     }
-    Quaternion newRotation;
     protected override void F_meleeattack()
     {
-        anim.SetBool("walk", false);
 
         f_rotation();
 
@@ -317,6 +331,7 @@ public class SquadLeader : Enemy_Fun
         if (distance > 4)
         {
             TraceNavSetting();
+            photonView.RPC(nameof(PlayAnimB), RpcTarget.All, "Walk", true);
             E_state = EnemyState.escape;
         }
         // escape 설정해야함.

@@ -35,6 +35,7 @@ public class Immolator : Enemy_Fun
     {
         // 고쳐야함
         //closestObject = GameObject.Find("Player");
+        photonView.RPC(nameof(PlayAnimB), RpcTarget.All, "Walk",true);
         E_state = EnemyState.patrol;
     }
 
@@ -72,7 +73,6 @@ public class Immolator : Enemy_Fun
     [PunRPC]
     IEnumerator I_RangedAttack()
     {
-        Debug.Log("디버그실행");
 
         flameattack.enabled = true;
         yield return  null;
@@ -85,8 +85,6 @@ public class Immolator : Enemy_Fun
     {
         // 걷는 애니메이션
         //anim.Play("Walk");
-        photonView.RPC(nameof(PlayAnim_T), RpcTarget.All, "Walk");
-
         agent.isStopped = false;
 
         // agent야 너의 목적지는 target의 위치야
@@ -99,6 +97,8 @@ public class Immolator : Enemy_Fun
         if (distance < ENEMYATTACK.ranged_attack_possible &&
             distance > ENEMYATTACK.melee_attack_possible)
         {
+            photonView.RPC(nameof(PlayAnim_T), RpcTarget.All, "Equip");
+
             // 공격상태로 전이하고싶다.
             E_state = EnemyState.wait;
             //anim.SetTrigger("Attack");
@@ -118,6 +118,8 @@ public class Immolator : Enemy_Fun
         {
             agent.velocity = Vector3.zero;
             agent.isStopped = true;
+            photonView.RPC(nameof(PlayAnimB), RpcTarget.All, "Walk", false);
+
             E_state = EnemyState.melee_attack;
         }
     }
@@ -126,8 +128,6 @@ public class Immolator : Enemy_Fun
     {
         // 걷는 애니메이션
         //anim.Play("Walk");
-        photonView.RPC(nameof(PlayAnim_T), RpcTarget.All, "Walk");
-
         base.F_patrol();
     }
     // 원거리 공격
@@ -149,6 +149,8 @@ public class Immolator : Enemy_Fun
         {
             flag = false;
             currrTime = 0;
+            photonView.RPC(nameof(PlayAnimB), RpcTarget.All, "Walk", true);
+
             E_state = EnemyState.chase;
         }
 
@@ -159,10 +161,7 @@ public class Immolator : Enemy_Fun
     protected override void F_wait()
     {
         // 장전 애니메이션
-        anim.SetBool("walk", false);
         //anim.Play("Equip");
-        photonView.RPC(nameof(PlayAnim_T), RpcTarget.All, "Equip");
-
 
         //Debug.Log("tlfgod");
         // Enemy 앞방향 Player를 향하게 설정.
@@ -204,14 +203,15 @@ public class Immolator : Enemy_Fun
     // 근거리 공격
     protected override void F_meleeattack()
     {
-        // 근거리 공격
-        photonView.RPC(nameof(PlayAnim_T), RpcTarget.All, "Melee_Attack");
-
+        // 근거리 공격 안하는 걸로.
+         
         currrTime += Time.deltaTime;
         // 테스트용
         if (currrTime > 2)
         {
             currrTime = 0;
+            photonView.RPC(nameof(PlayAnimB), RpcTarget.All, "Walk",true);
+
             E_state = EnemyState.chase;
         }
     }
