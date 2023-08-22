@@ -41,12 +41,20 @@ public class PlayerTest1 : MonoBehaviourPun,IPunObservable
 
         }
     }
+
+    //문제 : 스트라타잼 코드를 입력 후 던지는데 
+    //내 PC에서는 무엇을 던졌는지 아는데
+    //상대 PC에서는 무엇을 던지는지 몰라서 스트라타잼 ID를 같이 보낸다.
+    //하지만,누적되는것
     string id;
     [PunRPC]
     public void test1(string s) {
         id = s;
     }
 
+
+
+    //던지는 애니메이션이 끝난 후 이 함수가 실행된다. 
     public void FireGrenade() {
         Debug.Log(id);
         Throw(id);
