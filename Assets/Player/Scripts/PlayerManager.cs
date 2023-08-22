@@ -36,7 +36,7 @@ public class PlayerManager : MonoBehaviourPun
     //RPC 함수 실행?
 
     // mainscene에서 spawn
-    Vector3 playerSpawn = new Vector3(220, 0, 250);
+    Vector3 playerSpawn = new Vector3(225, 0, 245);
 
     IEnumerator spawn()
     {
@@ -45,7 +45,7 @@ public class PlayerManager : MonoBehaviourPun
         if (PLAYER_LIST.Count == 0)
         {
             Debug.Log("실행");
-            StartSpawn(playerSpawn + new Vector3(Random.Range(-10, 10), 0, Random.Range(-10, 10)));
+            StartSpawn(playerSpawn+new Vector3(Random.Range(-5,5),0,Random.Range(-5, 5)));
         }
         else
         {

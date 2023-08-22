@@ -56,7 +56,7 @@ public class FollowCam : MonoBehaviour
         }
         //백터를 보간한다.
 
-        transform.position = Vector3.Lerp(pos, target, Time.smoothDeltaTime * 10);
+        transform.position = Vector3.Lerp(pos, target, Time.smoothDeltaTime * 5);
 
     }
 }

@@ -1856,7 +1856,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   g: 9.8
-  max_height: 6
+  max_height: 3
 --- !u!114 &1103817260596919689
 MonoBehaviour:
   m_ObjectHideFlags: 0
