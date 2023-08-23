@@ -5,7 +5,6 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.UI;
 using Photon.Pun;
-using System.Diagnostics;
 
 public class Enemy1 : Enemy_Fun
 {
@@ -109,10 +108,11 @@ public class Enemy1 : Enemy_Fun
             //bullet.transform.forward = TsetG.transform.position - transform.position;
             // 밑방향으로 힘을 줘야함.
             //Debug.Log(bulletpos - transform.position);
-            bullet.GetComponent<Rigidbody>().AddForce((bulletpos - transform.position) * 12, ForceMode.Impulse);
+            bullet.GetComponent<Rigidbody>().AddForce((bulletpos - transform.position) * 8, ForceMode.Impulse);
 
             yield return new WaitForSeconds(0.15f);
         }
+        photonView.RPC(nameof(PlayAnimB), RpcTarget.All, "RAtk", false);
     }
 
 
@@ -183,18 +183,23 @@ public class Enemy1 : Enemy_Fun
         base.F_rangedattack();
 
         //anim.Play("Ranged_Attack");
-        anim.SetTrigger("Ranged_Attack");
+        //anim.SetTrigger("Ranged_Attack");
         if(!flag)
         {
             photonView.RPC(nameof(pun_I_RangedAttack), RpcTarget.All);
+            photonView.RPC(nameof(PlayAnimB), RpcTarget.All, "RAtk", true);
+
+
             //StartCoroutine(I_RangedAttack());
         }
         currrTime += Time.deltaTime;
-        if (currrTime > 2)
+        if (currrTime > 2.5f)
         {
             equip_flag = false;
             flag = false;
             currrTime = 0;
+            
+
             photonView.RPC(nameof(PlayAnimB), RpcTarget.All, "Walk", true);
             E_state = EnemyState.chase;
         }
@@ -209,21 +214,19 @@ public class Enemy1 : Enemy_Fun
         // 장전 애니메이션
         //anim.SetBool("walk", false);
         if (!equip_flag)
-        {
-            anim.Play("Equip");
-            photonView.RPC(nameof(PlayAnim_T), RpcTarget.All, "Equip");
+        {         
+            photonView.RPC(nameof(PlayAnimP), RpcTarget.All, "Equip");
 
             //anim.SetTrigger("equip");
-            //equip_flag=true;
+            equip_flag = true;
         }
 
         // Enemy 앞방향 Player를 향하게 설정.
         //transform.forward = target.transform.position - transform.position;
-        Vector3.Lerp(transform.forward, closestObject.transform.position - transform.position, 0.1f);
-        currTime += Time.deltaTime;
+
         // 총을 꺼내는 시간.
         //Debug.Log("총 꺼냄.");
-
+        transform.forward = closestObject.transform.position - transform.position;
         // 총 꺼내는 애니메이션
 
         // 일정 시간이 지나면 F_rangedattack으로
@@ -241,16 +244,17 @@ public class Enemy1 : Enemy_Fun
         if (distance < 5)
         {
             photonView.RPC(nameof(PlayAnimB), RpcTarget.All,"Walk", true);
+            equip_flag = !equip_flag;
             E_state = EnemyState.chase;
-            currTime = 0;
         }
 
         // 공격 거리 벗어났을 경우
         if (distance > ENEMYATTACK.attackRange)
         {
             photonView.RPC(nameof(PlayAnimB), RpcTarget.All,"Walk", true);
+            equip_flag = !equip_flag;
             E_state = EnemyState.chase;
-            currTime = 0;
+
         }
 
     }
@@ -262,13 +266,18 @@ public class Enemy1 : Enemy_Fun
         //anim.Play("Melee_Attack");
 
         // 애니메이션 수정해야함.
-        photonView.RPC(nameof(PlayAnim_T), RpcTarget.All, "Melee_Attack");
+        if (!flag)
+        {
+        photonView.RPC(nameof(PlayAnimP), RpcTarget.All, "Melee_Attack");
+            flag= true;
+        }
 
         currrTime += Time.deltaTime;
         // 테스트용
         if (currrTime > 2)
         {
             currrTime = 0;
+            flag = false;
             photonView.RPC(nameof(PlayAnimB), RpcTarget.All, "Walk", true);
             E_state = EnemyState.chase;
         }

@@ -2284,7 +2284,7 @@ MonoBehaviour:
     sound_Hurt: {fileID: 8300000, guid: 0f01458ab91c1ac4883d0e6e549bff26, type: 3}
     sound_Dead: {fileID: 8300000, guid: 92f9e83fee5bc0f468d280c410a25bc9, type: 3}
   ENEMYATTACK:
-    melee_attack_possible: 5
+    melee_attack_possible: 3
     ranged_attack_possible: 10
     attackRange: 25
     farDistance: 80

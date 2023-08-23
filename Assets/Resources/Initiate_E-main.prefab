@@ -1614,7 +1614,7 @@ MonoBehaviour:
     sound_Hurt: {fileID: 0}
     sound_Dead: {fileID: 0}
   ENEMYATTACK:
-    melee_attack_possible: 5
+    melee_attack_possible: 3
     ranged_attack_possible: 10
     attackRange: 20
     farDistance: 80
@@ -1628,7 +1628,7 @@ MonoBehaviour:
   objects: []
   Gun: {fileID: 5666187501187235687}
   I_bullet: {fileID: 6505834467949590267, guid: cae59c52a7abc804a9ff5ba3f3dc5b28, type: 3}
-  I_Muzzle: {fileID: 100006, guid: 30b4cc2728d8cec499fad63ba93785a4, type: 3}
+  I_Muzzle: {fileID: 100006, guid: 5317fde2cd7d75a4d8888fd00df21599, type: 3}
   I_FirePos: {fileID: 5666187499809710772}
 --- !u!195 &5666187500403617569
 NavMeshAgent:
