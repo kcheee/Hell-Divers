@@ -133,6 +133,5 @@ public class PlayerManager : MonoBehaviourPun
         {
             action(PLAYER_LIST[0].transform.position);
         }
-
     }
 }
