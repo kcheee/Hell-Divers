@@ -98,12 +98,12 @@ public class Gun : MonoBehaviourPun
             //Debug.LogError("¿Ã∞Õ¿Ã ≈∫∆€¡¸¿Ã¥Ÿ." + spread);
 
             GameObject fireEft = Instantiate(FireEft, FirePos.position, Quaternion.identity);
-            //GameObject fire2Eft = Instantiate(Fire2Eft, FirePos.position, Quaternion.identity);
+            GameObject fire2Eft = Instantiate(Fire2Eft, FirePos.position, Quaternion.identity);
             GameObject muzzleEft = Instantiate(MuzzleEft, FirePos.position, Quaternion.identity);
             //fireEft.transform.parent = null;
             //fireEft.transform.forward = transform.forward ;
             fireEft.transform.rotation = Quaternion.LookRotation(spread, Vector3.up);
-            //fire2Eft.transform.rotation = Quaternion.LookRotation(spread, Vector3.up);
+            fire2Eft.transform.rotation = Quaternion.LookRotation(spread, Vector3.up);
             muzzleEft.transform.forward = FirePos.forward;
             //if (PhotonNetwork.IsMasterClient)
 
@@ -184,7 +184,7 @@ public class Gun : MonoBehaviourPun
     }
 
     public void Reload() {
-        SoundManager.instance.SfxPlay(PlayerSound.instance.GetClip(PlayerSound.P_SOUND.Reloading));
+        
         Debug.Log("Reloading!!!");
         Current_Bullet = maxBullet;
         Current_Manganize--;

@@ -15,14 +15,14 @@ public class ChangeCursor : MonoBehaviour
         wsize = cursorImg2.width / 2;
         hsize = cursorImg2.height / 2;
         Debug.Log(hsize +  " ssss" + wsize);
-        Cursor.visible = false;
+        //Cursor.visible = false;
         Cursor.SetCursor(cursorImg1, Vector3.zero, CursorMode.ForceSoftware);
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetMouseButton(1)) {
+        if (Input.GetMouseButtonDown(1)) {
             Cursor.SetCursor(cursorImg2, Vector3.zero + (Vector3.up * hsize) + (Vector3.right * wsize) , CursorMode.ForceSoftware);
         }
         if (Input.GetMouseButtonUp(1)) {
