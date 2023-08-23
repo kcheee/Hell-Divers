@@ -8724,15 +8724,18 @@ ParticleSystem:
     collidesWithDynamic: 1
     interiorCollisions: 0
   TriggerModule:
-    enabled: 0
+    enabled: 1
     serializedVersion: 2
-    inside: 1
+    inside: 2
     outside: 0
     enter: 0
     exit: 0
-    colliderQueryMode: 0
+    colliderQueryMode: 2
     radiusScale: 1
-    primitives: []
+    primitives:
+    - {fileID: 8765008238257240389}
+    - {fileID: 8765008237633389164}
+    - {fileID: 8765008238363086483}
   SubModule:
     serializedVersion: 2
     enabled: 0

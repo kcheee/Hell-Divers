@@ -78,7 +78,7 @@ public class EJMachineGun : MonoBehaviourPun
                 machineGunImpact.transform.localScale = Vector3.one * 0.7f;
                 //machineGunImpact.transform.parent = machineGunHitInfo.transform;
 
-                print("머신건이 닿은 곳은 " + machineGunHitInfo.point);
+                //print("머신건이 닿은 곳은 " + machineGunHitInfo.point);
 
                 //03.일정 시간 후 Dequeue해줄 필요 없이 particle destroy
                 /*  if (machineGunImpact.activeSelf)
