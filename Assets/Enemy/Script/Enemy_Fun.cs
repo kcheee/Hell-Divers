@@ -77,7 +77,7 @@ public class Enemy_Fun : EnemyInfo, IPunObservable,I_Entity
         // attackRange만큼 가까워지면 추적.
         if (distance < ENEMYATTACK.attackRange)
         {
-            photonView.RPC(nameof(PlayAnim_T), RpcTarget.All, "Walk", true);
+            photonView.RPC(nameof(PlayAnimB), RpcTarget.All, "Walk", true);
             E_state = EnemyState.chase;
         }
 
@@ -192,26 +192,34 @@ public class Enemy_Fun : EnemyInfo, IPunObservable,I_Entity
     #region photon 설정
 
     [PunRPC]
-    public void PlayAnim(string name)
+    public void PlayAnimT(string name)
     {
         anim.SetTrigger(name);
+        Debug.LogWarning(name+"여러번 실행 방지");
     }
 
     [PunRPC]
-    public void PlayAnim(string name, float value)
+    public void PlayAnimF(string name, float value)
     {
         anim.SetFloat(name, value);
+        Debug.LogWarning(name + "여러번 실행 방지");
+
     }
 
     [PunRPC]
-    public void PlayAnim(string name, bool value)
+    public void PlayAnimB(string name, bool value)
     {
+
         anim.SetBool(name, value);
+        Debug.LogWarning(name + "여러번 실행 방지");
+
     }
     [PunRPC]
     public void PlayAnim_T(string name)
     {
         anim.Play(name);
+        Debug.LogWarning(name + "여러번 실행 방지");
+
     }
 
 

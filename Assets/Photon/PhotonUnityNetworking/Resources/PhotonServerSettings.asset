@@ -17,7 +17,7 @@ MonoBehaviour:
     AppIdFusion: 
     AppIdChat: 
     AppIdVoice: 
-    AppVersion: 1.3.1
+    AppVersion: 1.3.0
     UseNameServer: 1
     FixedRegion: asia
     Server: 
@@ -94,16 +94,10 @@ MonoBehaviour:
   - test
   - test1
   - SpawnBoss
-<<<<<<< Updated upstream
-=======
   - PlayAnimB
   - PlayAnimF
   - PlayAnimS
   - Set_Bullet
-  - PlayAnimT
->>>>>>> Stashed changes
-  - ShowBombExploImpact
-  - ShowGausCannonImpact
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 0

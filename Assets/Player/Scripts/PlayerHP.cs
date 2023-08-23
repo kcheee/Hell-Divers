@@ -8,14 +8,17 @@ public class PlayerHP : MonoBehaviourPun,I_Entity
 {
     public System.Action Ondie;
     Animator anim;
-
+    public GameObject DamageEft;
+    public GameObject DieEft;
+    public enum State { Live, Wounded,Die }
+    State current_State;
     public int HP
     {
         get { return hp; }
         set { hp = value; 
             if (hp < 0) {
                 //photonView.RPC(nameof(die), RpcTarget.All, Ondie);
-                die(Ondie);
+                
             } 
         }
     }
@@ -31,8 +34,21 @@ public class PlayerHP : MonoBehaviourPun,I_Entity
     [PunRPC]
     public void damaged(Vector3 pos ,int damage)
     {
-        HP -= damage;
-        Debug.Log("Player Damaged");
+        if(HP > 0)
+        {
+            HP -= damage;
+            Instantiate(DamageEft, pos, Quaternion.identity);
+            
+        }
+        else
+        {
+            if (current_State != State.Die) {
+                die(Ondie);
+                current_State = State.Die;
+            }
+            
+        }
+
     }
 
     // Update is called once per frame
@@ -44,8 +60,9 @@ public class PlayerHP : MonoBehaviourPun,I_Entity
 
     public void die(Action action)
     {
-        Debug.Log("ししししししししし!!");
+        Instantiate(DieEft, transform.position, Quaternion.identity);
         action();
+
         Invoke("activeFalse", 3f);
     }
     public void activeFalse()

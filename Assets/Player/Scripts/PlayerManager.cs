@@ -36,7 +36,7 @@ public class PlayerManager : MonoBehaviourPun
     //RPC 함수 실행?
 
     // mainscene에서 spawn
-    Vector3 playerSpawn = new Vector3(220, 0, 250);
+    Vector3 playerSpawn = new Vector3(225, 0, 245);
 
     IEnumerator spawn()
     {
@@ -45,7 +45,7 @@ public class PlayerManager : MonoBehaviourPun
         if (PLAYER_LIST.Count == 0)
         {
             Debug.Log("실행");
-            StartSpawn(playerSpawn + new Vector3(Random.Range(-10, 10), 0, Random.Range(-10, 10)));
+            StartSpawn(playerSpawn+new Vector3(Random.Range(-5,5),0,Random.Range(-5, 5)));
         }
         else
         {
@@ -66,8 +66,6 @@ public class PlayerManager : MonoBehaviourPun
         PhotonNetwork.SendRate = 30;
         //OnPhotonSeriallizeView 호출 빈도
         PhotonNetwork.SerializationRate = 30;
-        Debug.Log("스타트 함수 실행!!");
-
 
         //너 혼자니?
         StartCoroutine(spawn());
@@ -107,7 +105,7 @@ public class PlayerManager : MonoBehaviourPun
         if (SceneManager.GetActiveScene().name != "Lobby")
         {
 
-            GameObject PlatformObj = PhotonNetwork.Instantiate("Platform-Main", pos + Vector3.up * 30, Quaternion.Euler(-89.98f, 0, 0));
+            GameObject PlatformObj = PhotonNetwork.Instantiate("Platform-Main", pos + Vector3.up * 30, Quaternion.Euler(-90f, 0, 0));
             //GameObject player = PhotonNetwork.Instantiate("AlphaPlayer 1", pos , Quaternion.identity);
             //player.SetActive(false);
 

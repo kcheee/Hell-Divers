@@ -51,17 +51,20 @@ public class Stratagems : MonoBehaviourPun
 
     float time;
 
-    Text text;
+    public Text text;
+
+
     IEnumerator CallStratagem() {
         //일정 시간이 흐르고
         
         //자신의 물리를 끈다.
-        SoundManager.instance.SfxPlay(clip);
+        SoundManager.instance.SfxPlay(clip); //호출 효과
         //rbody.isKinematic = true;
 
-        Transform Str_time = PlayerUI.instance.StratagemTime;
-        GameObject textObj = Instantiate(timeText, Str_time);
+        Transform Str_time = PlayerUI.instance.StratagemTime; //타임을 넣을 부모 오브젝트에 
+        GameObject textObj = Instantiate(timeText, Str_time); //Text를 넣고 
         text = textObj.GetComponent<Text>();
+        
         //시간을 잰다.
 
         while (true) {
@@ -72,29 +75,32 @@ public class Stratagems : MonoBehaviourPun
             //PlayerUI.instance.TimeText.text = "탄약 보충 : " + Mathf.Floor(time * 100) / 100;
             //그러다가 time이 0보다 작아질때
             if (time < 0) {
-                text.text = "0";
-                Destroy(textObj);
 
-                //스트라타잼을 호출한다.
 
                 
                 Vector3 pos = transform.position;
                 Quaternion rot = Quaternion.identity;
                 if (PhotonNetwork.IsMasterClient) {
-                    //PhotonNetwork.Instantiate("Platform-Main", pos,rot);
+                    //마스터 클라이언트의 위치를 넘겨주며 모든 PC에 RPC를 실행한다.
                     photonView.RPC(nameof(Spawn), RpcTarget.All,pos,rot);
-                }
+                }                
+                text.text = "0";
+                //Destroy(textObj);
+                Debug.Log("삭제됬다고 @@@@@");
+                //스트라타잼을 호출한다.
 
                 break;
             }
         }
     }
 
+
+    //방장이 스폰하라고 호출할때
     [PunRPC]
     public void Spawn(Vector3 pos,Quaternion rot) {
-        
-        Debug.LogWarning("포톤포톤~");
-        Destroy(text.gameObject);
+        //그때 Text를 지우고 스폰한다.
+        if(text != null)
+            Destroy(text.gameObject);
         SpawnAction(pos,rot);
         /*GameObject platObj = Instantiate(Platform, pos, rot);
         Platform platform = platObj.GetComponent<Platform>();
@@ -107,11 +113,10 @@ public class Stratagems : MonoBehaviourPun
 
     private void OnCollisionEnter(Collision collision)
     {
-
+        //던져지고, 바닥에 닿았다면
         if (collision.gameObject.CompareTag("Floor")){
-            //코루틴으로 처리한다.(예정)
 
-            //rbody.isKinematic = true;
+            //2초 뒤에 action을 실행한다.
             StartCoroutine(GroundDelay(2f));
             
             

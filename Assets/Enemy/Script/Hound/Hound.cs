@@ -88,12 +88,13 @@ public class Hound : Enemy_Fun
         // 시야각 30도 안에 플레이어가 들어오면
         if (angleToPlayer < 30)
         {
-            photonView.RPC(nameof(PlayAnim), RpcTarget.All, "Run",true);
+            //photonView.RPC(nameof(PlayAnimB), RpcTarget.All, "Run",true);
+            
             //anim.SetBool("Run", true);
         }
         else
         {
-            photonView.RPC(nameof(PlayAnim), RpcTarget.All, "Run", false);
+            photonView.RPC(nameof(PlayAnimB), RpcTarget.All, "Run", false);
             //anim.SetBool("Run", false);
             E_state = EnemyState.wait;
         }
@@ -102,6 +103,8 @@ public class Hound : Enemy_Fun
         // 만약 추격중에 플레이어와의 거리가 포기거리보다 크다면
         if (distance > ENEMYATTACK.farDistance)
         {
+            photonView.RPC(nameof(PlayAnimB), RpcTarget.All, "Walk", true);
+            agent.speed = 4;
             E_state = EnemyState.patrol;
             // 순찰 상태로 전이하고싶다.
         }
@@ -109,6 +112,7 @@ public class Hound : Enemy_Fun
         // 근거리 공격 거리보다 작으면 근거리 공격 상황으로 바꿈.
         if (distance < 5 && angleToPlayer < 25)
         {
+            photonView.RPC(nameof(PlayAnimT), RpcTarget.All, "Attack");
             E_state = EnemyState.melee_attack;
         }
     }
@@ -116,10 +120,8 @@ public class Hound : Enemy_Fun
     protected override void F_patrol()
     {
         // 걷는 애니메이션
-        photonView.RPC(nameof(PlayAnim), RpcTarget.All, "Walk", true);
         //anim.SetBool("Walk", true);
 
-        agent.speed = 4;
         base.F_patrol();
     }
     // 원거리 공격
@@ -145,6 +147,7 @@ public class Hound : Enemy_Fun
         {
             // agent 다시 실행.
             TraceNavSetting();
+            photonView.RPC(nameof(PlayAnimB), RpcTarget.All, "Run", true);
             E_state = EnemyState.chase;
         }
     }
@@ -179,11 +182,12 @@ public class Hound : Enemy_Fun
                 // 이 조건문이 한번 실행하기 위한 flag
                 flag = false;
                 TraceNavSetting();
+                photonView.RPC(nameof(PlayAnimB), RpcTarget.All, "Run", true);
                 E_state = EnemyState.chase;
 
             });
-
-            photonView.RPC(nameof(PlayAnim), RpcTarget.All, "Attack");
+            Debug.Log("이거 한번만 실행되게 해야함.");
+            photonView.RPC(nameof(PlayAnim_T), RpcTarget.All, "Attack");
             //anim.SetTrigger("Attack");
 
             // attack 애니메이션이 끝나면
@@ -201,7 +205,7 @@ public class Hound : Enemy_Fun
         {
             agent.enabled = true;
             TraceNavSetting();
-
+            photonView.RPC(nameof(PlayAnimB), RpcTarget.All, "Run", true);
             E_state = EnemyState.chase;
         }
 

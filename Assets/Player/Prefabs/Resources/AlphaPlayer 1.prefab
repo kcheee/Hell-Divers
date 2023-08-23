@@ -716,6 +716,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Bullet: {fileID: 0}
   FirePos: {fileID: 1958730982505331081}
+  Fire2Eft: {fileID: 0}
   FireEft: {fileID: 100000, guid: 079ce06bb97c4484b957285d53708a6b, type: 3}
   MuzzleEft: {fileID: 100004, guid: bc75feaf52ea7ff41ab5fd2f5ba92c5e, type: 3}
   maxBullet: 100
@@ -1577,6 +1578,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b2412c30b42b71242b72ce57fd241c1c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  DamageEft: {fileID: 5737861413046029104, guid: d669b8e1302dd8342a38d862beb252af, type: 3}
+  DieEft: {fileID: 3745372705267084804, guid: 18c8224ea6cc8a04c9e38c64cbeaf5dd, type: 3}
   hp: 0
   maxHp: 100
 --- !u!114 &2498795001099063669
@@ -1610,7 +1613,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4593030282795132923}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
   m_Name: 
@@ -1832,6 +1835,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Bullet: {fileID: 0}
   FirePos: {fileID: 0}
+  Fire2Eft: {fileID: 0}
   FireEft: {fileID: 0}
   MuzzleEft: {fileID: 0}
   maxBullet: 6
@@ -2114,7 +2118,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3575892646341144779}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
   m_Name: 

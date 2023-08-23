@@ -23,7 +23,7 @@ public class flarebullet : MonoBehaviourPun {
 
 	IEnumerator spawn()
 	{
-		yield return new WaitForSeconds(4);
+		yield return new WaitForSeconds(2);
         float angle = 360 / spawnPos;
         Transform tf = gameObject.transform;
         Vector3 FlarePo = new Vector3(transform.position.x,0,transform.position.z);
