@@ -113,11 +113,11 @@ MonoBehaviour:
   Platform: {fileID: 5681520340206640054, guid: e47420ba5b2ada34b8651d1b8b5697a5, type: 3}
   Item: {fileID: 0}
   clip: {fileID: 8300000, guid: ff0e42dd5037454478c8caa1440933ba, type: 3}
-  timeText: {fileID: 7354023627979589584, guid: ef49ff0c2c5629d43b1f717a4c115dc3, type: 3}
+  timeText: {fileID: 1484191395107598, guid: fcf0f5820e3543f44b7b874171fe60b7, type: 3}
+  Stratagem_Image: {fileID: 21300000, guid: 7ebbe247abfa1324ab6f6b5caad20490, type: 3}
   id: str02
   CallCode: 01000000000000000100000002000000
   Image: {fileID: 0}
-  text: {fileID: 0}
 --- !u!1 &1024437098237574
 GameObject:
   m_ObjectHideFlags: 0
