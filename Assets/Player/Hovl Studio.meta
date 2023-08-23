@@ -1,6 +1,11 @@
 fileFormatVersion: 2
+<<<<<<< Updated upstream
 <<<<<<<< HEAD:Assets/Scene/Title_EJ.unity.meta
 guid: c6a25c98ccbea964a973ab5796055864
+=======
+<<<<<<<< HEAD:Assets/EJ/02_EJScenes/EJ_BossInMap.unity.meta
+guid: 6a1a07cb2a4863e498a91bd527326ee1
+>>>>>>> Stashed changes
 ========
 guid: f7aa13561cb41234cad15328072d2032
 folderAsset: yes

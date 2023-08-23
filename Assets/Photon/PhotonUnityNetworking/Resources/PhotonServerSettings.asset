@@ -94,6 +94,14 @@ MonoBehaviour:
   - test
   - test1
   - SpawnBoss
+<<<<<<< Updated upstream
+=======
+  - PlayAnimB
+  - PlayAnimF
+  - PlayAnimS
+  - Set_Bullet
+  - PlayAnimT
+>>>>>>> Stashed changes
   - ShowBombExploImpact
   - ShowGausCannonImpact
   DisableAutoOpenWizard: 1
