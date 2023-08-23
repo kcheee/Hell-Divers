@@ -140,7 +140,7 @@ public class PlayerTest1 : MonoBehaviourPun,IPunObservable
     Vector2 myDir;
     void Update()
     {
-        myDir = new Vector2(transform.forward.x, transform.forward.z);
+        myDir = new Vector2(trBody.forward.x, trBody.forward.z);
 /*        Vector3 test = Camera.main.WorldToViewportPoint(transform.position);
         Vector3 pos = transform.position;
         //Debug.Log(test);
@@ -198,14 +198,13 @@ public class PlayerTest1 : MonoBehaviourPun,IPunObservable
             dir = Vector3.right * h + Vector3.forward * v;
             dir.Normalize();
             speed = 4;
-            if (Input.GetMouseButtonDown(0) && !reload) {
+            if (Input.GetMouseButton(0) && !reload) {
                            
                 
                     int rand = Random.Range(-1, 2);
                     photonView.RPC(nameof(Fire), RpcTarget.All, rand);
                 
             }
-
 
             if (Input.GetMouseButton(0) && !reload)
             {
@@ -346,7 +345,6 @@ public class PlayerTest1 : MonoBehaviourPun,IPunObservable
         }
 
 
-
         anim.SetFloat("Horizontal", h);
         anim.SetFloat("Vertical", v);
         anim.SetFloat("speed",dir.magnitude);
@@ -376,10 +374,14 @@ public class PlayerTest1 : MonoBehaviourPun,IPunObservable
 
     public void Aiming() {
         
+        //RPC 함수 최소화
         if (Input.GetButtonUp("Fire2"))
         {
             photonView.RPC(nameof(PlayAnim), RpcTarget.All, "RifleAiming", false);
 
+        }
+        if (Input.GetButtonDown("Fire2")) { 
+            photonView.RPC(nameof(PlayAnim), RpcTarget.All, "RifleAiming", true);
         }
         //마우스 우클릭
         if (Input.GetButton("Fire2"))
@@ -389,18 +391,7 @@ public class PlayerTest1 : MonoBehaviourPun,IPunObservable
 
             //만약 현재 총기가 라이플이라면 라이플 애니메이션을 실행하고
             //현재 총기가 피스톨이라면 피스톨 애니메이션을 실행한다.
-            switch (currentGun.gunType)
-            {
-                case Gun.GunType.Rifle:
-                    photonView.RPC(nameof(PlayAnim), RpcTarget.All, "RifleAiming", true);
 
-                    break;
-                case Gun.GunType.Pistol:
-                    anim.SetBool("PistolAiming",true);
-
-                    break;
-                
-            }
             //anim.SetBool("Aiming", true);
 
             speed = 1;
