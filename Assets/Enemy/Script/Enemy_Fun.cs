@@ -215,7 +215,7 @@ public class Enemy_Fun : EnemyInfo, IPunObservable,I_Entity
 
     }
     [PunRPC]
-    public void PlayAnim_T(string name)
+    public void PlayAnimP(string name)
     {
         anim.Play(name);
         Debug.LogWarning(name + "여러번 실행 방지");

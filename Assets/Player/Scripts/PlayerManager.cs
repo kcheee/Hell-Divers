@@ -44,13 +44,11 @@ public class PlayerManager : MonoBehaviourPun
         Debug.Log(PLAYER_LIST.Count);
         if (PLAYER_LIST.Count == 0)
         {
-            Debug.Log("실행");
             StartSpawn(playerSpawn+new Vector3(Random.Range(-5,5),0,Random.Range(-5, 5)));
         }
         else
         {
             action += StartSpawn;
-            Debug.Log("이거 실행되는지");
         }
 
         //StartSpawn(playerSpawn + new Vector3(Random.Range(-10,10), 0, Random.Range(-10, 10)));
@@ -113,7 +111,6 @@ public class PlayerManager : MonoBehaviourPun
             GameObject player = null;
             platform.action = () =>
             {
-                Debug.Log("플레이어 소환");
                 player = PhotonNetwork.Instantiate("AlphaPlayer 1", pos, Quaternion.identity); PhotonNetwork.Destroy(PlatformObj);
             };
             return player;
@@ -127,7 +124,6 @@ public class PlayerManager : MonoBehaviourPun
 
     public void Addlist(PlayerTest1 player)
     {
-        Debug.Log("몇번실행됐는지");
         PLAYER_LIST.Add(player);
         if (action != null)
         {

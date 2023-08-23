@@ -89,7 +89,6 @@ public class PlayerTest1 : MonoBehaviourPun,IPunObservable
 
     private void Awake()
     {
-        Debug.Log("어웨이크 함수 실행!!");
         
         //PlayerManager.instace.action();
     }

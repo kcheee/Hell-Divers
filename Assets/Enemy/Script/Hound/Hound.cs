@@ -187,7 +187,7 @@ public class Hound : Enemy_Fun
 
             });
             Debug.Log("이거 한번만 실행되게 해야함.");
-            photonView.RPC(nameof(PlayAnim_T), RpcTarget.All, "Attack");
+            photonView.RPC(nameof(PlayAnimP), RpcTarget.All, "Attack");
             //anim.SetTrigger("Attack");
 
             // attack 애니메이션이 끝나면
