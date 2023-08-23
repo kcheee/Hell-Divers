@@ -9,6 +9,7 @@ public class PlayerTest1 : MonoBehaviourPun,IPunObservable
     //Test Text
     public Transform trBody;
     public Transform RightHand;
+    public Text NickNameText;
 
     public float speed = 5;
     public Gun currentGun;
@@ -95,6 +96,9 @@ public class PlayerTest1 : MonoBehaviourPun,IPunObservable
     }
     void Start()
     {
+        if(NickNameText)
+            NickNameText.text = photonView.Owner.NickName;
+        ch = GetComponent<CharacterController>();
         anim = trBody.GetComponent<Animator>();
         //test
        // PlayerUI.instance.ManganizeText.text = currentGun.currentManganize.ToString();
@@ -136,10 +140,13 @@ public class PlayerTest1 : MonoBehaviourPun,IPunObservable
     private Vector3 targetPsition;
     private Quaternion targetRotation;
 
+    public CharacterController ch;
 
     Vector2 myDir;
     void Update()
     {
+        ch.Move(Vector3.up * -9.81f * Time.deltaTime);
+        //transform.position += Vector3.up * -9.81f * Time.deltaTime;
         myDir = new Vector2(trBody.forward.x, trBody.forward.z);
 /*        Vector3 test = Camera.main.WorldToViewportPoint(transform.position);
         Vector3 pos = transform.position;
@@ -201,8 +208,7 @@ public class PlayerTest1 : MonoBehaviourPun,IPunObservable
             if (Input.GetMouseButton(0) && !reload) {
                            
                 
-                    int rand = Random.Range(-1, 2);
-                    photonView.RPC(nameof(Fire), RpcTarget.All, rand);
+                    
                 
             }
 
@@ -212,6 +218,10 @@ public class PlayerTest1 : MonoBehaviourPun,IPunObservable
                 {
                     photonView.RPC(nameof(PlayAnim), RpcTarget.All, "Throw");
 
+                }
+                else {
+                    int rand = Random.Range(-1, 2);
+                    photonView.RPC(nameof(Fire), RpcTarget.All, rand);
                 }
             }
             if (Input.GetMouseButtonUp(0))
@@ -263,7 +273,7 @@ public class PlayerTest1 : MonoBehaviourPun,IPunObservable
                 //ÀåÀü - > iDLE
                 photonView.RPC(nameof(PlayAnim), RpcTarget.All, "Reload");
                 reload = true;
-                SoundManager.instance.SfxPlay(PlayerSound.instance.GetClip(PlayerSound.P_SOUND.Reloading));
+                
             }
 
 
@@ -335,13 +345,14 @@ public class PlayerTest1 : MonoBehaviourPun,IPunObservable
 
             Aiming();
             //Debug.LogError(speed);
-            transform.position += dir * speed * Time.deltaTime;
+            //transform.position += dir * speed * Time.deltaTime;
+            ch.Move(dir * speed * Time.deltaTime);
         }
         //End Ming
         else
         {
-            transform.position = Vector3.Lerp(transform.position, targetPsition, Time.smoothDeltaTime * 5);
-            trBody.rotation = Quaternion.Lerp(trBody.rotation,  targetRotation, Time.smoothDeltaTime * 5);
+            transform.position = Vector3.Lerp(transform.position, targetPsition, Time.smoothDeltaTime * 20);
+            trBody.rotation = Quaternion.Lerp(trBody.rotation,  targetRotation, Time.smoothDeltaTime * 20);
         }
 
 

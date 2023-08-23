@@ -184,6 +184,7 @@ public class Gun : MonoBehaviourPun
     }
 
     public void Reload() {
+        SoundManager.instance.SfxPlay(PlayerSound.instance.GetClip(PlayerSound.P_SOUND.Reloading));
         Debug.Log("Reloading!!!");
         Current_Bullet = maxBullet;
         Current_Manganize--;

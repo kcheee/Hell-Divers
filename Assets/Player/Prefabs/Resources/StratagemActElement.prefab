@@ -183,7 +183,7 @@ GameObject:
   - component: {fileID: 224681537212956304}
   - component: {fileID: 222375518448072240}
   - component: {fileID: 114546881715996614}
-  - component: {fileID: 2966896771200926639}
+  - component: {fileID: 4736751755862708644}
   m_Layer: 5
   m_Name: StratagemActElement
   m_TagString: Untagged
@@ -247,7 +247,7 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
---- !u!114 &2966896771200926639
+--- !u!114 &4736751755862708644
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

@@ -10,6 +10,7 @@ public class ConnectionManager : MonoBehaviourPunCallbacks
     void Start()
     {
         PhotonNetwork.ConnectUsingSettings();
+        PhotonNetwork.LocalPlayer.NickName = "USER1234";
     }
 
     public override void OnConnectedToMaster()

@@ -17,6 +17,7 @@ public class Stratagems : MonoBehaviourPun
     public GameObject Item;
     public AudioClip clip;
     public GameObject timeText;
+    public Sprite Stratagem_Image;
     public string id;
 
     bool isUse;
@@ -51,7 +52,7 @@ public class Stratagems : MonoBehaviourPun
 
     float time;
 
-    public Text text;
+    StratagemArt art;
 
 
     IEnumerator CallStratagem() {
@@ -63,15 +64,18 @@ public class Stratagems : MonoBehaviourPun
 
         Transform Str_time = PlayerUI.instance.StratagemTime; //타임을 넣을 부모 오브젝트에 
         GameObject textObj = Instantiate(timeText, Str_time); //Text를 넣고 
-        text = textObj.GetComponent<Text>();
-        
+        StratagemArt artObj = textObj.GetComponent<StratagemArt>();
+        art = artObj;
+        art.image.sprite = Stratagem_Image;
+        //art.image = Stratagem_Image;
         //시간을 잰다.
 
         while (true) {
             yield return new WaitForSeconds(Time.deltaTime);
             //현재 시간에서 흐르는 시간을 계속 뺀다.
             time -= Time.deltaTime;
-            text.text = (Mathf.Floor(time * 100 ) / 100 ).ToString() ;
+
+            art.text.text = "00:" + (Mathf.Floor(time * 100 ) / 100 ).ToString() ;
             //PlayerUI.instance.TimeText.text = "탄약 보충 : " + Mathf.Floor(time * 100) / 100;
             //그러다가 time이 0보다 작아질때
             if (time < 0) {
@@ -84,7 +88,7 @@ public class Stratagems : MonoBehaviourPun
                     //마스터 클라이언트의 위치를 넘겨주며 모든 PC에 RPC를 실행한다.
                     photonView.RPC(nameof(Spawn), RpcTarget.All,pos,rot);
                 }                
-                text.text = "0";
+                art.text.text = "0";
                 //Destroy(textObj);
                 Debug.Log("삭제됬다고 @@@@@");
                 //스트라타잼을 호출한다.
@@ -99,8 +103,8 @@ public class Stratagems : MonoBehaviourPun
     [PunRPC]
     public void Spawn(Vector3 pos,Quaternion rot) {
         //그때 Text를 지우고 스폰한다.
-        if(text != null)
-            Destroy(text.gameObject);
+        if(art.gameObject != null)
+            Destroy(art.gameObject);
         SpawnAction(pos,rot);
         /*GameObject platObj = Instantiate(Platform, pos, rot);
         Platform platform = platObj.GetComponent<Platform>();
@@ -143,4 +147,5 @@ public class Stratagems : MonoBehaviourPun
     protected virtual void SpawnAction(Vector3 pos,Quaternion rot) {
         Debug.Log("Spawn");
     }
+    
 }
