@@ -23,4 +23,8 @@ public class I_Bullet : MonoBehaviour
             collision.gameObject.GetComponent<PhotonView>().RPC("damaged", RpcTarget.All, collision.transform.position, 2);
         }
     }
+    private void OnTriggerEnter(Collider other)
+    {
+        if()
+    }
 }
