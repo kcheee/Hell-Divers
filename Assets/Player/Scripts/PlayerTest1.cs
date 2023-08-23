@@ -273,7 +273,7 @@ public class PlayerTest1 : MonoBehaviourPun,IPunObservable
                 //ÀåÀü - > iDLE
                 photonView.RPC(nameof(PlayAnim), RpcTarget.All, "Reload");
                 reload = true;
-                
+                SoundManager.instance.SfxPlay(PlayerSound.instance.GetClip(PlayerSound.P_SOUND.Reloading));
             }
 
 
