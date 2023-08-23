@@ -16,7 +16,7 @@ public class EJFlarebullet : MonoBehaviourPun
     // Start is called before the first frame update
     void Start()
     {
-
+        StartCoroutine(DestroySelf());
     }
 
     // Update is called once per frame
@@ -56,11 +56,17 @@ public class EJFlarebullet : MonoBehaviourPun
                 //floorEffect.transform.localScale = Vector3.one * 10;
 
                 StartCoroutine(DestroySelf4Collision(collision));
+                
             }          
             //성공은 했는데 서로 부딪혀서 튕김 이걸 어떻게 해야하는지
         }
     }
 
+    IEnumerator DestroySelf()
+    {
+        Destroy(gameObject, 3);
+        yield return null;
+    }
 
     IEnumerator DestroySelf4Collision(Collision collision)
     {

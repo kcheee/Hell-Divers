@@ -9,7 +9,7 @@ public class EJBossHP : MonoBehaviourPun,I_Entity
     public static EJBossHP instance;
 
     float currentHP;
-    float maxHP = 300000;
+    float maxHP = 300;
 
     private void Awake()
     {

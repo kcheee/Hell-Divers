@@ -294,7 +294,7 @@ public class BossFSM : MonoBehaviourPun
             //StartCoroutine(GetComponent<EJGausCannonFireInstantiate>().CannonFire(AttackCompleted));
             //RPC되어 있는 스크립트로 가져오기
             photonView.RPC(nameof(StartGausCannonByRPC), RpcTarget.All);
-            StartCoroutine(GetComponent<PhotonGausCannon.EJGausCannonFireInstantiate_photon>().CannonFireByRPC(AttackCompleted));
+            //StartCoroutine(GetComponent<PhotonGausCannon.EJGausCannonFireInstantiate_photon>().CannonFireByRPC(AttackCompleted));
             XLflag = true;
             //B_state = BossState.Wait;
         }
