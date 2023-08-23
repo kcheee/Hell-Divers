@@ -13,17 +13,18 @@ public class FlameAttack : MonoBehaviour
     public float rotationAngle = 40f; // 회전할 각도 (40도)
     public float rotationDuration = 2f; // 회전할 시간 (2초)
     public AudioSource audioSource;
-
+    FireBaseScript FBS;
     static public FlameAttack instance;
     private void Awake()
     {
-        instance = this; 
+        instance = this;
+        FBS = GetComponent<FireBaseScript>();
     }
 
     IEnumerator delay()
     {
         yield return null;
-        FireBaseScript.instance.FlameStart();
+        FBS.FlameStart();
 
     }
 
@@ -60,7 +61,7 @@ public class FlameAttack : MonoBehaviour
             transform.DOLocalRotate(targetRotation, 1f).OnComplete(() =>
             {
 
-                FireBaseScript.instance.FlameStop();
+                FBS.FlameStop();
                 transform.localRotation = originpos;
 
                 // 자기자신 false

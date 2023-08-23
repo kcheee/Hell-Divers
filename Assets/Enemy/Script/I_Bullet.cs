@@ -15,16 +15,20 @@ public class I_Bullet : MonoBehaviour
             //Debug.Log(collision.transform.position);
             Instantiate(eft,gameObject.transform.position, Quaternion.identity);
             Destroy(gameObject);
-        }
-        if(collision.gameObject.tag == "Player")
-        {
-            Debug.Log("실행");    
-
-            collision.gameObject.GetComponent<PhotonView>().RPC("damaged", RpcTarget.All, collision.transform.position, 2);
-        }
+        }    
     }
     private void OnTriggerEnter(Collider other)
     {
-        if()
+       if(other.gameObject.tag == "Player")
+        {
+            Debug.Log("실행");
+            other.gameObject.GetComponent<PhotonView>().RPC("damaged", RpcTarget.All, other.transform.position, 2);
+        }
+        if (other.gameObject.tag == "Floor")
+        {
+            //Debug.Log(collision.transform.position);
+            Instantiate(eft, gameObject.transform.position, Quaternion.identity);
+            Destroy(gameObject);
+        }
     }
 }
