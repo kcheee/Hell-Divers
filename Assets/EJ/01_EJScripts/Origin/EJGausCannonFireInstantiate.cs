@@ -8,7 +8,7 @@ using UnityEngine;
 public class EJGausCannonFireInstantiate : MonoBehaviourPun
 {
     //cannonFire 변수
-    int cannonCount = 25;
+    int cannonCount = 16;
     bool isCannonDone = true;
     float cannonDelayTime = 0.05f; //0.02f
 
@@ -72,7 +72,7 @@ public class EJGausCannonFireInstantiate : MonoBehaviourPun
 
             //cannonMuzzleImpact 생성
             GameObject gausCannonMuzzleImpact = Instantiate(gausCannonMuzzleFactory);
-            gausCannonMuzzleImpact.transform.localScale = Vector3.one * 5;
+            gausCannonMuzzleImpact.transform.localScale = Vector3.one * 2;
             gausCannonMuzzleImpact.transform.position = cannonPos.transform.position;
             gausCannonMuzzleImpact.transform.up = cannonPos.transform.up;
             gausCannonMuzzleImpact.transform.localEulerAngles = cannonPos.transform.parent.localEulerAngles;
@@ -93,7 +93,7 @@ public class EJGausCannonFireInstantiate : MonoBehaviourPun
             //몸이랑 같이 돌아가고 싶다.
             Vector3 originAngle = transform.localEulerAngles;    
 
-            cannonPos.Rotate(new Vector3(cannonPosX, 0, 5 * cannonPosZDir)+originAngle, Space.Self);
+            cannonPos.Rotate(new Vector3(cannonPosX, 0, 7 * cannonPosZDir)+originAngle, Space.Self);
            
             yield return new WaitForSeconds(cannonDelayTime);
             //OFFRightArmAnim();

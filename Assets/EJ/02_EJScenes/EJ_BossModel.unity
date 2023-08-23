@@ -634,7 +634,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1006479283}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.060318142, y: 0.83988005, z: -3.98}
+  m_LocalPosition: {x: -0.23, y: 2.22, z: 6.96}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -874,7 +874,7 @@ RectTransform:
   - {fileID: 1700690659}
   - {fileID: 849600773}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -2627,6 +2627,7 @@ MonoBehaviour:
   cannonPos: {fileID: 73764008}
   gausCannonMuzzleFactory: {fileID: 8579966591951127539, guid: 34940ba778088e74095f5f57d9c0dc28, type: 3}
   gausCannonPrefabFactory: {fileID: 100002, guid: 1643f2f296912084db639937e195b6b1, type: 3}
+  floorEffectFactory: {fileID: 0}
   rightArmReaction: {fileID: 0}
   bodyReaction: {fileID: 0}
 --- !u!1 &3320135345980783060
@@ -4076,7 +4077,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6772127969006303585, guid: 644d5ec54b738a5498adaacecd683498, type: 3}
       propertyPath: m_RootOrder
-      value: 4
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 6772127969006303585, guid: 644d5ec54b738a5498adaacecd683498, type: 3}
       propertyPath: m_LocalPosition.x
@@ -4121,6 +4122,10 @@ PrefabInstance:
     - target: {fileID: 6772127969006303586, guid: 644d5ec54b738a5498adaacecd683498, type: 3}
       propertyPath: m_Name
       value: Tank-2nd
+      objectReference: {fileID: 0}
+    - target: {fileID: 6772127969006303591, guid: 644d5ec54b738a5498adaacecd683498, type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6772127969245551755, guid: 644d5ec54b738a5498adaacecd683498, type: 3}
       propertyPath: m_LocalRotation.w
