@@ -9,6 +9,7 @@ TagManager:
   - Enemy
   - rightArm
   - leftArm
+  - FxTemporaire
   layers:
   - Default
   - TransparentFX
@@ -33,7 +34,7 @@ TagManager:
   - Enemy
   - Floor
   - Player
-  - 
+  - Projectile
   - 
   - 
   - Boss

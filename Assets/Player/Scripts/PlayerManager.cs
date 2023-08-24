@@ -2,9 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
+using Photon.Realtime;
 using UnityEngine.SceneManagement;
 
-public class PlayerManager : MonoBehaviourPun
+public class PlayerManager : MonoBehaviourPunCallbacks
 {
     public static PlayerManager instace;
     //4명의 포톤뷰를 가지고 있고 public List<Photonview>
@@ -59,7 +60,8 @@ public class PlayerManager : MonoBehaviourPun
     void Start()
     {
         if (SceneManager.GetActiveScene().name != "Lobby") {
-            JoinUI();
+            PhotonNetwork.Instantiate("PlayerInfoObj",Vector3.zero,Quaternion.identity);
+            //JoinUI();
         }
             //SoundManager.instance.BgmPlay(clip);
 
@@ -106,7 +108,6 @@ public class PlayerManager : MonoBehaviourPun
         Debug.Log(SceneManager.GetActiveScene().name);
         if (SceneManager.GetActiveScene().name != "Lobby")
         {
-
             GameObject PlatformObj = PhotonNetwork.Instantiate("Platform-Main", pos + Vector3.up * 30, Quaternion.Euler(-90f, 0, 0));
             //GameObject player = PhotonNetwork.Instantiate("AlphaPlayer 1", pos , Quaternion.identity);
             //player.SetActive(false);
@@ -142,7 +143,5 @@ public class PlayerManager : MonoBehaviourPun
         GameObject obj =  Instantiate(UI_Obj, tr);
         PlayerInfoObj info = obj.GetComponent<PlayerInfoObj>();
         info.NameText.text = PhotonNetwork.LocalPlayer.NickName.ToString();
-
     }
-
 }
