@@ -8,6 +8,7 @@ public class EJMachineGun : MonoBehaviourPun
     //machinGunFire변수
     bool isMachineDone = true;
     float machineGunDelayTime = 0.1f;
+    public int machineGunDamage = 3;
 
     //machineGun Pos 변수
     public Transform machineGunPos;
@@ -47,10 +48,9 @@ public class EJMachineGun : MonoBehaviourPun
 
         if (Input.GetKeyDown(KeyCode.Alpha7))
         {
-
         }
     }
-
+   
 
     public IEnumerator MachineGunFire(System.Action<int> complete)
     {
@@ -92,10 +92,20 @@ public class EJMachineGun : MonoBehaviourPun
 
                 #region  HP 줄어드는 지 테스트 필요
                 //machineGun hitInfo가 player라면 데미지를 준다.
-                if (machineGunHitInfo.transform.tag == "Player")
-                {
-                    machineGunHitInfo.transform.GetComponent<PhotonView>().RPC("damaged", RpcTarget.All, machineGunHitInfo, 3);
+                //if (machineGunHitInfo.transform.tag == "Player")
+                //{
+                //    machineGunHitInfo.transform.GetComponent<PhotonView>().RPC("damaged", RpcTarget.All, machineGunHitInfo, 3);
 
+                //}
+
+                Collider[] machineGunHits =
+                Physics.OverlapSphere(machineGunHitInfo.transform.position, 1f, LayerMask.GetMask("Player"));
+
+                foreach (Collider attackedPlayer in machineGunHits)
+                {
+                    print("attackedPlayer는" + attackedPlayer);
+
+                    attackedPlayer.transform.GetComponent<PhotonView>().RPC("damaged", RpcTarget.All, attackedPlayer.transform.position+Vector3.up*1.6f, machineGunDamage);
                 }
                 #endregion
 
@@ -104,6 +114,10 @@ public class EJMachineGun : MonoBehaviourPun
 
                 EJBossSFX.instance.PlaymachineGunSFX();
             }
+
+
+
+            
 
 
             //04. machineGunPos가 일정량만큼 Z축 회전

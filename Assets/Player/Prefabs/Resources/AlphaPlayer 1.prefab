@@ -1005,7 +1005,7 @@ GameObject:
   - component: {fileID: 2364859072220297821}
   - component: {fileID: 2498795001099063669}
   - component: {fileID: -6977757991178916558}
-  m_Layer: 0
+  m_Layer: 22
   m_Name: AlphaPlayer 1
   m_TagString: Player
   m_Icon: {fileID: 0}

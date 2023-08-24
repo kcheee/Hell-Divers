@@ -11,6 +11,8 @@ public class EJBossHP : MonoBehaviourPun,I_Entity
     float currentHP;
     float maxHP = 300;
 
+    public GameObject bodyExploPrefab;
+
     private void Awake()
     {
         instance = this;
@@ -19,12 +21,16 @@ public class EJBossHP : MonoBehaviourPun,I_Entity
     void Start()
     {
         HP = maxHP;
+        //InstantiateDeathFX();
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        if (Input.GetKeyDown(KeyCode.Alpha5))
+        {
+            HP = 0;
+        }
     }
 
     public float HP
@@ -60,13 +66,39 @@ public class EJBossHP : MonoBehaviourPun,I_Entity
         }
         else
         {
-            Destroy(gameObject);
+            print("BOSS HP가 0이하로 떨어졌다");
+
+            StartCoroutine(InstantiateDeathFX());
+            if (deathexploDone)
+            {
+                Destroy(gameObject);
+            }
+        }  
+    }
+
+    bool deathexploDone = false;
+    IEnumerator InstantiateDeathFX()
+    {
+        if (!deathexploDone)
+        {
+            print("DeathFX가 실행되었습니다");
+            GameObject bodyexloImpact = PhotonNetwork.Instantiate("DeadExplo", transform.position + Vector3.up, Quaternion.identity);
+
+            //GameObject bodyexloImpact = Instantiate(bodyExploPrefab);
+            bodyexloImpact.transform.localScale = Vector3.one * 30;
+
+            bodyexloImpact.SetActive(true);
+
+            yield return new WaitForSeconds(0.1f);
+            deathexploDone = true;
+       
         }
-  
+
     }
 
     public void die(Action action)
     {
+        
         throw new NotImplementedException();
     }
 }

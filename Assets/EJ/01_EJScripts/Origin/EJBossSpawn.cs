@@ -30,6 +30,12 @@ public class EJBossSpawn : MonoBehaviourPun
 
         //if (Input.GetKeyDown(KeyCode.H))
             //SpawnBoss();
+
+        //if (EJBossHP.instance.HP <= 0)
+        //{
+        //    InstantiateDeathFX();
+        //}
+
     }
     
 
@@ -49,6 +55,26 @@ public class EJBossSpawn : MonoBehaviourPun
         boss.GetComponent<BossFSM>().enabled = true;
        
         isBossDone = true;
+    }
+
+
+    //보스의 위치를 가져오려면..?
+    bool deathexploDone = false;
+    void InstantiateDeathFX()
+    {
+        if (!deathexploDone)
+        {
+            Transform boss = GetComponent<EJBossHP>().gameObject.transform;
+
+            print("DeathFX가 실행되었습니다");
+            GameObject bodyexloImpact = PhotonNetwork.Instantiate("DeadExplo", boss.position, Quaternion.identity);
+            bodyexloImpact.transform.localScale = Vector3.one * 30;
+
+            bodyexloImpact.SetActive(true);
+
+            deathexploDone = true;
+        }
+
     }
 
     private void OnTriggerEnter(Collider other)

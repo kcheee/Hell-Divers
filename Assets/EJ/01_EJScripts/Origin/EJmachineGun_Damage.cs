@@ -4,6 +4,14 @@ using UnityEngine;
 
 public class EJmachineGun_Damage : MonoBehaviour
 {
+    ParticleSystem ps;
+    List<ParticleSystem.Particle> inside = new List<ParticleSystem.Particle>();
+
+    private void Awake()
+    {
+        ps = GetComponent<ParticleSystem>();
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -15,4 +23,16 @@ public class EJmachineGun_Damage : MonoBehaviour
     {
         
     }
+
+    private void OnParticleTrigger()
+    {
+        ps.GetTriggerParticles(ParticleSystemTriggerEventType.Inside, inside);
+
+        foreach (var v in inside)
+        {
+
+        }
+    }
+
 }
+
