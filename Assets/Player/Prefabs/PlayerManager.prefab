@@ -48,6 +48,7 @@ MonoBehaviour:
   PlayerList: []
   DeathList: []
   clip: {fileID: 8300000, guid: c1970ed5739f9de459e3dcb69528c708, type: 3}
+  UI_Obj: {fileID: 897255495876422405, guid: 4bf86a3488158264d8ae426e8b74d566, type: 3}
 --- !u!114 &8688608934734798170
 MonoBehaviour:
   m_ObjectHideFlags: 0
