@@ -40,6 +40,7 @@ public class PlayerManager : MonoBehaviourPun
 
     IEnumerator spawn()
     {
+
         yield return null;
         Debug.Log(PLAYER_LIST.Count);
         if (PLAYER_LIST.Count == 0)
@@ -57,9 +58,12 @@ public class PlayerManager : MonoBehaviourPun
     // Start is called before the first frame update
     void Start()
     {
-        //SoundManager.instance.BgmPlay(clip);
+        if (SceneManager.GetActiveScene().name != "Lobby") {
+            JoinUI();
+        }
+            //SoundManager.instance.BgmPlay(clip);
 
-        instace = this;
+            instace = this;
         //RPC 호출 빈도
         PhotonNetwork.SendRate = 30;
         //OnPhotonSeriallizeView 호출 빈도
@@ -79,7 +83,7 @@ public class PlayerManager : MonoBehaviourPun
         //    Debug.Log("HOHOHOOHOHOHOHOHOO");
         //    action += StartSpawn;
         //}
-
+        SoundManager.instance.BgmPlay(clip);
     }
 
     IEnumerator CheckList()
@@ -130,4 +134,15 @@ public class PlayerManager : MonoBehaviourPun
             action(PLAYER_LIST[0].transform.position);
         }
     }
+
+    public GameObject UI_Obj;
+    //들어올때 UI에 자신의 이름을 넣자.
+    public void JoinUI() {
+        Transform tr = PlayerUI.instance.PlayerInfo;
+        GameObject obj =  Instantiate(UI_Obj, tr);
+        PlayerInfoObj info = obj.GetComponent<PlayerInfoObj>();
+        info.NameText.text = PhotonNetwork.LocalPlayer.NickName.ToString();
+
+    }
+
 }
