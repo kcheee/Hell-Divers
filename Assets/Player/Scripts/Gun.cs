@@ -195,6 +195,7 @@ public class Gun : MonoBehaviourPun
         Debug.Log("Reloading!!!");
         Current_Bullet = maxBullet;
         Current_Manganize--;
+
     }
 
     IEnumerator FireWait() {

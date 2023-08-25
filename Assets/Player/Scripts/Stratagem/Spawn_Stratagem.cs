@@ -32,10 +32,21 @@ public class Spawn_Stratagem : Stratagems
         List<PlayerTest1> list = PlayerManager.instace.DeathList;
         for (int i = 0; i < list.Count; i++) {
             PlayerTest1 player = list[i];
-            if (player.photonView.IsMine)
+
+            player.reset();
+            player.gameObject.transform.position = pos;
+            player.gameObject.SetActive(true);
+            //실행자 == 죽은자 자기 자신일때 PhotonNetwork.Instantiate 를 실행해서 ismine이 된채로 시작.
+/*            if (player.photonView.IsMine)
             {
-                GameObject playerObj = PlayerManager.instace.StartSpawn(pos);
+                playerObj = PlayerManager.instace.StartSpawn(pos);
             }
+*/
+            //그리고 모든 PC에서 이 컴포넌트를 재사용한다.
+            //player.reset(); 
+            
+
+
             //    GameObject playerObj = PlayerManager.instace.StartSpawn(pos);
             //    PhotonView view = playerObj.GetComponent<PhotonView>();
             //    //주인교체 
@@ -44,7 +55,7 @@ public class Spawn_Stratagem : Stratagems
             Debug.Log("Player" + player);
             //어짜피 소환되니까 Remove는 동시에
             PlayerManager.instace.DeathList.Remove(player);
-            Destroy(player.gameObject);
+            //Destroy(player.gameObject);
         }
         //foreach (PlayerTest1 player in PlayerManager.instace.DeathList)
         //{

@@ -596,6 +596,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   DamageEft: {fileID: 0}
   DieEft: {fileID: 0}
+  current_State: 0
   hp: 0
   maxHp: 100
 --- !u!114 &2103862175456464263

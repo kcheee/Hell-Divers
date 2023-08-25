@@ -11,7 +11,7 @@ public class PlayerHP : MonoBehaviourPun,I_Entity
     public GameObject DamageEft;
     public GameObject DieEft;
     public enum State { Live, Wounded,Die }
-    State current_State;
+    public State current_State;
     public int HP
     {
         get { return hp; }

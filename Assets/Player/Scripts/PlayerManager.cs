@@ -20,6 +20,8 @@ public class PlayerManager : MonoBehaviourPunCallbacks
     public List<PlayerTest1> DeathList = new List<PlayerTest1>();
     public AudioClip clip;
 
+    public PlayerInfoObj PlayerInfoUI;
+
     public System.Func<Vector3, GameObject> action;
 
 
@@ -59,8 +61,11 @@ public class PlayerManager : MonoBehaviourPunCallbacks
     // Start is called before the first frame update
     void Start()
     {
+
+
         if (SceneManager.GetActiveScene().name != "Lobby") {
             PhotonNetwork.Instantiate("PlayerInfoObj",Vector3.zero,Quaternion.identity);
+            //PlayerInfoUI = JoinUI(PhotonNetwork.LocalPlayer.NickName);
             //JoinUI();
         }
             //SoundManager.instance.BgmPlay(clip);
