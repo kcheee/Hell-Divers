@@ -268,7 +268,7 @@ public class BossFSM : MonoBehaviourPun
         {
             print("공격XLDistance에 들어왔어요");
             OffNavMesh();
-            OnWheelMesh();
+            photonView.RPC(nameof(OnWheelMesh), RpcTarget.All);
             B_state = BossState.Wait;
         }
 
@@ -386,6 +386,8 @@ public class BossFSM : MonoBehaviourPun
         {
             print("Attack할 수 있는 거리가 아닙니다");
             OnNavMesh();
+            photonView.RPC(nameof(OffWheelMesh), RpcTarget.All);
+
             B_state = BossState.Chase;
             //anim.SetTrigger("Chase");
         }
@@ -400,7 +402,7 @@ public class BossFSM : MonoBehaviourPun
 
     private void UpdateWait()
     {
-        OffWheelMesh();
+       
         //photonView.RPC(nameof(OffNavMesh), RpcTarget.All);
         //photonView.RPC(nameof(OffWheelMesh),RpcTarget.All);
 
@@ -482,13 +484,13 @@ public class BossFSM : MonoBehaviourPun
         XLflag = false;
     }
 
-    //[PunRPC]
+    [PunRPC]
     void OnWheelMesh()
     {
         print("바퀴가 돌아갑니다");
         GetComponent<EJWheel>().enabled = true;
     }
-    //[PunRPC]
+    [PunRPC]
     //!!!!아마도 transform view가 붙어있으니 들어옴?
     void OffWheelMesh()
     {
@@ -498,3 +500,4 @@ public class BossFSM : MonoBehaviourPun
 }
 
 
+#endregion
