@@ -18,6 +18,6 @@ public class ManagerObj : MonoBehaviourPun
     }
     [PunRPC]
     public void join() {
-        PlayerManager.instace.JoinUI();               
+        //PlayerManager.instace.JoinUI();               
     }   
 }

@@ -25,6 +25,6 @@ public class I_Bullet : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        if()
+        //if()
     }
 }

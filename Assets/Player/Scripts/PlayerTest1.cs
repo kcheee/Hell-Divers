@@ -26,6 +26,9 @@ public class PlayerTest1 : MonoBehaviourPun,IPunObservable
 
     //던지려고 하는 물체
     public GameObject throwObject;
+
+
+    public PlayerInfoObj PlayerInfoUI;
     public Stratagems C_Stratagem {
         get { return current_stratagem; }
         set { current_stratagem = value;
@@ -97,6 +100,10 @@ public class PlayerTest1 : MonoBehaviourPun,IPunObservable
     {
         if(NickNameText)
             NickNameText.text = photonView.Owner.NickName;
+        //생성할때 오너의 닉네임을 가지고
+        PlayerInfoUI =  PlayerManager.instace.JoinUI(photonView.Owner.NickName);
+        //플레이어는 자신의 UI를 알고있으면 RPC로 다 되는거임
+
         ch = GetComponent<CharacterController>();
         anim = trBody.GetComponent<Animator>();
         //test
@@ -215,6 +222,7 @@ public class PlayerTest1 : MonoBehaviourPun,IPunObservable
             {
                 if (current_stratagem)
                 {
+                    
                     photonView.RPC(nameof(PlayAnim), RpcTarget.All, "Throw");
 
                 }

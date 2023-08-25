@@ -1711,6 +1711,7 @@ MonoBehaviour:
   stratagemObj: {fileID: 179448, guid: 41ddecd19696e4b7abfe4584fa7efe68, type: 3}
   current_stratagem: {fileID: 0}
   throwObject: {fileID: 0}
+  PlayerInfoUI: {fileID: 0}
   code_input: {fileID: 0}
   stratagemManager: {fileID: 0}
   playerHp: {fileID: 0}

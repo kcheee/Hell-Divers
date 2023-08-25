@@ -138,10 +138,11 @@ public class PlayerManager : MonoBehaviourPunCallbacks
 
     public GameObject UI_Obj;
     //들어올때 UI에 자신의 이름을 넣자.
-    public void JoinUI() {
+    public PlayerInfoObj JoinUI(string name) {
         Transform tr = PlayerUI.instance.PlayerInfo;
         GameObject obj =  Instantiate(UI_Obj, tr);
         PlayerInfoObj info = obj.GetComponent<PlayerInfoObj>();
-        info.NameText.text = PhotonNetwork.LocalPlayer.NickName.ToString();
+        info.NameText.text = name;
+        return info;
     }
 }
