@@ -2,9 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
+using Photon.Realtime;
 using UnityEngine.SceneManagement;
 
-public class PlayerManager : MonoBehaviourPun
+public class PlayerManager : MonoBehaviourPunCallbacks
 {
     public static PlayerManager instace;
     //4명의 포톤뷰를 가지고 있고 public List<Photonview>
@@ -19,6 +20,8 @@ public class PlayerManager : MonoBehaviourPun
     public List<PlayerTest1> DeathList = new List<PlayerTest1>();
     public AudioClip clip;
 
+    public PlayerInfoObj PlayerInfoUI;
+
     public System.Func<Vector3, GameObject> action;
 
 
@@ -27,27 +30,28 @@ public class PlayerManager : MonoBehaviourPun
         get { return PlayerList; }
         set
         {
+
             PlayerList = value;
+
+
         }
     }
     //RPC 함수 실행?
 
     // mainscene에서 spawn
     Vector3 playerSpawn = new Vector3(225, 0, 245);
-    float addspawnPos=5;
 
     IEnumerator spawn()
     {
 
         yield return null;
+        Debug.Log(PLAYER_LIST.Count);
         if (PLAYER_LIST.Count == 0)
         {
-            StartSpawn(playerSpawn);
-            addspawnPos += 5;
+            StartSpawn(playerSpawn+new Vector3(Random.Range(-5,5),0,Random.Range(-5, 5)));
         }
         else
         {
-
             action += StartSpawn;
         }
 
@@ -57,8 +61,12 @@ public class PlayerManager : MonoBehaviourPun
     // Start is called before the first frame update
     void Start()
     {
+
+
         if (SceneManager.GetActiveScene().name != "Lobby") {
-            JoinUI();
+            PhotonNetwork.Instantiate("PlayerInfoObj",Vector3.zero,Quaternion.identity);
+            //PlayerInfoUI = JoinUI(PhotonNetwork.LocalPlayer.NickName);
+            //JoinUI();
         }
             //SoundManager.instance.BgmPlay(clip);
 
@@ -82,7 +90,7 @@ public class PlayerManager : MonoBehaviourPun
         //    Debug.Log("HOHOHOOHOHOHOHOHOO");
         //    action += StartSpawn;
         //}
-
+        SoundManager.instance.BgmPlay(clip);
     }
 
     IEnumerator CheckList()
@@ -98,19 +106,13 @@ public class PlayerManager : MonoBehaviourPun
     //잘못설계했음! 이건 RPC였다.
     public GameObject StartSpawn(Vector3 pos)
     {
-        //int rand = Random.Range(-10, 10);
-        //addspawnPos = addspawnPos+5;        pos.x += addspawnPos;
-        //Debug.Log(pos.x + " : 위치값 : " +addspawnPos);
-        //pos.z += rand;
+        int rand = Random.Range(-10, 10);
+        pos.x += rand;
+        pos.z += rand;
 
         Debug.Log(SceneManager.GetActiveScene().name);
         if (SceneManager.GetActiveScene().name != "Lobby")
         {
-            int rand = Random.Range(-5, 5);
-            pos.x += rand;
-
-            Debug.Log(pos + " : 위치값 : " + addspawnPos);
-
             GameObject PlatformObj = PhotonNetwork.Instantiate("Platform-Main", pos + Vector3.up * 30, Quaternion.Euler(-90f, 0, 0));
             //GameObject player = PhotonNetwork.Instantiate("AlphaPlayer 1", pos , Quaternion.identity);
             //player.SetActive(false);
@@ -141,12 +143,11 @@ public class PlayerManager : MonoBehaviourPun
 
     public GameObject UI_Obj;
     //들어올때 UI에 자신의 이름을 넣자.
-    public void JoinUI() 
-    {
+    public PlayerInfoObj JoinUI(string name) {
         Transform tr = PlayerUI.instance.PlayerInfo;
         GameObject obj =  Instantiate(UI_Obj, tr);
         PlayerInfoObj info = obj.GetComponent<PlayerInfoObj>();
-        info.NameText.text = PhotonNetwork.LocalPlayer.NickName.ToString();
+        info.NameText.text = name;
+        return info;
     }
-
 }

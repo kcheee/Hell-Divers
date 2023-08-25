@@ -34,7 +34,7 @@ TagManager:
   - Enemy
   - Floor
   - Player
-  - 
+  - Projectile
   - 
   - 
   - Boss

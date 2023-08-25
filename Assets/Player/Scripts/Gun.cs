@@ -15,6 +15,7 @@ public class Gun : MonoBehaviourPun
     public GameObject Fire2Eft;
     public GameObject FireEft;
     public GameObject MuzzleEft;
+    public GameObject TestObj;
 
     public int maxBullet;
 
@@ -100,6 +101,12 @@ public class Gun : MonoBehaviourPun
             GameObject fireEft = Instantiate(FireEft, FirePos.position, Quaternion.identity);
             GameObject fire2Eft = Instantiate(Fire2Eft, FirePos.position, Quaternion.identity);
             GameObject muzzleEft = Instantiate(MuzzleEft, FirePos.position, Quaternion.identity);
+            GameObject test = Instantiate(TestObj, FirePos.position, Quaternion.identity);
+
+            DH_ProjectileMover move = fire2Eft.GetComponent<DH_ProjectileMover>();
+            if(move)
+                move.smoke = fireEft;
+
             //fireEft.transform.parent = null;
             //fireEft.transform.forward = transform.forward ;
             fireEft.transform.rotation = Quaternion.LookRotation(spread, Vector3.up);
@@ -188,6 +195,7 @@ public class Gun : MonoBehaviourPun
         Debug.Log("Reloading!!!");
         Current_Bullet = maxBullet;
         Current_Manganize--;
+
     }
 
     IEnumerator FireWait() {

@@ -10,6 +10,7 @@ public class PlayerUI : MonoBehaviour
     public Text BulletText;
     public Transform StratagemTime;
     public Image StratagemImage;
+    public Animator anim;
 
     //Player Info UI
     public Transform PlayerInfo;

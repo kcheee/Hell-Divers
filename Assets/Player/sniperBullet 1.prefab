@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 54434877392050152}
   - component: {fileID: 114234852126547982}
   - component: {fileID: 2713326500365244813}
-  m_Layer: 0
+  m_Layer: 23
   m_Name: sniperBullet 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
