@@ -32,7 +32,7 @@ public class EJObjectPoolMgr : MonoBehaviourPun
     public GameObject bombExploImpactPrefab;
     public Queue<GameObject> bombExploImpactQueue = new Queue<GameObject>();
 
-    int bombNum = 10;
+    int bombNum = 100;
 
     //BodyExplosion
     public GameObject bodyExploImpactPrefab;

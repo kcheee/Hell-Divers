@@ -13,20 +13,25 @@ public class EJFlarebullet : MonoBehaviourPun
 
     public PhotonView tankPv;
 
+    Rigidbody rb;
+
     // Start is called before the first frame update
     void Start()
     {
         StartCoroutine(DestroySelf());
+        rb = GetComponent<Rigidbody>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        transform.position += transform.up * flareBulletSpeed * Time.deltaTime;
+        rb.velocity = transform.up * flareBulletSpeed;
+        //transform.position += transform.up * flareBulletSpeed * Time.deltaTime;
     }
 
     private void OnTriggerEnter(Collider other)
     {
+        //print("11111111 : " +other.name);
         if (other.gameObject.layer == LayerMask.NameToLayer("Floor"))
         {
             //floor에 닿았을 때 생기는 효과 왜 안생김?
@@ -37,6 +42,11 @@ public class EJFlarebullet : MonoBehaviourPun
             floorEffect.transform.localScale = Vector3.one * 2;
 
             StartCoroutine(DestroySelf4Trigger(other));
+        }
+
+        if (other.gameObject.tag == "Player")
+        {
+            other.transform.GetComponent<PhotonView>().RPC("damaged", RpcTarget.All, transform.position, 3);
         }
     }
 

@@ -4881,6 +4881,7 @@ GameObject:
   - component: {fileID: 8765008237907036385}
   - component: {fileID: 8765008237907035935}
   - component: {fileID: 8765008237907036384}
+  - component: {fileID: 6998366699394444749}
   m_Layer: 0
   m_Name: FX_WaterSplash2_machineGun
   m_TagString: Untagged
@@ -8724,15 +8725,18 @@ ParticleSystem:
     collidesWithDynamic: 1
     interiorCollisions: 0
   TriggerModule:
-    enabled: 0
+    enabled: 1
     serializedVersion: 2
-    inside: 1
+    inside: 2
     outside: 0
     enter: 0
     exit: 0
-    colliderQueryMode: 0
+    colliderQueryMode: 2
     radiusScale: 1
-    primitives: []
+    primitives:
+    - {fileID: 8765008238257240389}
+    - {fileID: 8765008237633389164}
+    - {fileID: 8765008238363086483}
   SubModule:
     serializedVersion: 2
     enabled: 0
@@ -9743,6 +9747,18 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
+--- !u!114 &6998366699394444749
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8765008237907036386}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d1dc7d3be3d763b48935c6d72d19cef8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8765008238257240390
 GameObject:
   m_ObjectHideFlags: 0

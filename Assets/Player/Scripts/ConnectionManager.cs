@@ -10,7 +10,24 @@ public class ConnectionManager : MonoBehaviourPunCallbacks
     void Start()
     {
         PhotonNetwork.ConnectUsingSettings();
-        PhotonNetwork.LocalPlayer.NickName = "USER1234";
+        int rand = Random.Range(0, 4);
+        string nick = "";
+        switch (rand) {
+            case 0:
+                nick = "무명의기사";
+                break;
+            case 1:
+                nick = "바람의상처";
+                break;
+            case 2:
+                nick = "어둠의드래곤";
+                break;
+            case 3:
+                nick = "불꽃의카이저";
+                break;
+                
+        }
+        PhotonNetwork.LocalPlayer.NickName = nick;
     }
 
     public override void OnConnectedToMaster()

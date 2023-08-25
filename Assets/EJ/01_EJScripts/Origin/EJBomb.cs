@@ -62,18 +62,20 @@ public class EJBomb : MonoBehaviourPun
         //transform.position += transform.up * bombSpeed * Time.deltaTime;
     }
 
-/*    private void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject.layer == LayerMask.NameToLayer("Floor"))
+    /*    private void OnTriggerEnter(Collider other)
         {
-            transform.position = other.transform.position;
-            //땅과 부딪히면 bomb 없애기
-            EJObjectPoolMgr.instance.ReturnbombQueue(transform.gameObject);
+            if (other.gameObject.layer == LayerMask.NameToLayer("Floor"))
+            {
+                transform.position = other.transform.position;
+                //땅과 부딪히면 bomb 없애기
+                EJObjectPoolMgr.instance.ReturnbombQueue(transform.gameObject);
 
-            //04.coroutine만을 위한 빈 오브젝트를 만들어서 GameObject가 꺼진 후에도 작동하도록 한다.
-            EJGlobalCoroutine.instance.StartCoroutine(bombExplode(other));
-        }
-    }*/
+                //04.coroutine만을 위한 빈 오브젝트를 만들어서 GameObject가 꺼진 후에도 작동하도록 한다.
+                EJGlobalCoroutine.instance.StartCoroutine(bombExplode(other));
+            }
+        }*/
+
+    #region collision 함수
 
     private void OnCollisionEnter(Collision collision)
     {
@@ -89,6 +91,8 @@ public class EJBomb : MonoBehaviourPun
             EJObjectPoolMgr.instance.ReturnbombQueue(transform.gameObject);
             EJBossSFX.instance.PlaybombExploSFX();
         }
+
+        
     }
 
 
@@ -128,7 +132,79 @@ public class EJBomb : MonoBehaviourPun
         //BossFSM.Sflag = false;
     }
 
-    
+    #endregion
+
+
+    #region Trigger함수 
+
+
+    private void OnTriggerEnter(Collider other)
+    {
+        print("bomb터짐 범위 안에 들어온 것은" + other.gameObject);
+
+        if (other.gameObject.tag == "Floor")
+        {
+            if (PhotonNetwork.IsMasterClient)
+            {
+                StartCoroutine(bombExplodebyTrigger(other.transform.up));
+            }
+
+            EJObjectPoolMgr.instance.ReturnbombQueue(transform.gameObject);
+            EJBossSFX.instance.PlaybombExploSFX();
+        }
+
+        if (other.gameObject.tag == "Player")
+        {
+            PlayerDamage();
+        }
+    }
+
+    //bomb 잔상이 켜졌다 꺼지는 함수
+    IEnumerator bombExplodebyTrigger(Vector3 normal)
+    {
+        tankPv.RPC("ShowBombExploImpact", RpcTarget.All, transform.position, normal, bombDestroyTime);
+        //bomExploImpact = EJObjectPoolMgr.instance.GetbombExploImpactQueue();
+
+        //bomExploImpact.transform.position = transform.position;
+        //bomExploImpact.transform.localScale = Vector3.one *3;
+        //bomExploImpact.transform.forward = collision.GetContact(0).normal;
+
+        yield return new WaitForSeconds(bombDestroyTime);
+
+        //PlayerRPC로 바꿔주는 것
+
+
+    }
+
+    void PlayerDamage()
+    {
+
+        //bomb반경 안의 player damage 
+        RaycastHit[] bombHits = Physics.SphereCastAll(transform.position, bombRadius, Vector3.up, 0f, LayerMask.GetMask("Player"));
+
+
+        print("bomb에 맞은 것은 "+ bombHits[0].transform.gameObject.name);
+        
+
+
+        //!!!!!!!!!!Player가 맞았다 판정해서 구안에 들어오면 데미지를 받아야 한다. 
+        // player.GetComponent<PlayerTest1>().photonView = photonView;
+
+        foreach (RaycastHit hitObj in bombHits)
+        {
+            //pho
+            //hitObj.transform.GetComponent<EJPlayerHPforTest>().DamageHP(3);
+            hitObj.transform.GetComponent<PhotonView>().RPC("damaged", RpcTarget.All, hitObj.point, 3);
+        }
+
+        //EJObjectPoolMgr.instance.ReturnbombExploImpactQueue(bomExploImpact);
+        //yield return null;
+
+        //BossFSM.Sflag = false;
+    }
+    #endregion
+
+
 
 }
 

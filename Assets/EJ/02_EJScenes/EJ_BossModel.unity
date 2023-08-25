@@ -2428,6 +2428,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 09287c952ee318242951495731e0b304, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  machineGunDamage: 3
   machineGunPos: {fileID: 1074265847}
   machineGunFactory: {fileID: 8765008237907036386, guid: ee1c36be32b35c844beaaec7378d2ac4, type: 3}
   leftArmReaction: {fileID: 0}
@@ -4147,12 +4148,63 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.x
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6772127969263830076, guid: 644d5ec54b738a5498adaacecd683498, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.501674
+      objectReference: {fileID: 0}
+    - target: {fileID: 6772127969263830076, guid: 644d5ec54b738a5498adaacecd683498, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.799427
+      objectReference: {fileID: 0}
+    - target: {fileID: 6772127969263830076, guid: 644d5ec54b738a5498adaacecd683498, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.17568368
+      objectReference: {fileID: 0}
+    - target: {fileID: 6772127969263830076, guid: 644d5ec54b738a5498adaacecd683498, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.27995527
+      objectReference: {fileID: 0}
+    - target: {fileID: 6772127969263830076, guid: 644d5ec54b738a5498adaacecd683498, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -115.78
+      objectReference: {fileID: 0}
     - target: {fileID: 6911231757778707830, guid: 644d5ec54b738a5498adaacecd683498, type: 3}
       propertyPath: sceneViewId
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 644d5ec54b738a5498adaacecd683498, type: 3}
+--- !u!1 &6772127968189921996 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6772127969006303586, guid: 644d5ec54b738a5498adaacecd683498, type: 3}
+  m_PrefabInstance: {fileID: 6772127968189921995}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &6772127968189921997 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 1036705053, guid: 644d5ec54b738a5498adaacecd683498, type: 3}
+  m_PrefabInstance: {fileID: 6772127968189921995}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &6772127968189921998 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 303947114, guid: 644d5ec54b738a5498adaacecd683498, type: 3}
+  m_PrefabInstance: {fileID: 6772127968189921995}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &6772127968189921999
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6772127968189921996}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5681943da99bb3246bf071be7fcefb63, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  RocketPos: {fileID: 1074265847}
+  rocketFactory: {fileID: 100004, guid: 074a21437c34d3042823ee6f3f0f5eb7, type: 3}
+  leftArmReaction: {fileID: 6772127968189921998}
+  bodyReaction: {fileID: 6772127968189921997}
 --- !u!1 &6778846593301158584
 GameObject:
   m_ObjectHideFlags: 0
