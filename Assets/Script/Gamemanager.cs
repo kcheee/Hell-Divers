@@ -15,7 +15,10 @@ public class Gamemanager : MonoBehaviour
     #endregion
 
     public FollowCam followCam_start;
+    public GameObject TowerUI;
+    public GameObject EndUI;
 
+    // 수정 해야함.
     IEnumerator camstart()
     {
         yield return new WaitForSeconds(5);
@@ -26,4 +29,6 @@ public class Gamemanager : MonoBehaviour
     {
         StartCoroutine(camstart());
     }
+
+
 }

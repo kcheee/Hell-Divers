@@ -226,7 +226,7 @@ public class SquadLeader : Enemy_Fun
 
             // agent 다시 세팅
             TraceNavSetting();
-            photonView.RPC(nameof(PlayAnimB), RpcTarget.All, "Walk", true);
+            photonView.RPC(nameof(PlayAnimB), RpcTarget.All, "Walk",true);
             E_state = EnemyState.escape;
             currTime = 0;
         }
@@ -300,7 +300,7 @@ public class SquadLeader : Enemy_Fun
         //anim.Play("Flare");
 
         currrTime += Time.deltaTime;
-        if (currrTime > 2f)
+        if (currrTime > 2.5f)
         {
             flag = true;
             currrTime = 0;

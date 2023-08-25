@@ -95,13 +95,13 @@ public class UITrigger : MonoBehaviourPun
             }
         }
 
-        if (distance < button_on)
-        {
-            text.DOColor(F_C, 0.2f).OnComplete(() =>
-                    {
-                        uiElement.SetActive(false);
-                    });
-        }
+        //if (distance < button_on)
+        //{
+        //    text.DOColor(F_C, 0.2f).OnComplete(() =>
+        //            {
+        //                //uiElement.SetActive(false);
+        //            });
+        //}
     }
 
     protected Transform FindClosestObject()

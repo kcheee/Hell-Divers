@@ -5,6 +5,7 @@ using UnityEngine.AI;
 using DG.Tweening;
 using TMPro;
 using Photon.Pun;
+using Unity.VisualScripting;
 
 public class Hound : Enemy_Fun
 {
@@ -151,7 +152,7 @@ public class Hound : Enemy_Fun
             E_state = EnemyState.chase;
         }
     }
-
+    bool triggerAttack=false;
     // 근거리 공격
     protected override void F_meleeattack()
     {
@@ -176,6 +177,8 @@ public class Hound : Enemy_Fun
             Vector3 targetPosition = transform.position + transform.forward * 8;
             agent.enabled = false;
 
+            // 이때 공격 상황 진행.
+            triggerAttack = true;
             transform.DOMove(targetPosition, 1.3f).OnComplete(() => {
                 //Debug.Log(agent.transform.position);
                 agent.enabled = true;
@@ -183,9 +186,11 @@ public class Hound : Enemy_Fun
                 flag = false;
                 TraceNavSetting();
                 photonView.RPC(nameof(PlayAnimB), RpcTarget.All, "Run", true);
+                triggerAttack=false;
                 E_state = EnemyState.chase;
 
             });
+
             Debug.Log("이거 한번만 실행되게 해야함.");
             photonView.RPC(nameof(PlayAnimP), RpcTarget.All, "Attack");
             //anim.SetTrigger("Attack");
@@ -218,6 +223,16 @@ public class Hound : Enemy_Fun
 
     #endregion
 
+    private void OnTriggerEnter(Collider other)
+    {
+        if (triggerAttack)
+        {
+            if(other.gameObject.CompareTag("Player"))
+            {
+                other.gameObject.GetComponent<PhotonView>().RPC("damaged", RpcTarget.All, other.transform.position, 2);
+            }
+        }
 
+    }
 
 }

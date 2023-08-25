@@ -34,16 +34,21 @@ public class Grenade : MonoBehaviourPun
         yield return new WaitForSeconds(1.5f);
         Camera.main.transform.DOShakePosition(0.3f, 0.5f);
         // 데미지 함수 넣어야 함.
-        Collider[] cols = Physics.OverlapSphere(transform.position, 20);
+        Collider[] cols = Physics.OverlapSphere(transform.position, 5);
 
         for (int i = 0; i < cols.Length; i++)
         {
-            Debug.Log(cols[i]);
             if (cols[i].CompareTag("Player"))
             {
-                Debug.Log("호우");
-
+                cols[i].GetComponent<PhotonView>().RPC("damaged", RpcTarget.All,
+                new Vector3(cols[i].transform.position.x, cols[i].transform.position.y+1, cols[i].transform.position.z), 2);
             }
+            if (cols[i].CompareTag("Enemy"))
+            {
+                cols[i].GetComponent<PhotonView>().RPC("damaged", RpcTarget.All,
+                new Vector3(cols[i].transform.position.x, cols[i].transform.position.y + 1, cols[i].transform.position.z), 2);
+            }
+
         }
 
         Instantiate(bombEft,transform.position, Quaternion.identity);

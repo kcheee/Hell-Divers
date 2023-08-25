@@ -19,7 +19,7 @@ public class I_Bullet : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-       if(other.gameObject.tag == "Player")
+       if(other.gameObject.tag == "Player" || other.gameObject.tag == "Enemy")
         {
             Debug.Log("½ÇÇà");
             other.gameObject.GetComponent<PhotonView>().RPC("damaged", RpcTarget.All, other.transform.position, 2);
