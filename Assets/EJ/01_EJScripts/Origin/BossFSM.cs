@@ -77,6 +77,9 @@ public class BossFSM : MonoBehaviourPun
 
         nav.Warp(transform.position);
 
+        //!!!!!!!!!!!원래 head방향 남겨둠
+        headAxisOriginal = headAxis.transform.localEulerAngles;
+
         //nav.transform.forward =transform.forward;
 
         //closest = GameObject.FindGameObjectWithTag("Player");
@@ -106,10 +109,10 @@ public class BossFSM : MonoBehaviourPun
         //마스터라면
         if (photonView.IsMine)
         {
-            Debug.Log("photonViewisMine이 실행되고 있습니다");
+            //Debug.Log("photonViewisMine이 실행되고 있습니다");
             closestObject = FindClosestObject();
 
-            Debug.Log("플레이어는" + closestObject);
+            //Debug.Log("플레이어는" + closestObject);
             DistanceBoss2Player = Vector3.Distance(transform.position, closestObject.transform.position);
 
 
@@ -268,7 +271,25 @@ public class BossFSM : MonoBehaviourPun
         //    //StartCoroutine(transform.GetComponent<>)
         //    Sflag = true;
         //}
-       
+
+        //Attack일 때 headRotate
+        Transform player = FindClosestObject();
+        headAxis.transform.LookAt(player.position);
+
+        Vector3 headAxisAngle = headAxis.transform.localEulerAngles;
+
+        //-12이하이면, 막아주고 ?
+        if (headAxisAngle.x >= 12)
+        {
+            headAxisAngle.x = 12;
+        }
+        else if (headAxisAngle.x <= -8)
+        {
+            headAxisAngle.x = -8;
+        }
+
+        headAxis.transform.localEulerAngles = headAxisAngle;
+
         if (DistanceBoss2Player <= bombDistanceS && !Sflag)
         {
             print("MakeBomb");
@@ -328,6 +349,9 @@ public class BossFSM : MonoBehaviourPun
     {
         //photonView.RPC(nameof(OffNavMesh), RpcTarget.All);
         //photonView.RPC(nameof(OffWheelMesh),RpcTarget.All);
+
+        //!!!!!!!!!!!!정면 방향으로 서서히 돌아오고 싶다. 
+        headAxis.transform.forward = Vector3.Lerp(headAxis.transform.forward, transform.forward, 0.2f);
 
         //움직이는 player를 바라보게 해야 한다.
         //headAxis.transform.LookAt(player.transform);

@@ -38,6 +38,8 @@ public class PlayerHP : MonoBehaviourPun,I_Entity
         {
             HP -= damage;
             Instantiate(DamageEft, pos, Quaternion.identity);
+
+            print("플레이어의 현재체력은" + hp);
             
         }
         else

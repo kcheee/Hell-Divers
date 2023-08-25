@@ -9898,13 +9898,14 @@ GameObject:
   - component: {fileID: 6772127969006303611}
   - component: {fileID: 6772127969006303588}
   - component: {fileID: 6772127969006303589}
-  - component: {fileID: 199737434510436711}
   - component: {fileID: 6772127969006303590}
   - component: {fileID: 6772127969006303591}
   - component: {fileID: 6772127969006303584}
   - component: {fileID: 6772127969006303615}
   - component: {fileID: 6911231757778707830}
   - component: {fileID: 7729196389323836425}
+  - component: {fileID: 3958266513023295118}
+  - component: {fileID: 613775030795812664}
   m_Layer: 26
   m_Name: Tank-2nd
   m_TagString: Untagged
@@ -10077,8 +10078,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 09287c952ee318242951495731e0b304, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  machineGunDamage: 3
   machineGunPos: {fileID: 6772127969263830076}
-  machineGunFactory: {fileID: 8765008237907036386, guid: ee1c36be32b35c844beaaec7378d2ac4, type: 3}
+  machineGunFactory: {fileID: 183566, guid: 8cad5d1934e699941ad7059ae03f7e28, type: 3}
   leftArmReaction: {fileID: 303947114}
   bodyReaction: {fileID: 1036705053}
 --- !u!114 &6772127969006303611
@@ -10126,24 +10128,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gausCanonImpactPrefab: {fileID: 8579966591951127539, guid: f8d9ce3e2bdf63943bf080cab022beeb, type: 3}
   gausCanonMuzzleImpactPrefab: {fileID: 141530, guid: 4dc02866e849db44dba817ad93e49a9c, type: 3}
-  machineGunImpactPrefab: {fileID: 8765008237907036386, guid: ee1c36be32b35c844beaaec7378d2ac4, type: 3}
+  machineGunImpactPrefab: {fileID: 183566, guid: 8cad5d1934e699941ad7059ae03f7e28, type: 3}
   bombPrefab: {fileID: 9129263048663043606, guid: 7d6064dde017d7246840c5bd5af315e6, type: 3}
   bombMuzzleImpactPrefab: {fileID: 8579966591951127539, guid: 34940ba778088e74095f5f57d9c0dc28, type: 3}
   bombExploImpactPrefab: {fileID: 8579966591951127539, guid: 34940ba778088e74095f5f57d9c0dc28, type: 3}
   bodyExploImpactPrefab: {fileID: 100006, guid: e076683e0305e35498b8e8834978c0fa, type: 3}
   ObjectPool: {fileID: 7239203177727414990}
---- !u!114 &199737434510436711
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6772127969006303586}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6f68384311c0c114484e460a5b7d83b9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &6772127969006303590
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10259,6 +10249,32 @@ MonoBehaviour:
   m_SynchronizeRotation: 1
   m_SynchronizeScale: 0
   m_UseLocal: 1
+--- !u!135 &3958266513023295118
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6772127969006303586}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 5
+  m_Center: {x: 0, y: 0, z: 0.5}
+--- !u!114 &613775030795812664
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6772127969006303586}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f68384311c0c114484e460a5b7d83b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bodyExploPrefab: {fileID: 126312, guid: 68cc219c659ae6446865625c90d6f232, type: 3}
 --- !u!1 &6772127969245551860
 GameObject:
   m_ObjectHideFlags: 0
@@ -10313,14 +10329,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6772127969263830077}
-  m_LocalRotation: {x: 0.7933533, y: -0, z: -0, w: -0.6087615}
+  m_LocalRotation: {x: -0.72616005, y: 0.21112193, z: 0.25429755, w: 0.60286975}
   m_LocalPosition: {x: 5.45716, y: 7.6519823, z: -8.757485}
   m_LocalScale: {x: 0.22711197, y: 0.92445743, z: 0.27717918}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1577239766714577498}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: -15, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -100.6, y: 38.6, z: 0}
 --- !u!1 &6821716968480434469
 GameObject:
   m_ObjectHideFlags: 0
