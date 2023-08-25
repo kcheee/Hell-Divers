@@ -40,7 +40,8 @@ public class GranadeLauncher : MonoBehaviourPun
     {
         //photonView.RPC(nameof(Shoot), RpcTarget.All, gameObject, transform.position, pos, g, max_height);
         //photonView.RPC(nameof(deleShoot), RpcTarget.All, pos);
-        Shoot(gameObject, transform.position, pos, g, max_height);
+        Vector3 modify_pos = new Vector3(pos.x, pos.y+0.8f, pos.z);
+        Shoot(gameObject, transform.position, modify_pos, g, max_height);
     }
 
 
@@ -117,8 +118,10 @@ public class GranadeLauncher : MonoBehaviourPun
 
             var tpos = new Vector3(tx, ty, tz);
 
+            // 회전
             bullet.transform.LookAt(tpos);
 
+            // 포지션
             bullet.transform.position = tpos;
 
             // 나중에 
@@ -130,9 +133,9 @@ public class GranadeLauncher : MonoBehaviourPun
             yield return null;
             
         }
-        //Debug.Log("tkfgo");
+        Debug.Log("tkfgo");
         rb.useGravity = true;
-        //rb.velocity = Vector3.zero;
+        rb.velocity = Vector3.zero;
     }
 
     private void OnCollisionEnter(Collision collision)

@@ -5,6 +5,8 @@ using UnityEngine;
 public class EffectTest : MonoBehaviour
 {
     Rigidbody rbody;
+    public float speed;
+    Vector3 target;
     // Start is called before the first frame update
     void Start()
     {
@@ -15,6 +17,11 @@ public class EffectTest : MonoBehaviour
     void Update()
     {
         //transform.position = transform.forward * Time.deltaTime * 50;
-        rbody.AddForce(transform.forward * 10,ForceMode.Impulse);
+        rbody.AddForce(transform.forward * speed,ForceMode.Impulse);
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        Destroy(gameObject);
     }
 }

@@ -9,6 +9,7 @@ public class PlayerTest1 : MonoBehaviourPun,IPunObservable
     //Test Text
     public Transform trBody;
     public Transform RightHand;
+    public Text NickNameText;
 
     public float speed = 5;
     public Gun currentGun;
@@ -89,12 +90,14 @@ public class PlayerTest1 : MonoBehaviourPun,IPunObservable
 
     private void Awake()
     {
-        Debug.Log("어웨이크 함수 실행!!");
         
         //PlayerManager.instace.action();
     }
     void Start()
     {
+        if(NickNameText)
+            NickNameText.text = photonView.Owner.NickName;
+        ch = GetComponent<CharacterController>();
         anim = trBody.GetComponent<Animator>();
         //test
        // PlayerUI.instance.ManganizeText.text = currentGun.currentManganize.ToString();
@@ -136,11 +139,14 @@ public class PlayerTest1 : MonoBehaviourPun,IPunObservable
     private Vector3 targetPsition;
     private Quaternion targetRotation;
 
+    public CharacterController ch;
 
     Vector2 myDir;
     void Update()
     {
-        myDir = new Vector2(transform.forward.x, transform.forward.z);
+        ch.Move(Vector3.up * -9.81f * Time.deltaTime);
+        //transform.position += Vector3.up * -9.81f * Time.deltaTime;
+        myDir = new Vector2(trBody.forward.x, trBody.forward.z);
 /*        Vector3 test = Camera.main.WorldToViewportPoint(transform.position);
         Vector3 pos = transform.position;
         //Debug.Log(test);
@@ -198,14 +204,12 @@ public class PlayerTest1 : MonoBehaviourPun,IPunObservable
             dir = Vector3.right * h + Vector3.forward * v;
             dir.Normalize();
             speed = 4;
-            if (Input.GetMouseButtonDown(0) && !reload) {
+            if (Input.GetMouseButton(0) && !reload) {
                            
                 
-                    int rand = Random.Range(-1, 2);
-                    photonView.RPC(nameof(Fire), RpcTarget.All, rand);
+                    
                 
             }
-
 
             if (Input.GetMouseButton(0) && !reload)
             {
@@ -213,6 +217,10 @@ public class PlayerTest1 : MonoBehaviourPun,IPunObservable
                 {
                     photonView.RPC(nameof(PlayAnim), RpcTarget.All, "Throw");
 
+                }
+                else {
+                    int rand = Random.Range(-1, 2);
+                    photonView.RPC(nameof(Fire), RpcTarget.All, rand);
                 }
             }
             if (Input.GetMouseButtonUp(0))
@@ -336,15 +344,15 @@ public class PlayerTest1 : MonoBehaviourPun,IPunObservable
 
             Aiming();
             //Debug.LogError(speed);
-            transform.position += dir * speed * Time.deltaTime;
+            //transform.position += dir * speed * Time.deltaTime;
+            ch.Move(dir * speed * Time.deltaTime);
         }
         //End Ming
         else
         {
-            transform.position = Vector3.Lerp(transform.position, targetPsition, Time.smoothDeltaTime * 5);
-            trBody.rotation = Quaternion.Lerp(trBody.rotation,  targetRotation, Time.smoothDeltaTime * 5);
+            transform.position = Vector3.Lerp(transform.position, targetPsition, Time.smoothDeltaTime * 20);
+            trBody.rotation = Quaternion.Lerp(trBody.rotation,  targetRotation, Time.smoothDeltaTime * 20);
         }
-
 
 
         anim.SetFloat("Horizontal", h);
@@ -376,10 +384,14 @@ public class PlayerTest1 : MonoBehaviourPun,IPunObservable
 
     public void Aiming() {
         
+        //RPC 함수 최소화
         if (Input.GetButtonUp("Fire2"))
         {
             photonView.RPC(nameof(PlayAnim), RpcTarget.All, "RifleAiming", false);
 
+        }
+        if (Input.GetButtonDown("Fire2")) { 
+            photonView.RPC(nameof(PlayAnim), RpcTarget.All, "RifleAiming", true);
         }
         //마우스 우클릭
         if (Input.GetButton("Fire2"))
@@ -389,18 +401,7 @@ public class PlayerTest1 : MonoBehaviourPun,IPunObservable
 
             //만약 현재 총기가 라이플이라면 라이플 애니메이션을 실행하고
             //현재 총기가 피스톨이라면 피스톨 애니메이션을 실행한다.
-            switch (currentGun.gunType)
-            {
-                case Gun.GunType.Rifle:
-                    photonView.RPC(nameof(PlayAnim), RpcTarget.All, "RifleAiming", true);
 
-                    break;
-                case Gun.GunType.Pistol:
-                    anim.SetBool("PistolAiming",true);
-
-                    break;
-                
-            }
             //anim.SetBool("Aiming", true);
 
             speed = 1;

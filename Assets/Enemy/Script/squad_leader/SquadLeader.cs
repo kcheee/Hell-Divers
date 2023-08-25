@@ -188,7 +188,7 @@ public class SquadLeader : Enemy_Fun
         // 한번만 실행해야함.
         if(!Equip_flag)
         {
-            photonView.RPC(nameof(PlayAnim_T), RpcTarget.All, "Equip");
+            photonView.RPC(nameof(PlayAnimP), RpcTarget.All, "Equip");
             Equip_flag = true;
         }
 
@@ -226,7 +226,7 @@ public class SquadLeader : Enemy_Fun
 
             // agent 다시 세팅
             TraceNavSetting();
-            photonView.RPC(nameof(PlayAnimB), RpcTarget.All, "Walk", true);
+            photonView.RPC(nameof(PlayAnimB), RpcTarget.All, "Walk",true);
             E_state = EnemyState.escape;
             currTime = 0;
         }
@@ -257,7 +257,7 @@ public class SquadLeader : Enemy_Fun
             agent.destination = hit.position;
 
         }
-        if (distance >= ENEMYATTACK.ranged_attack_possible - 3)
+        if (distance >= ENEMYATTACK.ranged_attack_possible )
         {
             photonView.RPC(nameof(PlayAnimB), RpcTarget.All, "Walk", false);
             E_state = EnemyState.wait;
@@ -300,7 +300,7 @@ public class SquadLeader : Enemy_Fun
         //anim.Play("Flare");
 
         currrTime += Time.deltaTime;
-        if (currrTime > 3.5f)
+        if (currrTime > 2.5f)
         {
             flag = true;
             currrTime = 0;

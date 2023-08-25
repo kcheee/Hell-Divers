@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5751578904342345155}
   - component: {fileID: 5751578904342345154}
+  - component: {fileID: 8688608934734798170}
   m_Layer: 0
   m_Name: PlayerManager
   m_TagString: Untagged
@@ -45,4 +46,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PlayerList: []
-  clip: {fileID: 8300000, guid: 7708577d2803c144cae5aee24e46a5e3, type: 3}
+  DeathList: []
+  clip: {fileID: 8300000, guid: c1970ed5739f9de459e3dcb69528c708, type: 3}
+  UI_Obj: {fileID: 897255495876422405, guid: 4bf86a3488158264d8ae426e8b74d566, type: 3}
+--- !u!114 &8688608934734798170
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5751578904342345165}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bf19a75e102de7349af39e775d1784a8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cursorImg1: {fileID: 2800000, guid: 7f2916640c7fe444db95ee4965593568, type: 3}
+  cursorImg2: {fileID: 2800000, guid: 7614a4837ba7fc241b36b342ee121824, type: 3}
+  wsize: 0
+  hsize: 0

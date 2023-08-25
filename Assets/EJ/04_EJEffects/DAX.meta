@@ -1,7 +1,12 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/Resources/Immolator-main-Flame.prefab.meta
+guid: fc18c5e2b6a61ad4a8b7b9b773a04493
+PrefabImporter:
+========
 guid: 631c354ea80e0324e88fb02bad9ca580
 folderAsset: yes
 DefaultImporter:
+>>>>>>>> fdfdffdfdf:Assets/EJ/04_EJEffects/DAX.meta
   externalObjects: {}
   userData: 
   assetBundleName: 

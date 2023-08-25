@@ -10,15 +10,32 @@ public class PlayerUI : MonoBehaviour
     public Text BulletText;
     public Transform StratagemTime;
     public Image StratagemImage;
+
+    //Player Info UI
+    public Transform PlayerInfo;
+
+    private void Awake()
+    {
+        instance = this;
+    }
     // Start is called before the first frame update
     void Start()
     {
-        instance = this;
+        
     }
 
     // Update is called once per frame
     void Update()
     {
         
+    }
+
+
+    public static PlayerUI Get() {
+        if (instance == null) {
+            GameObject UIObj = new GameObject("PlayerUI");
+            instance = UIObj.AddComponent<PlayerUI>();
+        }
+        return instance;
     }
 }

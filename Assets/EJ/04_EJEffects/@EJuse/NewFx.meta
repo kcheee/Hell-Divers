@@ -1,7 +1,12 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/Player/Prefabs/PlayerInfoObj.prefab.meta
+guid: 822ba34d9f39c9a4489c2bb2ce87a8d1
+PrefabImporter:
+========
 guid: 0b509c67b02be9b4994721cf40db1c86
 folderAsset: yes
 DefaultImporter:
+>>>>>>>> fdfdffdfdf:Assets/EJ/04_EJEffects/@EJuse/NewFx.meta
   externalObjects: {}
   userData: 
   assetBundleName: 

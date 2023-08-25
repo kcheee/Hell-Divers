@@ -512,6 +512,7 @@ GameObject:
   - component: {fileID: 4763041989043310559}
   - component: {fileID: 4763041989043310560}
   - component: {fileID: -4135001805706409521}
+  - component: {fileID: 8334042461931457171}
   m_Layer: 0
   m_Name: Platform-Main
   m_TagString: Untagged
@@ -725,6 +726,19 @@ MonoBehaviour:
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
+--- !u!65 &8334042461931457171
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5681520340206640054}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 0.07764274}
+  m_Center: {x: 0, y: 0, z: 0.025602654}
 --- !u!1 &6658892649097345949
 GameObject:
   m_ObjectHideFlags: 0

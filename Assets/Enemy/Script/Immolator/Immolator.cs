@@ -97,7 +97,7 @@ public class Immolator : Enemy_Fun
         if (distance < ENEMYATTACK.ranged_attack_possible &&
             distance > ENEMYATTACK.melee_attack_possible)
         {
-            photonView.RPC(nameof(PlayAnim_T), RpcTarget.All, "Equip");
+            photonView.RPC(nameof(PlayAnimP), RpcTarget.All, "Equip");
 
             // °ø°Ý»óÅÂ·Î ÀüÀÌÇÏ°í½Í´Ù.
             E_state = EnemyState.wait;
@@ -136,7 +136,6 @@ public class Immolator : Enemy_Fun
         // ¿ø°Ü¸® °ø°Ý
         base.F_rangedattack();
 
-        anim.Play("Ranged_Attack");
         if (!flag)
         {
             photonView.RPC(nameof(pun_I_RangedAttack), RpcTarget.All);
@@ -168,8 +167,8 @@ public class Immolator : Enemy_Fun
         //transform.forward = target.transform.position - transform.position;
         //Vector3.Lerp(transform.forward, target.transform.position - transform.position, 0.1f);
 
-        f_rotation();
-        currTime += Time.deltaTime;
+        transform.forward = closestObject.transform.position - transform.position;
+
         // ÃÑÀ» ²¨³»´Â ½Ã°£.
         //Debug.Log("ÃÑ ²¨³¿.");
 
@@ -194,6 +193,8 @@ public class Immolator : Enemy_Fun
         // °ø°Ý °Å¸® ¹þ¾î³µÀ» °æ¿ì
         if (distance > ENEMYATTACK.attackRange)
         {
+            photonView.RPC(nameof(PlayAnimB), RpcTarget.All, "Walk", true);
+
             E_state = EnemyState.chase;
             currTime = 0;
         }

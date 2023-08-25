@@ -3,8 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
-
-public class Grenade : MonoBehaviour
+using Photon.Pun;
+public class Grenade : MonoBehaviourPun
 {
 
     public GameObject smoke;
@@ -19,6 +19,13 @@ public class Grenade : MonoBehaviour
         p = smoke.GetComponent<ParticleSystem>();
 
     }
+    [PunRPC]
+    void pun_delay()
+    {
+        StartCoroutine(delay());
+    }
+
+
 
     IEnumerator delay()
     {
@@ -27,10 +34,26 @@ public class Grenade : MonoBehaviour
         yield return new WaitForSeconds(1.5f);
         Camera.main.transform.DOShakePosition(0.3f, 0.5f);
         // 데미지 함수 넣어야 함.
+        Collider[] cols = Physics.OverlapSphere(transform.position, 5);
+
+        for (int i = 0; i < cols.Length; i++)
+        {
+            if (cols[i].CompareTag("Player"))
+            {
+                cols[i].GetComponent<PhotonView>().RPC("damaged", RpcTarget.All,
+                new Vector3(cols[i].transform.position.x, cols[i].transform.position.y+1, cols[i].transform.position.z), 2);
+            }
+            if (cols[i].CompareTag("Enemy"))
+            {
+                cols[i].GetComponent<PhotonView>().RPC("damaged", RpcTarget.All,
+                new Vector3(cols[i].transform.position.x, cols[i].transform.position.y + 1, cols[i].transform.position.z), 2);
+            }
+
+        }
 
         Instantiate(bombEft,transform.position, Quaternion.identity);
 
-            Destroy(gameObject,0.25f);
+        Destroy(gameObject,0.25f);
     }
     private void OnCollisionEnter(Collision collision)
     {

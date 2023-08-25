@@ -1,8 +1,14 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/Player/Prefabs/Resources/StratagemActElement.prefab.meta
+guid: 7c7c2dbb10de1594a9993cf28289f7eb
+NativeFormatImporter:
+========
 guid: cc3d5d89b8a851d439eecd0ab3cc4d9c
 folderAsset: yes
 DefaultImporter:
+>>>>>>>> fdfdffdfdf:Assets/EJ/04_EJEffects/DAX/Magic Packs Vol1/Materials.meta
   externalObjects: {}
+  mainObjectFileID: 100100000
   userData: 
   assetBundleName: 
   assetBundleVariant: 
