@@ -117,33 +117,75 @@ public class BossFSM : MonoBehaviourPun
             //Debug.Log("플레이어는" + closestObject);
             DistanceBoss2Player = Vector3.Distance(transform.position, closestObject.transform.position);
 
-
+            #region 주석처리한 것
             //움직이는 player를 바라보게 해야 한다.
             //headAxis.transform.LookAt(player.transform);
-            switch (B_state)
+            //switch (B_state)
+            //{
+            //    case BossState.Chase:
+            //        UpdateChase();
+            //        break;
+            //    case BossState.Wait:
+            //        UpdateWait();
+            //        break;
+            //    case BossState.Attack:
+            //        UpdateAttack();
+            //        break;
+            //    case BossState.Die:
+            //        UpdateDie();
+            //        break;
+            //}
+
+            #endregion
+
+            #region changeState
+
+            if (DistanceBoss2Player <= bombDistanceS && !Sflag)
             {
-                case BossState.Chase:
-                    UpdateChase();
-                    break;
-                case BossState.Wait:
-                    UpdateWait();
-                    break;
-                case BossState.Attack:
-                    UpdateAttack();
-                    break;
-                case BossState.Die:
-                    UpdateDie();
-                    break;
+                ChangeState(BossState.Chase);
             }
         }
     }
 
     #region 상태
-    public void ChangeState(BossState s)
+    public void ChangeState(BossState bossS)
     {
-        if (B_state == s) return;
+        if (B_state == bossS) return;
 
-        B_state = s;
+        B_state = bossS;
+
+        switch (B_state)
+        {
+            case BossState.Chase:
+                if (bossS != BossState.Chase)
+                {
+                    UpdateChase();
+                    OnWheelMesh();
+                }
+                break;
+            case BossState.Wait:
+                if (bossS != BossState.Wait)
+                {
+
+                    UpdateWait();
+                    OffWheelMesh();
+                }
+                break;
+            case BossState.Attack:
+                if (bossS != BossState.Attack)
+                {
+
+                    UpdateAttack();
+                }
+                break;
+            case BossState.Die:
+                if (bossS != BossState.Die)
+                {
+
+                    UpdateDie();
+                }
+                break;
+        }
 
     }
 
