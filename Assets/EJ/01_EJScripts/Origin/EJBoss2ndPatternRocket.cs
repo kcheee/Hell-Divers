@@ -5,22 +5,26 @@ using Photon.Pun;
 
 public class EJBoss2ndPatternRocket : MonoBehaviourPun
 {
-    float rocketSpeed = Random.Range(10, 20);
+    float rocketSpeed;
 
-    Transform rocketPos;
-    public Rigidbody rb;
+    Rigidbody rb;
 
 
     public PhotonView tankPv;
     // Start is called before the first frame update
     void Start()
     {
-
+        rocketSpeed = Random.Range(10, 20);
+        rb = GetComponent<Rigidbody>();
+        rb.AddForce(transform.forward * rocketSpeed, ForceMode.Impulse);
     }
 
     // Update is called once per frame
     void Update()
     {
-        transform.position += rocketPos.up * rocketSpeed * Time.deltaTime;
+        //transform.position += transform.forward * rocketSpeed * Time.deltaTime;
+
+        //??? 로켓헤드 방향
+        transform.forward = rb.velocity.normalized;
     }
 }

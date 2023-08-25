@@ -41,7 +41,7 @@ public class EJBoss2ndPatternFire: MonoBehaviourPun
         {
             GameObject rocket = Instantiate(rocketFactory);
             rocket.transform.position = RocketPos.position;
-            rocket.transform.localEulerAngles = RocketPos.transform.localEulerAngles;
+            //rocket.transform.localEulerAngles = RocketPos.transform.localEulerAngles;
             rocket.transform.forward = RocketPos.transform.up;
 
             ONLeftArmAnim();
@@ -49,10 +49,10 @@ public class EJBoss2ndPatternFire: MonoBehaviourPun
 
             EJBossSFX.instance.PlaymachineGunSFX();
 
-            float rotY = Random.Range(-20, 20);
-            float rotX = Random.Range(-105, -100);
+            float rotY = Random.Range(-10, 10);
+            //float rotX = Random.Range(-10, 10);
 
-            RocketPos.Rotate(new Vector3(rotX, rotY, 0), Space.Self);
+            RocketPos.Rotate(new Vector3(0, rotY, 0), Space.Self);
             yield return new WaitForSeconds(0.7f);
 
         }
