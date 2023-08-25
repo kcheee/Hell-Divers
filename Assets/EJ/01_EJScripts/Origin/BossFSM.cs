@@ -75,6 +75,7 @@ public class BossFSM : MonoBehaviourPun
     {
         nav = GetComponent<NavMeshAgent>();
 
+        //Nav Mesh 생성 시 오류 잡아주는 warp
         nav.Warp(transform.position);
 
         //!!!!!!!!!!!원래 head방향 남겨둠
@@ -111,6 +112,7 @@ public class BossFSM : MonoBehaviourPun
         {
             //Debug.Log("photonViewisMine이 실행되고 있습니다");
             closestObject = FindClosestObject();
+            //closestObject = GameObject.FindWithTag("Player").transform;
 
             //Debug.Log("플레이어는" + closestObject);
             DistanceBoss2Player = Vector3.Distance(transform.position, closestObject.transform.position);
@@ -214,7 +216,7 @@ public class BossFSM : MonoBehaviourPun
 
     private void UpdateChase()
     {
-        Debug.Log(nav.destination);
+        Debug.Log("플레이어 위치를 따라가고 있습니다" + nav.destination);
         nav.destination = closestObject.transform.position;
         //photonView.RPC(nameof(OnWheelMesh), RpcTarget.All);
 
@@ -224,6 +226,7 @@ public class BossFSM : MonoBehaviourPun
         {
             print("공격XLDistance에 들어왔어요");
             OffNavMesh();
+            OnWheelMesh();
             B_state = BossState.Wait;
         }
 
@@ -256,10 +259,18 @@ public class BossFSM : MonoBehaviourPun
         StartCoroutine(transform.GetComponent<EJGausCannonFireInstantiate>().CannonFire(AttackCompleted));
     }
 
+
+    //old one 
     [PunRPC]
     void StartMachineGunByRPC()
     {
         StartCoroutine(transform.GetComponent<EJMachineGun>().MachineGunFire(AttackCompleted));
+    }
+
+    [PunRPC]
+    void Start2ndPatternByRPC()
+    {
+        StartCoroutine(transform.GetComponent<EJBoss2ndPatternFire>().MakeRocket(AttackCompleted));
     }
 
     //쿨타임을 걸어두고 앞으로 걸어나가면 공격 다르게 발사되는 상태
@@ -305,7 +316,7 @@ public class BossFSM : MonoBehaviourPun
             print("MachineGunFire");
             //StartCoroutine(GetComponent<EJMachineGun>().MachineGunFire(AttackCompleted));
 
-            photonView.RPC(nameof(StartMachineGunByRPC), RpcTarget.All);
+            photonView.RPC(nameof(Start2ndPatternByRPC), RpcTarget.All);
             Lflag = true;
             //B_state = BossState.Wait;
         }
@@ -347,6 +358,7 @@ public class BossFSM : MonoBehaviourPun
 
     private void UpdateWait()
     {
+        OffWheelMesh();
         //photonView.RPC(nameof(OffNavMesh), RpcTarget.All);
         //photonView.RPC(nameof(OffWheelMesh),RpcTarget.All);
 
@@ -403,7 +415,7 @@ public class BossFSM : MonoBehaviourPun
         return closest;
     }
 
-    [PunRPC]
+    //[PunRPC]
     void OnNavMesh()
     {
         this.nav.isStopped = false;
@@ -428,14 +440,17 @@ public class BossFSM : MonoBehaviourPun
         XLflag = false;
     }
 
-    [PunRPC]
+    //[PunRPC]
     void OnWheelMesh()
     {
+        print("바퀴가 돌아갑니다");
         GetComponent<EJWheel>().enabled = true;
     }
-    [PunRPC]
+    //[PunRPC]
+    //!!!!아마도 transform view가 붙어있으니 들어옴?
     void OffWheelMesh()
     {
+        print("바퀴가 멈췄습니다");
         GetComponent<EJWheel>().enabled = false;
     }
 }

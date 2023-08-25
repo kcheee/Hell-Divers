@@ -104,6 +104,8 @@ MonoBehaviour:
   - PlayAnimP
   - pun_delay
   - InstantiateDeathFXbyRPC
+  - Start2ndPatternByRPC
+  - ShowRocketExploImpact
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 0

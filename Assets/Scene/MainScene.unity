@@ -5517,7 +5517,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!65 &1060002515
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -5608,7 +5608,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c22cdc0df6cfd04e8e1b248538e1acc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bossSpawnFactory: {fileID: 6772127969006303586, guid: 644d5ec54b738a5498adaacecd683498, type: 3}
+  bossSpawnFactory: {fileID: 7157786843037978720, guid: 2b3d81702e15bd0409233d15dd7a24de, type: 3}
   SpawnPoint: {fileID: 1085577385}
   bossTrigger: {fileID: 1060002514}
 --- !u!1 &1076360737
