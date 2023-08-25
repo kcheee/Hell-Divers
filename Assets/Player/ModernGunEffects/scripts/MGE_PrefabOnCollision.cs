@@ -10,6 +10,7 @@ public class MGE_PrefabOnCollision : MonoBehaviour {
 
 
 	// Use this for initialization
+	//trigger로 바꾸기
 	void OnCollisionEnter(Collision coll){
 		Instantiate (createThis, transform.position, transform.rotation);
 

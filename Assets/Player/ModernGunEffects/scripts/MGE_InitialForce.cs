@@ -40,23 +40,23 @@ public class MGE_InitialForce : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 
-		myRB = GetComponent<Rigidbody> ();
+		//myRB = GetComponent<Rigidbody> ();
 
-		x_act = x_str + Random.Range (-x_rnd, x_rnd);
-		y_act = y_str + Random.Range (-y_rnd, y_rnd);
-		z_act = z_str + Random.Range (-z_rnd, z_rnd);
+		//x_act = x_str + Random.Range (-x_rnd, x_rnd);
+		//y_act = y_str + Random.Range (-y_rnd, y_rnd);
+		//z_act = z_str + Random.Range (-z_rnd, z_rnd);
 
-		x_tq_act = x_torq + Random.Range (-x_torq_rnd, x_torq_rnd);
-		y_tq_act = y_torq + Random.Range (-y_torq_rnd, y_torq_rnd);
-		z_tq_act = z_torq + Random.Range (-z_torq_rnd, z_torq_rnd);
+		//x_tq_act = x_torq + Random.Range (-x_torq_rnd, x_torq_rnd);
+		//y_tq_act = y_torq + Random.Range (-y_torq_rnd, y_torq_rnd);
+		//z_tq_act = z_torq + Random.Range (-z_torq_rnd, z_torq_rnd);
 
-		if (local == false) {
-			myRB.AddForce (new Vector3 (x_act, y_act, z_act), ForceMode.Impulse); 
-			myRB.AddTorque (new Vector3 (x_tq_act, y_tq_act, z_tq_act), ForceMode.Impulse);
-		} else {
-			myRB.AddRelativeForce (new Vector3 (x_act, y_act, z_act), ForceMode.Impulse);	
-			myRB.AddRelativeTorque (new Vector3 (x_tq_act, y_tq_act, z_tq_act), ForceMode.Impulse);
-		}
+		//if (local == false) {
+		//	myRB.AddForce (new Vector3 (x_act, y_act, z_act), ForceMode.Impulse); 
+		//	myRB.AddTorque (new Vector3 (x_tq_act, y_tq_act, z_tq_act), ForceMode.Impulse);
+		//} else {
+		//	myRB.AddRelativeForce (new Vector3 (x_act, y_act, z_act), ForceMode.Impulse);	
+		//	myRB.AddRelativeTorque (new Vector3 (x_tq_act, y_tq_act, z_tq_act), ForceMode.Impulse);
+		//}
 
 
 
