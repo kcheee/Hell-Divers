@@ -275,7 +275,21 @@ public class BossFSM : MonoBehaviourPun
         //Attack일 때 headRotate
         Transform player = FindClosestObject();
         headAxis.transform.LookAt(player.position);
-       
+
+        Vector3 headAxisAngle = headAxis.transform.localEulerAngles;
+
+        //-12이하이면, 막아주고 ?
+        if (headAxisAngle.x >= 12)
+        {
+            headAxisAngle.x = 12;
+        }
+        else if (headAxisAngle.x <= -8)
+        {
+            headAxisAngle.x = -8;
+        }
+
+        headAxis.transform.localEulerAngles = headAxisAngle;
+
         if (DistanceBoss2Player <= bombDistanceS && !Sflag)
         {
             print("MakeBomb");

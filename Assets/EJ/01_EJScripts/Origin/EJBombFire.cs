@@ -98,7 +98,7 @@ public class EJBombFire : MonoBehaviourPun
                 bombPos.Rotate(new Vector3(0,bombPosY,0)+ originBombAngle, Space.Self);
 
                 //생성해서 총알에 AddForce를 주고 싶은데 이렇게 하면 달리나?
-                bomb.GetComponent<EJBomb>().rb.AddForce(bombPos.transform.forward * 20, ForceMode.Impulse);
+                bomb.GetComponent<EJBomb>().rb.AddForce(bombPos.transform.forward * 10, ForceMode.Impulse);
 
                 //rb.AddForce(rot * 20, ForceMode.Impulse);
                 //GetComponent<EJBomb>().BulletFire();

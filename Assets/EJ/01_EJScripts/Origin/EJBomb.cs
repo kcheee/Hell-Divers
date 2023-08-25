@@ -146,7 +146,7 @@ public class EJBomb : MonoBehaviourPun
         {
             if (PhotonNetwork.IsMasterClient)
             {
-                StartCoroutine(bombExplodebyTrigger(other));
+                StartCoroutine(bombExplodebyTrigger(other.transform.up));
             }
 
             EJObjectPoolMgr.instance.ReturnbombQueue(transform.gameObject);
@@ -160,9 +160,9 @@ public class EJBomb : MonoBehaviourPun
     }
 
     //bomb 잔상이 켜졌다 꺼지는 함수
-    IEnumerator bombExplodebyTrigger(Collider other)
+    IEnumerator bombExplodebyTrigger(Vector3 normal)
     {
-        tankPv.RPC("ShowBombExploImpact", RpcTarget.All, transform.position, other.transform, bombDestroyTime);
+        tankPv.RPC("ShowBombExploImpact", RpcTarget.All, transform.position, normal, bombDestroyTime);
         //bomExploImpact = EJObjectPoolMgr.instance.GetbombExploImpactQueue();
 
         //bomExploImpact.transform.position = transform.position;

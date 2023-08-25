@@ -58,7 +58,7 @@ public class EJMachineGun : MonoBehaviourPun
 
         //machineGun 변수
         int machineCount = 8;
-        int machineGunRotateZadd = -5;
+        int machineGunRotateZadd = -10;
 
         isMachineDone = false;
 
@@ -114,12 +114,7 @@ public class EJMachineGun : MonoBehaviourPun
 
                 EJBossSFX.instance.PlaymachineGunSFX();
             }
-
-
-
-            
-
-
+         
             //04. machineGunPos가 일정량만큼 Z축 회전
             machineGunPos.Rotate(new Vector3(0, 0, machineGunRotateZadd), Space.Self);
 

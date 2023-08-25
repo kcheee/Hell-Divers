@@ -68,12 +68,17 @@ public class EJBossHP : MonoBehaviourPun,I_Entity
         {
             print("BOSS HP가 0이하로 떨어졌다");
 
-            StartCoroutine(InstantiateDeathFX());
-            if (deathexploDone)
-            {
-                Destroy(gameObject);
-            }
+            photonView.RPC("InstantiateDeathFXbyRPC", RpcTarget.All, 1);
+            
+          
         }  
+    }
+
+    [PunRPC]
+    public void InstantiateDeathFXbyRPC(int a)
+    {
+        print("DeathFXbyRPC 함수가 실행되었습니다");
+        StartCoroutine(InstantiateDeathFX());
     }
 
     bool deathexploDone = false;
@@ -82,16 +87,22 @@ public class EJBossHP : MonoBehaviourPun,I_Entity
         if (!deathexploDone)
         {
             print("DeathFX가 실행되었습니다");
-            GameObject bodyexloImpact = PhotonNetwork.Instantiate("DeadExplo", transform.position + Vector3.up, Quaternion.identity);
+            //GameObject bodyexloImpact = PhotonNetwork.Instantiate("EJBossDeath", transform.position + Vector3.up, Quaternion.identity);
 
-            //GameObject bodyexloImpact = Instantiate(bodyExploPrefab);
-            bodyexloImpact.transform.localScale = Vector3.one * 30;
+            GameObject bodyexloImpact = Instantiate(bodyExploPrefab);
+            bodyexloImpact.transform.localScale = Vector3.one * 10;
+            bodyexloImpact.transform.position = transform.position;
+            bodyexloImpact.transform.up = transform.up;
 
-            bodyexloImpact.SetActive(true);
+            //bodyexloImpact.SetActive(true);
 
-            yield return new WaitForSeconds(0.1f);
+            yield return new WaitForSeconds(2f);
             deathexploDone = true;
-       
+
+            if (deathexploDone)
+            {
+                PhotonNetwork.Destroy(gameObject);
+            }
         }
 
     }
