@@ -103,6 +103,8 @@ MonoBehaviour:
   - ShowGausCannonImpact
   - PlayAnimP
   - pun_delay
+  - InstantiateDeathFXbyRPC
+  - PanelOn
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 0

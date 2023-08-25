@@ -16,7 +16,6 @@ public class EJUITitle_SelectBtn : Button
     protected override void Start()
     {
         base.Start();
-
     }
 
     // Update is called once per frame
@@ -28,27 +27,31 @@ public class EJUITitle_SelectBtn : Button
         {
                 if (n == 1)
                 {
-                    //게임신으로 이동
-                    SceneManager.LoadScene("ConnectionScene");
-                }else
+                //게임신으로 이동
+                SceneManager.LoadScene("ConnectionScene");
+            }
+            else
                 {
-
-
                 //뭔가 다른 씬으로 이동
                 SceneManager.LoadScene("ConnectionScene");
-                }                  
+            }                  
         }
-     
     }
 
     
     public void ClickSceneMove()
     {
-
-            SceneManager.LoadScene("ConnectionScene");
+        StartCoroutine(FadeOUt());
+       //SceneManager.LoadScene("ConnectionScene");
 
     }
 
+    IEnumerator FadeOUt()
+    {
+        EJUITitle_Logo.Instance.fadeout();
+        yield return new WaitForSeconds(2);
+        SceneManager.LoadScene("ConnectionScene");
+    }
 
     public override void OnPointerEnter(PointerEventData eventData)
     {

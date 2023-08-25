@@ -7,6 +7,11 @@ using DG.Tweening;
 
 public class EJUITitle_Logo : MonoBehaviour
 {
+    static public EJUITitle_Logo Instance;
+    private void Awake()
+    {
+        Instance = this;
+    }
     //1번째 뜨는 것
     public GameObject first;
 
@@ -18,6 +23,8 @@ public class EJUITitle_Logo : MonoBehaviour
     //2번째에 뜨는 것
     public GameObject Second;
 
+    public Image img;
+    
     //mainLogo
     Vector3 mainLogoScale;
     Image mainLogoOpacity;
@@ -103,6 +110,10 @@ public class EJUITitle_Logo : MonoBehaviour
         }
     }
 
+     public void fadeout()
+    {
+        img.DOFade(1, 1.5f);
+    }
 
     IEnumerator firstUION()
     {

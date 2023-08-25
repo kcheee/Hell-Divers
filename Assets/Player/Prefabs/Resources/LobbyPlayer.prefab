@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 9662392755763978}
   - component: {fileID: 1542855771536006656}
-  - component: {fileID: 1542855771536006657}
   - component: {fileID: 1542855771536006662}
   - component: {fileID: 1542855771536006663}
   - component: {fileID: 6205518597869438517}
@@ -503,37 +502,6 @@ MonoBehaviour:
     spineStiffness: 0.5
     pullBodyVertical: 0.5
     pullBodyHorizontal: 0
---- !u!114 &1542855771536006657
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9662392755763977}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3956cd2ab16b4af4c8f4c6faec8abd62, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  trBody: {fileID: 392979298074932867}
-  RightHand: {fileID: 8636690121294661171}
-  NickNameText: {fileID: 0}
-  speed: 5
-  currentGun: {fileID: 6093597119669685841}
-  mainGun: {fileID: 6093597119669685841}
-  subGun: {fileID: 6692365152367010812}
-  reload: 0
-  testclip: {fileID: 8300000, guid: 3809adb90d5f7a445abdd62ad8d283e5, type: 3}
-  testclip2: {fileID: 8300000, guid: 0b8939a41ac5e5e4f869e0ee539f858f, type: 3}
-  stratagemObj: {fileID: 179448, guid: 41ddecd19696e4b7abfe4584fa7efe68, type: 3}
-  current_stratagem: {fileID: 0}
-  throwObject: {fileID: 0}
-  code_input: {fileID: 0}
-  stratagemManager: {fileID: 0}
-  playerHp: {fileID: 0}
-  currentState: 0
-  layer: 0
-  ch: {fileID: 0}
 --- !u!136 &1542855771536006662
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -616,7 +584,6 @@ MonoBehaviour:
   OwnershipTransfer: 0
   observableSearch: 2
   ObservedComponents:
-  - {fileID: 1542855771536006657}
   - {fileID: 4551583055824806920}
   sceneViewId: 0
   InstantiationId: 0
@@ -635,7 +602,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_SynchronizePosition: 1
   m_SynchronizeRotation: 1
-  m_SynchronizeScale: 0
+  m_SynchronizeScale: 1
   m_UseLocal: 1
 --- !u!143 &6858061153521358400
 CharacterController:

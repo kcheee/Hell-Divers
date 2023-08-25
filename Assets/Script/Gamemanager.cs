@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
+using UnityEngine.UI;
 
 public class Gamemanager : MonoBehaviour
 {
@@ -17,11 +18,13 @@ public class Gamemanager : MonoBehaviour
     public FollowCam followCam_start;
     public GameObject TowerUI;
     public GameObject EndUI;
+    public CanvasGroup fade;
 
     // 수정 해야함.
     IEnumerator camstart()
     {
-        yield return new WaitForSeconds(5);
+        fade.DOFade(0, 2);
+        yield return new WaitForSeconds(0.5f);
         followCam_start.enabled = true;
     }
 

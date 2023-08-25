@@ -12,12 +12,12 @@ public class MissionComplete : MonoBehaviour
     void missionCompleteText()
     {
         endUI.SetActive(true);
-        logo[0].DOAnchorPos(new Vector2(250, 0), 0.4f);
-        logo[1].DOAnchorPos(new Vector2(-250, 0), 0.4f);
+        logo[0].DOAnchorPos(new Vector2(370, 0), 0.4f);
+        logo[1].DOAnchorPos(new Vector2(-370, 0), 0.4f);
         mission_T.DOAnchorPos(new Vector2(), 0.4f); // new vector2 (0,0)
 
-        logo[0].DOAnchorPos(new Vector2(250,0),0.4f);
-        logo[1].DOAnchorPos(new Vector2(-250, 0), 0.4f);
+        logo[0].DOAnchorPos(new Vector2(370, 0),0.4f);
+        logo[1].DOAnchorPos(new Vector2(-370, 0), 0.4f);
         mission_T.DOAnchorPos(new Vector2(), 0.4f); // new vector2 (0,0)
     }
 
