@@ -7,6 +7,7 @@ using UnityEngine;
 
 public class EJGausCannonFireInstantiate : MonoBehaviourPun
 {
+    #region cannonFire변수
     //cannonFire 변수
     int cannonCount = 16;
     bool isCannonDone = true;
@@ -25,6 +26,8 @@ public class EJGausCannonFireInstantiate : MonoBehaviourPun
     //PhotonView
     PhotonView photonview;
 
+    #endregion
+
     // Start is called before the first frame update
     void Start()
     {
@@ -35,20 +38,20 @@ public class EJGausCannonFireInstantiate : MonoBehaviourPun
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Alpha1))
+        //test용
+        if (Input.GetKeyDown(KeyCode.Alpha7))
         {
             if (isCannonDone)
             {
-                //StartCoroutine(CannonFire(null));
-
+                StartCoroutine(CannonFire(null));
                 //!!!!RPC함수는 photonView를 통해서 호출해야하는데 startcoroutine은 어떻게 적용하는 거지? 
-                photonview.RPC(nameof(StartCannonFirebyRPC), RpcTarget.All);
+                //photonview.RPC(nameof(StartCannonFirebyRPC), RpcTarget.All);
                 //StartCoroutine(photonview.RPC("CannonFirebyRPC"), RpcTarget.All);
             }
         }
     }
 
-
+    #region 원본) CannonFire 코루틴 함수
 
     public IEnumerator CannonFire(System.Action<int> complete)
     {
@@ -86,14 +89,14 @@ public class EJGausCannonFireInstantiate : MonoBehaviourPun
             //gausCannon불빛이 나간다. 
             GameObject gausCannonPrefab = Instantiate(gausCannonPrefabFactory);
             gausCannonPrefab.transform.position = cannonPos.transform.position;
-            gausCannonPrefab.transform.up = cannonPos.transform.up;
-
+            gausCannonPrefab.transform.up = cannonPos.transform.forward;
 
 
             //몸이랑 같이 돌아가고 싶다.
             Vector3 originAngle = transform.localEulerAngles;    
 
-            cannonPos.Rotate(new Vector3(cannonPosX, 0, 7 * cannonPosZDir)+originAngle, Space.Self);
+            //cannonPos.Rotate(new Vector3(cannonPosX, 0, 7 * cannonPosZDir)+originAngle, Space.Self);
+            cannonPos.Rotate(new Vector3(cannonPosX, 7*cannonPosZDir, 0 ), Space.Self);
            
             yield return new WaitForSeconds(cannonDelayTime);
             //OFFRightArmAnim();
@@ -108,13 +111,16 @@ public class EJGausCannonFireInstantiate : MonoBehaviourPun
             complete(2);
         }
     }
+    #endregion
+
 
     [PunRPC]
     void StartCannonFirebyRPC()
     {
-        StartCoroutine(CannonFirebyRPC(null));
+        StartCoroutine(CannonFire(null));
     }
 
+    #region CannonFire 원본 함수를 RPC로 만들 필요는 없지 않나
     [PunRPC]
     public IEnumerator CannonFirebyRPC(System.Action<int> complete)
     {
@@ -172,7 +178,9 @@ public class EJGausCannonFireInstantiate : MonoBehaviourPun
             complete(2);
         }
     }
+    #endregion
 
+    #region Anim
     public Animator rightArmReaction;
     public Animator bodyReaction;
 
@@ -186,6 +194,7 @@ public class EJGausCannonFireInstantiate : MonoBehaviourPun
     {
         bodyReaction.SetTrigger("HeadReaction");
     }
+    #endregion
 
     [PunRPC]
     void ShowGausCannonImpact(Vector3 pos, Vector3 normal, float waitTime)

@@ -144,6 +144,7 @@ public class BossFSM : MonoBehaviourPun
             {
                 ChangeState(BossState.Chase);
             }
+            #endregion
         }
     }
 
@@ -348,7 +349,8 @@ public class BossFSM : MonoBehaviourPun
             print("MakeBomb");
             //StartCoroutine(transform.GetComponent<EJBombFire>().MakeBomb(AttackCompleted));
 
-            photonView.RPC(nameof(StartMakeBombByRPC), RpcTarget.All);
+            //photonView.RPC(nameof(StartMakeBombByRPC), RpcTarget.All);
+            photonView.RPC(nameof(Start2ndPatternByRPC), RpcTarget.All);
             //StartCoroutine(transform.GetComponent<>)
             Sflag = true;
             //B_state = BossState.Wait;
@@ -500,4 +502,3 @@ public class BossFSM : MonoBehaviourPun
 }
 
 
-#endregion

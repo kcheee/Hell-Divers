@@ -5,6 +5,7 @@ using Photon.Pun;
 
 public class EJBoss2ndPatternFire: MonoBehaviourPun
 {
+    #region rocket 변수
     //rocket변수
     bool isRocketDone = true;
     int RocketCount = 6;
@@ -17,6 +18,9 @@ public class EJBoss2ndPatternFire: MonoBehaviourPun
 
     GameObject rocketImpact;
     public GameObject rocketFactory;
+    public GameObject rocketExploImpactFactory;
+
+    #endregion
 
     // Start is called before the first frame update
     void Start()
@@ -37,6 +41,7 @@ public class EJBoss2ndPatternFire: MonoBehaviourPun
         }
     }
 
+    #region 01. MakeRocket Coroutine 함수
     public IEnumerator MakeRocket(System.Action<int> complete)
     {
         isRocketDone = false;
@@ -45,21 +50,16 @@ public class EJBoss2ndPatternFire: MonoBehaviourPun
         {
             GameObject rocket = Instantiate(rocketFactory);
             rocket.transform.position = RocketPos.position;
-            //rocket.transform.localEulerAngles = RocketPos.transform.localEulerAngles;
             rocket.transform.forward = RocketPos.transform.up;
 
             ONLeftArmAnim();
             bodyReactionAnim();
 
             EJBossSFX.instance.PlaymachineGunSFX();
-
-            //rotX = Random.Range(-10, 10);
-            //rotZ = Random.Range(-10, 10);
             
             //X는 윗방향 +가 윗방향, -가 아래 방향
             //Z는 좌우방향 +가 보스 기준 오른쪽, -가 보스 기준 왼쪽
             
-
             RocketPos.Rotate(new Vector3(rotX, 0, rotZ), Space.Self);
             rotZ -= 3;
             rotX += 1;
@@ -69,15 +69,14 @@ public class EJBoss2ndPatternFire: MonoBehaviourPun
             yield return new WaitForSeconds(0.7f);
 
         }
+
         RocketPos.localEulerAngles = RocketOriginAngle;
         rotX = 0;
         rotZ = 0;
-
-        
-        print("로켓포스 앞방향이 원래 방향으로 돌아왔습니다");
+       
+        //print("로켓포스 앞방향이 원래 방향으로 돌아왔습니다");
 
         isRocketDone = true;
-
 
         if (complete != null)
         {
@@ -85,8 +84,10 @@ public class EJBoss2ndPatternFire: MonoBehaviourPun
         }      
         yield return null;
     }
+    #endregion
 
-
+    #region Anim함수들
+    //Anim
     public Animator leftArmReaction;
     public Animator bodyReaction;
 
@@ -99,4 +100,37 @@ public class EJBoss2ndPatternFire: MonoBehaviourPun
         leftArmReaction.SetTrigger("HeadReaction");
     }
 
+    #endregion
+
+    #region 02. 바닥충돌FX함수
+
+    //매개변수(3)
+    //pos: rocket 스크립트에서 Trigger 충돌 위치
+    //normal: rocket 스크립트에서 Trigger 충돌의 normal방향
+    //waitTime: 일정 시간 후 사라질 타이밍
+
+    [PunRPC]
+    public void ShowRocketExploImpact(Vector3 pos, /*Vector3 normal,*/ float waitTime)
+    {
+        print("로켓이 바닥충돌 효과가 발생했습니다");
+
+        GameObject rocketExploImpact = Instantiate(rocketExploImpactFactory);
+
+        rocketExploImpact.transform.position = pos;
+        //rocketExploImpact.transform.localScale = Vector3.one * 3;
+        //rocketExploImpact.transform.forward = normal;
+
+        StartCoroutine(wait(rocketExploImpact, waitTime));
+    }
+
+    //매개변수(2)
+    //rocket: 사라지게 할 오브젝트
+    //waitTime: 기다릴 시간
+
+    IEnumerator wait(GameObject rocket, float waitTime)
+    {
+        yield return new WaitForSeconds(waitTime);
+        Destroy(gameObject);
+    }
+    #endregion
 }

@@ -105,6 +105,9 @@ MonoBehaviour:
   - pun_delay
   - InstantiateDeathFXbyRPC
   - PanelOn
+  - join
+  - ShowRocketExploImpact
+  - Start2ndPatternByRPC
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 0
