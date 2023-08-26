@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
+  m_IndirectSpecularColor: {r: 0.18009897, g: 0.22549154, b: 0.30680946, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -9145,6 +9145,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eda179bf0c022824c8f989cca8977b84, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1796217727
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1796217701}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e4154ed49f166354d8804be3df8d0fdc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  FirePos: {fileID: 2046529229}
+  fireBoltFactory: {fileID: 141530, guid: 4dc02866e849db44dba817ad93e49a9c, type: 3}
+  fireBoltExploImpactFactory: {fileID: 141530, guid: 4dc02866e849db44dba817ad93e49a9c, type: 3}
+  leftArmReaction: {fileID: 2046529228}
+  bodyReaction: {fileID: 2046529227}
 --- !u!1 &1820602380
 GameObject:
   m_ObjectHideFlags: 0
@@ -11306,6 +11323,21 @@ PrefabInstance:
     - {fileID: 4400383736625314094, guid: 7af5197bd135da14ca24958a870cf10e, type: 3}
     - {fileID: 4400383736625314097, guid: 7af5197bd135da14ca24958a870cf10e, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 7af5197bd135da14ca24958a870cf10e, type: 3}
+--- !u!95 &2046529227 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 6983432863054323031, guid: 7af5197bd135da14ca24958a870cf10e, type: 3}
+  m_PrefabInstance: {fileID: 2046529226}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &2046529228 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 6983432862413577504, guid: 7af5197bd135da14ca24958a870cf10e, type: 3}
+  m_PrefabInstance: {fileID: 2046529226}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &2046529229 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4400383736401347702, guid: 7af5197bd135da14ca24958a870cf10e, type: 3}
+  m_PrefabInstance: {fileID: 2046529226}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2078895659
 PrefabInstance:
   m_ObjectHideFlags: 0
