@@ -116,6 +116,8 @@ public class PlayerTest1 : MonoBehaviourPun,IPunObservable
         //add component.
         code_input = gameObject.AddComponent<Code_InputManager>();
         stratagemManager = GetComponent<StratagemManager>();
+        stratagemManager.PlayerInfoUI = PlayerInfoUI; 
+
         playerHp = GetComponent<PlayerHP>();
         playerHp.Ondie = () => {
             if (currentState != PlayerState.Die) {
@@ -132,6 +134,32 @@ public class PlayerTest1 : MonoBehaviourPun,IPunObservable
             PlayerManager.instace.action = null;
         }
         PlayerManager.instace.Addlist(this);
+
+        //Bullet이 change되었을때 호출되는 함수.
+        currentGun.OnBulletChanged = () =>
+        {
+            Debug.LogError("실행됨!!");
+            float ratio = ((float)currentGun.currentBullet / (float)currentGun.maxBullet);
+            PlayerInfoUI.AmmoImg.fillAmount = ratio;
+
+            if (ratio <= 0.3 && cor == null)
+            {
+                Debug.LogError("호출");
+                cor = StartCoroutine(PlayerInfoUI.NoAmmo());
+            }
+            if (ratio >= 0.3 && cor != null)
+            {
+                StopCoroutine(cor);
+                PlayerInfoUI.resetcolor();
+                cor = null;
+            }
+        };
+
+        currentGun.OnManganizeChanged = () =>
+        {
+            Debug.LogError("Changed");
+            PlayerInfoUI.AmmoText.text = "X" + currentGun.Current_Manganize;
+        };
     }
 
     Vector3 last;
@@ -213,11 +241,11 @@ public class PlayerTest1 : MonoBehaviourPun,IPunObservable
             dir = Vector3.right * h + Vector3.forward * v;
             dir.Normalize();
             speed = 4;
-            if (Input.GetMouseButton(0) && !reload) {
+            if (Input.GetMouseButton(0) && !currentGun.IsReloading) {
 
             }
 
-            if (Input.GetMouseButton(0) && !reload)
+            if (Input.GetMouseButton(0) && !currentGun.IsReloading)
             {
                 if (current_stratagem)
                 {
@@ -290,8 +318,13 @@ public class PlayerTest1 : MonoBehaviourPun,IPunObservable
             {
                 //애니메이션이 끝나고 장전이 실행된다.
                 //장전 - > iDLE
+                currentGun.IsReloading = true;
                 photonView.RPC(nameof(PlayAnim), RpcTarget.All, "Reload");
-                reload = true;
+                StartCoroutine(PlayerInfoUI.ReloadGunUI(0.65f, () => {
+                    StartCoroutine(PlayerInfoUI.ChangedAmmo(PlayerInfoUI.EffectChanel.color));
+                    currentGun.IsReloading = false;
+                }));
+                
                 SoundManager.instance.SfxPlay(PlayerSound.instance.GetClip(PlayerSound.P_SOUND.Reloading));
             }
 
@@ -391,14 +424,7 @@ public class PlayerTest1 : MonoBehaviourPun,IPunObservable
         //Debug.LogError(rand);
         currentGun.Fire(rand);
 
-        float ratio = ((float)currentGun.currentBullet / (float)currentGun.maxBullet);
-        PlayerInfoUI.AmmoImg.fillAmount = ratio;
-
-        if (ratio <= 0.3 && cor == null)
-        {
-            Debug.LogError("아아아앙");
-            cor = StartCoroutine(PlayerInfoUI.NoAmmo());
-        }
+        
 
 
     }
@@ -412,7 +438,9 @@ public class PlayerTest1 : MonoBehaviourPun,IPunObservable
     }
 
     public void Reloading() {
+        
         currentGun.Reload();
+        
 
     }
 

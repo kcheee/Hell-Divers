@@ -20,12 +20,20 @@ public class Gun : MonoBehaviourPun
     public int maxBullet;
 
     public int currentBullet;
+    //탄약이 조정될때 함수를 실행시키고싶다
+    //근데, Player를 가지고 있으면 의존도가 높아짐.
+    //건이 리로드 될때 호출되는 함수
+
+
+    public System.Action OnBulletChanged;
+    public System.Action OnManganizeChanged;
     //currentBullet
     public int Current_Bullet
     {
         get { return currentBullet; }
         set {
             currentBullet = value;
+            OnBulletChanged();
             //PlayerUI.instance.BulletText.text = value.ToString();
         }
     }
@@ -38,6 +46,7 @@ public class Gun : MonoBehaviourPun
         get { return currentManganize; }
         set { currentManganize = value;
             //PlayerUI.instance.ManganizeText.text = value.ToString();
+            OnManganizeChanged();
         }
     }
     //총의 사거리다.
@@ -180,10 +189,11 @@ public class Gun : MonoBehaviourPun
     }
 
 
+    public bool IsReloading;
     //여기는 자동 Reload 가 없습니다
     public bool ReloadAble() {
         //탄창이 0보다 크고 현재 총알이 최대 총알보다 작을때 장전을 할수있음!
-        if (Current_Manganize > 0 && Current_Bullet < maxBullet) {
+        if ((Current_Manganize > 0 && Current_Bullet < maxBullet) && !IsReloading) {
 
             return true;
         }
@@ -191,7 +201,7 @@ public class Gun : MonoBehaviourPun
     }
 
     public void Reload() {
-        
+        IsReloading = false;
         Debug.Log("Reloading!!!");
         Current_Bullet = maxBullet;
         Current_Manganize--;

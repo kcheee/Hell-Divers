@@ -20,6 +20,9 @@ public class Stratagems : MonoBehaviourPun
     public Sprite Stratagem_Image;
     public string id;
 
+    //자신의 UI를 가지고(생성할때)
+    public StratagemUICode myCodeUI;
+
     bool isUse;
     Animator anim;
     //호출 코드 리스트
@@ -28,6 +31,9 @@ public class Stratagems : MonoBehaviourPun
     public Image Image;
 
     public System.Action<Vector3,Quaternion> action;
+
+
+    public StratagemUICode myStratagemUI; 
 
     void Start()
     {
@@ -147,5 +153,10 @@ public class Stratagems : MonoBehaviourPun
     protected virtual void SpawnAction(Vector3 pos,Quaternion rot) {
         Debug.Log("Spawn");
     }
-    
+
+
+    public void UIChanged(int index) {
+        myStratagemUI.Code_images[index].color = Color.red;
+    }
+
 }

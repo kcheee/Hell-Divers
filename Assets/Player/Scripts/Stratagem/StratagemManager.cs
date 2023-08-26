@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using UnityEngine.UI;
 public class StratagemManager : MonoBehaviour
 {
     //스트라타잼 4개를 보유하고있다!
@@ -12,12 +13,35 @@ public class StratagemManager : MonoBehaviour
     public List<Stratagems> active_Stratagems = new List<Stratagems>();
 
     public bool Isreturn = false;
+
+    public PlayerInfoObj PlayerInfoUI;
+    public GameObject UIObject;
+
+    public System.Action<int,int,bool> active_Action;
     private void Start()
     {
         //active_Stratagems = current_Stratagems.ToList();
-        current_Stratagems.ForEach(s =>
-        active_Stratagems.Add(s)
-        );
+        current_Stratagems.ForEach((s) =>
+        {
+            GameObject go = Instantiate(UIObject, PlayerInfoUI.Stratagem_Panel);
+            StratagemUICode Code = go.GetComponent<StratagemUICode>();
+            //자기 자신의 코드를 생성하고 셋팅.(예정)
+            s.myStratagemUI = Code;
+            //foreach (KeyType.Key key in s.CallCode)
+            //{
+            //    컬코드에 따라서 생성되는 이미지 UI
+            //    Image img = new Image();
+            //    img.sprite = Code.GetTexture(key)
+            //    Code.Code_images.Add();
+            //}
+
+            //PlayerInfoUI.codes.Add(Code);
+
+
+            active_Stratagems.Add(s);
+        });
+          
+        
 
     }
     public Stratagems CompareCode(List<KeyType.Key> list,int index) {
@@ -41,19 +65,25 @@ public class StratagemManager : MonoBehaviour
                 if (!active_Stratagems.Contains(Stratagem)) {
                     active_Stratagems.Add(Stratagem);
                 }
+                
+                //PlayerInfoUI.codes[i].Code_images[index].color = Color.red;
                 //인덱스가 같고 코드의 길이가 들어온 인덱스와 같으면
                 //스킬을 사용한다.
                 Debug.Log(Stratagem.CallCode.Count - 1 + " " + index + 1);
+                Stratagem.myStratagemUI.Code_images[index].color = Color.black;
                 if (Stratagem.CallCode.Count - 1 == index) {
                     Debug.Log("스킬사용!!");
                     //인덱스를 초기화 하고싶다.
                     list.Clear();
                     active_Stratagems.Clear();
+                    Stratagem.myStratagemUI.ResetColor();
                     return Stratagem;
                 }
             }
             else {
                 //너 비활성화
+                Stratagem.myStratagemUI.ResetColor();
+                //PlayerInfoUI.codes[i].ResetColor();
                 active_Stratagems.Remove(Stratagem);
                 Debug.Log("너 비활성화");
             }
@@ -74,4 +104,6 @@ public class StratagemManager : MonoBehaviour
             active_Stratagems.Add(s)
         );
     }
+
+
 }

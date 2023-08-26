@@ -848,6 +848,7 @@ MonoBehaviour:
   min_spreadRange: 1
   max_spreadRange: 30
   add_spreadRange: 200
+  IsReloading: 0
 --- !u!114 &2463147330721929833
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1765,6 +1766,8 @@ MonoBehaviour:
   - {fileID: -5539414565337158051, guid: d18edd39fa916804ab4a43670a85a17e, type: 3}
   active_Stratagems: []
   Isreturn: 0
+  PlayerInfoUI: {fileID: 0}
+  UIObject: {fileID: 4162504402114399961, guid: ea68c625ff4c5fc42850aa6fb2d38ff5, type: 3}
 --- !u!114 &2364859072220297821
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2166,6 +2169,7 @@ MonoBehaviour:
   min_spreadRange: 1
   max_spreadRange: 5
   add_spreadRange: 200
+  IsReloading: 0
 --- !u!1 &8193234234623924631
 GameObject:
   m_ObjectHideFlags: 0
