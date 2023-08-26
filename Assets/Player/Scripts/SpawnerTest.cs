@@ -23,8 +23,6 @@ public class SpawnerTest : MonoBehaviour
         StartCoroutine(SpawnTime(t, ()=> {
             PhotonNetwork.Instantiate("dum", transform.position, transform.rotation);
         }));
-        
-
     }
 
     IEnumerator SpawnTime(float t, System.Action action) {

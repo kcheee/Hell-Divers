@@ -2,9 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
+using Photon.Realtime;
 using UnityEngine.SceneManagement;
 
-public class PlayerManager : MonoBehaviourPun
+public class PlayerManager : MonoBehaviourPunCallbacks
 {
     public static PlayerManager instace;
     //4명의 포톤뷰를 가지고 있고 public List<Photonview>
@@ -18,6 +19,8 @@ public class PlayerManager : MonoBehaviourPun
     public List<PlayerTest1> PlayerList = new List<PlayerTest1>();
     public List<PlayerTest1> DeathList = new List<PlayerTest1>();
     public AudioClip clip;
+
+    public PlayerInfoObj PlayerInfoUI;
 
     public System.Func<Vector3, GameObject> action;
 
@@ -58,8 +61,12 @@ public class PlayerManager : MonoBehaviourPun
     // Start is called before the first frame update
     void Start()
     {
+
+
         if (SceneManager.GetActiveScene().name != "Lobby") {
-            JoinUI();
+            PhotonNetwork.Instantiate("PlayerInfoObj",Vector3.zero,Quaternion.identity);
+            //PlayerInfoUI = JoinUI(PhotonNetwork.LocalPlayer.NickName);
+            //JoinUI();
         }
             //SoundManager.instance.BgmPlay(clip);
 
@@ -106,7 +113,6 @@ public class PlayerManager : MonoBehaviourPun
         Debug.Log(SceneManager.GetActiveScene().name);
         if (SceneManager.GetActiveScene().name != "Lobby")
         {
-
             GameObject PlatformObj = PhotonNetwork.Instantiate("Platform-Main", pos + Vector3.up * 30, Quaternion.Euler(-90f, 0, 0));
             //GameObject player = PhotonNetwork.Instantiate("AlphaPlayer 1", pos , Quaternion.identity);
             //player.SetActive(false);
@@ -137,12 +143,11 @@ public class PlayerManager : MonoBehaviourPun
 
     public GameObject UI_Obj;
     //들어올때 UI에 자신의 이름을 넣자.
-    public void JoinUI() {
+    public PlayerInfoObj JoinUI(string name) {
         Transform tr = PlayerUI.instance.PlayerInfo;
         GameObject obj =  Instantiate(UI_Obj, tr);
         PlayerInfoObj info = obj.GetComponent<PlayerInfoObj>();
-        info.NameText.text = PhotonNetwork.LocalPlayer.NickName.ToString();
-
+        info.NameText.text = name;
+        return info;
     }
-
 }

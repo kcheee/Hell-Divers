@@ -2,8 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
-using TMPro;
 using Photon.Pun;
 
 public class EJBossHP : MonoBehaviourPun,I_Entity
@@ -13,10 +11,6 @@ public class EJBossHP : MonoBehaviourPun,I_Entity
     float currentHP;
     float maxHP = 300;
 
-    //bossHP
-    public Slider BossHPBar;
-
-    //죽었을 때 나오는 효과
     public GameObject bodyExploPrefab;
 
     private void Awake()
@@ -27,8 +21,7 @@ public class EJBossHP : MonoBehaviourPun,I_Entity
     void Start()
     {
         HP = maxHP;
-        BossHPBar.maxValue = maxHP;
-        
+        //InstantiateDeathFX();
     }
 
     // Update is called once per frame
@@ -49,7 +42,6 @@ public class EJBossHP : MonoBehaviourPun,I_Entity
         set
         {
             currentHP = value;
-            BossHPBar.value = currentHP;
         }
     }
 

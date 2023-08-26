@@ -26,6 +26,9 @@ public class PlayerTest1 : MonoBehaviourPun,IPunObservable
 
     //던지려고 하는 물체
     public GameObject throwObject;
+
+
+    public PlayerInfoObj PlayerInfoUI;
     public Stratagems C_Stratagem {
         get { return current_stratagem; }
         set { current_stratagem = value;
@@ -97,6 +100,12 @@ public class PlayerTest1 : MonoBehaviourPun,IPunObservable
     {
         if(NickNameText)
             NickNameText.text = photonView.Owner.NickName;
+        //생성할때 오너의 닉네임을 가지고
+
+        //모든 플레이어는 UI를 가지고 있어야하니까 Player에서 생성하는게 맞는거같다는 나의 생각.
+            PlayerInfoUI = PlayerManager.instace.JoinUI(photonView.Owner.NickName);
+        //플레이어는 자신의 UI를 알고있으면 RPC로 다 되는거임
+
         ch = GetComponent<CharacterController>();
         anim = trBody.GetComponent<Animator>();
         //test
@@ -205,20 +214,20 @@ public class PlayerTest1 : MonoBehaviourPun,IPunObservable
             dir.Normalize();
             speed = 4;
             if (Input.GetMouseButton(0) && !reload) {
-                           
-                
-                    
-                
+
             }
 
             if (Input.GetMouseButton(0) && !reload)
             {
                 if (current_stratagem)
                 {
+                    
                     photonView.RPC(nameof(PlayAnim), RpcTarget.All, "Throw");
 
                 }
-                else {
+                else
+                {
+
                     int rand = Random.Range(-1, 2);
                     photonView.RPC(nameof(Fire), RpcTarget.All, rand);
                 }
@@ -237,15 +246,26 @@ public class PlayerTest1 : MonoBehaviourPun,IPunObservable
                 Debug.LogWarning("Invoke 호출");
 
             }
+            if (Input.GetKeyUp(KeyCode.LeftControl))
+            {
+                Debug.Log("떗다@");
+                PlayerInfoUI.anim.SetTrigger("None");
+            }
+            if (Input.GetKeyDown(KeyCode.LeftControl))
+            {
+                Debug.Log("했다");
+                PlayerInfoUI.anim.SetTrigger("Active");
+            }
 
             //컨트롤 키를 눌렀을때 스트라타잼 입력을 받고싶다.
             if (Input.GetKey(KeyCode.LeftControl))
             {
+
                 PlayerUI.instance.StratagemImage.gameObject.SetActive(true);
+                //PlayerUI.instance.anim.SetTrigger("Active");
                 //입력 코드를 입력할때
                 code_input.input(() => {
                     code_input.IsInput = !stratagemManager.Isreturn;
-
                     SoundManager.instance.SfxPlay(PlayerSound.instance.GetClip(PlayerSound.P_SOUND.Input));
 
                     //코드가 진짜 코드와 맞는지 계속 확인해준다.
@@ -263,10 +283,10 @@ public class PlayerTest1 : MonoBehaviourPun,IPunObservable
                 return;
             } //end Input.
               //만약에 움직이고 있다면(sqr은 루트 ㄴㄴ)
+            
 
-
-            //재장전 키를 눌렀고 Gun한테 장전을 할수 있는지 물어본다.
-            if (Input.GetKeyDown(KeyCode.R) && currentGun.ReloadAble())
+                //재장전 키를 눌렀고 Gun한테 장전을 할수 있는지 물어본다.
+                if (Input.GetKeyDown(KeyCode.R) && currentGun.ReloadAble())
             {
                 //애니메이션이 끝나고 장전이 실행된다.
                 //장전 - > iDLE
@@ -293,7 +313,7 @@ public class PlayerTest1 : MonoBehaviourPun,IPunObservable
             //전부 초기화 한다.
             if (Input.GetKeyUp(KeyCode.LeftControl))
             {
-                PlayerUI.instance.StratagemImage.gameObject.SetActive(false);
+               
                 code_input.init();
                 stratagemManager.init();
             }
@@ -363,11 +383,24 @@ public class PlayerTest1 : MonoBehaviourPun,IPunObservable
         anim.SetFloat("MyVertical",myDir.y);
     }
 
+
+    Coroutine cor;
     [PunRPC]
     public void Fire(int rand) {
         photonView.RPC("Res_Spr",RpcTarget.All);
         //Debug.LogError(rand);
         currentGun.Fire(rand);
+
+        float ratio = ((float)currentGun.currentBullet / (float)currentGun.maxBullet);
+        PlayerInfoUI.AmmoImg.fillAmount = ratio;
+
+        if (ratio <= 0.3 && cor == null)
+        {
+            Debug.LogError("아아아앙");
+            cor = StartCoroutine(PlayerInfoUI.NoAmmo());
+        }
+
+
     }
     public void ChangeGun(Gun gun) {
         currentGun.gameObject.SetActive(false);
@@ -380,6 +413,7 @@ public class PlayerTest1 : MonoBehaviourPun,IPunObservable
 
     public void Reloading() {
         currentGun.Reload();
+
     }
 
     public void Aiming() {
@@ -518,5 +552,25 @@ public class PlayerTest1 : MonoBehaviourPun,IPunObservable
     private void OnDestroy()
     {
         PlayerManager.instace.PLAYER_LIST.Remove(this);
+    }
+
+    public PlayerTest1 copy() {
+        PlayerTest1 newplayer = new PlayerTest1();
+        newplayer.PlayerInfoUI = this.PlayerInfoUI;
+        return newplayer;
+    }
+
+    public void reset()
+    {
+        transform.position = Vector3.zero;
+        transform.rotation = Quaternion.identity;
+        currentGun.currentBullet = currentGun.maxBullet;
+        photonView.RPC(nameof(PlayAnim), RpcTarget.All, "Idle");
+        currentState = PlayerState.Live;
+        //HP
+        //카메라 리셋
+        playerHp.HP = playerHp.maxHp;
+        playerHp.current_State = PlayerHP.State.Live;
+        PlayerManager.instace.PLAYER_LIST.Add(this);
     }
 }

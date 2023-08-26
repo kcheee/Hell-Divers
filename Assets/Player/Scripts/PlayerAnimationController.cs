@@ -30,6 +30,7 @@ public class PlayerAnimationController : MonoBehaviour
         Player.FireGrenade();
     }
     public void Grenade() {
+        
         testGun.SetActive(false);
     
     }

@@ -719,6 +719,7 @@ MonoBehaviour:
   Fire2Eft: {fileID: 1082213743303154, guid: 4aae9ddc8b5e4a24da55b49fcc3022a4, type: 3}
   FireEft: {fileID: 100000, guid: 079ce06bb97c4484b957285d53708a6b, type: 3}
   MuzzleEft: {fileID: 100004, guid: bc75feaf52ea7ff41ab5fd2f5ba92c5e, type: 3}
+  TestObj: {fileID: 0}
   maxBullet: 100
   currentBullet: 20
   maxManganize: 10
@@ -1596,6 +1597,7 @@ MonoBehaviour:
   stratagemObj: {fileID: 179448, guid: 41ddecd19696e4b7abfe4584fa7efe68, type: 3}
   current_stratagem: {fileID: 0}
   throwObject: {fileID: 0}
+  PlayerInfoUI: {fileID: 0}
   code_input: {fileID: 0}
   stratagemManager: {fileID: 0}
   playerHp: {fileID: 0}
@@ -1663,6 +1665,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   DamageEft: {fileID: 5737861413046029104, guid: d669b8e1302dd8342a38d862beb252af, type: 3}
   DieEft: {fileID: 3745372705267084804, guid: 18c8224ea6cc8a04c9e38c64cbeaf5dd, type: 3}
+  current_State: 0
   hp: 0
   maxHp: 100
 --- !u!114 &2498795001099063669
@@ -2035,6 +2038,7 @@ MonoBehaviour:
   Fire2Eft: {fileID: 0}
   FireEft: {fileID: 0}
   MuzzleEft: {fileID: 0}
+  TestObj: {fileID: 0}
   maxBullet: 6
   currentBullet: 6
   maxManganize: 10
