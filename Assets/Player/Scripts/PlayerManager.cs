@@ -119,7 +119,7 @@ public class PlayerManager : MonoBehaviourPunCallbacks
             GameObject PlatformObj = PhotonNetwork.Instantiate("Platform-Main", pos + Vector3.up * 30, Quaternion.Euler(-90f, 0, 0));
             //GameObject player = PhotonNetwork.Instantiate("AlphaPlayer 1", pos , Quaternion.identity);
             //player.SetActive(false);
-            addspawnPos += 5;
+            //addspawnPos += 5;
             Platform platform = PlatformObj.GetComponent<Platform>();
             GameObject player = null;
             platform.action = () =>
