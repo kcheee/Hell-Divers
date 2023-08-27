@@ -37,7 +37,7 @@ public class LobbyButton : Button
         base.OnSelect(eventData);
         if(PhotonNetwork.IsMasterClient)
         {
-            StartCoroutine(LobbySceneChange.instance.Fade(false));
+           LobbySceneChange.instance.delePun(false);
             //PhotonNetwork.LoadLevel("MainScene");
         }
     }

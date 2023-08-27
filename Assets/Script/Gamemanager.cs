@@ -51,6 +51,11 @@ public class Gamemanager : MonoBehaviourPun
     #endregion
 
     // Ending scene으로 전환
+    [PunRPC]
+    void pun_ending()
+    {
+        StartCoroutine(ending());
+    }
     public IEnumerator ending()
     {
         yield return new WaitForSeconds(2f);
@@ -76,7 +81,8 @@ public class Gamemanager : MonoBehaviourPun
         // endingscene
         if (Input.GetKeyDown(KeyCode.H))
         {
-            StartCoroutine(ending());
+            //StartCoroutine(ending());
+            photonView.RPC(nameof(pun_ending),RpcTarget.All);
         }
     }
 

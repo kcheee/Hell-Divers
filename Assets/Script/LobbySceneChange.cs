@@ -90,6 +90,16 @@ public class LobbySceneChange : MonoBehaviourPun
         audioSource.Play();
     }
 
+   public void delePun(bool flag)
+    {
+        photonView.RPC(nameof(pun_Fade), RpcTarget.All, flag);
+    }
+    [PunRPC]
+    public void pun_Fade(bool flag)
+    {
+        StartCoroutine(Fade(flag));
+    }
+
     public IEnumerator Fade(bool In)
     {
         if (In)
