@@ -78,10 +78,7 @@ public class EJBossHP : MonoBehaviourPun,I_Entity
         else
         {
             print("BOSS HP가 0이하로 떨어졌다");
-
-            photonView.RPC("InstantiateDeathFXbyRPC", RpcTarget.All, 1);
-            
-          
+            photonView.RPC("InstantiateDeathFXbyRPC", RpcTarget.All, 1);         
         }  
     }
 
@@ -96,31 +93,21 @@ public class EJBossHP : MonoBehaviourPun,I_Entity
     IEnumerator InstantiateDeathFX()
     {
         if (!deathexploDone)
-        {
-            
-
-
+        {            
             print("DeathFX가 실행되었습니다");
+
             //GameObject bodyexloImpact = PhotonNetwork.Instantiate("EJBossDeath", transform.position + Vector3.up, Quaternion.identity);
 
             GameObject bodyexloImpact = Instantiate(bodyExploPrefab);
 
-            
-
-            bodyexloImpact.transform.localScale = Vector3.one * 10;
-            bodyexloImpact.transform.position = transform.position;
+            //bodyexloImpact.transform.localScale = Vector3.one * 10;
+            bodyexloImpact.transform.position = transform.position + Vector3.up*1.6f;
             bodyexloImpact.transform.up = transform.up;
 
-            //bodyexloImpact.SetActive(true);
-
-            PhotonNetwork.Destroy(gameObject);      
+            Destroy(gameObject);   
+            
             yield return null;
-            //deathexploDone = true;
-
-            //if (deathexploDone)
-            //{
-            //    PhotonNetwork.Destroy(gameObject);
-            //}
+ 
             deathexploDone = true;
         }
 

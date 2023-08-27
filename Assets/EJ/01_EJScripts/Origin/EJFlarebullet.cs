@@ -10,7 +10,7 @@ public class EJFlarebullet : MonoBehaviourPun
     float destroyTime = 1f;
     float bombRadius = 3;
 
-    public GameObject floorEffectFactroy;
+    public GameObject floorEffectFactory;
     //public PhotonView tankPv;
 
     Rigidbody rb;
@@ -39,12 +39,12 @@ public class EJFlarebullet : MonoBehaviourPun
 
         if (other.gameObject.layer == LayerMask.NameToLayer("Floor"))
         {
-            print("Floor에 닿았다");
+            print(">>>>>Floor에 닿았다");
 
             //RPC로 안보인다.
-
+            ShowBulletImpact();
             //photonView.RPC(nameof(ShowBulletImpact), RpcTarget.All);
-            photonView.RPC(nameof(test), RpcTarget.All);
+            //photonView.RPC(nameof(test), RpcTarget.All);
         }
 
         if (other.gameObject.tag == "Player")
@@ -68,14 +68,15 @@ public class EJFlarebullet : MonoBehaviourPun
     [PunRPC]
    public void ShowBulletImpact()
     {
-        print("ShowBulletImpact함수 실행");
+        print(">>>>>ShowBulletImpact함수 실행");
 
-        //GameObject floorEffect = Instantiate(floorEffectFactroy, transform.position, Quaternion.identity);
+        //GameObject floorEffect = Instantiate(floorEffectFactory, transform.position, Quaternion.identity);
+        GameObject floorEffect = PhotonNetwork.Instantiate("mDAX_Electricity_Ground_Explosion_00", transform.position, Quaternion.identity);
 
-        //Debug.Log("gausCannon이 바닥에 닿았을 때 생기는 효과는" + floorEffect);
+        Debug.Log("gausCannon이 바닥에 닿았을 때 생기는 효과는" + floorEffect);
 
-        ////floorEffect.transform.localScale = Vector3.one * 2;
-        //Destroy(gameObject, 2.5f);
+        //floorEffect.transform.localScale = Vector3.one * 2;
+        Destroy(gameObject, 2.5f);
     }
 
 

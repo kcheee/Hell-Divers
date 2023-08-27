@@ -4071,7 +4071,8 @@ MonoBehaviour:
   bombFlyingSFX: {fileID: 8300000, guid: 9ae271abe0e89b742a0be570f4ddf614, type: 3}
   bombExploSFX: {fileID: 8300000, guid: fec6219b88f8f0f4baa33e7ddcf0a6d8, type: 3}
   gausCannonSFX: {fileID: 8300000, guid: b3bfdb257bab36c4496e876b8ea416e1, type: 3}
-  machineGunSFX: {fileID: 8300000, guid: cdbc1f1185096cd4eb2db4f767b4288b, type: 3}
+  machineGunSFX: {fileID: 8300000, guid: fec6219b88f8f0f4baa33e7ddcf0a6d8, type: 3}
+  deadSFX: {fileID: 8300000, guid: 86272f460dc0fc648a25ebd4b0175f3c, type: 3}
 --- !u!82 &3084460742303193405
 AudioSource:
   m_ObjectHideFlags: 0
@@ -12080,7 +12081,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bossHPBar: {fileID: 8589871036999026871}
-  bodyExploPrefab: {fileID: 126312, guid: 68cc219c659ae6446865625c90d6f232, type: 3}
+  bodyExploPrefab: {fileID: 172206, guid: a842bb16ba97ed141a04ba1319a70537, type: 3}
 --- !u!54 &682633426659527348
 Rigidbody:
   m_ObjectHideFlags: 0
