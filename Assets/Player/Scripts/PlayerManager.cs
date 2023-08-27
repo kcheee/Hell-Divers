@@ -43,7 +43,6 @@ public class PlayerManager : MonoBehaviourPun
         if (PLAYER_LIST.Count == 0)
         {
             StartSpawn(playerSpawn);
-            addspawnPos += 5;
         }
         else
         {
@@ -107,14 +106,14 @@ public class PlayerManager : MonoBehaviourPun
         if (SceneManager.GetActiveScene().name != "Lobby")
         {
             int rand = Random.Range(-5, 5);
-            pos.x += rand;
+            pos.x += addspawnPos;
 
             Debug.Log(pos + " : À§Ä¡°ª : " + addspawnPos);
 
             GameObject PlatformObj = PhotonNetwork.Instantiate("Platform-Main", pos + Vector3.up * 30, Quaternion.Euler(-90f, 0, 0));
             //GameObject player = PhotonNetwork.Instantiate("AlphaPlayer 1", pos , Quaternion.identity);
             //player.SetActive(false);
-
+            addspawnPos += 5;
             Platform platform = PlatformObj.GetComponent<Platform>();
             GameObject player = null;
             platform.action = () =>

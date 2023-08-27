@@ -128,7 +128,7 @@ public class SquadLeader : Enemy_Fun
     {
         anim.SetTrigger("Ranged_Attack");
         flag = false;
-        yield return new WaitForSeconds(0.3f);
+        yield return new WaitForSeconds(1.1f);
         audioSource.PlayOneShot(ENEMY.sound_Normal[1], 1);
         GameObject Grenda = Instantiate(Granade, FirePos.transform.position, Quaternion.identity);
         Grenda.GetComponent<GranadeLauncher>().value(POS);
@@ -266,6 +266,7 @@ public class SquadLeader : Enemy_Fun
         {
             StopNavSetting();
             photonView.RPC(nameof(PlayAnimB), RpcTarget.All, "Walk", false);
+            photonView.RPC(nameof(PlayAnimT), RpcTarget.All, "MeleeAttack");
             E_state = EnemyState.melee_attack;
         }
         //break;
@@ -314,7 +315,7 @@ public class SquadLeader : Enemy_Fun
     }
     protected override void F_meleeattack()
     {
-
+        currrTime += Time.deltaTime;
         f_rotation();
 
         if (transform.forward != (closestObject.transform.position - transform.position))
@@ -328,7 +329,14 @@ public class SquadLeader : Enemy_Fun
         }
         // 근접공격 코드 아직 안짬. 애니메이션 없음
         Debug.Log("근접공격");
-        if (distance > 4)
+
+        if (distance < 3 && currrTime > 2.5f)
+        {
+            currrTime = 0;
+            photonView.RPC(nameof(PlayAnimT), RpcTarget.All, "MeleeAttack");
+
+        }
+        if (distance > 3)
         {
             TraceNavSetting();
             photonView.RPC(nameof(PlayAnimB), RpcTarget.All, "Walk", true);
@@ -337,6 +345,16 @@ public class SquadLeader : Enemy_Fun
         // escape 설정해야함.
     }
     #endregion
+
+    protected override void Die()
+    {
+        transform.GetComponent<SquadLeader>().enabled = false;
+        //GetComponent<BoxCollider>().enabled = false;
+
+        base.Die();
+        Debug.Log("log");
+        StartCoroutine(GetComponent<Die>().delay());
+    }
 
     #region animation event
 

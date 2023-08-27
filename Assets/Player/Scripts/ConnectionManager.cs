@@ -3,9 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
+using DG.Tweening;
+
 public class ConnectionManager : MonoBehaviourPunCallbacks
 {
     public string StartScene;
+    public CanvasGroup loadingUI;
     // Start is called before the first frame update
     void Start()
     {
@@ -28,6 +31,23 @@ public class ConnectionManager : MonoBehaviourPunCallbacks
                 
         }
         PhotonNetwork.LocalPlayer.NickName = nick;
+        StartCoroutine(Fade(true));
+
+        SoundManager.instance.BGMSrc.DOFade(0,1);
+    }
+    IEnumerator Fade(bool In)
+    {
+        if (In)
+            loadingUI.DOFade(1, 0.5f);
+        else
+        {
+            SoundManager.instance.BGMSrc.clip = SoundManager.instance.BGMClip.Lobby;
+            SoundManager.instance.BGMSrc.Play();
+            SoundManager.instance.BGMSrc.DOFade(1, 1);
+            loadingUI.DOFade(0, 0.5f);
+            yield return new WaitForSeconds(1);
+            PhotonNetwork.LoadLevel(StartScene);
+        }
     }
 
     public override void OnConnectedToMaster()
@@ -76,6 +96,6 @@ public class ConnectionManager : MonoBehaviourPunCallbacks
         base.OnJoinedRoom();
         print(nameof(OnJoinedRoom));
         //Game Scene ¿Ãµø
-        PhotonNetwork.LoadLevel(StartScene);
+        StartCoroutine(Fade(false));
     }
 }

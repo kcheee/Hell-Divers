@@ -25,6 +25,8 @@ public class UITrigger : MonoBehaviourPun
     // 가까운 오브젝트 
     private Transform closestObject;
 
+    AudioSource audioSource;
+
     bool flag = false;
     IEnumerator delay()
     {
@@ -34,6 +36,7 @@ public class UITrigger : MonoBehaviourPun
 
     private void Start()
     {
+        audioSource = gameObject.GetComponent<AudioSource>();
         text = uiElement.GetComponent<Text>();
         T_C = new Color(255, 255, 255, 1);
         F_C = new Color(255, 255, 255, 0);
@@ -91,6 +94,7 @@ public class UITrigger : MonoBehaviourPun
         {
             if (Input.GetKeyDown(KeyCode.E))
             {
+                if(LobbySceneChange.playerReady<2)  audioSource.Play();
                 photonView.RPC(nameof(ReadyCount), RpcTarget.All);
             }
         }

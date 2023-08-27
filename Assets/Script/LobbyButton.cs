@@ -9,9 +9,11 @@ using UnityEngine.UI;
 public class LobbyButton : Button
 {
     Image img;
+    AudioSource audioSource;
     protected override void Start()
     {
         img = transform.GetComponent<Image>();
+        audioSource = GetComponent<AudioSource>();
     }
 
     public override void OnPointerEnter(PointerEventData eventData)
@@ -35,7 +37,8 @@ public class LobbyButton : Button
         base.OnSelect(eventData);
         if(PhotonNetwork.IsMasterClient)
         {
-            PhotonNetwork.LoadLevel("MainScene");
+            StartCoroutine(LobbySceneChange.instance.Fade(false));
+            //PhotonNetwork.LoadLevel("MainScene");
         }
     }
 

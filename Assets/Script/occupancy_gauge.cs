@@ -21,6 +21,7 @@ public class occupancy_gauge : MonoBehaviour
     public float radius;
     public float AddGauze=0.1f;
     public Text text;
+    public Image TowerMission;
     Animator anim;
     float gaze;
     private Transform closestObject;
@@ -144,6 +145,8 @@ public class occupancy_gauge : MonoBehaviour
         anim.SetTrigger("Finish");
         audioSource.PlayOneShot(audioclip[1]);
         text.text = "확보 완료";
+        StartCoroutine(Gamemanager.instance.MissionUIOnOff());
+        TowerMission.sprite = Resources.Load<Sprite>("CheckBox");
         yield return new WaitForSeconds(7);
         GetComponent<occupancy_gauge>().enabled = false;
     }

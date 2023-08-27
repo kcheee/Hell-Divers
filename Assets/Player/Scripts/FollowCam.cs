@@ -11,7 +11,7 @@ public class FollowCam : MonoBehaviour
     public Transform Target;
     public bool Iscam;
     bool startlerp=false;
-
+    bool CheckShake = false;
     private void OnEnable()
     {
         StartCoroutine(startlerpCam());
@@ -33,7 +33,6 @@ public class FollowCam : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
         if (startlerp)
         {
             if (PlayerManager.instace.PlayerList.Count == 0) return;
@@ -74,7 +73,24 @@ public class FollowCam : MonoBehaviour
             //백터를 보간한다.
 
             transform.position = Vector3.Lerp(pos, target, Time.smoothDeltaTime * 5);
-
         }
+
+        // 테스트용
+        if (Input.GetKeyDown(KeyCode.Mouse0)) 
+        {
+            CheckShake = true;        
+        }
+        if (Input.GetKeyUp(KeyCode.Mouse0))
+        {
+            CheckShake = false;
+        }
+        if(CheckShake)
+        {
+            Camera.main.transform.DOShakePosition(0.2f, 0.1f, 10, 90);
+        }     
     }
+
+
+
+
 }

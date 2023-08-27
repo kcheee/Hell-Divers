@@ -216,7 +216,16 @@ public class Immolator : Enemy_Fun
             E_state = EnemyState.chase;
         }
     }
+    
+    protected override void Die()
+    {
+        transform.GetComponent<Immolator>().enabled = false;
+        //GetComponent<BoxCollider>().enabled = false;
 
+        base.Die();
+        Debug.Log("log");
+        StartCoroutine(GetComponent<Die>().delay());
+    }
 
     #endregion
 
