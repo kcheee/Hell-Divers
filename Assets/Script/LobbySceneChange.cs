@@ -106,6 +106,7 @@ public class LobbySceneChange : MonoBehaviourPun
             FadeImg.DOFade(0, 0.5f);
         else
         {
+            Debug.Log("모두 실행 되야함");
             // 오디오 실행
             audioSource.clip = clip;
             audioSource.Play();

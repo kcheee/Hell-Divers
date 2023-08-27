@@ -22,6 +22,9 @@ public class occupancy_gauge : MonoBehaviour
     public float AddGauze=0.1f;
     public Text text;
     public Image TowerMission;
+
+    public SpawnManager spawnManager;
+
     Animator anim;
     float gaze;
     private Transform closestObject;
@@ -102,6 +105,7 @@ public class occupancy_gauge : MonoBehaviour
             occupationGaze = OccupationGaze.start;
             anim.SetTrigger("Start");
             //audioSource.clip = audioclip[0];
+            spawnManager.enabled = true;
             audioSource.PlayOneShot(audioclip[0]);
         }
 
@@ -141,6 +145,9 @@ public class occupancy_gauge : MonoBehaviour
     IEnumerator component_off()
     {
         // 플래그
+        // 스폰
+        spawnManager.enabled = false;
+
         flag = true;
         anim.SetTrigger("Finish");
         audioSource.PlayOneShot(audioclip[1]);

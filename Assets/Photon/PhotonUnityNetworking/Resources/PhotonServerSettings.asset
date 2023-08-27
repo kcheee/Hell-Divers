@@ -112,6 +112,8 @@ MonoBehaviour:
   - ShowBulletImpact
   - StartfireBoltByRPC
   - manganizeRPC
+  - pun_ending
+  - pun_Fade
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 0
