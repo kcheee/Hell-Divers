@@ -778,7 +778,7 @@ MonoBehaviour:
   objects: []
   Gun: {fileID: 7092018863350617055}
   I_bullet: {fileID: 6505834467949590267, guid: cae59c52a7abc804a9ff5ba3f3dc5b28, type: 3}
-  I_Muzzle: {fileID: 100006, guid: 5317fde2cd7d75a4d8888fd00df21599, type: 3}
+  I_Muzzle: {fileID: 100006, guid: 30b4cc2728d8cec499fad63ba93785a4, type: 3}
   I_FirePos: {fileID: 7092018862531366412}
 --- !u!195 &7092018864337650585
 NavMeshAgent:

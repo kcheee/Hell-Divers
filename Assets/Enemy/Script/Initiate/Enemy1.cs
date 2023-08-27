@@ -32,6 +32,7 @@ public class Enemy1 : Enemy_Fun
     public GameObject I_FirePos;
 
     bool flag = false;
+    bool die_flag = false;
 
     AudioSource audioSource;
     // ÄÄÆ÷³ÍÆ® 
@@ -95,23 +96,26 @@ public class Enemy1 : Enemy_Fun
         float T = 3;
         for (int i = 0; i < 10; i++)
         {
-            T += Random.Range(0.8f, 2f);
-            audioSource.Play();
+            if (!die_flag)
+            {
+                T += Random.Range(0.8f, 2f);
+                audioSource.Play();
 
-            Vector3 bulletpos = pos + transform.forward * T + transform.right * Random.Range(-1f, 1f);
-            GameObject bullet = Instantiate(I_bullet, I_FirePos.transform.position, Quaternion.identity);
-            Instantiate(I_Muzzle, I_FirePos.transform.position, Quaternion.identity).transform.parent = transform;
+                Vector3 bulletpos = pos + transform.forward * T + transform.right * Random.Range(-1f, 1f);
+                GameObject bullet = Instantiate(I_bullet, I_FirePos.transform.position, Quaternion.identity);
+                Instantiate(I_Muzzle, I_FirePos.transform.position, Quaternion.identity)/*.transform.parent = transform*/;
 
-            bullet.transform.parent = transform;
+                bullet.transform.parent = transform;
 
-            //Debug.Log(bullet.transform.position);
+                //Debug.Log(bullet.transform.position);
 
-            //bullet.transform.forward = TsetG.transform.position - transform.position;
-            // ¹Ø¹æÇâÀ¸·Î ÈûÀ» Áà¾ßÇÔ.
-            //Debug.Log(bulletpos - transform.position);
-            bullet.GetComponent<Rigidbody>().AddForce((bulletpos - transform.position) * 8, ForceMode.Impulse);
+                //bullet.transform.forward = TsetG.transform.position - transform.position;
+                // ¹Ø¹æÇâÀ¸·Î ÈûÀ» Áà¾ßÇÔ.
+                //Debug.Log(bulletpos - transform.position);
+                bullet.GetComponent<Rigidbody>().AddForce((bulletpos - transform.position) * 8, ForceMode.Impulse);
 
-            yield return new WaitForSeconds(0.15f);
+                yield return new WaitForSeconds(0.15f);
+            }
         }
         photonView.RPC(nameof(PlayAnimB), RpcTarget.All, "RAtk", false);
     }
@@ -286,6 +290,7 @@ public class Enemy1 : Enemy_Fun
 
     protected override void Die()
     {
+        die_flag = !die_flag;
         transform.GetComponent<Enemy1>().enabled = false;
         GetComponent<BoxCollider>().enabled = false;
 

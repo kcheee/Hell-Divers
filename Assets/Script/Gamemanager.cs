@@ -28,6 +28,7 @@ public class Gamemanager : MonoBehaviourPun
          public CanvasGroup fade;
          public CanvasGroup MissionUI;
     }
+         public Image Bossmission;
 
     [SerializeField]
     protected UIMANAGER uimanager;
@@ -50,7 +51,7 @@ public class Gamemanager : MonoBehaviourPun
     #endregion
 
     // Ending scene으로 전환
-    IEnumerator ending()
+    public IEnumerator ending()
     {
         SoundManager.instance.BGMSrc.DOFade(0, 2);
         uimanager.fade.DOFade(1, 5);

@@ -92,7 +92,6 @@ public class PlayerManager : MonoBehaviourPunCallbacks
         //    Debug.Log("HOHOHOOHOHOHOHOHOO");
         //    action += StartSpawn;
         //}
-        SoundManager.instance.BgmPlay(clip);
     }
 
     IEnumerator CheckList()

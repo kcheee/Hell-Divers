@@ -13,10 +13,10 @@ public class EJBossHP : MonoBehaviourPun,I_Entity
     float currentHP;
     float maxHP = 300;
 
-    //HP½½¶óÀÌ´õ
+    //HPï¿½ï¿½ï¿½ï¿½ï¿½Ì´ï¿½
     public Slider bossHPBar;
 
-    //boss »ç¸Á ½Ã ³ª¿À´Â È¿°ú
+    //boss ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ È¿ï¿½ï¿½
     public GameObject bodyExploPrefab;
 
     private void Awake()
@@ -39,7 +39,7 @@ public class EJBossHP : MonoBehaviourPun,I_Entity
             HP = 0;
         }
 
-        //???? HP´Â °è¼Ó ¿©±â¼­ Ã¼Å©ÇØÁÖ´Â°Ô ¸Â³ª..?
+        //???? HPï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½â¼­ Ã¼Å©ï¿½ï¿½ï¿½Ö´Â°ï¿½ ï¿½Â³ï¿½..?
         bossHPBar.value = HP;
     }
 
@@ -65,27 +65,29 @@ public class EJBossHP : MonoBehaviourPun,I_Entity
     }
 
 
-    //collider¸¦ ºÎ¸ð ¿ÀºêÁ§Æ®·Î ¿Ã·È´õ´Ï ÇØ°áµÇ¾úÀ½
+    //colliderï¿½ï¿½ ï¿½Î¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½Ã·È´ï¿½ï¿½ï¿½ ï¿½Ø°ï¿½Ç¾ï¿½ï¿½ï¿½
     [PunRPC]
     public void damaged(Vector3 pos, int damage = 0)
     {
-        Debug.Log("damageÇÔ¼ö ½ÇÇà");
+        Debug.Log("damageï¿½Ô¼ï¿½ ï¿½ï¿½ï¿½ï¿½");
         if (HP > 0)
         {
             HP -= damage;
-            Debug.Log("º¸½ºÀÇ ÇöÀç Ã¼·ÂÀº"+ currentHP);
+            Debug.Log("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Ã¼ï¿½ï¿½ï¿½ï¿½"+ currentHP);
         }
         else
         {
-            print("BOSS HP°¡ 0ÀÌÇÏ·Î ¶³¾îÁ³´Ù");
+            print("BOSS HPï¿½ï¿½ 0ï¿½ï¿½ï¿½Ï·ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½");
+
             photonView.RPC("InstantiateDeathFXbyRPC", RpcTarget.All, 1);         
+
         }  
     }
 
     [PunRPC]
     public void InstantiateDeathFXbyRPC(int a)
     {
-        print("DeathFXbyRPC ÇÔ¼ö°¡ ½ÇÇàµÇ¾ú½À´Ï´Ù");
+        print("DeathFXbyRPC ï¿½Ô¼ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ç¾ï¿½ï¿½ï¿½ï¿½Ï´ï¿½");
         StartCoroutine(InstantiateDeathFX());
     }
 
@@ -93,8 +95,23 @@ public class EJBossHP : MonoBehaviourPun,I_Entity
     IEnumerator InstantiateDeathFX()
     {
         if (!deathexploDone)
-        {            
-            print("DeathFX°¡ ½ÇÇàµÇ¾ú½À´Ï´Ù");
+
+                    
+
+        {
+
+            //Gamemanager.instance
+
+            // Å¸ï¿½ï¿½ UI
+            StartCoroutine(Gamemanager.instance.MissionUIOnOff());
+            // Å¸ï¿½ï¿½ ï¿½Ì¼ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½.
+            Gamemanager.instance.Bossmission.sprite = Resources.Load<Sprite>("CheckBox");
+
+            // endingsceneï¿½ï¿½ ï¿½Ìµï¿½
+            StartCoroutine(Gamemanager.instance.ending());
+
+
+            print("DeathFXï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ç¾ï¿½ï¿½ï¿½ï¿½Ï´ï¿½");
 
             //GameObject bodyexloImpact = PhotonNetwork.Instantiate("EJBossDeath", transform.position + Vector3.up, Quaternion.identity);
 

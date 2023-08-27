@@ -9,6 +9,16 @@ public class MissionComplete : MonoBehaviour
     public RectTransform[] logo;
     public RectTransform mission_T;
 
+    private void Start()
+    {
+        StartCoroutine(delay());
+    }
+    
+    IEnumerator delay()
+    {
+        yield return new WaitForSeconds(5f);
+    }
+
     void missionCompleteText()
     {
         endUI.SetActive(true);
