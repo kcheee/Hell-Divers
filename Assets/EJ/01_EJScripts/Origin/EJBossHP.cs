@@ -81,7 +81,7 @@ public class EJBossHP : MonoBehaviourPun,I_Entity
 
             photonView.RPC("InstantiateDeathFXbyRPC", RpcTarget.All, 1);
             
-          
+            
         }  
     }
 
@@ -97,8 +97,16 @@ public class EJBossHP : MonoBehaviourPun,I_Entity
     {
         if (!deathexploDone)
         {
-            
 
+            //Gamemanager.instance
+
+            // 타워 UI
+            StartCoroutine(Gamemanager.instance.MissionUIOnOff());
+            // 타워 미션 스프라이프 수정.
+            Gamemanager.instance.Bossmission.sprite = Resources.Load<Sprite>("CheckBox");
+
+            // endingscene로 이동
+            StartCoroutine(Gamemanager.instance.ending());
 
             print("DeathFX가 실행되었습니다");
             //GameObject bodyexloImpact = PhotonNetwork.Instantiate("EJBossDeath", transform.position + Vector3.up, Quaternion.identity);
