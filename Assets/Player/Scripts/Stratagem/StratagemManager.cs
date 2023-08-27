@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 using UnityEngine.UI;
+using Photon.Pun;
+using UnityEngine.SceneManagement;
+
 public class StratagemManager : MonoBehaviour
 {
     //스트라타잼 4개를 보유하고있다!
@@ -21,10 +24,17 @@ public class StratagemManager : MonoBehaviour
     public System.Action<int,int,bool> active_Action;
 
 
-
+    public PhotonView photonView;
     private void Start()
     {
-
+        if (SceneManager.GetActiveScene().name == "Lobby")
+        {
+            return;
+        }
+        photonView = GetComponent<PhotonView>();
+        if (!photonView.IsMine) {
+            return;
+        }
         int index = 0;
         //active_Stratagems = current_Stratagems.ToList();
         current_Stratagems.ForEach((s) =>
