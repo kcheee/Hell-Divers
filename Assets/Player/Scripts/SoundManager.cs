@@ -4,20 +4,37 @@ using UnityEngine;
 
 public class SoundManager : MonoBehaviour
 {
-    public static SoundManager instance;
-    public AudioSource BGMSrc;
-    public AudioSource SFXSrc;
-
+    #region ΩÃ±€≈Ê
+    public static SoundManager instance;   
     private void Awake()
     {
         instance = this;
 
         DontDestroyOnLoad(gameObject);
     }
+    #endregion
+
+    [System.Serializable]
+    public struct BGMCLIP
+    {
+        public AudioClip Title;
+        public AudioClip Lobby;
+        public AudioClip Main;
+        public AudioClip Ending;
+    }
+
+    [SerializeField] public BGMCLIP BGMClip;
+
+    public AudioSource BGMSrc;
+    public AudioSource SFXSrc;
+
+
     // Start is called before the first frame update
     void Start()
     {
-            
+        // title bgm Ω√¿€.
+        BGMSrc.clip = BGMClip.Title;
+        BGMSrc.Play();
     }
 
     // Update is called once per frame
@@ -35,6 +52,5 @@ public class SoundManager : MonoBehaviour
     {
         BGMSrc.clip = clip;
         BGMSrc.Play();
-
     }
 }

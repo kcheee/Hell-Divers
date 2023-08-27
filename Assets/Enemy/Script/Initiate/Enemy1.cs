@@ -47,6 +47,7 @@ public class Enemy1 : Enemy_Fun
         //target = GameObject.FindWithTag("Player");
         photonView.RPC(nameof(PlayAnimB), RpcTarget.All, "Walk", true);
         E_state = EnemyState.patrol;
+        
     }
 
     private void FixedUpdate()
@@ -283,6 +284,15 @@ public class Enemy1 : Enemy_Fun
         }
     }
 
+    protected override void Die()
+    {
+        transform.GetComponent<Enemy1>().enabled = false;
+        GetComponent<BoxCollider>().enabled = false;
+
+        base.Die();
+        Debug.Log("log");
+        StartCoroutine(GetComponent<Die>().delay());
+    }
 
     #endregion
 

@@ -8,13 +8,13 @@ using UnityEngine.SceneManagement;
 public class PlayerManager : MonoBehaviourPunCallbacks
 {
     public static PlayerManager instace;
-    //4¸íÀÇ Æ÷Åæºä¸¦ °¡Áö°í ÀÖ°í public List<Photonview>
-    //¸®½ºÆ®¿¡¼­ ÀÚ½ÅÀÇ Æ÷Åæºä¸¦ °¡Á®¿Í¼­ 
-    //RPC ÇÔ¼ö¸¦ ½ÇÇàÇÑ´Ù.
+    //4ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ä¸¦ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö°ï¿½ public List<Photonview>
+    //ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ï¿½ï¿½ ï¿½Ú½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ä¸¦ ï¿½ï¿½ï¿½ï¿½ï¿½Í¼ï¿½ 
+    //RPC ï¿½Ô¼ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ñ´ï¿½.
 
-    //¾Æ´Ï¸é ±×³É Player List¸¦ °¡Á®¿Íµµ µÇ°Ú´Ù.
-    //PlayerÀÇ »óÅÂ¸¦ ºñ±³ÇØ¼­? 
-    //Á×Àº ÇÃ·¹ÀÌ¾î¸¦ ¼ÒÈ¯ÇÑ´Ù.
+    //ï¿½Æ´Ï¸ï¿½ ï¿½×³ï¿½ Player Listï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Íµï¿½ ï¿½Ç°Ú´ï¿½.
+    //Playerï¿½ï¿½ ï¿½ï¿½ï¿½Â¸ï¿½ ï¿½ï¿½ï¿½Ø¼ï¿½? 
+    //ï¿½ï¿½ï¿½ï¿½ ï¿½Ã·ï¿½ï¿½Ì¾î¸¦ ï¿½ï¿½È¯ï¿½Ñ´ï¿½.
 
     public List<PlayerTest1> PlayerList = new List<PlayerTest1>();
     public List<PlayerTest1> DeathList = new List<PlayerTest1>();
@@ -36,9 +36,9 @@ public class PlayerManager : MonoBehaviourPunCallbacks
 
         }
     }
-    //RPC ÇÔ¼ö ½ÇÇà?
+    //RPC ï¿½Ô¼ï¿½ ï¿½ï¿½ï¿½ï¿½?
 
-    // mainscene¿¡¼­ spawn
+    // mainsceneï¿½ï¿½ï¿½ï¿½ spawn
     Vector3 playerSpawn = new Vector3(225, 0, 245);
 
     IEnumerator spawn()
@@ -48,7 +48,9 @@ public class PlayerManager : MonoBehaviourPunCallbacks
         Debug.Log(PLAYER_LIST.Count);
         if (PLAYER_LIST.Count == 0)
         {
-            StartSpawn(playerSpawn+new Vector3(Random.Range(-5,5),0,Random.Range(-5, 5)));
+
+            StartSpawn(playerSpawn);
+
         }
         else
         {
@@ -71,17 +73,17 @@ public class PlayerManager : MonoBehaviourPunCallbacks
             //SoundManager.instance.BgmPlay(clip);
 
             instace = this;
-        //RPC È£Ãâ ºóµµ
+        //RPC È£ï¿½ï¿½ ï¿½ï¿½
         PhotonNetwork.SendRate = 30;
-        //OnPhotonSeriallizeView È£Ãâ ºóµµ
+        //OnPhotonSeriallizeView È£ï¿½ï¿½ ï¿½ï¿½
         PhotonNetwork.SerializationRate = 30;
 
-        //³Ê È¥ÀÚ´Ï?
+        //ï¿½ï¿½ È¥ï¿½Ú´ï¿½?
         StartCoroutine(spawn());
 
         //if (PhotonNetwork.CurrentRoom.PlayerCount <= 1)
         //{
-        //    Debug.Log("È¥½ºÆù ¤Ð¤Ð");
+        //    Debug.Log("È¥ï¿½ï¿½ï¿½ï¿½ ï¿½Ð¤ï¿½");
         //    StartSpawn(Vector3.zero);
         //}
         //else
@@ -103,7 +105,7 @@ public class PlayerManager : MonoBehaviourPunCallbacks
         //Debug.Log(PLAYER_LIST[0].transform.position);
     }
 
-    //Àß¸ø¼³°èÇßÀ½! ÀÌ°Ç RPC¿´´Ù.
+    //ï¿½ß¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½! ï¿½Ì°ï¿½ RPCï¿½ï¿½ï¿½ï¿½.
     public GameObject StartSpawn(Vector3 pos)
     {
         int rand = Random.Range(-10, 10);
@@ -113,10 +115,11 @@ public class PlayerManager : MonoBehaviourPunCallbacks
         Debug.Log(SceneManager.GetActiveScene().name);
         if (SceneManager.GetActiveScene().name != "Lobby")
         {
+
             GameObject PlatformObj = PhotonNetwork.Instantiate("Platform-Main", pos + Vector3.up * 30, Quaternion.Euler(-90f, 0, 0));
             //GameObject player = PhotonNetwork.Instantiate("AlphaPlayer 1", pos , Quaternion.identity);
             //player.SetActive(false);
-
+            addspawnPos += 5;
             Platform platform = PlatformObj.GetComponent<Platform>();
             GameObject player = null;
             platform.action = () =>
@@ -142,7 +145,7 @@ public class PlayerManager : MonoBehaviourPunCallbacks
     }
 
     public GameObject UI_Obj;
-    //µé¾î¿Ã¶§ UI¿¡ ÀÚ½ÅÀÇ ÀÌ¸§À» ³ÖÀÚ.
+    //ï¿½ï¿½ï¿½Ã¶ï¿½ UIï¿½ï¿½ ï¿½Ú½ï¿½ï¿½ï¿½ ï¿½Ì¸ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½.
     public PlayerInfoObj JoinUI(string name) {
         Transform tr = PlayerUI.instance.PlayerInfo;
         GameObject obj =  Instantiate(UI_Obj, tr);

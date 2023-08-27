@@ -62,6 +62,16 @@ public class Hound : Enemy_Fun
         }
     }
 
+    protected override void Die()
+    {
+        transform.GetComponent<Hound>().enabled = false;
+        //GetComponent<BoxCollider>().enabled = false;
+
+        base.Die();
+        Debug.Log("log");
+        StartCoroutine(GetComponent<Die>().delay());
+    }
+
 
     #region 상태 함수 애니메이션 여기다가.
     protected override void F_chase()

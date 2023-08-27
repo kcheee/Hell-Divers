@@ -34,33 +34,28 @@ public class LobbyCamera : MonoBehaviour
             }
         else
         {
-            if (Input.GetKeyDown(KeyCode.N))
-            {
-                Debug.Log(transform.eulerAngles);
-                transform.Rotate(new Vector3(0,5,0));
 
-            }
             //transform.LookAt(PLAYER.transform);
 
             // lerp를 쓰면 clmap가 안먹네
             transform.DOLookAt(PLAYER.transform.position, 2);
 
-            // 현재 카메라의 회전값을 Euler 각도로 변환
-            Vector3 currentRotation = transform.eulerAngles;
+            //// 현재 카메라의 회전값을 Euler 각도로 변환
+            //Vector3 currentRotation = transform.eulerAngles;
 
-            // X 축 회전 값을 클램핑
-            currentRotation.x = Mathf.Clamp(currentRotation.x, minXAngle, maxXAngle);
+            //// X 축 회전 값을 클램핑
+            //currentRotation.x = Mathf.Clamp(currentRotation.x, minXAngle, maxXAngle);
 
-            // Y 축 회전 값을 클램핑
-            currentRotation.y = Mathf.Clamp(currentRotation.y, minYAngle, maxYAngle);
+            //// Y 축 회전 값을 클램핑
+            //currentRotation.y = Mathf.Clamp(currentRotation.y, minYAngle, maxYAngle);
 
-            // z축 회전 값 clamp
-            currentRotation.z = Mathf.Clamp(currentRotation.z, minZAngle, maxZAngle);
+            //// z축 회전 값 clamp
+            //currentRotation.z = Mathf.Clamp(currentRotation.z, minZAngle, maxZAngle);
 
-            // 클램핑된 회전값을 적용
-            //transform.LookAt(PLAYER.transform.position);
+            //// 클램핑된 회전값을 적용
+            ////transform.LookAt(PLAYER.transform.position);
 
-            transform.eulerAngles = new Vector3(currentRotation.x, currentRotation.y, currentRotation.z);
+            //transform.eulerAngles = new Vector3(currentRotation.x, currentRotation.y, currentRotation.z);
 
         }
     }

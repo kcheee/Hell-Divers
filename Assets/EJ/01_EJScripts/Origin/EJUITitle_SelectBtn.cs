@@ -28,13 +28,16 @@ public class EJUITitle_SelectBtn : Button
                 if (n == 1)
                 {
                 //게임신으로 이동
-                SceneManager.LoadScene("ConnectionScene");
-            }
+                //SceneManager.LoadScene("ConnectionScene");
+                StartCoroutine(FadeOUt());
+                }
             else
                 {
                 //뭔가 다른 씬으로 이동
-                SceneManager.LoadScene("ConnectionScene");
-            }                  
+                //SceneManager.LoadScene("ConnectionScene");
+                StartCoroutine(FadeOUt());
+
+                }
         }
     }
 

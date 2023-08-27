@@ -129,28 +129,28 @@ public class Enemy_Fun : EnemyInfo, IPunObservable,I_Entity
         }
     }
 
-    public void E_Hit(Vector3 pos)
-    {
-        anim.SetTrigger("Hit");
-        GameObject gm = Instantiate(BloodEft, pos, Quaternion.identity);
-        Destroy(gm, 2);
+    //public void E_Hit(Vector3 pos)
+    //{
+    //    anim.SetTrigger("Hit");
+    //    GameObject gm = Instantiate(BloodEft, pos, Quaternion.identity);
+    //    Destroy(gm, 2);
 
-        ENEMY.hp -= 10;
+    //    ENEMY.hp -= 10;
 
-        if (ENEMY.hp <= 0)
-        {
-            //die
-            Debug.Log("die");
+    //    if (ENEMY.hp <= 0)
+    //    {
+    //        //die
+    //        Debug.Log("die");
+            
+    //        GameObject diegm = Instantiate(DieEft, pos, Quaternion.identity);
 
-            GameObject diegm = Instantiate(DieEft, pos, Quaternion.identity);
+    //        anim.Play("Die");
+    //        //Destroy(gameObject);
 
-            anim.Play("Die");
-            Destroy(gameObject);
-
-        }
-        // 부모로 설정.
-        gm.transform.parent = transform;
-    }
+    //    }
+    //    // 부모로 설정.
+    //    gm.transform.parent = transform;
+    //}
 
     // navmeshagent 설정
     #region
@@ -254,14 +254,19 @@ public class Enemy_Fun : EnemyInfo, IPunObservable,I_Entity
         if (ENEMY.hp <= 0)
         {
             //die
-            Debug.Log("die");
+            Debug.Log(ENEMY.hp);
             GameObject diegm = Instantiate(DieEft, pos, Quaternion.identity);
             //GameObject diegm = Instantiate(DieEft, pos, Quaternion.identity);
-
-            anim.Play("Die");
-            Destroy(gameObject);
+            Die();
+            //anim.Play("Die");
+            //Destroy(gameObject);
 
         }
+    }
+
+    protected virtual void Die()
+    {
+        agent.enabled = false;
     }
 
     public void die(Action action)
