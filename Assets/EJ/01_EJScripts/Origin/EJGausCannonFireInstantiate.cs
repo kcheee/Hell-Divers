@@ -89,6 +89,7 @@ public class EJGausCannonFireInstantiate : MonoBehaviourPun
             EJBossSFX.instance.PlaygausCannonSFX();
 
             //gausCannon불빛이 나간다. 
+            //GameObject gausCannonPrefab = PhotonNetwork.Instantiate("flarebullet_squadLeader_EJ", cannonPos.transform.position, Quaternion.identity);
             GameObject gausCannonPrefab = Instantiate(gausCannonPrefabFactory);
             gausCannonPrefab.transform.position = cannonPos.transform.position;
             gausCannonPrefab.transform.up = cannonPos.transform.forward;

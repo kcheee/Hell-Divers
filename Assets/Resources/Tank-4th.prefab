@@ -12080,7 +12080,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bossHPBar: {fileID: 8589871036999026871}
-  bodyExploPrefab: {fileID: 126312, guid: 68cc219c659ae6446865625c90d6f232, type: 3}
+  bodyExploPrefab: {fileID: 172206, guid: a842bb16ba97ed141a04ba1319a70537, type: 3}
 --- !u!54 &682633426659527348
 Rigidbody:
   m_ObjectHideFlags: 0

@@ -24,7 +24,7 @@ public class FlameAttack : MonoBehaviour
     IEnumerator delay()
     {
         yield return null;
-        FBS.FlameStart();
+        //FBS.FlameStart();
 
     }
 
@@ -61,7 +61,7 @@ public class FlameAttack : MonoBehaviour
             transform.DOLocalRotate(targetRotation, 1f).OnComplete(() =>
             {
 
-                FBS.FlameStop();
+                //FBS.FlameStop();
                 transform.localRotation = originpos;
 
                 // 자기자신 false
