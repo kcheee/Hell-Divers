@@ -289,7 +289,7 @@ public class PlayerTest1 : MonoBehaviourPun,IPunObservable
             if (Input.GetKey(KeyCode.LeftControl))
             {
 
-                PlayerUI.instance.StratagemImage.gameObject.SetActive(true);
+                
                 //PlayerUI.instance.anim.SetTrigger("Active");
                 //입력 코드를 입력할때
                 code_input.input(() => {

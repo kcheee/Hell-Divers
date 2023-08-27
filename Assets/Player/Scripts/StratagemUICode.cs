@@ -5,7 +5,9 @@ using UnityEngine.UI;
 
 public class StratagemUICode : MonoBehaviour
 {
+
     public List<Image> Code_images;
+    public Image GetImage;
     public static Sprite Up_texture;
     public static Sprite Right_texture;
     public static Sprite Left_texture;
@@ -45,7 +47,9 @@ public class StratagemUICode : MonoBehaviour
 
     public void ResetColor()
     {
+        Debug.LogError("초기화 메서드 실행");
         foreach (Image img in Code_images) {
+            Debug.LogError("초기화 메서드 실행2");
             img.color = Color.white;
         }
 

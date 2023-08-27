@@ -20,9 +20,6 @@ public class Stratagems : MonoBehaviourPun
     public Sprite Stratagem_Image;
     public string id;
 
-    //자신의 UI를 가지고(생성할때)
-    public StratagemUICode myCodeUI;
-
     bool isUse;
     Animator anim;
     //호출 코드 리스트
