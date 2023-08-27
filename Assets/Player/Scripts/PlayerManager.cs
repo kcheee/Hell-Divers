@@ -66,7 +66,7 @@ public class PlayerManager : MonoBehaviourPunCallbacks
 
 
         if (SceneManager.GetActiveScene().name != "Lobby") {
-            PhotonNetwork.Instantiate("PlayerInfoObj",Vector3.zero,Quaternion.identity);
+            //PhotonNetwork.Instantiate("PlayerInfoObj",Vector3.zero,Quaternion.identity);
             //PlayerInfoUI = JoinUI(PhotonNetwork.LocalPlayer.NickName);
             //JoinUI();
         }

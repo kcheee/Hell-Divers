@@ -4,6 +4,7 @@ using UnityEngine;
 using System.Linq;
 using UnityEngine.UI;
 using Photon.Pun;
+using UnityEngine.SceneManagement;
 
 public class StratagemManager : MonoBehaviour
 {
@@ -26,6 +27,10 @@ public class StratagemManager : MonoBehaviour
     public PhotonView photonView;
     private void Start()
     {
+        if (SceneManager.GetActiveScene().name == "Lobby")
+        {
+            return;
+        }
         photonView = GetComponent<PhotonView>();
         if (!photonView.IsMine) {
             return;
