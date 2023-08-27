@@ -18,17 +18,17 @@ public class SpawnManager : MonoBehaviourPun
     public GameObject[] spawnMob;
     public int spawnmaxcount = 10;  // 스폰 맥스 카운트
     public float spawnInterval = 1.0f;  // 소환 간격
-
+    public bool SpawnFlag = false;
     private int currentSpawnCount = 0;  // 현재 스폰된 횟수
 
-    private void Start()
+    private void OnEnable()
     {
         StartCoroutine(SpawnRoutine());
     }
 
     private IEnumerator SpawnRoutine()
     {
-        while (true)
+        while (SpawnFlag)
         {
             int randomPosIndex = Random.Range(0, spawnPos.Length);  // 랜덤한 스폰 위치 인덱스
             int randomMobIndex = Random.Range(0, 4);  // 랜덤한 몹 인덱스

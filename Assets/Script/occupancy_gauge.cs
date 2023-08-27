@@ -106,6 +106,7 @@ public class occupancy_gauge : MonoBehaviour
             anim.SetTrigger("Start");
             //audioSource.clip = audioclip[0];
             spawnManager.enabled = true;
+            spawnManager.SpawnFlag = true;
             audioSource.PlayOneShot(audioclip[0]);
         }
 
@@ -146,6 +147,7 @@ public class occupancy_gauge : MonoBehaviour
     {
         // 플래그
         // 스폰
+        spawnManager.SpawnFlag = false;           
         spawnManager.enabled = false;
 
         flag = true;

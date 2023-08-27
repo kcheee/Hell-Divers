@@ -8924,7 +8924,7 @@ MonoBehaviour:
   - {fileID: 1225825171}
   spawnMob: []
   spawnmaxcount: 10
-  spawnInterval: 3
+  spawnInterval: 7
 --- !u!1001 &1886960070
 PrefabInstance:
   m_ObjectHideFlags: 0
