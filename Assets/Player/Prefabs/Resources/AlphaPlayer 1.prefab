@@ -737,7 +737,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &4109199140032985405
 Transform:
   m_ObjectHideFlags: 0
@@ -1713,6 +1713,7 @@ MonoBehaviour:
   current_stratagem: {fileID: 0}
   throwObject: {fileID: 0}
   PlayerInfoUI: {fileID: 0}
+  PlayerNameUI: {fileID: 5005979920656242527}
   code_input: {fileID: 0}
   stratagemManager: {fileID: 0}
   playerHp: {fileID: 0}
@@ -1770,6 +1771,7 @@ MonoBehaviour:
   PlayerInfoUI: {fileID: 0}
   UIObject: {fileID: 207134377497736520, guid: 33cbd2cdaf6d8e94fbe146a32defcbc0, type: 3}
   UIObject2: {fileID: 8897452094159945774, guid: 505460beccce54f418c6bcc0cc9b8fc1, type: 3}
+  photonView: {fileID: 0}
 --- !u!114 &2364859072220297821
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2060,7 +2062,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &97808914373067160
 Transform:
   m_ObjectHideFlags: 0

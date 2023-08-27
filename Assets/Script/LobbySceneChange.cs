@@ -34,6 +34,9 @@ public class LobbySceneChange : MonoBehaviourPun
         PhotonNetwork.AutomaticallySyncScene = true;
         StartCoroutine(Fade(true));
 
+        SoundManager.instance.BGMSrc.clip = SoundManager.instance.BGMClip.Lobby;
+        SoundManager.instance.BGMSrc.Play();
+        SoundManager.instance.BGMSrc.DOFade(1, 5);
 
     }
 

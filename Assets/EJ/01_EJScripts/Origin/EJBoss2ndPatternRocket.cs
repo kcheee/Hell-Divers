@@ -5,38 +5,78 @@ using Photon.Pun;
 
 public class EJBoss2ndPatternRocket : MonoBehaviourPun
 {
+    #region rocket 변수
     float rocketSpeed;
+    float rocketRadius = 3;
 
     Rigidbody rb;
     public GameObject rocketExploImpactFactory;
 
-
     public PhotonView tankPv;
-    // Start is called before the first frame update
+    #endregion
+
     void Start()
     {
-        rocketSpeed = Random.Range(10, 20);
+        //대충 20m정도 날아감
+        //rocketSpeed = Random.Range(10, 20);
+        rocketSpeed = Random.Range(10, 15); 
+
         rb = GetComponent<Rigidbody>();
         rb.AddForce(transform.forward * rocketSpeed, ForceMode.Impulse);
     }
 
-    // Update is called once per frame
     void Update()
     {
-        //transform.position += transform.forward * rocketSpeed * Time.deltaTime;
-
         //??? 로켓헤드 방향
         transform.forward = rb.velocity.normalized;
     }
 
-    [PunRPC]
-    void ShowRocketExploImpact(Vector3 pos, Vector3 normal, float waitTime)
+    #region 01. Trigger효과
+    //terrain과 부딪히는 것은 trigger임
+    private void OnTriggerEnter(Collider other)
     {
+        print("rocket이 Trigger로 부딪힌 것은" + other);
+
+        if (other.gameObject.tag == "Floor")
+        {
+            if (/*PhotonNetwork.IsMasterClient*/true)
+            {
+                //StartCoroutine(rocketExplodebyTrigger(/*other.transform.up*/));
+                //ShowRocketExploImpact(transform.position, 3);
+
+                // 동기화 안되면 이거
+                photonView.RPC(nameof(ShowRocketExploImpact), RpcTarget.All, transform.position, 3);
+            }
+
+            Destroy(gameObject);
+            EJBossSFX.instance.PlaybombExploSFX();
+
+            //rocket떨어진 위치와 몸체의 위치            
+            //GameObject boss = gameObject.GetComponent<BossFSM>().gameObject;
+            //print("bomb가 떨어진 지점은 "+ (other.transform.position -boss.transform.position));
+        }
+
+        if (other.gameObject.tag == "Player")
+        {
+            PlayerDamage();
+        }
+    }
+
+    #endregion
+
+    #region 02. ShowRocketExploImpact
+
+    [PunRPC]
+    public void ShowRocketExploImpact(Vector3 pos, /*Vector3 normal,*/ float waitTime)
+    {
+        print("로켓이 바닥충돌 효과가 발생했습니다");
+
         GameObject rocketExploImpact = Instantiate(rocketExploImpactFactory);
+        //GameObject rocketExploImpact = PhotonNetwork.Instantiate("Rocket", pos,Quaternion.identity);
 
         rocketExploImpact.transform.position = pos;
-        rocketExploImpact.transform.localScale = Vector3.one * 3;
-        rocketExploImpact.transform.forward = normal;
+        //rocketExploImpact.transform.localScale = Vector3.one * 3;
+        //rocketExploImpact.transform.forward = normal;
 
         StartCoroutine(wait(rocketExploImpact, waitTime));
     }
@@ -46,4 +86,24 @@ public class EJBoss2ndPatternRocket : MonoBehaviourPun
         yield return new WaitForSeconds(waitTime);
         Destroy(gameObject);
     }
+
+    #endregion
+
+    #region PlayerDamage함수
+
+    void PlayerDamage()
+    {
+        //bomb반경 안의 player damage 
+        RaycastHit[] bombHits = Physics.SphereCastAll(transform.position, rocketRadius, Vector3.up, 0f, LayerMask.GetMask("Player"));
+
+        print("Rocket에 맞은 것은 " + bombHits[0].transform.gameObject.name);
+
+        foreach (RaycastHit hitObj in bombHits)
+        {
+            hitObj.transform.GetComponent<PhotonView>().RPC("damaged", RpcTarget.All, hitObj.point, 3);
+        }
+
+    }
+    #endregion
+
 }

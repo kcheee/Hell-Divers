@@ -109,6 +109,9 @@ MonoBehaviour:
   - ShowRocketExploImpact
   - Start2ndPatternByRPC
   - sound
+  - ShowBulletImpact
+  - StartfireBoltByRPC
+  - manganizeRPC
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 0
