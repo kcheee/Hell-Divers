@@ -21,7 +21,7 @@ public class SpawnManager : MonoBehaviourPun
     public bool SpawnFlag = false;
     private int currentSpawnCount = 0;  // 현재 스폰된 횟수
 
-    private void OnEnable()
+    private void Start()
     {
         StartCoroutine(SpawnRoutine());
     }
