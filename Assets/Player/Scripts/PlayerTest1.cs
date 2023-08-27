@@ -128,6 +128,13 @@ public class PlayerTest1 : MonoBehaviourPun,IPunObservable
             }
         
         };
+        playerHp.OnDamaged = () =>
+        {
+            //if(PhotonNetwork.IsMasterClient)
+            //photonView.RPC(nameof(PlayAnim), RpcTarget.All,"Hit");
+            anim.SetTrigger("Hit");
+            Debug.LogError("온 데미지드");
+        };
 
 
         if (photonView.IsMine) {
@@ -241,9 +248,7 @@ public class PlayerTest1 : MonoBehaviourPun,IPunObservable
             dir = Vector3.right * h + Vector3.forward * v;
             dir.Normalize();
             speed = 4;
-            if (Input.GetMouseButton(0) && !currentGun.IsReloading) {
 
-            }
 
             if (Input.GetMouseButton(0) && !currentGun.IsReloading)
             {
@@ -255,16 +260,20 @@ public class PlayerTest1 : MonoBehaviourPun,IPunObservable
                 }
                 else
                 {
-
+                    
                     int rand = Random.Range(-1, 2);
+                    photonView.RPC(nameof(PlayAnim), RpcTarget.All, "RifleAiming", true);
+                    
                     photonView.RPC(nameof(Fire), RpcTarget.All, rand);
+                    Islook = true;
                 }
             }
             if (Input.GetMouseButtonUp(0))
             {
-                
+                Islook = false;
+                photonView.RPC(nameof(PlayAnim), RpcTarget.All, "RifleAiming", false);
                 //CancelInvoke("ResetSpread");
-                if(currCoroutine != null)
+                if (currCoroutine != null)
                 {
                     StopCoroutine(currCoroutine);
                 }
@@ -369,33 +378,32 @@ public class PlayerTest1 : MonoBehaviourPun,IPunObservable
                 }
 
 
-
                 // 이동 방향과 Body 의 오른쪽 벡터의 사이각을 구하자
                 float angle = Vector3.Angle(dir, trBody.right);
 
                 //만약에 각도가 90보다 작으면 오른쪽을 회전
                 //원작에 회전이 생각보다 빠르게 된다.
-                if (!(Vector3.Magnitude(trBody.forward - dir) < 0.1))
+                if (!(Vector3.Magnitude(trBody.forward - dir) < 0.1) && !Islook)
                 {
                     if (angle < 90)
                     {
-                        trBody.Rotate(new Vector3(0, 5, 0));
+                        trBody.Rotate(new Vector3(0, 1, 0));
                         //Debug.Log(angle);
                     }
                     //그렇지않으면 왼쪽으로 회전
                     else
                     {
                         //Debug.Log(angle);
-                        trBody.Rotate(new Vector3(0, -5, 0));
+                        trBody.Rotate(new Vector3(0, -1, 0));
                     }
                 }
                 //trBody.forward = Vector3.Lerp(trBody.forward, dir,Time.deltaTime * 20);
 
             }
 
-
-
             Aiming();
+            if (Islook)
+                speed = 1;
             //Debug.LogError(speed);
             //transform.position += dir * speed * Time.deltaTime;
             ch.Move(dir * speed * Time.deltaTime);
@@ -407,7 +415,7 @@ public class PlayerTest1 : MonoBehaviourPun,IPunObservable
             trBody.rotation = Quaternion.Lerp(trBody.rotation,  targetRotation, Time.smoothDeltaTime * 20);
         }
 
-
+        //Vector2 myDir = new Vector2(trBody.forward.x, trBody.forward.z);
         anim.SetFloat("Horizontal", h);
         anim.SetFloat("Vertical", v);
         anim.SetFloat("speed",dir.magnitude);
@@ -420,6 +428,8 @@ public class PlayerTest1 : MonoBehaviourPun,IPunObservable
     Coroutine cor;
     [PunRPC]
     public void Fire(int rand) {
+        //photonView.RPC(nameof(PlayAnim), RpcTarget.All, "RifleAiming", true);
+        Look();
         photonView.RPC("Res_Spr",RpcTarget.All);
         //Debug.LogError(rand);
         currentGun.Fire(rand);
@@ -446,6 +456,9 @@ public class PlayerTest1 : MonoBehaviourPun,IPunObservable
 
     public void Aiming() {
         
+        if (Islook)
+            return;
+        Debug.Log("Ssss");
         //RPC 함수 최소화
         if (Input.GetButtonUp("Fire2"))
         {
@@ -481,11 +494,12 @@ public class PlayerTest1 : MonoBehaviourPun,IPunObservable
                 Vector3 target = hitInfo.point - transform.position;
                 target.y = 0;
                 //일단 이렇게 하고 수정합시당.
+                //trBody.rotation = Quaternion.Lerp(trBody.rotation,Quaternion.LookRotation(target,Vector3.up),Time.deltaTime * 5);
                 trBody.forward = target;
                 //trBody.forward = Vector3.Lerp(trBody.forward,target,Time.deltaTime * 5);
             }
 
-            Vector2 myDir = new Vector2(trBody.forward.x, trBody.forward.z);
+
 
 
             //RPC 없어도 가능. 성능 저하 발생!!
@@ -499,7 +513,28 @@ public class PlayerTest1 : MonoBehaviourPun,IPunObservable
 
     }
 
+    public bool Islook;
+    public void Look() {
 
+        speed = 1;
+        Vector3 msPos = Input.mousePosition;
+
+        //스크린 위치로 바꾸고 거기에 해당하는 레이를 만든다.
+        Ray ray = Camera.main.ScreenPointToRay(msPos);
+        RaycastHit hitInfo;
+        //레이를 쏜다.
+        if (Physics.Raycast(ray, out hitInfo))
+        {
+
+            //맞은곳 - 자신의 위치를 target으로 한다. y값은 사용하지 않으니 0으로 한다.
+            Vector3 target = hitInfo.point - transform.position;
+            target.y = 0;
+            //일단 이렇게 하고 수정합시당.
+            trBody.rotation = Quaternion.Lerp(trBody.rotation, Quaternion.LookRotation(target, Vector3.up), Time.deltaTime * 5);
+            //trBody.forward = target;
+            //trBody.forward = Vector3.Lerp(trBody.forward,target,Time.deltaTime * 5);
+        }
+    }
 
     //RPC는 인보크를 사용할수없으니ㄷ까(인보크가 안되어서 코루틴으로 작성 왜 안되지?)
     public IEnumerator ResetSpread() {

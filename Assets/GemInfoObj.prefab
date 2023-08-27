@@ -57,6 +57,7 @@ MonoBehaviour:
   - {fileID: 4692236343411998062}
   - {fileID: 2747557649965176867}
   - {fileID: 4365835304527848922}
+  GetImage: {fileID: 5724639434164351750}
 --- !u!1 &1778020928254860342
 GameObject:
   m_ObjectHideFlags: 0

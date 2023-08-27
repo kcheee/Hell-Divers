@@ -16,15 +16,30 @@ public class StratagemManager : MonoBehaviour
 
     public PlayerInfoObj PlayerInfoUI;
     public GameObject UIObject;
+    public GameObject UIObject2;
 
     public System.Action<int,int,bool> active_Action;
 
+
+
     private void Start()
     {
+
+        int index = 0;
         //active_Stratagems = current_Stratagems.ToList();
         current_Stratagems.ForEach((s) =>
         {
-            GameObject go = Instantiate(UIObject, PlayerInfoUI.Stratagem_Panel);
+            GameObject go = null;
+            //지금은 급하니 땜빵을 하자
+            switch (index) {
+                case 0:
+                    go = Instantiate(UIObject, PlayerInfoUI.Stratagem_Panel);
+                    break;
+                case 1:
+                    go = Instantiate(UIObject2, PlayerInfoUI.Stratagem_Panel);
+                    break;
+            }
+            
             StratagemUICode CodeUI = go.GetComponent<StratagemUICode>();
             //자기 자신의 코드를 생성하고 셋팅.(예정)
             CodeUI.GetImage.sprite = s.Stratagem_Image;
@@ -41,6 +56,7 @@ public class StratagemManager : MonoBehaviour
 
 
             active_Stratagems.Add(s);
+            index++;
         });
           
         
@@ -75,7 +91,7 @@ public class StratagemManager : MonoBehaviour
                 //인덱스가 같고 코드의 길이가 들어온 인덱스와 같으면
                 //스킬을 사용한다.
                 Debug.Log(Stratagem.CallCode.Count - 1 + " " + index + 1);
-                Stratagem.myStratagemUI.Code_images[index].color = Color.black;
+                Stratagem.myStratagemUI.Code_images[index].color = Color.yellow;
                 if (Stratagem.CallCode.Count - 1 == index) {
                     Debug.Log("스킬사용!!");
                     //인덱스를 초기화 하고싶다.

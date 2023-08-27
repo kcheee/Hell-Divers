@@ -16,10 +16,12 @@ public class Platform : MonoBehaviour
     public GameObject Item;
     public System.Action action;
 
+    public AudioClip myClip;
+
     IEnumerator move()
     {
-
-        audiosource.Play();
+        SoundManager.instance.SfxPlay(myClip);
+        //audiosource.Play();
         //yield return new WaitForSeconds(1.8f);
         yield return null;
         transform.DOMove(new Vector3(transform.position.x, 0.5f, transform.position.z), 2.3f).SetEase(Ease.InCirc).OnComplete(() => {

@@ -121,7 +121,7 @@ public class PlayerManager : MonoBehaviourPunCallbacks
             GameObject player = null;
             platform.action = () =>
             {
-                player = PhotonNetwork.Instantiate("AlphaPlayer 1", pos, Quaternion.identity); PhotonNetwork.Destroy(PlatformObj);
+                player = PhotonNetwork.Instantiate("AlphaPlayer 1", pos, Quaternion.identity); //PhotonNetwork.Destroy(PlatformObj);
             };
             return player;
         }
