@@ -5023,7 +5023,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 858b2da4bca42994096461c96c0dc9f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  floorEffectFactroy: {fileID: 156330, guid: f7c073233e5897e44a4e3cd4e755e82b, type: 3}
+  floorEffectFactory: {fileID: 4896466333204890307, guid: 7bdaf8fa2f4e73b419dda5a633ac1e34, type: 3}
 --- !u!114 &467373490402001209
 MonoBehaviour:
   m_ObjectHideFlags: 0

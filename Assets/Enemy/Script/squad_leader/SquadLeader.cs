@@ -84,6 +84,7 @@ public class SquadLeader : Enemy_Fun
     {
         StartCoroutine(Squad_Flare());
     }
+
     IEnumerator Squad_Flare()
     {
         flare_flag = false;

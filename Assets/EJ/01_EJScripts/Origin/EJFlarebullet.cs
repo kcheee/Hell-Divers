@@ -39,11 +39,11 @@ public class EJFlarebullet : MonoBehaviourPun
 
         if (other.gameObject.layer == LayerMask.NameToLayer("Floor"))
         {
-            print("Floor에 닿았다");
+            print(">>>>>Floor에 닿았다");
 
             //RPC로 안보인다.
-
-            photonView.RPC(nameof(ShowBulletImpact), RpcTarget.All);
+            ShowBulletImpact();
+            //photonView.RPC(nameof(ShowBulletImpact), RpcTarget.All);
             //photonView.RPC(nameof(test), RpcTarget.All);
         }
 
@@ -68,10 +68,10 @@ public class EJFlarebullet : MonoBehaviourPun
     [PunRPC]
    public void ShowBulletImpact()
     {
-        print("ShowBulletImpact함수 실행");
+        print(">>>>>ShowBulletImpact함수 실행");
 
         //GameObject floorEffect = Instantiate(floorEffectFactory, transform.position, Quaternion.identity);
-        GameObject floorEffect = PhotonNetwork.Instantiate("flarebullet_squadLeader_EJ", transform.position, Quaternion.identity);
+        GameObject floorEffect = PhotonNetwork.Instantiate("mDAX_Electricity_Ground_Explosion_00", transform.position, Quaternion.identity);
 
         Debug.Log("gausCannon이 바닥에 닿았을 때 생기는 효과는" + floorEffect);
 

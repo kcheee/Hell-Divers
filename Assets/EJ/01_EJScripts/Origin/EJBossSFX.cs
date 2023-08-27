@@ -10,6 +10,7 @@ public class EJBossSFX : MonoBehaviour
     public AudioClip bombExploSFX;
     public AudioClip gausCannonSFX;
     public AudioClip machineGunSFX;
+    public AudioClip deadSFX;
 
     AudioSource audiosource;
 
@@ -42,5 +43,9 @@ public class EJBossSFX : MonoBehaviour
     public void PlaymachineGunSFX()
     {
         audiosource.PlayOneShot(machineGunSFX);
+    }
+    public void DeadSFX()
+    {
+        audiosource.PlayOneShot(deadSFX);
     }
 }

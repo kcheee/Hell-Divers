@@ -17,16 +17,14 @@ public class Grenade : MonoBehaviourPun
         // 메인캠에 달려있는 오브젝트 가져옴
         //cam.transform.GetComponent<DOTweenAnimation>().DOPlay();
         p = smoke.GetComponent<ParticleSystem>();
-
     }
 
 
-    [PunRPC]
+    [PunRPC] 
     void pun_delay()
     {
         StartCoroutine(delay());
     }
-
 
 
     IEnumerator delay()
@@ -52,7 +50,6 @@ public class Grenade : MonoBehaviourPun
             }
 
         }
-
         Instantiate(bombEft,transform.position, Quaternion.identity);
 
         Destroy(gameObject,0.25f);

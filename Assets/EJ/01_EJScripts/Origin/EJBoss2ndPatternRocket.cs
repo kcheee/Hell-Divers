@@ -42,18 +42,15 @@ public class EJBoss2ndPatternRocket : MonoBehaviourPun
             if (/*PhotonNetwork.IsMasterClient*/true)
             {
                 //StartCoroutine(rocketExplodebyTrigger(/*other.transform.up*/));
-                //ShowRocketExploImpact(transform.position, 3);
+                ShowRocketExploImpact(transform.position, 3);
 
-                // 동기화 안되면 이거
+                //동기화 안되면 이거
                 photonView.RPC(nameof(ShowRocketExploImpact), RpcTarget.All, transform.position, 3);
+
             }
 
             Destroy(gameObject);
             EJBossSFX.instance.PlaybombExploSFX();
-
-            //rocket떨어진 위치와 몸체의 위치            
-            //GameObject boss = gameObject.GetComponent<BossFSM>().gameObject;
-            //print("bomb가 떨어진 지점은 "+ (other.transform.position -boss.transform.position));
         }
 
         if (other.gameObject.tag == "Player")
@@ -72,13 +69,12 @@ public class EJBoss2ndPatternRocket : MonoBehaviourPun
         print("로켓이 바닥충돌 효과가 발생했습니다");
 
         GameObject rocketExploImpact = Instantiate(rocketExploImpactFactory);
-        //GameObject rocketExploImpact = PhotonNetwork.Instantiate("Rocket", pos,Quaternion.identity);
+        //GameObject rocketExploImpact = PhotonNetwork.Instantiate("bomb+DAX_Frost_Nova_t0_0 1", pos,Quaternion.identity);
 
         rocketExploImpact.transform.position = pos;
-        //rocketExploImpact.transform.localScale = Vector3.one * 3;
-        //rocketExploImpact.transform.forward = normal;
 
         StartCoroutine(wait(rocketExploImpact, waitTime));
+
     }
 
     IEnumerator wait(GameObject rocket, float waitTime)
