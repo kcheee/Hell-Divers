@@ -34,17 +34,25 @@ public class Spawn_Stratagem : Stratagems
             PlayerTest1 player = list[i];
 
             player.reset();
+            //바디를 숨기고
+            player.trBody.gameObject.SetActive(false);
+            //본체를 활성화해서
+            player.gameObject.SetActive(true);
+            //미리 옮기고
             player.gameObject.transform.position = pos;
             PlayerManager.instace.DeathList.Remove(player);
-            player.trBody.gameObject.SetActive(false);
+
 
 
             GameObject platform = Instantiate((GameObject)Resources.Load("Platform-Main"), pos + Vector3.up * 50 , Quaternion.Euler(-90,0,0));
             Platform plat = platform.GetComponent<Platform>();
             plat.action = () => {
+                //다시 활성화!
+                player.PlayerNameUI.gameObject.SetActive(true);
                 player.trBody.gameObject.SetActive(true);
-                player.gameObject.SetActive(true); 
-            
+                player.gameObject.SetActive(true);
+                PlayerManager.instace.PLAYER_LIST.Add(player);
+
             };
             //실행자 == 죽은자 자기 자신일때 PhotonNetwork.Instantiate 를 실행해서 ismine이 된채로 시작.
 /*            if (player.photonView.IsMine)
