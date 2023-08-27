@@ -29,6 +29,9 @@ public class Stratagems : MonoBehaviourPun
 
     public System.Action<Vector3,Quaternion> action;
 
+
+    public StratagemUICode myStratagemUI; 
+
     void Start()
     {
         /*rbody = GetComponent<Rigidbody>();
@@ -147,5 +150,10 @@ public class Stratagems : MonoBehaviourPun
     protected virtual void SpawnAction(Vector3 pos,Quaternion rot) {
         Debug.Log("Spawn");
     }
-    
+
+
+    public void UIChanged(int index) {
+        myStratagemUI.Code_images[index].color = Color.red;
+    }
+
 }

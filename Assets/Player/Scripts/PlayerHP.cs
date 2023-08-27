@@ -7,6 +7,7 @@ using Photon.Pun;
 public class PlayerHP : MonoBehaviourPun,I_Entity
 {
     public System.Action Ondie;
+    public System.Action OnDamaged;
     Animator anim;
     public GameObject DamageEft;
     public GameObject DieEft;
@@ -36,10 +37,13 @@ public class PlayerHP : MonoBehaviourPun,I_Entity
     {
         if(HP > 0)
         {
+            Debug.Log("데미지드0");
+            OnDamaged();
             HP -= damage;
             Instantiate(DamageEft, pos, Quaternion.identity);
 
             print("플레이어의 현재체력은" + hp);
+
             
         }
         else
@@ -70,6 +74,6 @@ public class PlayerHP : MonoBehaviourPun,I_Entity
     public void activeFalse()
     {
         gameObject.SetActive(false);
-        
     }
+
 }

@@ -848,6 +848,7 @@ MonoBehaviour:
   min_spreadRange: 1
   max_spreadRange: 30
   add_spreadRange: 200
+  IsReloading: 0
 --- !u!114 &2463147330721929833
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1718,6 +1719,7 @@ MonoBehaviour:
   currentState: 0
   layer: 0
   ch: {fileID: 0}
+  Islook: 0
 --- !u!136 &3095864612242719476
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -1765,6 +1767,9 @@ MonoBehaviour:
   - {fileID: -5539414565337158051, guid: d18edd39fa916804ab4a43670a85a17e, type: 3}
   active_Stratagems: []
   Isreturn: 0
+  PlayerInfoUI: {fileID: 0}
+  UIObject: {fileID: 207134377497736520, guid: 33cbd2cdaf6d8e94fbe146a32defcbc0, type: 3}
+  UIObject2: {fileID: 8897452094159945774, guid: 505460beccce54f418c6bcc0cc9b8fc1, type: 3}
 --- !u!114 &2364859072220297821
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2166,6 +2171,7 @@ MonoBehaviour:
   min_spreadRange: 1
   max_spreadRange: 5
   add_spreadRange: 200
+  IsReloading: 0
 --- !u!1 &8193234234623924631
 GameObject:
   m_ObjectHideFlags: 0

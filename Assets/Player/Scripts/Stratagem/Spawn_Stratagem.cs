@@ -35,7 +35,17 @@ public class Spawn_Stratagem : Stratagems
 
             player.reset();
             player.gameObject.transform.position = pos;
-            player.gameObject.SetActive(true);
+            PlayerManager.instace.DeathList.Remove(player);
+            player.trBody.gameObject.SetActive(false);
+
+
+            GameObject platform = Instantiate((GameObject)Resources.Load("Platform-Main"), pos + Vector3.up * 50 , Quaternion.Euler(-90,0,0));
+            Platform plat = platform.GetComponent<Platform>();
+            plat.action = () => {
+                player.trBody.gameObject.SetActive(true);
+                player.gameObject.SetActive(true); 
+            
+            };
             //실행자 == 죽은자 자기 자신일때 PhotonNetwork.Instantiate 를 실행해서 ismine이 된채로 시작.
 /*            if (player.photonView.IsMine)
             {
@@ -54,7 +64,7 @@ public class Spawn_Stratagem : Stratagems
             //}
             Debug.Log("Player" + player);
             //어짜피 소환되니까 Remove는 동시에
-            PlayerManager.instace.DeathList.Remove(player);
+
             //Destroy(player.gameObject);
         }
         //foreach (PlayerTest1 player in PlayerManager.instace.DeathList)

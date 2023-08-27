@@ -701,6 +701,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   particle1: {fileID: 4896466333204890307, guid: ad0480ed39aae3d4c9a276fc12fa724e, type: 3}
   particle2: {fileID: 8869350663860847647, guid: 8aff1d1bd4eaef043a069ea14404b9d6, type: 3}
+  Item: {fileID: 0}
+  myClip: {fileID: 8300000, guid: 35a5bb3ca57fbfd47aa9519020383064, type: 3}
 --- !u!1 &6658892649097345949
 GameObject:
   m_ObjectHideFlags: 0
