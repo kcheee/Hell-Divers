@@ -24,7 +24,7 @@ public class FlameAttack : MonoBehaviour
     IEnumerator delay()
     {
         yield return null;
-        //FBS.FlameStart();
+        FBS.FlameStart();
 
     }
 

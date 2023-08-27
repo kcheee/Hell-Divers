@@ -145,8 +145,12 @@ public class occupancy_gauge : MonoBehaviour
         anim.SetTrigger("Finish");
         audioSource.PlayOneShot(audioclip[1]);
         text.text = "확보 완료";
+
+        // 타워 UI
         StartCoroutine(Gamemanager.instance.MissionUIOnOff());
+        // 타워 미션 스프라이프 수정.
         TowerMission.sprite = Resources.Load<Sprite>("CheckBox");
+
         yield return new WaitForSeconds(7);
         GetComponent<occupancy_gauge>().enabled = false;
     }
