@@ -32,10 +32,17 @@ public class EJFlarebullet : MonoBehaviourPun
 
     private void OnTriggerEnter(Collider other)
     {
+        print("FlareBullet이 trigger로 닿은 것은" + other);
+
         if (other.gameObject.layer == LayerMask.NameToLayer("Floor"))
         {
             //floor에 닿았을 때 생기는 효과 왜 안생김?
+            print("Floor Layer에 닿은 것은" + other);
+
             GameObject floorEffect = Instantiate(floorEffectFactroy);
+
+            Debug.Log("gausCannon이 바닥에 닿았을 때 생기는 효과는" + floorEffect);
+
             floorEffect.transform.position = transform.position;
             floorEffect.transform.forward = other.transform.up;
             floorEffect.transform.localScale = Vector3.one * 2;
@@ -45,7 +52,8 @@ public class EJFlarebullet : MonoBehaviourPun
 
         if (other.gameObject.tag == "Player")
         {
-            other.transform.GetComponent<PhotonView>().RPC("damaged", RpcTarget.All, transform.position /*+ Vector3.up * 1.6f*/, 3);
+            //player 피격 pos 전달 필요
+            other.transform.GetComponent<PhotonView>().RPC("damaged", RpcTarget.All, transform.position + Vector3.down * 1.6f, 3);
         }
     }
 
@@ -64,7 +72,7 @@ public class EJFlarebullet : MonoBehaviourPun
         //HP테스트 필요
         if (other.gameObject.tag == "Player")
         {
-            other.transform.GetComponent<PhotonView>().RPC("damaged", RpcTarget.All, other, 3);
+            other.transform.GetComponent<PhotonView>().RPC("damaged", RpcTarget.All, other.gameObject.transform.position + Vector3.up , 3);
         }      
 
         flareBulletSpeed = 0;

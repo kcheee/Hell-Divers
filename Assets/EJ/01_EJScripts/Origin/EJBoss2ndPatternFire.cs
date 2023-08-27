@@ -114,7 +114,8 @@ public class EJBoss2ndPatternFire: MonoBehaviourPun
     {
         print("로켓이 바닥충돌 효과가 발생했습니다");
 
-        GameObject rocketExploImpact = Instantiate(rocketExploImpactFactory);
+        //GameObject rocketExploImpact = Instantiate(rocketExploImpactFactory);
+        GameObject rocketExploImpact = PhotonNetwork.Instantiate("Rocket", pos,Quaternion.identity);
 
         rocketExploImpact.transform.position = pos;
         //rocketExploImpact.transform.localScale = Vector3.one * 3;

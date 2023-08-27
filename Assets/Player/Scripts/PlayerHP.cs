@@ -47,10 +47,8 @@ public class PlayerHP : MonoBehaviourPun,I_Entity
             if (current_State != State.Die) {
                 die(Ondie);
                 current_State = State.Die;
-            }
-            
+            }          
         }
-
     }
 
     // Update is called once per frame

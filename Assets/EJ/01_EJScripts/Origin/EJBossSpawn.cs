@@ -42,16 +42,17 @@ public class EJBossSpawn : MonoBehaviourPun
     void SpawnBoss()
     {
         Debug.Log("SpawnBoss가 실행되었습니다");
-
         
-        GameObject boss = PhotonNetwork.Instantiate("Tank-3rd", SpawnPoint.transform.position, Quaternion.identity);
-        //boss.transform.parent = SpawnPoint.transform;
-        //boss.transform.position = SpawnPoint.transform.localPosition;
+        GameObject boss = PhotonNetwork.Instantiate("Tank-4th", SpawnPoint.transform.position, Quaternion.identity);
+
+        //boss.GetComponent<NavMeshAgent>().enabled = false;
+
         boss.transform.position = SpawnPoint.transform.position;
-        Debug.Log(boss.transform.position);
-        boss.GetComponent<NavMeshAgent>().enabled = true;
+
+        Debug.Log("Boss의 위치는" + boss.transform.position + "이고 SpawnPoint의 위치는" + SpawnPoint.transform.position);
 
         //nav가 켜졌다면, bossFSM이 켜진다.로 조건을 바꿔야하나?
+        //boss.GetComponent<NavMeshAgent>().enabled = true;
         boss.GetComponent<BossFSM>().enabled = true;
 
         isBossDone = true;

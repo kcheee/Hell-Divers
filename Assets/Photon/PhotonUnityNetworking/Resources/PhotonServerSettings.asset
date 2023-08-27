@@ -108,6 +108,7 @@ MonoBehaviour:
   - join
   - ShowRocketExploImpact
   - Start2ndPatternByRPC
+  - StartfireBoltByRPC
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 0

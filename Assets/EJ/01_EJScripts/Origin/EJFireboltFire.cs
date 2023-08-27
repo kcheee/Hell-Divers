@@ -33,8 +33,16 @@ public class EJFireboltFire : MonoBehaviourPun
             if (isFireDone)
             {
                 StartCoroutine(MakeFireBolt(null));
+                //MakeFireBoltTest();
             }
         }
+    }
+
+    //생기긴 하는데 안보이네..
+    void MakeFireBoltTest()
+    {
+        GameObject firebolt = Instantiate(fireBoltExploImpactFactory);
+        firebolt.transform.position = FirePos.transform.position;
     }
 
     #region MakeFireBolt 코루틴 함수
@@ -46,7 +54,7 @@ public class EJFireboltFire : MonoBehaviourPun
         {
             GameObject fireBolt = Instantiate(fireBoltFactory);
             fireBolt.transform.position = FirePos.position;
-            fireBolt.transform.forward = FirePos.transform.up;
+            fireBolt.transform.forward = FirePos.transform.forward;
 
             ONLeftArmAnim();
             bodyReactionAnim();
