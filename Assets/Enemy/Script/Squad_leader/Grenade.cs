@@ -19,6 +19,8 @@ public class Grenade : MonoBehaviourPun
         p = smoke.GetComponent<ParticleSystem>();
 
     }
+
+
     [PunRPC]
     void pun_delay()
     {

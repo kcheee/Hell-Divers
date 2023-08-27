@@ -5,47 +5,41 @@ using Photon.Pun;
 
 public class EJBombFire : MonoBehaviourPun
 {
+    #region bomb변수
     //bomb
     bool isBombDone = true;
-    int bombCount = 5;
+    int bombCount = 6;
 
     //bombPos
     public Transform bombPos;
     float bombPosX;
-    float bombPosY;
     float bombPosZ;
-
     Vector3 originBombAngle;
+
+    //bombPrefab
     GameObject bomb;
-    GameObject bombMuzzleImpact;
-    public GameObject bombHead;
 
     //bombMuzzleFX
+    GameObject bombMuzzleImpact;
     public GameObject bombMuzzleFactory;
 
-    //bombReaction
+    //bombReactionAnim
+    public GameObject bombHead;
 
     //RigidBody
     Rigidbody rb;
 
-    // Start is called before the first frame update
+    #endregion
     void Start()
     {
+        //원래 회전 값 담아두기
         originBombAngle = bombPos.localEulerAngles;
-        rb = GetComponent<Rigidbody>();
-
-        //Vector3 rot = transform.eulerAngles;
-
-        //rot.x += Random.Range(-5, 5);
-        //rot.y += Random.Range(-5, 5);
-        //rot.z += Random.Range(-5, 5);
-        //transform.eulerAngles = rot;
-
     }
 
     // Update is called once per frame
     void Update()
     {
+        //test
         if (Input.GetKeyDown(KeyCode.Alpha3))
         {
             if (isBombDone)
@@ -55,7 +49,8 @@ public class EJBombFire : MonoBehaviourPun
         }
     }
 
-    //Bomb를 생성하고 힘을 가한다.
+    #region MakeBomb
+    //Bomb를 생성, bomb스크립트에서 힘을 가한다.
     public IEnumerator MakeBomb(System.Action<int> complete)
     {
         isBombDone = false;
@@ -65,8 +60,10 @@ public class EJBombFire : MonoBehaviourPun
             //bomb 생성
             bomb = EJObjectPoolMgr.instance.GetbombQueue();
 
-            //bomb는 boss에서 Instantiate되고, PhotonNetwork.Instantiate가 아니기 때문에
-            //photonView의 주인이 누가되는지 모른다.
+            //**photonView
+            //photonView가 붙은 boss에서 bomb가 동작할 함수들을 작성하고 가져다 쓸 예정
+
+            //bomb는 boss에서 Instantiate되고, PhotonNetwork.Instantiate가 아니기 때문에 photonView의 주인이 누가되는지 모른다.
             //그렇기 때문에 생성되는 Bomb에 강제로 Boss의 photonView를 붙여준다.
             //master에서만 bomb 생성 후 공격하고 이를 각 PC에서 보여주기 위해서
 
@@ -76,7 +73,7 @@ public class EJBombFire : MonoBehaviourPun
             {
                 //bomb 생성
                 bomb.transform.position = bombPos.position;
-                bomb.transform.forward = bombPos.transform.up;
+                bomb.transform.forward = bombPos.transform.forward;
 
                 EJBossSFX.instance.PlaybombFlyingSFX();
                 ONHeadAnim();
@@ -88,20 +85,15 @@ public class EJBombFire : MonoBehaviourPun
                 bombMuzzleImpact.transform.position = bombPos.position;
                 bombMuzzleImpact.transform.localEulerAngles = bombPos.transform.parent.localEulerAngles;
                 bombMuzzleImpact.transform.localScale = Vector3.one;
-                bombMuzzleImpact.transform.up = bombPos.transform.forward;
+                bombMuzzleImpact.transform.forward = bombPos.transform.forward;
 
-                //bombPosX += Random.Range(-0.3f, 0.3f);
-                bombPosY += Random.Range(-20f, 20f);
-                //bombPosZ += Random.Range(-0.3f, 0.3f);
 
-                //forward위치를 Random으로 해둬야함.
-                bombPos.Rotate(new Vector3(0,bombPosY,0)+ originBombAngle, Space.Self);
+                //bombPos 회전
+                bombPosX += Random.Range(1f,3f);
+                bombPosZ += Random.Range(-3f, 2f);
 
-                //생성해서 총알에 AddForce를 주고 싶은데 이렇게 하면 달리나?
-                bomb.GetComponent<EJBomb>().rb.AddForce(bombPos.transform.forward * 10, ForceMode.Impulse);
+                bombPos.Rotate(new Vector3(bombPosX,0,bombPosZ) + originBombAngle, Space.Self);
 
-                //rb.AddForce(rot * 20, ForceMode.Impulse);
-                //GetComponent<EJBomb>().BulletFire();
             }
 
             //쿨타임
@@ -109,6 +101,8 @@ public class EJBombFire : MonoBehaviourPun
             //BossFSM.Sflag = false;
         }
 
+        bombPosX = 0;
+        bombPosZ = 0;
         isBombDone = true;
 
         if(complete != null)
@@ -116,7 +110,10 @@ public class EJBombFire : MonoBehaviourPun
             complete(0);
         }
     }
+    #endregion
 
+    #region Animation함수들
+    //bodyReactionAnim
     public Animator headReaction;
     public Animator bodyReaction;
 
@@ -125,16 +122,17 @@ public class EJBombFire : MonoBehaviourPun
         headReaction.SetTrigger("headFire");
     }
 
-    //turretHeadAnim
     public void ONBodyAnim()
     {
         bodyReaction.SetTrigger("HeadReaction");
     }
+    #endregion
 
-
+    //***photonView
     //실제 Bomb Script에서 실행시켜줘야 하는 함수지만 RPC를 던지기 위해서
-    //Boss에 붙어있는 Script에다가 작성해주는 것
+    //Boss에 붙어있는 Script에다가 작성해줌.
 
+    #region RPC) bomb 바닥 충돌 FX
     [PunRPC]
     //bomb가 바닥과 충돌했을 때 나오는 연기
     void ShowBombExploImpact(Vector3 pos, Vector3 normal, float waitTime)
@@ -154,4 +152,5 @@ public class EJBombFire : MonoBehaviourPun
         yield return new WaitForSeconds(waitTime);
         EJObjectPoolMgr.instance.ReturnbombExploImpactQueue(bomb);
     }
+    #endregion
 }

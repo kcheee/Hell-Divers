@@ -231,7 +231,7 @@ PrefabInstance:
     - target: {fileID: 1698291995015541663, guid: 8f9c8fcb79b51c04e87a5266a9c36f75, type: 3}
       propertyPath: BulletText
       value: 
-      objectReference: {fileID: 1345275477}
+      objectReference: {fileID: 0}
     - target: {fileID: 1698291995015541663, guid: 8f9c8fcb79b51c04e87a5266a9c36f75, type: 3}
       propertyPath: PlayerInfo
       value: 
@@ -239,7 +239,7 @@ PrefabInstance:
     - target: {fileID: 1698291995015541663, guid: 8f9c8fcb79b51c04e87a5266a9c36f75, type: 3}
       propertyPath: ManganizeText
       value: 
-      objectReference: {fileID: 1345275478}
+      objectReference: {fileID: 0}
     - target: {fileID: 1698291995015541663, guid: 8f9c8fcb79b51c04e87a5266a9c36f75, type: 3}
       propertyPath: StratagemTime
       value: 
@@ -3336,6 +3336,7 @@ MonoBehaviour:
   PlayerList: []
   DeathList: []
   clip: {fileID: 0}
+  PlayerInfoUI: {fileID: 0}
   UI_Obj: {fileID: 897255495876422405, guid: 7c5bf62e5a4498b4fb7465c3496fb1fb, type: 3}
 --- !u!4 &333842327
 Transform:
@@ -3980,7 +3981,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 426664000}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 71.7, y: -1.2, z: 203.2}
+  m_LocalPosition: {x: 71.7, y: 2.4, z: 203.2}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -7203,7 +7204,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1060002514}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 133, y: -0.0004005432, z: 176.5}
+  m_LocalPosition: {x: 209.2, y: -0.0004005432, z: 203.1}
   m_LocalScale: {x: 27.529327, y: 29.58, z: 29.58}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -7222,7 +7223,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c22cdc0df6cfd04e8e1b248538e1acc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bossSpawnFactory: {fileID: 7157786843037978720, guid: 2b3d81702e15bd0409233d15dd7a24de, type: 3}
+  bossSpawnFactory: {fileID: 8589871035917801646, guid: 2408cd2139f94e545a47f78350904356, type: 3}
   SpawnPoint: {fileID: 1085577385}
   bossTrigger: {fileID: 1060002514}
 --- !u!1 &1076360737
@@ -7313,7 +7314,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1085577385}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 6.27, y: 1.94, z: 91.15}
+  m_LocalPosition: {x: 134.2, y: 1.94, z: -0.8}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -8437,28 +8438,6 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 5727686847429798223, guid: fd095a60f34509e459caf1cdf2799f7c, type: 3}
   m_PrefabInstance: {fileID: 1345275474}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1345275477 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 281578953429199601, guid: fd095a60f34509e459caf1cdf2799f7c, type: 3}
-  m_PrefabInstance: {fileID: 1345275474}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &1345275478 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 281578951973941523, guid: fd095a60f34509e459caf1cdf2799f7c, type: 3}
-  m_PrefabInstance: {fileID: 1345275474}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!224 &1345275479 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 6507249732291400015, guid: fd095a60f34509e459caf1cdf2799f7c, type: 3}
@@ -12976,7 +12955,7 @@ GameObject:
   - component: {fileID: 1925361389}
   - component: {fileID: 1925361388}
   - component: {fileID: 1925361387}
-  m_Layer: 0
+  m_Layer: 21
   m_Name: Terrain
   m_TagString: Floor
   m_Icon: {fileID: 0}
@@ -13320,7 +13299,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1993142170
 Transform:
   m_ObjectHideFlags: 0

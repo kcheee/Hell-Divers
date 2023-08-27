@@ -22,6 +22,7 @@ public class BossFSM : MonoBehaviourPun
 
     public BossState B_state;
 
+    #region Boss관련 변수
     //navigation
     NavMeshAgent nav;
 
@@ -64,6 +65,7 @@ public class BossFSM : MonoBehaviourPun
     bool isHoundDone = false;
     bool isTurretDone = false;
 
+    #endregion
 
     private void Awake()
     {
@@ -81,12 +83,6 @@ public class BossFSM : MonoBehaviourPun
         //!!!!!!!!!!!원래 head방향 남겨둠
         headAxisOriginal = headAxis.transform.localEulerAngles;
 
-        //nav.transform.forward =transform.forward;
-
-        //closest = GameObject.FindGameObjectWithTag("Player");
-        //Debug.Log(closest);
-        //closestObject = FindClosestObject();
-
         //왜 chase부터 안들어오지?
         B_state = BossState.Chase;
 
@@ -94,7 +90,7 @@ public class BossFSM : MonoBehaviourPun
         headAxisOriginal = transform.localEulerAngles;
 
         //littleBoss 순서대로 넣고 싶음
-        littleBoss = new GameObject[] { houndFactory, turretFactory };
+        //littleBoss = new GameObject[] { houndFactory, turretFactory };
     }
 
     // Update is called once per frame
@@ -120,21 +116,21 @@ public class BossFSM : MonoBehaviourPun
             #region 주석처리한 것
             //움직이는 player를 바라보게 해야 한다.
             //headAxis.transform.LookAt(player.transform);
-            //switch (B_state)
-            //{
-            //    case BossState.Chase:
-            //        UpdateChase();
-            //        break;
-            //    case BossState.Wait:
-            //        UpdateWait();
-            //        break;
-            //    case BossState.Attack:
-            //        UpdateAttack();
-            //        break;
-            //    case BossState.Die:
-            //        UpdateDie();
-            //        break;
-            //}
+            switch (B_state)
+            {
+                case BossState.Chase:
+                    UpdateChase();
+                    break;
+                case BossState.Wait:
+                    UpdateWait();
+                    break;
+                case BossState.Attack:
+                    UpdateAttack();
+                    break;
+                case BossState.Die:
+                    UpdateDie();
+                    break;
+            }
 
             #endregion
 
@@ -144,10 +140,12 @@ public class BossFSM : MonoBehaviourPun
             {
                 ChangeState(BossState.Chase);
             }
+            #endregion
         }
     }
 
-    #region 상태
+    //한 상태면 다른 상태로 넘어갈 수 없게 하고 싶음
+    #region ChangeState함수 (사용 안함)
     public void ChangeState(BossState bossS)
     {
         if (B_state == bossS) return;
@@ -188,10 +186,13 @@ public class BossFSM : MonoBehaviourPun
         }
 
     }
+    #endregion
 
     // State를 바꿀 때마다 RPC를 보낸다.
 
 
+
+    #region MakeLittleBoss함수 (사용 안함)
     public Transform spawnPosGroup;
     public Vector3[] spawnPos;
 
@@ -244,11 +245,13 @@ public class BossFSM : MonoBehaviourPun
             B_state = BossState.Attack;
         }
     }
+    #endregion
 
-    //한 상태면 다른 상태로 넘어갈 수 없게 하고 싶음
+    
     private void UpdateRotate2Player()
     {
         //transform.LookAt(player.transform.position);
+
         //player와 나와의 거리
         Vector3 LookingPlayerDir = closestObject.transform.position - transform.position;
         //다시 쫓아가든, 공격하든 플레이어를 찾아서 총구를 회전하는 상태
@@ -258,16 +261,18 @@ public class BossFSM : MonoBehaviourPun
 
     private void UpdateChase()
     {
-        Debug.Log("플레이어 위치를 따라가고 있습니다" + nav.destination);
+        Debug.Log("Chase중입니다" + nav.destination);
+
         nav.destination = closestObject.transform.position;
         //photonView.RPC(nameof(OnWheelMesh), RpcTarget.All);
-
 
         //공격가능범위 안으로 들어오면 Attack
         if (DistanceBoss2Player <= NoAttack_ChaseDistance)
         {
             print("공격XLDistance에 들어왔어요");
             OffNavMesh();
+
+            //바퀴 굴러가는 거 딱 chase로 변화할 때 한 번만 RPC날려주면 된다.
             photonView.RPC(nameof(OnWheelMesh), RpcTarget.All);
             B_state = BossState.Wait;
         }
@@ -284,11 +289,12 @@ public class BossFSM : MonoBehaviourPun
 
         //Attack을 마치면 Wait로 바뀌기 전에 바라보는 방향으로 고개를 틀어야 한다.
         //UpdateRotate2Player();
-
+        photonView.RPC(nameof(OnWheelMesh), RpcTarget.All);
         B_state = BossState.Wait;
         //rotate = true;
     }
 
+    #region rpc
     [PunRPC]
     void StartMakeBombByRPC()
     {
@@ -315,15 +321,16 @@ public class BossFSM : MonoBehaviourPun
         StartCoroutine(transform.GetComponent<EJBoss2ndPatternFire>().MakeRocket(AttackCompleted));
     }
 
+    [PunRPC]
+    void StartfireBoltByRPC()
+    {
+        StartCoroutine(transform.GetComponent<EJFireboltFire>().MakeFireBolt(AttackCompleted));
+    }
+    #endregion
+
     //쿨타임을 걸어두고 앞으로 걸어나가면 공격 다르게 발사되는 상태
     private void UpdateAttack()
     {
-        //if(!Sflag)
-        //{
-        //    photonView.RPC(nameof(StartMakeBombByRPC), RpcTarget.All);
-        //    //StartCoroutine(transform.GetComponent<>)
-        //    Sflag = true;
-        //}
 
         //Attack일 때 headRotate
         Transform player = FindClosestObject();
@@ -343,25 +350,30 @@ public class BossFSM : MonoBehaviourPun
 
         headAxis.transform.localEulerAngles = headAxisAngle;
 
+        #region 01.근접공격-bombFire-> rocketFire로 바꿈
         if (DistanceBoss2Player <= bombDistanceS && !Sflag)
         {
             print("MakeBomb");
             //StartCoroutine(transform.GetComponent<EJBombFire>().MakeBomb(AttackCompleted));
 
-            photonView.RPC(nameof(StartMakeBombByRPC), RpcTarget.All);
+            //photonView.RPC(nameof(StartMakeBombByRPC), RpcTarget.All);
+            photonView.RPC(nameof(Start2ndPatternByRPC), RpcTarget.All);
             //StartCoroutine(transform.GetComponent<>)
             Sflag = true;
             //B_state = BossState.Wait;
         }
+        #endregion
+        #region 02.중거리 공격- machineGun -> firebolt공격으로 바꿈
         else if (DistanceBoss2Player > machineGunDistanceM && DistanceBoss2Player <= GausCannonDistanceL && !Lflag)
         {
             print("MachineGunFire");
             //StartCoroutine(GetComponent<EJMachineGun>().MachineGunFire(AttackCompleted));
 
-            photonView.RPC(nameof(Start2ndPatternByRPC), RpcTarget.All);
+            photonView.RPC(nameof(StartfireBoltByRPC), RpcTarget.All);
             Lflag = true;
-            //B_state = BossState.Wait;
         }
+        #endregion
+        #region 03.장거리 공격 - GausCannon공격
         else if (DistanceBoss2Player > GausCannonDistanceL && DistanceBoss2Player <= makeLittleBossDistance && !XLflag)
         {
             print("GausCannonFire");
@@ -372,6 +384,8 @@ public class BossFSM : MonoBehaviourPun
             XLflag = true;
             //B_state = BossState.Wait;
         }
+        #endregion
+
         else if (DistanceBoss2Player > makeLittleBossDistance && DistanceBoss2Player <= NoAttack_ChaseDistance && !XXLflag)
         {
             print("makelittleBoss");
@@ -386,12 +400,10 @@ public class BossFSM : MonoBehaviourPun
         {
             print("Attack할 수 있는 거리가 아닙니다");
             OnNavMesh();
-            photonView.RPC(nameof(OffWheelMesh), RpcTarget.All);
 
+            photonView.RPC(nameof(OnWheelMesh), RpcTarget.All);
             B_state = BossState.Chase;
-            //anim.SetTrigger("Chase");
         }
-        // AllFlagFalse();
     }
 
     private void UpdateDie()
@@ -402,16 +414,11 @@ public class BossFSM : MonoBehaviourPun
 
     private void UpdateWait()
     {
-       
-        //photonView.RPC(nameof(OffNavMesh), RpcTarget.All);
-        //photonView.RPC(nameof(OffWheelMesh),RpcTarget.All);
 
         //!!!!!!!!!!!!정면 방향으로 서서히 돌아오고 싶다. 
         headAxis.transform.forward = Vector3.Lerp(headAxis.transform.forward, transform.forward, 0.2f);
 
         //움직이는 player를 바라보게 해야 한다.
-        //headAxis.transform.LookAt(player.transform);
-        //UpdatePatrol();
         UpdateRotate2Player();
 
         //player와 나와의 방향을 구해서 Lerp를 사용한다?        
@@ -434,16 +441,21 @@ public class BossFSM : MonoBehaviourPun
         if (curTime > waitTime)
         {
             print("공격 딜레이 시간이 지나고 Attack상태로 접어듭니다");
+
+            photonView.RPC(nameof(OffWheelMesh), RpcTarget.All);
             B_state = BossState.Attack;
             curTime = 0;
         }
     }
-    #endregion
 
+    #region 가까운 플레이어 찾는 함수
     // 가까운 플레이어 찾는 함수.
     protected Transform FindClosestObject()
     {
         Transform closest = PlayerManager.instace.PlayerList[0].transform;
+
+        print("BossFSM script에 찾은 closest Player는" + closest);
+
         float closestDistance = Vector3.Distance(transform.position, closest.position);
 
         foreach (PlayerTest1 obj in PlayerManager.instace.PlayerList)
@@ -458,14 +470,18 @@ public class BossFSM : MonoBehaviourPun
 
         return closest;
     }
+    #endregion
 
-    //[PunRPC]
+
+    #region NavMesh함수
+
     void OnNavMesh()
     {
         this.nav.isStopped = false;
         this.nav.updatePosition = true;
         this.nav.updateRotation = true;
     }
+
 
     void OffNavMesh()
     {
@@ -474,7 +490,9 @@ public class BossFSM : MonoBehaviourPun
         this.nav.updatePosition = false;
         this.nav.updateRotation = false;
     }
+    #endregion
 
+    #region 모든 태그 false시키는 것 (안씀)
     //이것이 필요한 것인가?
     void AllFlagFalse()
     {
@@ -483,21 +501,23 @@ public class BossFSM : MonoBehaviourPun
         Lflag = false;
         XLflag = false;
     }
+    #endregion
 
+    #region 바퀴 굴러가는 함수
     [PunRPC]
     void OnWheelMesh()
     {
-        print("바퀴가 돌아갑니다");
+        print("OnWheelMesh 실행 + 바퀴가 돌아갑니다");
         GetComponent<EJWheel>().enabled = true;
     }
     [PunRPC]
     //!!!!아마도 transform view가 붙어있으니 들어옴?
     void OffWheelMesh()
     {
-        print("바퀴가 멈췄습니다");
+        print("OffWheelMesh 실행 + 바퀴가 멈췄습니다");
         GetComponent<EJWheel>().enabled = false;
     }
+    #endregion
 }
 
 
-#endregion

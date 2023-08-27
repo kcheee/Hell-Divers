@@ -5,111 +5,114 @@ using Photon.Pun;
 
 public class EJFlarebullet : MonoBehaviourPun
 {
-
+    #region flarebullet변수
     float flareBulletSpeed = 50f;
     float destroyTime = 1f;
+    float bombRadius = 3;
 
     public GameObject floorEffectFactroy;
-
-    public PhotonView tankPv;
+    //public PhotonView tankPv;
 
     Rigidbody rb;
+    #endregion
+
 
     // Start is called before the first frame update
     void Start()
     {
-        StartCoroutine(DestroySelf());
+        //StartCoroutine(DestroySelf());
         rb = GetComponent<Rigidbody>();
+        rb.velocity = transform.up * flareBulletSpeed;
     }
 
     // Update is called once per frame
     void Update()
     {
-        rb.velocity = transform.up * flareBulletSpeed;
-        //transform.position += transform.up * flareBulletSpeed * Time.deltaTime;
+
     }
 
+
+    #region 01. Trigger효과
     private void OnTriggerEnter(Collider other)
     {
-        //print("11111111 : " +other.name);
+        //print("FlareBullet이 trigger로 닿은 것은" + other.gameObject);
+
         if (other.gameObject.layer == LayerMask.NameToLayer("Floor"))
         {
-            //floor에 닿았을 때 생기는 효과 왜 안생김?
-            GameObject floorEffect = Instantiate(floorEffectFactroy);
-            floorEffect.transform.position = transform.position;
+            print("Floor에 닿았다");
 
-            floorEffect.transform.forward = other.transform.up;
-            floorEffect.transform.localScale = Vector3.one * 2;
+            //RPC로 안보인다.
 
-            StartCoroutine(DestroySelf4Trigger(other));
+            //photonView.RPC(nameof(ShowBulletImpact), RpcTarget.All);
+            photonView.RPC(nameof(test), RpcTarget.All);
         }
 
         if (other.gameObject.tag == "Player")
         {
-            other.transform.GetComponent<PhotonView>().RPC("damaged", RpcTarget.All, transform.position, 3);
+            //player 피격 pos 전달 필요
+            //other.transform.GetComponent<PhotonView>().RPC("damaged", RpcTarget.All, transform.position + Vector3.down * 1.6f, 3);
+
+            PlayerDamage();
         }
     }
 
-    private void OnCollisionEnter(Collision collision)
+    #endregion
+
+    [PunRPC]
+    void test()
     {
-        if (collision.gameObject.layer == LayerMask.NameToLayer("Floor"))
-        {
-            if (PhotonNetwork.IsMasterClient)
-            {
-                //부딪힌 곳에 Floor Effect가 나오는 것은 RPC로 할 것임
-
-                //collision의 정확한 지점
-                //GameObject floorEffect = Instantiate(floorEffectFactroy);
-                //floorEffect.transform.position = collision.contacts[0].point;
-                ////성공?
-                //floorEffect.transform.forward = collision.GetContact(0).normal;
-                //floorEffect.transform.localScale = Vector3.one * 10;
-
-                StartCoroutine(DestroySelf4Collision(collision));
-                
-            }          
-            //성공은 했는데 서로 부딪혀서 튕김 이걸 어떻게 해야하는지
-        }
+        Debug.Log("제발 부타");
     }
 
-    IEnumerator DestroySelf()
+    #region 02. ShowBulletImpact함수
+    [PunRPC]
+   public void ShowBulletImpact()
     {
-        Destroy(gameObject, 3);
-        yield return null;
+        print("ShowBulletImpact함수 실행");
+
+        //GameObject floorEffect = Instantiate(floorEffectFactroy, transform.position, Quaternion.identity);
+
+        //Debug.Log("gausCannon이 바닥에 닿았을 때 생기는 효과는" + floorEffect);
+
+        ////floorEffect.transform.localScale = Vector3.one * 2;
+        //Destroy(gameObject, 2.5f);
     }
 
-    IEnumerator DestroySelf4Collision(Collision collision)
-    {
-        tankPv.RPC("ShowGausCannonImpact", RpcTarget.All, transform.position, collision.GetContact(0).normal);
 
-        #region HP테스트 필요
-        if (collision.gameObject.tag == "Player")
-        {
-            collision.transform.GetComponent<PhotonView>().RPC("damaged", RpcTarget.All, collision, 3);
-        }
+    #endregion
 
-        #endregion
-        flareBulletSpeed = 0;
-        yield return new WaitForSeconds(destroyTime);
-
-        Destroy(gameObject);
-    }
-
+    #region 안쓰는 함수
     IEnumerator DestroySelf4Trigger(Collider other)
     {
-        tankPv.RPC("ShowGausCannonImpact", RpcTarget.All, transform.position,other.transform.up);
+        //tankPv.RPC("ShowGausCannonImpact", RpcTarget.All, transform.position,other.transform.up);
 
-        #region HP테스트 필요
+        //HP테스트 필요
         if (other.gameObject.tag == "Player")
         {
-            other.transform.GetComponent<PhotonView>().RPC("damaged", RpcTarget.All, other, 3);
-        }
-
-        #endregion
+            other.transform.GetComponent<PhotonView>().RPC("damaged", RpcTarget.All, other.gameObject.transform.position + Vector3.up , 3);
+        }      
 
         flareBulletSpeed = 0;
         yield return new WaitForSeconds(destroyTime);
 
         Destroy(gameObject);
     }
+    #endregion
+
+
+    #region 03. bombRadius에 들어온 PlayerDamage함수
+    void PlayerDamage()
+    {
+        //bomb반경 안의 player damage 
+        RaycastHit[] bombHits = Physics.SphereCastAll(transform.position, bombRadius, Vector3.up, 0f, LayerMask.GetMask("Player"));
+
+        print("bomb에 맞은 것은 " + bombHits[0].transform.gameObject.name);
+
+        foreach (RaycastHit hitObj in bombHits)
+        {
+            hitObj.transform.GetComponent<PhotonView>().RPC("damaged", RpcTarget.All, hitObj.point, 3);
+        }
+
+    }
+    #endregion
 }
