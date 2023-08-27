@@ -96,8 +96,7 @@ public class EJBossHP : MonoBehaviourPun,I_Entity
     {
         if (!deathexploDone)
 
-                    
-
+                   
         {
 
             //Gamemanager.instance

@@ -9161,7 +9161,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 0, y: -0.00016017498}
+  m_AnchoredPosition: {x: 0, y: -0.00038889976}
   m_SizeDelta: {x: 0, y: 300}
   m_Pivot: {x: 0, y: 1}
 --- !u!1 &1937982162
@@ -9196,6 +9196,7 @@ MonoBehaviour:
   PlayerList: []
   DeathList: []
   clip: {fileID: 0}
+  PlayerInfoUI: {fileID: 0}
   UI_Obj: {fileID: 0}
 --- !u!4 &1937982164
 Transform:
