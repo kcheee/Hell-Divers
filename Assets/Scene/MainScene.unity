@@ -247,7 +247,7 @@ PrefabInstance:
     - target: {fileID: 1698291995015541663, guid: 8f9c8fcb79b51c04e87a5266a9c36f75, type: 3}
       propertyPath: StratagemImage
       value: 
-      objectReference: {fileID: 1345275475}
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8f9c8fcb79b51c04e87a5266a9c36f75, type: 3}
 --- !u!1 &24450665 stripped
@@ -2199,7 +2199,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &77763963
 RectTransform:
   m_ObjectHideFlags: 0
@@ -8422,17 +8422,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fd095a60f34509e459caf1cdf2799f7c, type: 3}
---- !u!114 &1345275475 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 281578953305421341, guid: fd095a60f34509e459caf1cdf2799f7c, type: 3}
-  m_PrefabInstance: {fileID: 1345275474}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!224 &1345275476 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 5727686847429798223, guid: fd095a60f34509e459caf1cdf2799f7c, type: 3}

@@ -369,7 +369,7 @@ public class BossFSM : MonoBehaviourPun
             print("MachineGunFire");
             //StartCoroutine(GetComponent<EJMachineGun>().MachineGunFire(AttackCompleted));
 
-            photonView.RPC(nameof(StartfireBoltByRPC), RpcTarget.All);
+            photonView.RPC(nameof(Start2ndPatternByRPC), RpcTarget.All);
             Lflag = true;
         }
         #endregion
