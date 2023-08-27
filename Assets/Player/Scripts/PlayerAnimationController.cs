@@ -1,3 +1,4 @@
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -18,9 +19,18 @@ public class PlayerAnimationController : MonoBehaviour
         
     }
 
+    //모든 pC에서 실행됨.
     public void Reloading() {
+        Debug.LogError("모듡 피시에서 실행");
         Player.currentGun.Reload();
         Player.reload = false;
+        /*        if (PhotonNetwork.IsMasterClient) {
+                    Player.currentGun.Reload();
+                    Player.reload = false;
+                    Player.photonView.RPC("manganizeRPC",RpcTarget.All, Player.currentGun.Current_Manganize);
+                    Player.currentGun.photonView.RPC("Set_Bullet", RpcTarget.All, Player.currentGun.currentBullet);
+                }*/
+
     }
 
 
