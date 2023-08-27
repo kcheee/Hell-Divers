@@ -18,7 +18,8 @@ GameObject:
   - component: {fileID: 19883576}
   - component: {fileID: 19995626}
   - component: {fileID: 8660641415932142450}
-  m_Layer: 0
+  - component: {fileID: 467373490402001209}
+  m_Layer: 27
   m_Name: flarebullet_squadLeader_EJ
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -50,10 +51,10 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_Enabled: 1
-  m_Radius: 3.46
-  m_Height: 0.99
+  m_Radius: 1.5849063
+  m_Height: 3.1698132
   m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Center: {x: -2.9574115e-10, y: -4.9851068e-11, z: 0.08265567}
 --- !u!54 &5400000
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -67,9 +68,9 @@ Rigidbody:
   m_AngularDrag: 10
   m_UseGravity: 1
   m_IsKinematic: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_Constraints: 0
-  m_CollisionDetection: 2
+  m_CollisionDetection: 1
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -98,7 +99,7 @@ Light:
   m_Shape: 0
   m_Color: {r: 1, g: 0.042179987, b: 0, a: 1}
   m_Intensity: 2
-  m_Range: 1.5
+  m_Range: 1.5322475
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
   m_CookieSize: 6.91
@@ -5023,4 +5024,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   floorEffectFactroy: {fileID: 156330, guid: f7c073233e5897e44a4e3cd4e755e82b, type: 3}
-  tankPv: {fileID: 0}
+--- !u!114 &467373490402001209
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 100002}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0

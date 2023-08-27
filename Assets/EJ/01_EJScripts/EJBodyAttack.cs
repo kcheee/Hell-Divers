@@ -32,12 +32,12 @@ public class EJBodyAttack : MonoBehaviourPun
 
     private void OnTriggerEnter(Collider other)
     {
-        print("bossBody에 Trigger된 것은" + other);
+        print("bossBody에 Trigger된 것은" + other.gameObject);
 
         if (other.gameObject.tag == "Player")
         {
             print("Player가 boss에 닿아서 데미지를 입었습니다");
-            other.transform.GetComponent<PhotonView>().RPC("damaged", RpcTarget.All, other, 1);
+            other.gameObject.GetComponent<PhotonView>().RPC("damaged", RpcTarget.All, other, 1);
         }
     }
 }

@@ -28,7 +28,7 @@ public class EJBoss2ndPatternFire: MonoBehaviourPun
         //원래 회전값 담아둘 변수
         RocketOriginAngle = RocketPos.localEulerAngles;
     }
-
+    
     // Update is called once per frame
     void Update()
     {
@@ -109,29 +109,12 @@ public class EJBoss2ndPatternFire: MonoBehaviourPun
     //normal: rocket 스크립트에서 Trigger 충돌의 normal방향
     //waitTime: 일정 시간 후 사라질 타이밍
 
-    [PunRPC]
-    public void ShowRocketExploImpact(Vector3 pos, /*Vector3 normal,*/ float waitTime)
-    {
-        print("로켓이 바닥충돌 효과가 발생했습니다");
 
-        //GameObject rocketExploImpact = Instantiate(rocketExploImpactFactory);
-        GameObject rocketExploImpact = PhotonNetwork.Instantiate("Rocket", pos,Quaternion.identity);
-
-        rocketExploImpact.transform.position = pos;
-        //rocketExploImpact.transform.localScale = Vector3.one * 3;
-        //rocketExploImpact.transform.forward = normal;
-
-        StartCoroutine(wait(rocketExploImpact, waitTime));
-    }
 
     //매개변수(2)
     //rocket: 사라지게 할 오브젝트
     //waitTime: 기다릴 시간
 
-    IEnumerator wait(GameObject rocket, float waitTime)
-    {
-        yield return new WaitForSeconds(waitTime);
-        Destroy(gameObject);
-    }
+
     #endregion
 }

@@ -116,21 +116,21 @@ public class BossFSM : MonoBehaviourPun
             #region 주석처리한 것
             //움직이는 player를 바라보게 해야 한다.
             //headAxis.transform.LookAt(player.transform);
-            //switch (B_state)
-            //{
-            //    case BossState.Chase:
-            //        UpdateChase();
-            //        break;
-            //    case BossState.Wait:
-            //        UpdateWait();
-            //        break;
-            //    case BossState.Attack:
-            //        UpdateAttack();
-            //        break;
-            //    case BossState.Die:
-            //        UpdateDie();
-            //        break;
-            //}
+            switch (B_state)
+            {
+                case BossState.Chase:
+                    UpdateChase();
+                    break;
+                case BossState.Wait:
+                    UpdateWait();
+                    break;
+                case BossState.Attack:
+                    UpdateAttack();
+                    break;
+                case BossState.Die:
+                    UpdateDie();
+                    break;
+            }
 
             #endregion
 
@@ -294,6 +294,7 @@ public class BossFSM : MonoBehaviourPun
         //rotate = true;
     }
 
+    #region rpc
     [PunRPC]
     void StartMakeBombByRPC()
     {
@@ -325,6 +326,7 @@ public class BossFSM : MonoBehaviourPun
     {
         StartCoroutine(transform.GetComponent<EJFireboltFire>().MakeFireBolt(AttackCompleted));
     }
+    #endregion
 
     //쿨타임을 걸어두고 앞으로 걸어나가면 공격 다르게 발사되는 상태
     private void UpdateAttack()

@@ -44,12 +44,14 @@ public class EJGausCannonFireInstantiate : MonoBehaviourPun
             if (isCannonDone)
             {
                 StartCoroutine(CannonFire(null));
+
                 //!!!!RPC함수는 photonView를 통해서 호출해야하는데 startcoroutine은 어떻게 적용하는 거지? 
                 //photonview.RPC(nameof(StartCannonFirebyRPC), RpcTarget.All);
                 //StartCoroutine(photonview.RPC("CannonFirebyRPC"), RpcTarget.All);
             }
         }
     }
+
 
     #region 원본) CannonFire 코루틴 함수
 
@@ -91,12 +93,11 @@ public class EJGausCannonFireInstantiate : MonoBehaviourPun
             gausCannonPrefab.transform.position = cannonPos.transform.position;
             gausCannonPrefab.transform.up = cannonPos.transform.forward;
 
-
             //몸이랑 같이 돌아가고 싶다.
             Vector3 originAngle = transform.localEulerAngles;    
 
             //cannonPos.Rotate(new Vector3(cannonPosX, 0, 7 * cannonPosZDir)+originAngle, Space.Self);
-            cannonPos.Rotate(new Vector3(cannonPosX, 7*cannonPosZDir, 0 ), Space.Self);
+            cannonPos.Rotate(new Vector3(cannonPosX, 7 * cannonPosZDir, 0 ), Space.Self);
            
             yield return new WaitForSeconds(cannonDelayTime);
             //OFFRightArmAnim();
@@ -196,18 +197,4 @@ public class EJGausCannonFireInstantiate : MonoBehaviourPun
     }
     #endregion
 
-    [PunRPC]
-    void ShowGausCannonImpact(Vector3 pos, Vector3 normal, float waitTime)
-    {
-        //collision의 정확한 지점
-        GameObject floorEffect = Instantiate(floorEffectFactory);
-        
-        //floorEffect.transform.position = collision.contacts[0].point;
-        floorEffect.transform.position = pos;
-
-        //성공?
-        //floorEffect.transform.forward = collision.GetContact(0).normal;
-        floorEffect.transform.forward = normal;
-        floorEffect.transform.localScale = Vector3.one * 10;
-    }
 }

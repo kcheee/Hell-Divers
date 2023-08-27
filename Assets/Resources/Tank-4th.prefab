@@ -7449,14 +7449,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5342420911915814913}
-  m_LocalRotation: {x: -0, y: 0.69653916, z: 0.71751875, w: 0}
+  m_LocalRotation: {x: 0, y: 0.66261995, z: 0.7489558, w: 0}
   m_LocalPosition: {x: 0.6537112, y: 0.16187873, z: -1.0522343}
   m_LocalScale: {x: 9.682229, y: 8.786398, z: 2.3113513}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8589871036772685743}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 8.3, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -83, y: 0, z: 180}
 --- !u!1 &5342420913110439784
 GameObject:
   m_ObjectHideFlags: 0
@@ -11739,7 +11739,6 @@ GameObject:
   - component: {fileID: 835390137476965525}
   - component: {fileID: 1004260282203179056}
   - component: {fileID: 3084460741895889352}
-  - component: {fileID: 4806267847988330954}
   - component: {fileID: 5342420911931962418}
   - component: {fileID: 5342420911931962419}
   m_Layer: 26
@@ -12193,26 +12192,6 @@ MonoBehaviour:
   rocketExploImpactFactory: {fileID: 4896466333204890307, guid: 7bdaf8fa2f4e73b419dda5a633ac1e34, type: 3}
   leftArmReaction: {fileID: 3084460741660146854}
   bodyReaction: {fileID: 3084460741984353489}
---- !u!114 &4806267847988330954
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8589871035917801646}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d2db5fc66fc71a241b886b7f286b3ce9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  gausCanonImpactPrefab: {fileID: 8579966591951127539, guid: f8d9ce3e2bdf63943bf080cab022beeb, type: 3}
-  gausCanonMuzzleImpactPrefab: {fileID: 141530, guid: 4dc02866e849db44dba817ad93e49a9c, type: 3}
-  machineGunImpactPrefab: {fileID: 183566, guid: 8cad5d1934e699941ad7059ae03f7e28, type: 3}
-  bombPrefab: {fileID: 9129263048663043606, guid: 7d6064dde017d7246840c5bd5af315e6, type: 3}
-  bombMuzzleImpactPrefab: {fileID: 8579966591951127539, guid: 34940ba778088e74095f5f57d9c0dc28, type: 3}
-  bombExploImpactPrefab: {fileID: 4896466333204890307, guid: 7bdaf8fa2f4e73b419dda5a633ac1e34, type: 3}
-  bodyExploImpactPrefab: {fileID: 100006, guid: e076683e0305e35498b8e8834978c0fa, type: 3}
-  ObjectPool: {fileID: 5672534817498329858}
 --- !u!114 &5342420911931962418
 MonoBehaviour:
   m_ObjectHideFlags: 0
