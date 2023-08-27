@@ -4,6 +4,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using Photon.Pun;
+using UnityEngine.SceneManagement;
+
 public class PlayerTest1 : MonoBehaviourPun,IPunObservable
 {
     //Test Text
@@ -103,6 +105,7 @@ public class PlayerTest1 : MonoBehaviourPun,IPunObservable
         //생성할때 오너의 닉네임을 가지고
 
         //모든 플레이어는 UI를 가지고 있어야하니까 Player에서 생성하는게 맞는거같다는 나의 생각.
+        if (SceneManager.GetActiveScene().name != "Lobby")
             PlayerInfoUI = PlayerManager.instace.JoinUI(photonView.Owner.NickName);
         //플레이어는 자신의 UI를 알고있으면 RPC로 다 되는거임
 
