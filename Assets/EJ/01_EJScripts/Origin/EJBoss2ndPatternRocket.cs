@@ -7,7 +7,7 @@ public class EJBoss2ndPatternRocket : MonoBehaviourPun
 {
     #region rocket º¯¼ö
     float rocketSpeed;
-    float rocketRadius = 3;
+    float rocketRadius = 10;
 
     Rigidbody rb;
     public GameObject rocketExploImpactFactory;
