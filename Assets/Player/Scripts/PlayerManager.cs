@@ -60,7 +60,12 @@ public class PlayerManager : MonoBehaviourPunCallbacks
         //StartSpawn(playerSpawn + new Vector3(Random.Range(-10,10), 0, Random.Range(-10, 10)));
 
     }
-    // Start is called before the first frame update
+
+    private void Awake()
+    {
+        instace = this;
+    }
+
     void Start()
     {
 
@@ -72,7 +77,7 @@ public class PlayerManager : MonoBehaviourPunCallbacks
         }
             //SoundManager.instance.BgmPlay(clip);
 
-            instace = this;
+            
         //RPC ȣ�� ��
         PhotonNetwork.SendRate = 30;
         //OnPhotonSeriallizeView ȣ�� ��
