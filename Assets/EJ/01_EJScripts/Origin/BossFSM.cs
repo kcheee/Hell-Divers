@@ -401,7 +401,7 @@ public class BossFSM : MonoBehaviourPun
         else if (DistanceBoss2Player > makeLittleBossDistance && DistanceBoss2Player <= NoAttack_ChaseDistance && !XXLflag)
         {
             print("makelittleBoss");
-            photonView.RPC(nameof(MakeLittleBoss), RpcTarget.All);
+            //photonView.RPC(nameof(MakeLittleBoss), RpcTarget.All);
             XXLflag = true;
 
             B_state = BossState.Wait;
