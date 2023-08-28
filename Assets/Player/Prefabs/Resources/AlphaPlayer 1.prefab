@@ -1787,8 +1787,8 @@ MonoBehaviour:
   DamageEft: {fileID: 5737861413046029104, guid: d669b8e1302dd8342a38d862beb252af, type: 3}
   DieEft: {fileID: 3745372705267084804, guid: 18c8224ea6cc8a04c9e38c64cbeaf5dd, type: 3}
   current_State: 0
-  hp: 2218
-  maxHp: 1117
+  hp: 300
+  maxHp: 300
 --- !u!114 &2498795001099063669
 MonoBehaviour:
   m_ObjectHideFlags: 0
