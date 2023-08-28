@@ -11774,6 +11774,7 @@ GameObject:
   - component: {fileID: 3084460741895889352}
   - component: {fileID: 5342420911931962418}
   - component: {fileID: 5342420911931962419}
+  - component: {fileID: 2224734517800561501}
   m_Layer: 26
   m_Name: Tank-4th
   m_TagString: Untagged
@@ -12254,6 +12255,19 @@ MonoBehaviour:
   fireBoltExploImpactFactory: {fileID: 141530, guid: 4dc02866e849db44dba817ad93e49a9c, type: 3}
   leftArmReaction: {fileID: 3084460741660146854}
   bodyReaction: {fileID: 3084460741984353489}
+--- !u!114 &2224734517800561501
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8589871035917801646}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 57ccaaf361357c54fad339132fddaf96, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spawnManager: {fileID: 0}
 --- !u!1 &8589871036600309757
 GameObject:
   m_ObjectHideFlags: 0
