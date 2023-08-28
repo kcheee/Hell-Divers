@@ -19,6 +19,17 @@ public class EJBossHP : MonoBehaviourPun,I_Entity
     //boss ��� �� ������ ȿ��
     public GameObject bodyExploPrefab;
 
+    //SpawnManager
+    public EJEnemySpawnMgr ejEnemySpawnMgr;
+
+    Animator anim;
+    float gaze;
+    private Transform closestObject;
+    float distance;
+
+    bool flag = false;
+    bool delayflag = false;
+
     private void Awake()
     {
         instance = this;
@@ -34,13 +45,20 @@ public class EJBossHP : MonoBehaviourPun,I_Entity
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Alpha5))
+/*        if (Input.GetKeyDown(KeyCode.Alpha5))
         {
             HP = 0;
-        }
+        }*/
 
         //???? HP�� ��� ���⼭ üũ���ִ°� �³�..?
         bossHPBar.value = HP;
+
+
+
+        if (currentHP < 1500)
+        {
+            ejEnemySpawnMgr.gameObject.SetActive(true);
+        }
     }
 
     public float HP
@@ -96,9 +114,8 @@ public class EJBossHP : MonoBehaviourPun,I_Entity
     {
         if (!deathexploDone)
 
-                   
+                  
         {
-
             //Gamemanager.instance
 
             // Ÿ�� UI
@@ -127,6 +144,17 @@ public class EJBossHP : MonoBehaviourPun,I_Entity
             deathexploDone = true;
         }
 
+    }
+
+    IEnumerator component_off()
+    {
+        // 플래그
+        // 스폰
+        ejEnemySpawnMgr.SpawnFlag = false;
+        ejEnemySpawnMgr.enabled = false;
+
+        yield return new WaitForSeconds(7);
+        GetComponent<EJEnemySpawnMgr>().enabled = false;
     }
 
     public void die(Action action)
