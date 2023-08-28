@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
+  m_IndirectSpecularColor: {r: 0.18009897, g: 0.22549154, b: 0.30680946, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -9147,7 +9147,7 @@ MonoBehaviour:
   - {fileID: 1891503615}
   spawnMob: []
   spawnmaxcount: 10
-  spawnInterval: 7
+  spawnInterval: 5
   SpawnFlag: 0
 --- !u!114 &1871599319
 MonoBehaviour:
