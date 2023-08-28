@@ -11,7 +11,7 @@ public class EJBossHP : MonoBehaviourPun,I_Entity
     public static EJBossHP instance;
 
     float currentHP;
-    float maxHP = 300;
+    float maxHP = 3000;
 
     //HP�����̴�
     public Slider bossHPBar;
