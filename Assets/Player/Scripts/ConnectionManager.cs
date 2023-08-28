@@ -12,6 +12,7 @@ public class ConnectionManager : MonoBehaviourPunCallbacks
     // Start is called before the first frame update
     void Start()
     {
+        PhotonNetwork.AutomaticallySyncScene = true;
         PhotonNetwork.ConnectUsingSettings();
         int rand = Random.Range(0, 4);
         string nick = "";
@@ -96,6 +97,17 @@ public class ConnectionManager : MonoBehaviourPunCallbacks
         base.OnJoinedRoom();
         print(nameof(OnJoinedRoom));
         //Game Scene ¿Ãµø
+
+        
         StartCoroutine(Fade(false));
+    }
+
+
+    private void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.U))
+        {
+            StartCoroutine(Fade(false));
+        }
     }
 }

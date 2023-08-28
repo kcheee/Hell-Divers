@@ -107,7 +107,7 @@ public class PlayerTest1 : MonoBehaviourPun,IPunObservable
         //생성할때 오너의 닉네임을 가지고
 
         //모든 플레이어는 UI를 가지고 있어야하니까 Player에서 생성하는게 맞는거같다는 나의 생각.
-        if (SceneManager.GetActiveScene().name != "Lobby") {
+        if (SceneManager.GetActiveScene().name == "MainScene") {
             currentGun.gameObject.SetActive(true);
             PlayerInfoUI = PlayerManager.instace.JoinUI(photonView.Owner.NickName);
         }
@@ -409,14 +409,14 @@ public class PlayerTest1 : MonoBehaviourPun,IPunObservable
                 {
                     if (angle < 90)
                     {
-                        trBody.Rotate(new Vector3(0, 1, 0));
+                        trBody.Rotate(new Vector3(0, 2, 0));
                         //Debug.Log(angle);
                     }
                     //그렇지않으면 왼쪽으로 회전
                     else
                     {
                         //Debug.Log(angle);
-                        trBody.Rotate(new Vector3(0, -1, 0));
+                        trBody.Rotate(new Vector3(0, -2, 0));
                     }
                 }
                 //trBody.forward = Vector3.Lerp(trBody.forward, dir,Time.deltaTime * 20);
