@@ -41,7 +41,7 @@ public class PlayerHP : MonoBehaviourPun,I_Entity
             OnDamaged();
             HP -= damage;
             Instantiate(DamageEft, pos, Quaternion.identity);
-
+            DamageEft.transform.localScale *= 7;
             print("플레이어의 현재체력은" + hp);
 
             
