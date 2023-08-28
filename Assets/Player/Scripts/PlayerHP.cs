@@ -40,8 +40,8 @@ public class PlayerHP : MonoBehaviourPun,I_Entity
             Debug.Log("데미지드0");
             OnDamaged();
             HP -= damage;
-            Instantiate(DamageEft, pos, Quaternion.identity);
-            DamageEft.transform.localScale *= 7;
+            GameObject go= Instantiate(DamageEft, pos, Quaternion.identity);
+            go.transform.localScale = Vector3.one * 7;
             print("플레이어의 현재체력은" + hp);
 
             
@@ -71,7 +71,7 @@ public class PlayerHP : MonoBehaviourPun,I_Entity
     }
     public void activeFalse()
     {
-        gameObject.SetActive(false);
+        gameObject.GetComponent<PlayerTest1>().trBody.gameObject.SetActive(false);
     }
 
 }

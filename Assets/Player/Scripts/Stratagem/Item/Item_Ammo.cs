@@ -19,7 +19,8 @@ public class Item_Ammo : Item,I_StratagemObject
         //Destroy(gameObject);
         //네트워크측에서 생성하니까 네트워크측에서 삭제한다
         //이로서 완벽한 생성과 삭제가 보장된다.
-        PhotonNetwork.Destroy(gameObject);
+        if(PhotonNetwork.IsMasterClient)
+            PhotonNetwork.Destroy(gameObject);
     }
 
     //활성화 되었을때

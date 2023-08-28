@@ -140,6 +140,7 @@ public class PlayerTest1 : MonoBehaviourPun,IPunObservable
                 PlayerManager.instace.PlayerList.Remove(this);
                 PlayerManager.instace.DeathList.Add(this);
                 PlayerNameUI.gameObject.SetActive(false);
+                //trBody.gameObject.SetActive(false);
             }
         
         };
@@ -573,7 +574,7 @@ public class PlayerTest1 : MonoBehaviourPun,IPunObservable
     public void GetItem() {
         //포톤은 마스터 클라이언트거나 내 객체만 삭제가 가능한것으로 보임 따라서 
         //마스터 PC에 있는놈만 이것을 실행하면 된다!
-        if(PhotonNetwork.IsMasterClient && currentGemObj != null)
+        if( currentGemObj != null)
             currentGemObj.Add();
     }
 
@@ -667,3 +668,4 @@ public class PlayerTest1 : MonoBehaviourPun,IPunObservable
         currentGun.Current_Manganize = size;
     }
 }
+
