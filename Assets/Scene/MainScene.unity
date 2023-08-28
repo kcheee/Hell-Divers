@@ -7222,8 +7222,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1463401748}
-  - component: {fileID: 1463401750}
   - component: {fileID: 1463401749}
+  - component: {fileID: 1463401750}
   m_Layer: 0
   m_Name: SpawnManager_bossZone
   m_TagString: Untagged
@@ -7278,18 +7278,15 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1463401747}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 23ea65c52a44dae47aad9f115220ef93, type: 3}
+  m_Script: {fileID: 11500000, guid: 5f25fdb88f36b3e4ab3909b1741970f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawnPos:
-  - {fileID: 1736064591}
-  - {fileID: 20449010}
-  - {fileID: 60589590}
+  spawnPos: []
   spawnMob: []
   spawnmaxcount: 10
-  spawnInterval: 7
+  spawnInterval: 15
   SpawnFlag: 0
 --- !u!1 &1466095097
 GameObject:

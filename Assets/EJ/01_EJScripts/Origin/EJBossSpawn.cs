@@ -83,7 +83,6 @@ public class EJBossSpawn : MonoBehaviourPun
         print("bosstrigger에 감지된 것은" + other);
         if (PhotonNetwork.IsMasterClient)
         {
-
             if (!isBossDone)
             {
                 SpawnBoss();
