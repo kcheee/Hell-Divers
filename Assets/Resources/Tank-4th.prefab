@@ -11459,7 +11459,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8572883135410962091}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 5}
+  m_LocalPosition: {x: 69, y: 0, z: -14.1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -11775,6 +11775,7 @@ GameObject:
   - component: {fileID: 5342420911931962418}
   - component: {fileID: 5342420911931962419}
   - component: {fileID: 2224734517800561501}
+  - component: {fileID: 3050249046759684173}
   m_Layer: 26
   m_Name: Tank-4th
   m_TagString: Untagged
@@ -12269,6 +12270,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spawnManager: {fileID: 0}
+--- !u!114 &3050249046759684173
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8589871035917801646}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f25fdb88f36b3e4ab3909b1741970f7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spawnPos:
+  - {fileID: 1327004161480418, guid: 6b092a131f9c62e44b2c7ae9b8ff3a45, type: 3}
+  spawnMob: []
+  spawnmaxcount: 10
+  spawnInterval: 1
+  SpawnFlag: 0
 --- !u!1 &8589871036600309757
 GameObject:
   m_ObjectHideFlags: 0
