@@ -24,10 +24,12 @@ public class EJEnemySpawnMgr : MonoBehaviourPun
     void Start()
     {
         StartCoroutine(SpawnRoutine());
+        print("enemySpawnMgr 스타트 함수 실행");
     }
 
     private IEnumerator SpawnRoutine()
     {
+        print("SpawnRoutine실행중");
         while (SpawnFlag)
         {
             int randomPosIndex = Random.Range(0, spawnPos.Length);  // 랜덤한 스폰 위치 인덱스

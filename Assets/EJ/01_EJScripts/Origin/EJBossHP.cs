@@ -57,7 +57,10 @@ public class EJBossHP : MonoBehaviourPun,I_Entity
 
         if (currentHP < 1500)
         {
-            ejEnemySpawnMgr.gameObject.SetActive(true);
+            if (!ejEnemySpawnMgr.isActiveAndEnabled)
+            {
+                ejEnemySpawnMgr.gameObject.SetActive(true);
+            }
         }
     }
 

@@ -401,7 +401,7 @@ public class BossFSM : MonoBehaviourPun
         else if (DistanceBoss2Player > makeLittleBossDistance && DistanceBoss2Player <= NoAttack_ChaseDistance && !XXLflag)
         {
             print("makelittleBoss");
-            //photonView.RPC(nameof(MakeLittleBoss), RpcTarget.All);
+            photonView.RPC(nameof(MakeLittleBoss), RpcTarget.All);
             XXLflag = true;
 
             B_state = BossState.Wait;
@@ -413,7 +413,7 @@ public class BossFSM : MonoBehaviourPun
             print("Attack할 수 있는 거리가 아닙니다");
             OnNavMesh();
 
-            photonView.RPC(nameof(OnWheelMesh), RpcTarget.All);
+            //photonView.RPC(nameof(OnWheelMesh), RpcTarget.All);
             B_state = BossState.Chase;
         }
     }
