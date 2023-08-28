@@ -99,9 +99,7 @@ public class EJBossHP : MonoBehaviourPun,I_Entity
         else
         {
             print("BOSS HP�� 0���Ϸ� ��������");
-
             photonView.RPC("InstantiateDeathFXbyRPC", RpcTarget.All, 1);         
-
         }  
     }
 
@@ -115,9 +113,7 @@ public class EJBossHP : MonoBehaviourPun,I_Entity
     bool deathexploDone = false;
     IEnumerator InstantiateDeathFX()
     {
-        if (!deathexploDone)
-
-                  
+        if (!deathexploDone)                 
         {
             //Gamemanager.instance
 
@@ -146,7 +142,6 @@ public class EJBossHP : MonoBehaviourPun,I_Entity
  
             deathexploDone = true;
         }
-
     }
 
     IEnumerator component_off()
