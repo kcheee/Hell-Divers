@@ -94,7 +94,7 @@ public class BossFSM : MonoBehaviourPun
     }
 
     // Update is called once per frame
-    void Update()
+    void LateUpdate()
     {
         if (PlayerManager.instace.PlayerList.Count == 0) return;
 
@@ -142,6 +142,10 @@ public class BossFSM : MonoBehaviourPun
             }
             #endregion
         }
+
+        Vector3 pos = headAxis.transform.localPosition;
+        pos.y = -0.759999f;
+        headAxis.transform.localPosition = pos;
     }
 
     //한 상태면 다른 상태로 넘어갈 수 없게 하고 싶음
