@@ -111,10 +111,22 @@ public class Gun : MonoBehaviourPun
             GameObject fire2Eft = Instantiate(Fire2Eft, FirePos.position, Quaternion.identity);
             GameObject muzzleEft = Instantiate(MuzzleEft, FirePos.position, Quaternion.identity);
             GameObject test = Instantiate(TestObj, FirePos.position, Quaternion.identity);
+
+
             int randrange = Random.Range(-1,2);
-            int randforce = Random.Range(-10, 30);
-            test.GetComponent<Rigidbody>().AddForce(FirePos.right * randforce + Vector3.up * randrange, ForceMode.Impulse);
+            int randforce = Random.Range(1, 30);
+            float range = current_spreadRange / max_spreadRange;
+            Debug.LogError(range);
+            if (range >= 0.7)
+            {
+                Debug.LogError("아니 이게 외 안됨!");
+                test.GetComponent<TrailRenderer>().enabled = true;
+            }
+            int randDir = Random.Range(-1, 2);
+            Vector3 randdir = FirePos.right + FirePos.forward * randDir * 0.5f;
+            test.GetComponent<Rigidbody>().AddForce(randdir * randforce + Vector3.up * randrange, ForceMode.Impulse);
             test.GetComponent<Rigidbody>().AddTorque(Vector3.up * randrange * randforce + Vector3.right * 20);
+
 
             DH_ProjectileMover move = fire2Eft.GetComponent<DH_ProjectileMover>();
             if(move)

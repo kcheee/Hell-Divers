@@ -50,8 +50,17 @@ public class DH_ProjectileMover : MonoBehaviour
     //https ://docs.unity3d.com/ScriptReference/Rigidbody.OnCollisionEnter.html
     void OnCollisionEnter(Collision collision)
     {
-        if(smoke)
+        if (collision.gameObject.CompareTag("Enemy"))
+        {
+            if (smoke)
+                Destroy(smoke);
+            Destroy(gameObject);
+            Debug.LogError("sss");
+            return;
+        }
+        if (smoke)
             Destroy(smoke);
+
         //Lock all axes movement and rotation
         rb.constraints = RigidbodyConstraints.FreezeAll;
         speed = 0;
