@@ -409,14 +409,14 @@ public class PlayerTest1 : MonoBehaviourPun,IPunObservable
                 {
                     if (angle < 90)
                     {
-                        trBody.Rotate(new Vector3(0, 1, 0));
+                        trBody.Rotate(new Vector3(0, 2, 0));
                         //Debug.Log(angle);
                     }
                     //그렇지않으면 왼쪽으로 회전
                     else
                     {
                         //Debug.Log(angle);
-                        trBody.Rotate(new Vector3(0, -1, 0));
+                        trBody.Rotate(new Vector3(0, -2, 0));
                     }
                 }
                 //trBody.forward = Vector3.Lerp(trBody.forward, dir,Time.deltaTime * 20);
