@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
+  m_IndirectSpecularColor: {r: 0.18009897, g: 0.22549154, b: 0.30680946, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -247,7 +247,7 @@ PrefabInstance:
     - target: {fileID: 1698291995015541663, guid: 8f9c8fcb79b51c04e87a5266a9c36f75, type: 3}
       propertyPath: StratagemImage
       value: 
-      objectReference: {fileID: 1345275475}
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8f9c8fcb79b51c04e87a5266a9c36f75, type: 3}
 --- !u!1 &24450665 stripped
@@ -614,11 +614,15 @@ PrefabInstance:
       propertyPath: patrolT.Array.data[1]
       value: 
       objectReference: {fileID: 1877696142}
+    - target: {fileID: 6297448813253455716, guid: a675b80c1c9a6de4bb13c16aa1b35598, type: 3}
+      propertyPath: sceneViewId
+      value: 25
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a675b80c1c9a6de4bb13c16aa1b35598, type: 3}
 --- !u!4 &74748811 stripped
 Transform:
-  m_CorrespondingSourceObject: {fileID: 5666187499236865119, guid: a675b80c1c9a6de4bb13c16aa1b35598, type: 3}
+  m_CorrespondingSourceObject: {fileID: 7092018863170279655, guid: a675b80c1c9a6de4bb13c16aa1b35598, type: 3}
   m_PrefabInstance: {fileID: 74748810}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &76129009
@@ -1923,11 +1927,15 @@ PrefabInstance:
       propertyPath: patrolT.Array.data[1]
       value: 
       objectReference: {fileID: 1877696142}
+    - target: {fileID: 6297448813253455716, guid: a675b80c1c9a6de4bb13c16aa1b35598, type: 3}
+      propertyPath: sceneViewId
+      value: 18
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a675b80c1c9a6de4bb13c16aa1b35598, type: 3}
 --- !u!4 &267325723 stripped
 Transform:
-  m_CorrespondingSourceObject: {fileID: 5666187499236865119, guid: a675b80c1c9a6de4bb13c16aa1b35598, type: 3}
+  m_CorrespondingSourceObject: {fileID: 7092018863170279655, guid: a675b80c1c9a6de4bb13c16aa1b35598, type: 3}
   m_PrefabInstance: {fileID: 267325722}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &331774900
@@ -2636,6 +2644,10 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8589871035917801644, guid: 2408cd2139f94e545a47f78350904356, type: 3}
+      propertyPath: headAxis
+      value: 
+      objectReference: {fileID: 402950407}
     - target: {fileID: 8589871035917801645, guid: 2408cd2139f94e545a47f78350904356, type: 3}
       propertyPath: m_RootOrder
       value: 14
@@ -2684,12 +2696,25 @@ PrefabInstance:
       propertyPath: m_Name
       value: Tank-4th
       objectReference: {fileID: 0}
+    - target: {fileID: 8589871036661742860, guid: 2408cd2139f94e545a47f78350904356, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: -0.70710677
+      objectReference: {fileID: 0}
+    - target: {fileID: 8589871036661742860, guid: 2408cd2139f94e545a47f78350904356, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.70710677
+      objectReference: {fileID: 0}
     - target: {fileID: 8589871036863802575, guid: 2408cd2139f94e545a47f78350904356, type: 3}
       propertyPath: sceneViewId
       value: 27
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2408cd2139f94e545a47f78350904356, type: 3}
+--- !u!1 &402950407 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1869659480097293946, guid: 2408cd2139f94e545a47f78350904356, type: 3}
+  m_PrefabInstance: {fileID: 402950406}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &410777000
 GameObject:
   m_ObjectHideFlags: 0
@@ -3116,7 +3141,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!65 &479289567
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3222,6 +3247,7 @@ MonoBehaviour:
   radius: 20
   AddGauze: 0.1
   text: {fileID: 1867699791}
+  TowerMission: {fileID: 0}
   audioclip:
   - {fileID: 8300000, guid: 01b452051a72bea44974fbc1d696b2a9, type: 3}
   - {fileID: 8300000, guid: 56ba004fcb8a39d4c9b0785986c35517, type: 3}
@@ -5777,11 +5803,15 @@ PrefabInstance:
       propertyPath: patrolT.Array.data[1]
       value: 
       objectReference: {fileID: 1877696142}
+    - target: {fileID: 6297448813253455716, guid: a675b80c1c9a6de4bb13c16aa1b35598, type: 3}
+      propertyPath: sceneViewId
+      value: 17
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a675b80c1c9a6de4bb13c16aa1b35598, type: 3}
 --- !u!4 &958716210 stripped
 Transform:
-  m_CorrespondingSourceObject: {fileID: 5666187499236865119, guid: a675b80c1c9a6de4bb13c16aa1b35598, type: 3}
+  m_CorrespondingSourceObject: {fileID: 7092018863170279655, guid: a675b80c1c9a6de4bb13c16aa1b35598, type: 3}
   m_PrefabInstance: {fileID: 958716209}
   m_PrefabAsset: {fileID: 0}
 --- !u!4 &968941625 stripped
@@ -7266,17 +7296,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fd095a60f34509e459caf1cdf2799f7c, type: 3}
---- !u!114 &1345275475 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 281578953305421341, guid: fd095a60f34509e459caf1cdf2799f7c, type: 3}
-  m_PrefabInstance: {fileID: 1345275474}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!224 &1345275476 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 5727686847429798223, guid: fd095a60f34509e459caf1cdf2799f7c, type: 3}
@@ -7358,11 +7377,15 @@ PrefabInstance:
       propertyPath: patrolT.Array.data[1]
       value: 
       objectReference: {fileID: 1877696142}
+    - target: {fileID: 6297448813253455716, guid: a675b80c1c9a6de4bb13c16aa1b35598, type: 3}
+      propertyPath: sceneViewId
+      value: 10
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a675b80c1c9a6de4bb13c16aa1b35598, type: 3}
 --- !u!4 &1351139454 stripped
 Transform:
-  m_CorrespondingSourceObject: {fileID: 5666187499236865119, guid: a675b80c1c9a6de4bb13c16aa1b35598, type: 3}
+  m_CorrespondingSourceObject: {fileID: 7092018863170279655, guid: a675b80c1c9a6de4bb13c16aa1b35598, type: 3}
   m_PrefabInstance: {fileID: 1351139453}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1356326480
@@ -8330,11 +8353,15 @@ PrefabInstance:
       propertyPath: patrolT.Array.data[1]
       value: 
       objectReference: {fileID: 1877696142}
+    - target: {fileID: 6297448813253455716, guid: a675b80c1c9a6de4bb13c16aa1b35598, type: 3}
+      propertyPath: sceneViewId
+      value: 5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a675b80c1c9a6de4bb13c16aa1b35598, type: 3}
 --- !u!4 &1563459538 stripped
 Transform:
-  m_CorrespondingSourceObject: {fileID: 5666187499236865119, guid: a675b80c1c9a6de4bb13c16aa1b35598, type: 3}
+  m_CorrespondingSourceObject: {fileID: 7092018863170279655, guid: a675b80c1c9a6de4bb13c16aa1b35598, type: 3}
   m_PrefabInstance: {fileID: 1563459537}
   m_PrefabAsset: {fileID: 0}
 --- !u!4 &1569916212 stripped
@@ -8450,9 +8477,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   followCam_start: {fileID: 1466095098}
-  TowerUI: {fileID: 0}
-  EndUI: {fileID: 0}
-  fade: {fileID: 77763966}
+  uimanager:
+    TowerUI: {fileID: 0}
+    EndUI: {fileID: 0}
+    fade: {fileID: 0}
+    MissionUI: {fileID: 0}
 --- !u!4 &1687153738
 Transform:
   m_ObjectHideFlags: 0
@@ -9164,22 +9193,22 @@ Transform:
   - {fileID: 2134745216}
   - {fileID: 9116800211615124553}
   - {fileID: 1221440109}
-  - {fileID: 267325723}
+  - {fileID: 74748811}
   - {fileID: 157120857}
   - {fileID: 697648932}
   - {fileID: 737365324}
-  - {fileID: 1351139454}
-  - {fileID: 74748811}
+  - {fileID: 267325723}
+  - {fileID: 958716210}
   - {fileID: 1526399998}
   - {fileID: 926521137}
   - {fileID: 2004122515}
   - {fileID: 1753668323}
   - {fileID: 1367835928}
   - {fileID: 1739908916}
-  - {fileID: 958716210}
+  - {fileID: 1351139454}
   - {fileID: 886156585}
-  - {fileID: 1930994618}
   - {fileID: 1563459538}
+  - {fileID: 1930994618}
   - {fileID: 1273545226}
   - {fileID: 217677549}
   - {fileID: 1540274448}
@@ -10452,11 +10481,15 @@ PrefabInstance:
       propertyPath: patrolT.Array.data[1]
       value: 
       objectReference: {fileID: 1877696142}
+    - target: {fileID: 6297448813253455716, guid: a675b80c1c9a6de4bb13c16aa1b35598, type: 3}
+      propertyPath: sceneViewId
+      value: 3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a675b80c1c9a6de4bb13c16aa1b35598, type: 3}
 --- !u!4 &1930994618 stripped
 Transform:
-  m_CorrespondingSourceObject: {fileID: 5666187499236865119, guid: a675b80c1c9a6de4bb13c16aa1b35598, type: 3}
+  m_CorrespondingSourceObject: {fileID: 7092018863170279655, guid: a675b80c1c9a6de4bb13c16aa1b35598, type: 3}
   m_PrefabInstance: {fileID: 1930994617}
   m_PrefabAsset: {fileID: 0}
 --- !u!4 &1960014718 stripped

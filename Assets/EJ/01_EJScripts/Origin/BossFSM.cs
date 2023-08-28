@@ -94,7 +94,7 @@ public class BossFSM : MonoBehaviourPun
     }
 
     // Update is called once per frame
-    void Update()
+    void LateUpdate()
     {
         if (PlayerManager.instace.PlayerList.Count == 0) return;
 
@@ -142,6 +142,10 @@ public class BossFSM : MonoBehaviourPun
             }
             #endregion
         }
+
+        Vector3 pos = headAxis.transform.localPosition;
+        pos.y = -0.759999f;
+        headAxis.transform.localPosition = pos;
     }
 
     //한 상태면 다른 상태로 넘어갈 수 없게 하고 싶음
@@ -258,10 +262,11 @@ public class BossFSM : MonoBehaviourPun
         transform.forward = Vector3.Lerp(transform.forward, LookingPlayerDir, 0.7f * Time.deltaTime);
     }
 
-
+    #region UpdateChase
     private void UpdateChase()
     {
         Debug.Log("Chase중입니다" + nav.destination);
+        print(">>>Chase State에서의 headAxis의 localEulerAngle은" + headAxis.transform.localEulerAngles);
 
         nav.destination = closestObject.transform.position;
         //photonView.RPC(nameof(OnWheelMesh), RpcTarget.All);
@@ -281,6 +286,9 @@ public class BossFSM : MonoBehaviourPun
         //transform.localEulerAngles = Vector3.Lerp(transform.localEulerAngles, headAxisOriginal, 0.7f);
     }
 
+    #endregion
+
+    #region Action 델리게이트 함수
     public void AttackCompleted(int skillIdx)
     {
         if (skillIdx == 0) Sflag = false;
@@ -293,6 +301,7 @@ public class BossFSM : MonoBehaviourPun
         B_state = BossState.Wait;
         //rotate = true;
     }
+    #endregion
 
     #region rpc
     [PunRPC]
@@ -328,10 +337,11 @@ public class BossFSM : MonoBehaviourPun
     }
     #endregion
 
+    #region UpdateAttack
     //쿨타임을 걸어두고 앞으로 걸어나가면 공격 다르게 발사되는 상태
     private void UpdateAttack()
     {
-
+        print("현재 Attack 상태이며, LimitHeadAxis함수가 실행되었습니다");
         //Attack일 때 headRotate
         Transform player = FindClosestObject();
         headAxis.transform.LookAt(player.position);
@@ -349,6 +359,8 @@ public class BossFSM : MonoBehaviourPun
         }
 
         headAxis.transform.localEulerAngles = headAxisAngle;
+
+    print(">>>Attack State에서의 headAxis의 localEulerAngle은" + headAxis.transform.localEulerAngles);
 
         #region 01.근접공격-bombFire-> rocketFire로 바꿈
         if (DistanceBoss2Player <= bombDistanceS && !Sflag)
@@ -406,14 +418,19 @@ public class BossFSM : MonoBehaviourPun
         }
     }
 
+    #endregion
+
+
     private void UpdateDie()
     {
         if (EJBossHP.instance.HP < 0)
             B_state = BossState.Die;
     }
 
+    #region UpdateWait
     private void UpdateWait()
     {
+        print(">>>Wait State에서의 headAxis의 localEulerAngle은" + headAxis.transform.localEulerAngles);
 
         //!!!!!!!!!!!!정면 방향으로 서서히 돌아오고 싶다. 
         headAxis.transform.forward = Vector3.Lerp(headAxis.transform.forward, transform.forward, 0.2f);
@@ -447,6 +464,29 @@ public class BossFSM : MonoBehaviourPun
             curTime = 0;
         }
     }
+    #endregion
+
+    void LimitHeadAxis()
+    {
+        print("현재 Attack 상태이며, LimitHeadAxis함수가 실행되었습니다");
+        //Attack일 때 headRotate
+        Transform player = FindClosestObject();
+        headAxis.transform.LookAt(player.position);
+
+        Vector3 headAxisAngle = headAxis.transform.localEulerAngles;
+
+        //-12이하이면, 막아주고 ?
+        if (headAxisAngle.x >= 12)
+        {
+            headAxisAngle.x = 12;
+        }
+        else if (headAxisAngle.x <= -8)
+        {
+            headAxisAngle.x = -8;
+        }
+
+        headAxis.transform.localEulerAngles = headAxisAngle;
+    }
 
     #region 가까운 플레이어 찾는 함수
     // 가까운 플레이어 찾는 함수.
@@ -471,7 +511,6 @@ public class BossFSM : MonoBehaviourPun
         return closest;
     }
     #endregion
-
 
     #region NavMesh함수
 
