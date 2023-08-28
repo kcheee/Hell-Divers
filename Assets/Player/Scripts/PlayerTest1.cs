@@ -107,7 +107,7 @@ public class PlayerTest1 : MonoBehaviourPun,IPunObservable
         //생성할때 오너의 닉네임을 가지고
 
         //모든 플레이어는 UI를 가지고 있어야하니까 Player에서 생성하는게 맞는거같다는 나의 생각.
-        if (SceneManager.GetActiveScene().name != "Lobby") {
+        if (SceneManager.GetActiveScene().name == "MainScene") {
             currentGun.gameObject.SetActive(true);
             PlayerInfoUI = PlayerManager.instace.JoinUI(photonView.Owner.NickName);
         }

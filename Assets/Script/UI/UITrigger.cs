@@ -49,46 +49,50 @@ public class UITrigger : MonoBehaviourPun
 
         closestObject = FindClosestObject();
 
-        distance = Vector3.Distance(transform.position, closestObject.position);
-
-        if (distance < UI_on && !T_flag)
+        if(closestObject != null)
         {
-            T_flag = true; // UI 활성화됨으로 표시
+            distance = Vector3.Distance(transform.position, closestObject.position);
 
-            uiElement.SetActive(true);
-
-            text.DOColor(T_C, 0.5f);
-        }
-        else if (distance >= UI_on && T_flag)
-        {
-            T_flag = false; // UI 비활성화됨으로 표시
-
-            text.DOColor(F_C, 0.5f).OnComplete(() =>
+            if (distance < UI_on && !T_flag)
             {
-                uiElement.SetActive(false);
-            });
+                T_flag = true; // UI 활성화됨으로 표시
 
-            Debug.Log("실행");
-        }
-        // 버튼
-        if (distance < button_on && !B_flag)
-        {
+                uiElement.SetActive(true);
 
-            B_flag = true; // UI 활성화됨으로 표시
-            buttonElement.SetActive(true);
-            text.DOColor(Color.yellow, 0.1f);
+                text.DOColor(T_C, 0.5f);
+            }
+            else if (distance >= UI_on && T_flag)
+            {
+                T_flag = false; // UI 비활성화됨으로 표시
 
-            // E키를 눌렀을 때
-        }
-        else if (distance >= button_on && B_flag)
-        {
-            B_flag = false; // UI 비활성화됨으로 표시
-            buttonElement.SetActive(false);
-            text.DOColor(T_C, 0.1f).OnComplete(() =>
+                text.DOColor(F_C, 0.5f).OnComplete(() =>
+                {
+                    uiElement.SetActive(false);
+                });
+
+                Debug.Log("실행");
+            }
+            // 버튼
+            if (distance < button_on && !B_flag)
             {
 
-            });
+                B_flag = true; // UI 활성화됨으로 표시
+                buttonElement.SetActive(true);
+                text.DOColor(Color.yellow, 0.1f);
+
+                // E키를 눌렀을 때
+            }
+            else if (distance >= button_on && B_flag)
+            {
+                B_flag = false; // UI 비활성화됨으로 표시
+                buttonElement.SetActive(false);
+                text.DOColor(T_C, 0.1f).OnComplete(() =>
+                {
+
+                });
+            }
         }
+        
 
         if (B_flag)
         {
@@ -110,7 +114,7 @@ public class UITrigger : MonoBehaviourPun
 
     protected Transform FindClosestObject()
     {
-
+        if(PlayerManager.instace.PlayerList.Count <= 0) return null;
         Transform closest = PlayerManager.instace.PlayerList[0].transform;
         float closestDistance = Vector3.Distance(transform.position, closest.position);
 
