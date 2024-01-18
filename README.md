@@ -51,8 +51,53 @@ Unity 2019.3.26f1
 
 # 💡 주요내용
 
+각자 자기가 한 내용 쓰면 좋을거 같음.   
+
 <details>
-<summary>   
+  <summary>강찬희</summary>   
+ Enemy(FSM)   
+ 
+ - 이미지 첨부
+ - 
+FinalIK 사용
+
+  - 이미지 첨부
+  - 
+Photon 사용   
+   - 이미지 첨부
+   - 
+</details>
+
+<details>
+  <summary>김도현</summary>   
+ Enemy(FSM)   
+ 
+ - 이미지 첨부
+ - 
+FinalIK 사용
+
+  - 이미지 첨부
+  - 
+Photon 사용   
+   - 이미지 첨부
+   - 
+</details>
+
+<details>
+  <summary>최은정</summary>   
+ Enemy(FSM)   
+ 
+ - 이미지 첨부
+ - 
+FinalIK 사용
+
+  - 이미지 첨부
+  - 
+Photon 사용   
+   - 이미지 첨부
+   - 
+</details>
+
 
 
 # 🛠 기술 스택       
