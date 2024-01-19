@@ -115,6 +115,6 @@ Photon 사용
 시연영상 업로드 해야함 (다시 찍어야됌)   
 
 ### Beta 발표 ppt   
-   은정님 시간 나실때 PPT 파일 여기에 올려주세요!!
+   (https://docs.google.com/presentation/d/1gYbWrsQCYzRaODcrMETuY6ChuxfWq1zcxuGKXdfqEwM/edit#slide=id.g2789cfb1957_0_354)https://docs.google.com/presentation/d/1gYbWrsQCYzRaODcrMETuY6ChuxfWq1zcxuGKXdfqEwM/edit#slide=id.g2789cfb1957_0_354
 
 # 🔍 참고 자료   
