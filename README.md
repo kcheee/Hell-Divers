@@ -32,89 +32,35 @@ Unity 2019.3.26f1
 
 # 📅 진행 기록
 
-간트차트 등등 
-시간 되실때 써주삼..   
+![image](https://github.com/kcheee/Hell-Divers/assets/86779278/2bb71d61-18bf-427c-8927-f7e64f5a6883)
 
 
-# 클래스 설계
 
-## Player   
-클래스 다이어 그램 해도 되고 안해도 됌   
+# 📃 클래스 설계
 
 ## Enemy   
 
 ![HellDivers_classdiagram drawio](https://github.com/kcheee/Hell-Divers/assets/86779278/e5b8d5a3-571a-4196-9bb5-81e02961be84)   
-
-## Boss   
-
-클래스 다이어 그램 해도 되고 안해도 됌   
-
-# 💡 주요내용
-
-각자 자기가 한 내용 쓰면 좋을거 같음.   
-
-<details>
-  <summary>강찬희</summary>   
- Enemy(FSM)   
- 
- - 이미지 첨부
- - 
-FinalIK 사용
-
-  - 이미지 첨부
-  - 
-Photon 사용   
-   - 이미지 첨부
-   - 
-</details>
-
-<details>
-  <summary>김도현</summary>   
- Enemy(FSM)   
- 
- - 이미지 첨부
- - 
-FinalIK 사용
-
-  - 이미지 첨부
-  - 
-Photon 사용   
-   - 이미지 첨부
-   - 
-</details>
-
-<details>
-  <summary>최은정</summary>   
- Enemy(FSM)   
- 
- - 이미지 첨부
- - 
-FinalIK 사용
-
-  - 이미지 첨부
-  - 
-Photon 사용   
-   - 이미지 첨부
-   - 
-</details>
-
-
+   
 
 # 🛠 기술 스택       
 
    
 ### XR   
  <img src="https://img.shields.io/badge/C%23-239120?style=for-the-badge&logo=c-sharp&logoColor=white"> <img src="https://img.shields.io/badge/Unity-100000?style=for-the-badge&logo=unity&logoColor=white">      
- 
-![images (1)](https://github.com/kcheee/Hell-Divers/assets/86779278/cbaf0f73-fee0-4801-86d9-6144e05ec38a)
+  <img src="https://img.shields.io/badge/photon-004480?style=for-the-badge&logo=photon&logoColor=white">
+
+### ETC
+<img src="https://img.shields.io/badge/github-181717?style=for-the-badge&logo=github&logoColor=white"> <img src="https://img.shields.io/badge/Notion-000000?style=for-the-badge&logo=Notion&logoColor=white">  <img src="https://img.shields.io/badge/googledrive-4285F4?style=for-the-badge&logo=googledrive&logoColor=white">
 
 
 # 📃 결과물   
 ### 시연영상
 
-시연영상 업로드 해야함 (다시 찍어야됌)   
+[![Video Label](http://img.youtube.com/vi/i5_55oun_0Y/0.jpg)](https://youtu.be/i5_55oun_0Y)
 
 ### Beta 발표 ppt   
    (https://docs.google.com/presentation/d/1gYbWrsQCYzRaODcrMETuY6ChuxfWq1zcxuGKXdfqEwM/edit#slide=id.g2789cfb1957_0_354)https://docs.google.com/presentation/d/1gYbWrsQCYzRaODcrMETuY6ChuxfWq1zcxuGKXdfqEwM/edit#slide=id.g2789cfb1957_0_354
 
 # 🔍 참고 자료   
+https://namu.wiki/w/HELLDIVERS/%EC%A0%81
