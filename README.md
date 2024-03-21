@@ -60,7 +60,7 @@ Unity 2019.3.26f1
 [![Video Label](http://img.youtube.com/vi/i5_55oun_0Y/0.jpg)](https://youtu.be/i5_55oun_0Y)
 
 ### Beta 발표 ppt   
-   [발표PPT](https://docs.google.com/presentation/d/1gYbWrsQCYzRaODcrMETuY6ChuxfWq1zcxuGKXdfqEwM/edit#slide=id.g2789cfb1957_0_354)https://docs.google.com/presentation/d/1gYbWrsQCYzRaODcrMETuY6ChuxfWq1zcxuGKXdfqEwM/edit#slide=id.g2789cfb1957_0_354)
+   [발표PPT](https://docs.google.com/presentation/d/1gYbWrsQCYzRaODcrMETuY6ChuxfWq1zcxuGKXdfqEwM/edit#slide=id.g2789cfb1957_0_354)
 
 # 🔍 참고 자료   
 https://namu.wiki/w/HELLDIVERS/%EC%A0%81
